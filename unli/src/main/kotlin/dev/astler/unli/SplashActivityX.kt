@@ -10,7 +10,7 @@ open class SplashActivityX : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setMainActivity()?.let {
-            startActivity(Intent(this, setMainActivity()))
+            startActivity(Intent(this, it))
         }
 
         splashTasks()
@@ -20,7 +20,5 @@ open class SplashActivityX : AppCompatActivity() {
 
     open fun setMainActivity(): Class<*>? = null
 
-    open fun splashTasks() {
-
-    }
+    open fun splashTasks() {}
 }

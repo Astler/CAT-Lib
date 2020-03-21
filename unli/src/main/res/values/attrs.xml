@@ -13,4 +13,9 @@
         <attr name="colorInversion" format="boolean">false</attr>
 
     </declare-styleable>
+
+    <declare-styleable name="StateLayout">
+        <attr name="unli_loading_view" format="reference" />
+        <attr name="unli_error_view" format="reference" />
+    </declare-styleable>
 </resources>
