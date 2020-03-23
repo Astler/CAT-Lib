@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.util.Log
@@ -19,6 +21,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import java.util.*
 
 class UtilsX {
     companion object {
@@ -27,8 +30,13 @@ class UtilsX {
             return if (id != 0) id else R.string.nothing
         }
 
-        fun getStringFromString(context: Context, stringName: String, returnIfNull: String = stringName): String {
-            val stringId = context.resources.getIdentifier(stringName, "string", context.packageName)
+        fun getStringFromString(
+            context: Context,
+            stringName: String,
+            returnIfNull: String = stringName
+        ): String {
+            val stringId =
+                context.resources.getIdentifier(stringName, "string", context.packageName)
             return if (stringId != 0) context.getString(stringId) else returnIfNull
         }
 
@@ -39,8 +47,8 @@ class UtilsX {
         @Suppress("DEPRECATION")
         private fun rateIntentForUri(url: String, context: Context): Intent {
             val intent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(String.format("%s?id=%s", url, context.packageName))
+                Intent.ACTION_VIEW,
+                Uri.parse(String.format("%s?id=%s", url, context.packageName))
             )
 
             var flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
@@ -62,24 +70,27 @@ class UtilsX {
                 context.startActivity(rateIntent)
             } catch (e: ActivityNotFoundException) {
                 val rateIntent =
-                        rateIntentForUri("https://play.google.com/store/apps/details", context)
+                    rateIntentForUri("https://play.google.com/store/apps/details", context)
                 context.startActivity(rateIntent)
             }
         }
 
         fun showKeyboard(activity: AppCompatActivity, editText: EditText) {
             if (editText.requestFocus()) {
-                val inputMethod = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val inputMethod =
+                    activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethod.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
             }
         }
 
         fun hideKeyboard(activity: Activity) {
-            val view = activity.currentFocus?: View(activity)
-            val inputMethod = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val view = activity.currentFocus ?: View(activity)
+            val inputMethod =
+                activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethod.hideSoftInputFromWindow(
                 view.windowToken,
-                InputMethodManager.SHOW_IMPLICIT)
+                InputMethodManager.SHOW_IMPLICIT
+            )
         }
 
         fun hideKeyboardFrom(
@@ -96,12 +107,20 @@ class UtilsX {
                     Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
         }
 
-        fun Context.getColorFromAttr(@AttrRes attrColor: Int, typedValue: TypedValue = TypedValue(), resolveRefs: Boolean = true): Int {
+        fun Context.getColorFromAttr(
+            @AttrRes attrColor: Int,
+            typedValue: TypedValue = TypedValue(),
+            resolveRefs: Boolean = true
+        ): Int {
             theme.resolveAttribute(attrColor, typedValue, resolveRefs)
             return typedValue.data
         }
 
-        fun tintDrawable(context: Context, @DrawableRes icon: Int, @ColorRes colorId: Int): Drawable? {
+        fun tintDrawable(
+            context: Context,
+            @DrawableRes icon: Int,
+            @ColorRes colorId: Int
+        ): Drawable? {
             val drawable = ContextCompat.getDrawable(context, icon)
 
             drawable?.let {
@@ -112,7 +131,11 @@ class UtilsX {
             return drawable
         }
 
-        fun tintDrawableByAttr(context: Context, @DrawableRes icon: Int, @AttrRes attrId: Int): Drawable? {
+        fun tintDrawableByAttr(
+            context: Context,
+            @DrawableRes icon: Int,
+            @AttrRes attrId: Int
+        ): Drawable? {
             val drawable = ContextCompat.getDrawable(context, icon)
 
             drawable?.let {
@@ -121,6 +144,37 @@ class UtilsX {
             }
 
             return drawable
+        }
+
+        fun canShowAds(context: Context): Boolean =
+            context.appPrefs.dayWithoutAds == GregorianCalendar.getInstance()
+                .get(Calendar.DAY_OF_MONTH) && isOnline(context)
+
+        @Suppress("DEPRECATION")
+        fun isOnline(context: Context): Boolean {
+
+            val connMgr =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+            if (Build.VERSION.SDK_INT < 23) {
+                val networkInfo = connMgr.activeNetworkInfo
+
+                return networkInfo != null && networkInfo.isConnected && networkInfo.type == ConnectivityManager.TYPE_WIFI || networkInfo?.type == ConnectivityManager.TYPE_MOBILE
+            } else {
+                val network = connMgr.activeNetwork
+
+                if (network != null) {
+                    val networkCapabilities = connMgr.getNetworkCapabilities(network)
+
+                    if (networkCapabilities != null) {
+                        return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || networkCapabilities.hasTransport(
+                            NetworkCapabilities.TRANSPORT_WIFI
+                        )
+                    }
+                }
+            }
+
+            return false
         }
     }
 

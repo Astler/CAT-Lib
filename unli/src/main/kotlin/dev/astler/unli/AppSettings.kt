@@ -13,24 +13,18 @@ class AppSettings {
 
     companion object {
 
-        private fun loadLocalePref(context: Context?): String {
-            val nPreferencesTool = PreferencesTool(context)
-
-            return if(nPreferencesTool.chooseLanguageManually()) {
-                nPreferencesTool.getUserLanguage()
-            } else ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0).toString()
-        }
+//        private fun loadLocalePref(context: Context?): String {
+//            val nPreferencesTool = PreferencesTool(context)
+//
+//            return if(nPreferencesTool.chooseLanguageManually()) {
+//                nPreferencesTool.getUserLanguage()
+//            } else ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0).toString()
+//        }
 
         @Suppress("deprecation")
         fun loadLocale(context: Context): Context? {
-            val languageTag = loadLocalePref(context)
+           // val languageTag = loadLocalePref(context)
             val customLocale: Locale = Locale.ENGLISH //localeForLanguageTag(languageTag)
-
-            UtilsX.log("tag: $languageTag :: locale: $customLocale")
-            UtilsX.log(
-                "system language ${ConfigurationCompat.getLocales(Resources.getSystem().configuration)
-                    .get(0)}"
-            )
 
             Locale.setDefault(customLocale)
 
@@ -48,15 +42,15 @@ class AppSettings {
             }
         }
 
-        private fun localeForLanguageTag(languageTag: String): Locale {
-            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Locale.forLanguageTag(languageTag.replace("_".toRegex(), "-"))
-            } else {
-                val parts = languageTag.split("[_]").toTypedArray()
-                val language = parts[0]
-                val country = if (parts.size >= 2) parts[1] else null
-                country?.let { Locale(language, it) } ?: Locale(language)
-            }
-        }
+//        private fun localeForLanguageTag(languageTag: String): Locale {
+//            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                Locale.forLanguageTag(languageTag.replace("_".toRegex(), "-"))
+//            } else {
+//                val parts = languageTag.split("[_]").toTypedArray()
+//                val language = parts[0]
+//                val country = if (parts.size >= 2) parts[1] else null
+//                country?.let { Locale(language, it) } ?: Locale(language)
+//            }
+//        }
     }
 }
