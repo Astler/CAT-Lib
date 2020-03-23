@@ -84,6 +84,8 @@ class UtilsX {
         }
 
         fun hideKeyboard(activity: Activity) {
+            //Находим View с фокусом, так мы сможем получить правильный window token
+            //Если такого View нет, то создадим одно, это для получения window token из него
             val view = activity.currentFocus ?: View(activity)
             val inputMethod =
                 activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -93,10 +95,7 @@ class UtilsX {
             )
         }
 
-        fun hideKeyboardFrom(
-            context: Context,
-            view: View?
-        ) {
+        fun hideKeyboardFrom(context: Context, view: View?) {
             val imm =
                 context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view?.windowToken, 0)

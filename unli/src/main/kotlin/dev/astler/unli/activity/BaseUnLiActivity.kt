@@ -8,11 +8,7 @@ import dev.astler.unli.appPrefs
 abstract class BaseUnLiActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context) {
-        if (newBase.appPrefs.useEnglish) {
-            super.attachBaseContext(AppSettings.loadLocale(newBase))
-        } else {
-            super.attachBaseContext(newBase)
-        }
+        super.attachBaseContext(AppSettings.loadLocale(newBase, newBase.appPrefs.useEnglish))
     }
 
 //    fun updateBackgroundColor(color: Int = appPrefs.backgroundColor) {
