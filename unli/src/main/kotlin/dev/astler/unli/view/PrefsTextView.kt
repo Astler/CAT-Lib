@@ -40,7 +40,7 @@ open class PrefsTextView(context: Context, attrs: AttributeSet?, defStyleAttr: I
 
         val textSizeModifier =
             typedArray.getInteger(R.styleable.PrefsTextView_textSizeModifier, 0)
-        textSize = PreferencesTool(context).getTextSize() + textSizeModifier
+        textSize = PreferencesTool(context).textSize + textSizeModifier
 
         val changeColor = typedArray.getBoolean(R.styleable.PrefsTextView_changeTextColor, true)
 

@@ -63,7 +63,7 @@ class TextViewWithImages(context: Context, attrs: AttributeSet?, defStyleAttr: I
 
                         val d = ContextCompat.getDrawable(context, id)
 
-                        val size = (prefsTool.getTextSize() * 3).toInt()
+                        val size = (prefsTool.textSize * 3).toInt()
 
                         d?.setBounds(0, 0, size, size)
                         val imageSpan = VerticalImageSpan(d!!)
