@@ -6,7 +6,6 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
     app:allowDividerBelow="true"
     app:iconSpaceReserved="false">
 
-
     <ListPreference
         android:defaultValue="system"
         android:entries="@array/theme_names"
