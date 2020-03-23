@@ -13,13 +13,13 @@ open class PreferencesTool(context: Context?) {
 
         const val appThemeKey = "appTheme"
 
-        const val appLocale = "appLocale"
+        const val appLocaleKey = "appLocale"
         const val appLocaleDefault = "system"
-        const val appLocaleMode = "appLocaleMode"
+        const val appLocaleModeKey = "appLocaleMode"
         const val appLocaleModeDefault = false
 
-        const val textSizeName = "textSize"
-        const val textSizeDefault = "18"
+        const val textSizeKey = "textSizeNew"
+        const val textSizeDefault = 18
 
         const val useEnglishKey = "useEnglish"
         const val firstStartKey = "firstStart"
@@ -31,10 +31,9 @@ open class PreferencesTool(context: Context?) {
     fun getPreferences(): SharedPreferences = mPreferences
 
     var textSize: Float
-        get() = (getPreferences().getString(textSizeName, textSizeDefault)
-            ?: textSizeDefault).toFloat()
+        get() = (getPreferences().getInt(textSizeKey, textSizeDefault)).toFloat()
         set(value) {
-            edit(textSizeName, value)
+            edit(textSizeKey, value.toInt())
         }
 
     var isDarkTheme: Boolean
@@ -75,15 +74,15 @@ open class PreferencesTool(context: Context?) {
         }
 
     var chooseLanguageManually: Boolean
-        get() = getPreferences().getBoolean(appLocaleMode, appLocaleModeDefault)
+        get() = getPreferences().getBoolean(appLocaleModeKey, appLocaleModeDefault)
         set(value) {
-            edit(appLocaleMode, value)
+            edit(appLocaleModeKey, value)
         }
 
     var userLanguage: String
-        get() = getPreferences().getString(appLocale, appLocaleDefault) ?: appLocaleDefault
+        get() = getPreferences().getString(appLocaleKey, appLocaleDefault) ?: appLocaleDefault
         set(value) {
-            edit(appLocale, value)
+            edit(appLocaleKey, value)
         }
 
     fun isFirstStartForVersion(versionCode: Int) =
@@ -105,15 +104,18 @@ open class PreferencesTool(context: Context?) {
         isSystemTheme = true
         textSize = 18f
         useEnglish = false
+        chooseLanguageManually = false
+        userLanguage = "en"
     }
 
-    fun edit(name: String, type: Any) {
+    private fun edit(name: String, type: Any) {
         val editor = getPreferences().edit()
 
         when (type) {
             is Boolean -> editor.putBoolean(name, type)
             is Int -> editor.putInt(name, type)
             is Float -> editor.putFloat(name, type)
+            is String -> editor.putString(name, type)
         }
 
         editor.apply()
