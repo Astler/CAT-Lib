@@ -1,4 +1,4 @@
-package dev.astler.library.view
+package dev.astler.unli.view
 
 import android.text.Spannable
 import android.content.Context
@@ -7,7 +7,6 @@ import android.util.AttributeSet
 import androidx.core.content.ContextCompat
 import dev.astler.library.view.style.VerticalImageSpan
 import dev.astler.unli.PreferencesTool
-import dev.astler.unli.view.PrefsTextView
 import java.util.regex.Pattern
 
 class TextViewWithImages(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :

@@ -40,16 +40,22 @@ open class PreferencesTool(context: Context?) {
         }
 
     var isDarkTheme: Boolean
-        get() = getPreferences().getString(appThemeKey, "system") == "dark"
+        get() = appTheme == "dark"
         set(value) {
             edit(appThemeKey, "dark")
         }
 
     var isSystemTheme: Boolean
-        get() = getPreferences().getString(appThemeKey, "system") == "system"
+        get() = appTheme == "system"
         set(value) {
             if (value)
                 edit(appThemeKey, "system")
+        }
+
+    var appTheme: String
+        get() = getPreferences().getString(appThemeKey, "system") ?: "system"
+        set(value) {
+            edit(appThemeKey, value)
         }
 
     var useEnglish: Boolean
@@ -68,6 +74,18 @@ open class PreferencesTool(context: Context?) {
         get() = getPreferences().getInt(dayWithoutAdsKey, -1)
         set(value) {
             edit(dayWithoutAdsKey, -1)
+        }
+
+    var chooseLanguageManually: Boolean
+        get() = getPreferences().getBoolean(appLocaleMode, appLocaleModeDefault)
+        set(value) {
+            edit(appLocaleMode, value)
+        }
+
+    var userLanguage: String
+        get() = getPreferences().getString(appLocale, appLocaleDefault) ?: appLocaleDefault
+        set(value) {
+            edit(appLocale, value)
         }
 
     fun isFirstStartForVersion(versionCode: Int) =
