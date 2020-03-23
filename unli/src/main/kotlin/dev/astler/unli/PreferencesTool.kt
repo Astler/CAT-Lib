@@ -28,6 +28,10 @@ open class PreferencesTool(context: Context?) {
 
     private var mPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
+    open fun loadDefaultPreferences(context: Context) {
+        PreferenceManager.setDefaultValues(context, R.xml.prefs, false)
+    }
+
     fun getPreferences(): SharedPreferences = mPreferences
 
     var textSize: Float

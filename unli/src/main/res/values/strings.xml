@@ -3,4 +3,54 @@
 
     <string name="nothing">Nothing</string>
 
+    <string name="disable_ads">Disable ads for one day</string>
+    <string name="language">App language</string>
+
+    <string-array name="locales_string">
+        <item>English</item>
+        <item>Русский</item>
+        <item>Українська</item>
+    </string-array>
+
+    <string-array name="locales_values">
+        <item>en</item>
+        <item>ru</item>
+        <item>uk</item>
+    </string-array>
+
+    <string-array name="font_size_names">
+        <item>@string/very_small</item>
+        <item>@string/small</item>
+        <item>@string/medium</item>
+        <item>@string/big</item>
+        <item>@string/very_big</item>
+    </string-array>
+
+    <string name="very_small">Very small</string>
+    <string name="small">Small</string>
+    <string name="medium">Normal</string>
+    <string name="big">Large</string>
+    <string name="very_big">Very Large</string>
+
+    <string name="main_prefs">Main settings</string>
+    <string name="language_settings">Language Settings</string>
+    <string name="change_lang_by_user">Select a language manually</string>
+
+    <string-array name="theme_values">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+
+    <string-array name="theme_names" translatable="false">
+        <item>@string/light_theme</item>
+        <item>@string/light_theme</item>
+        <item>@string/dark_theme</item>
+    </string-array>
+
+    <string name="dark_theme">Dark</string>
+    <string name="light_theme">Light</string>
+
+    <string name="font_size">Font size</string>
+    <string name="app_theme">Application Theme</string>
 </resources>

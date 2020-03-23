@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceCategory
+    android:title="@string/main_prefs"
+    app:allowDividerBelow="true"
+    app:iconSpaceReserved="false">
+
+
+    <ListPreference
+        android:defaultValue="system"
+        android:entries="@array/theme_names"
+        android:entryValues="@array/theme_values"
+        android:key="appTheme"
+        android:title="@string/app_theme"
+        app:iconSpaceReserved="false"
+        app:useSimpleSummaryProvider="true"  />
+
+    <ListPreference
+        android:defaultValue="18"
+        android:entries="@array/font_size_names"
+        android:entryValues="@array/font_size_values"
+        android:key="textSize"
+        android:title="@string/font_size"
+        app:iconSpaceReserved="false"
+        app:useSimpleSummaryProvider="true" />
+
+</PreferenceCategory>
+
+<PreferenceCategory
+    app:iconSpaceReserved="false"
+    app:title="@string/language_settings">
+
+    <SwitchPreferenceCompat
+        app:iconSpaceReserved="false"
+        app:key="appLocaleMode"
+        app:title="@string/change_lang_by_user"/>
+
+    <ListPreference
+        android:defaultValue="en"
+        android:dependency="appLocaleMode"
+        android:entries="@array/locales_string"
+        android:entryValues="@array/locales_values"
+        android:key="appLocale"
+        android:title="@string/language"
+        app:iconSpaceReserved="false"
+        app:useSimpleSummaryProvider="true"/>
+
+    <Preference
+        android:key="dayWithoutAds"
+        android:title="@string/disable_ads" />
+
+</PreferenceCategory>
+
+</PreferenceScreen>
