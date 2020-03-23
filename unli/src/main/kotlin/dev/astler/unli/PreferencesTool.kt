@@ -37,7 +37,7 @@ open class PreferencesTool(context: Context?) {
     var textSize: Float
         get() = (getPreferences().getInt(textSizeKey, textSizeDefault)).toFloat()
         set(value) {
-            edit(textSizeKey, value.toInt())
+            edit(textSizeKey, value.toString())
         }
 
     var isDarkTheme: Boolean

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer-array name="font_size_values">
+    <string-array name="font_size_values">
         <item>10</item>
         <item>14</item>
         <item>18</item>
         <item>23</item>
         <item>28</item>
-    </integer-array>
+    </string-array>
 </resources>
