@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.util.TypedValue
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.AttrRes
@@ -73,11 +74,21 @@ class UtilsX {
             }
         }
 
-        fun hideKeyboard(activity: AppCompatActivity, editText: EditText) {
+        fun hideKeyboard(activity: Activity) {
+            val view = activity.currentFocus?: View(activity)
             val inputMethod = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethod.hideSoftInputFromWindow(
-                    editText.windowToken,
-                    InputMethodManager.SHOW_IMPLICIT)
+                view.windowToken,
+                InputMethodManager.SHOW_IMPLICIT)
+        }
+
+        fun hideKeyboardFrom(
+            context: Context,
+            view: View?
+        ) {
+            val imm =
+                context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view?.windowToken, 0)
         }
 
         fun isDarkTheme(activity: Activity): Boolean {
