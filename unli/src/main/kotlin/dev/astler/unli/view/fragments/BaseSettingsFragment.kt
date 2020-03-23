@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
 import dev.astler.unli.R
 
-class BaseSettingsFragment : PreferenceFragmentCompat() {
+open class BaseSettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.prefs)
