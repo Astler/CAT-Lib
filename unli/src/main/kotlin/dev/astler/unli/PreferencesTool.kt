@@ -112,7 +112,7 @@ open class PreferencesTool(context: Context?) {
         userLanguage = "en"
     }
 
-    private fun edit(name: String, type: Any) {
+    fun edit(name: String, type: Any) {
         val editor = getPreferences().edit()
 
         when (type) {

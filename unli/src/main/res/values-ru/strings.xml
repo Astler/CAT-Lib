@@ -20,4 +20,6 @@
 
     <string name="font_size">Размер шрифта</string>
     <string name="app_theme">Тема приложения</string>
+
+    <string name="system_theme">Системная тема</string>
 </resources>
