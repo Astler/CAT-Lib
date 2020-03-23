@@ -24,8 +24,6 @@ open class PreferencesTool(context: Context?) {
         const val useEnglishKey = "useEnglish"
         const val firstStartKey = "firstStart"
         const val dayWithoutAdsKey = "dayWithoutAds"
-
-        const val customBackgroundKey = "customBackground"
     }
 
     private var mPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -102,10 +100,6 @@ open class PreferencesTool(context: Context?) {
     fun setFirstStartForVersion(versionCode: Int) {
         edit("firstStartVersion$versionCode", false)
     }
-
-//    var backgroundColor: Int
-//        get() = mPreferences.getInt(customBackgroundKey, ContextCompat.getColor(context, R.color.default_background_color))
-//        set(backgroundColor) = edit(customBackgroundKey, backgroundColor)
 
     open fun preferencesToDefault() {
         isSystemTheme = true
