@@ -106,15 +106,6 @@ class UtilsX {
                     Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
         }
 
-        fun Context.getColorFromAttr(
-            @AttrRes attrColor: Int,
-            typedValue: TypedValue = TypedValue(),
-            resolveRefs: Boolean = true
-        ): Int {
-            theme.resolveAttribute(attrColor, typedValue, resolveRefs)
-            return typedValue.data
-        }
-
         fun tintDrawable(
             context: Context,
             @DrawableRes icon: Int,
@@ -176,14 +167,26 @@ class UtilsX {
             return false
         }
     }
+}
 
-    fun Context.moreApps () {
-        try {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://dev?id=4948748506238999540"))
-            startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/dev?id=4948748506238999540"))
-            startActivity(intent)
-        }
+fun Context.moreApps() {
+    try {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://dev?id=4948748506238999540"))
+        startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://play.google.com/store/apps/dev?id=4948748506238999540")
+        )
+        startActivity(intent)
     }
+}
+
+fun Context.getColorFromAttr(
+    @AttrRes attrColor: Int,
+    typedValue: TypedValue = TypedValue(),
+    resolveRefs: Boolean = true
+): Int {
+    theme.resolveAttribute(attrColor, typedValue, resolveRefs)
+    return typedValue.data
 }
