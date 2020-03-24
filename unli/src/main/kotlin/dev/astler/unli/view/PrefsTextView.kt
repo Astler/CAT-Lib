@@ -6,7 +6,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
 import dev.astler.unli.PreferencesTool
 import dev.astler.unli.R
-import dev.astler.unli.UtilsX.Companion.getColorFromAttr
+import dev.astler.unli.getColorFromAttr
 
 open class PrefsTextView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     AppCompatTextView(context, attrs, defStyleAttr) {
