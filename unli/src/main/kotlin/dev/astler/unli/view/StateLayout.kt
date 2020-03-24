@@ -45,8 +45,8 @@ class StateLayout @JvmOverloads constructor(context: Context,
 
     init {
         val attrsStateLayout = context.obtainStyledAttributes(attrs, R.styleable.StateLayout)
-        loadingResId = attrsStateLayout.getResourceId(R.styleable.StateLayout_unli_loading_view, -1)
-        errorResId = attrsStateLayout.getResourceId(R.styleable.StateLayout_unli_error_view, -1)
+        loadingResId = attrsStateLayout.getResourceId(R.styleable.StateLayout_unli_loading_view, R.layout.loading_view)
+        errorResId = attrsStateLayout.getResourceId(R.styleable.StateLayout_unli_error_view, R.layout.empty_view)
         attrsStateLayout.recycle()
     }
 
