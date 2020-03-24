@@ -177,4 +177,13 @@ class UtilsX {
         }
     }
 
+    fun Context.moreApps () {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://dev?id=4948748506238999540"))
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/dev?id=4948748506238999540"))
+            startActivity(intent)
+        }
+    }
 }

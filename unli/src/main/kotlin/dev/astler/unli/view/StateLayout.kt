@@ -39,8 +39,8 @@ class StateLayout @JvmOverloads constructor(context: Context,
 
     private var viewsMap = HashMap<Int, View>()
 
-    private var loadingResId = -1
-    private var errorResId = -1
+    private var loadingResId = R.layout.loading_view
+    private var errorResId = R.layout.empty_view
 
     init {
         val attrsStateLayout = context.obtainStyledAttributes(attrs, R.styleable.StateLayout)

@@ -74,7 +74,7 @@ open class PreferencesTool(context: Context?) {
     var dayWithoutAds: Int
         get() = getPreferences().getInt(dayWithoutAdsKey, -1)
         set(value) {
-            edit(dayWithoutAdsKey, -1)
+            edit(dayWithoutAdsKey, value)
         }
 
     var chooseLanguageManually: Boolean

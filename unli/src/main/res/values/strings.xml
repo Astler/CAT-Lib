@@ -54,4 +54,5 @@
 
     <string name="font_size">Font size</string>
     <string name="app_theme">Application Theme</string>
+    <string name="nothing_to_show">Nothing here yet</string>
 </resources>

@@ -22,4 +22,6 @@
     <string name="app_theme">Тема приложения</string>
 
     <string name="system_theme">Системная тема</string>
+
+    <string name="nothing_to_show">Тут пока ничего нет</string>
 </resources>
