@@ -22,7 +22,7 @@ class StateLayout @JvmOverloads constructor(context: Context,
         const val defaultView = 1
     }
 
-    private var activeView = defaultView
+    var activeView = defaultView
         set(value) {
             if (this.activeView == value) {
                 return
