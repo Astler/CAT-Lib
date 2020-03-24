@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import dev.astler.unli.R
+import dev.astler.unli.UtilsX
 
 //based on https://github.com/wangshouquan/StateLayout
 
@@ -51,6 +52,9 @@ class StateLayout @JvmOverloads constructor(context: Context,
 
     override fun onFinishInflate() {
         super.onFinishInflate()
+
+        UtilsX.log("onFinishInflate()")
+
         if (childCount > 1) {
             throw IllegalArgumentException("You must have only one content view.")
         }
@@ -80,6 +84,10 @@ class StateLayout @JvmOverloads constructor(context: Context,
 
         addView(view)
         view.visibility = View.GONE
+
+
+        UtilsX.log("setViewForState = $state")
+
         viewsMap[state] = view
     }
 
