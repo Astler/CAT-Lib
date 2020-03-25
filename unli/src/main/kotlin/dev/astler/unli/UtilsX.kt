@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -15,12 +16,19 @@ import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.widget.NestedScrollView
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dev.astler.unli.UtilsX.Companion.isOnline
 import java.util.*
 
 class UtilsX {
@@ -31,12 +39,12 @@ class UtilsX {
         }
 
         fun getStringFromString(
-            context: Context,
-            stringName: String,
-            returnIfNull: String = stringName
+                context: Context,
+                stringName: String,
+                returnIfNull: String = stringName
         ): String {
             val stringId =
-                context.resources.getIdentifier(stringName, "string", context.packageName)
+                    context.resources.getIdentifier(stringName, "string", context.packageName)
             return if (stringId != 0) context.getString(stringId) else returnIfNull
         }
 
@@ -47,8 +55,8 @@ class UtilsX {
         @Suppress("DEPRECATION")
         private fun rateIntentForUri(url: String, context: Context): Intent {
             val intent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(String.format("%s?id=%s", url, context.packageName))
+                    Intent.ACTION_VIEW,
+                    Uri.parse(String.format("%s?id=%s", url, context.packageName))
             )
 
             var flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
@@ -70,7 +78,7 @@ class UtilsX {
                 context.startActivity(rateIntent)
             } catch (e: ActivityNotFoundException) {
                 val rateIntent =
-                    rateIntentForUri("https://play.google.com/store/apps/details", context)
+                        rateIntentForUri("https://play.google.com/store/apps/details", context)
                 context.startActivity(rateIntent)
             }
         }
@@ -78,7 +86,7 @@ class UtilsX {
         fun showKeyboard(activity: AppCompatActivity, editText: EditText) {
             if (editText.requestFocus()) {
                 val inputMethod =
-                    activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethod.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
             }
         }
@@ -88,16 +96,16 @@ class UtilsX {
             //Если такого View нет, то создадим одно, это для получения window token из него
             val view = activity.currentFocus ?: View(activity)
             val inputMethod =
-                activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethod.hideSoftInputFromWindow(
-                view.windowToken,
-                InputMethodManager.SHOW_IMPLICIT
+                    view.windowToken,
+                    InputMethodManager.SHOW_IMPLICIT
             )
         }
 
         fun hideKeyboardFrom(context: Context, view: View?) {
             val imm =
-                context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                    context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view?.windowToken, 0)
         }
 
@@ -107,9 +115,9 @@ class UtilsX {
         }
 
         fun tintDrawable(
-            context: Context,
-            @DrawableRes icon: Int,
-            @ColorRes colorId: Int
+                context: Context,
+                @DrawableRes icon: Int,
+                @ColorRes colorId: Int
         ): Drawable? {
             val drawable = ContextCompat.getDrawable(context, icon)
 
@@ -122,9 +130,9 @@ class UtilsX {
         }
 
         fun tintDrawableByAttr(
-            context: Context,
-            @DrawableRes icon: Int,
-            @AttrRes attrId: Int
+                context: Context,
+                @DrawableRes icon: Int,
+                @AttrRes attrId: Int
         ): Drawable? {
             val drawable = ContextCompat.getDrawable(context, icon)
 
@@ -136,15 +144,11 @@ class UtilsX {
             return drawable
         }
 
-        fun canShowAds(context: Context): Boolean =
-            context.appPrefs.dayWithoutAds == GregorianCalendar.getInstance()
-                .get(Calendar.DAY_OF_MONTH) && isOnline(context)
-
         @Suppress("DEPRECATION")
         fun isOnline(context: Context): Boolean {
 
             val connMgr =
-                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
             if (Build.VERSION.SDK_INT < 23) {
                 val networkInfo = connMgr.activeNetworkInfo
@@ -158,7 +162,7 @@ class UtilsX {
 
                     if (networkCapabilities != null) {
                         return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || networkCapabilities.hasTransport(
-                            NetworkCapabilities.TRANSPORT_WIFI
+                                NetworkCapabilities.TRANSPORT_WIFI
                         )
                     }
                 }
@@ -169,23 +173,61 @@ class UtilsX {
     }
 }
 
+fun Context.canShowAds(): Boolean =
+        appPrefs.dayWithoutAds == GregorianCalendar.getInstance()
+                .get(Calendar.DAY_OF_MONTH) && isOnline(this)
+
 fun Context.moreApps() {
     try {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://dev?id=4948748506238999540"))
         startActivity(intent)
     } catch (e: ActivityNotFoundException) {
         val intent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("https://play.google.com/store/apps/dev?id=4948748506238999540")
+                Intent.ACTION_VIEW,
+                Uri.parse("https://play.google.com/store/apps/dev?id=4948748506238999540")
         )
         startActivity(intent)
     }
 }
 
+fun ImageView.setColorTintDrawable(@DrawableRes icon: Int, @ColorRes colorId: Int) {
+    setImageDrawable(UtilsX.tintDrawable(context, icon, colorId))
+}
+
+fun ImageView.setAttrTintDrawable(@DrawableRes icon: Int, @AttrRes attrId: Int) {
+    setImageDrawable(UtilsX.tintDrawableByAttr(context, icon, attrId))
+}
+
+fun TextView.customTypeface(boldFont: Boolean = false) {
+    typeface = if (boldFont) ResourcesCompat.getFont(context, R.font.google_sans_bold)
+    else ResourcesCompat.getFont(context, R.font.google_sans_reg)
+}
+
+fun RecyclerView.hideFABOnScroll(fab: FloatingActionButton) {
+    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            if (dy > 0)
+                fab.hide()
+            else if (dy < 0)
+                fab.show()
+        }
+    })
+}
+
+fun NestedScrollView.hideFABOnScroll(fab: FloatingActionButton) {
+    setOnScrollChangeListener { v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+        if (scrollY > oldScrollY) {
+            fab.hide()
+        } else {
+            fab.show()
+        }
+    }
+}
+
 fun Context.getColorFromAttr(
-    @AttrRes attrColor: Int,
-    typedValue: TypedValue = TypedValue(),
-    resolveRefs: Boolean = true
+        @AttrRes attrColor: Int,
+        typedValue: TypedValue = TypedValue(),
+        resolveRefs: Boolean = true
 ): Int {
     theme.resolveAttribute(attrColor, typedValue, resolveRefs)
     return typedValue.data
