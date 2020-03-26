@@ -13,11 +13,11 @@ import dev.astler.unli.interfaces.RecyclerAdapterSizeListener
 import dev.astler.unli.view.StateLayout
 import kotlinx.android.synthetic.main.recycler_view_fragment.view.*
 
-abstract class CoreGameList: CoreFragment(), RecyclerAdapterSizeListener {
+abstract class BaseListFragment: CoreFragment(), RecyclerAdapterSizeListener {
 
-    private lateinit var mStateLayout: StateLayout
-    private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mFABView: FloatingActionButton
+    lateinit var mStateLayout: StateLayout
+    lateinit var mRecyclerView: RecyclerView
+    lateinit var mFABView: FloatingActionButton
 
     override fun totalItems(size: Int) {
         if (size <= 0) {
@@ -32,12 +32,11 @@ abstract class CoreGameList: CoreFragment(), RecyclerAdapterSizeListener {
 
     }
 
-    @SuppressLint("InflateParams")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = inflater.inflate(R.layout.recycler_view_fragment, container, false)
 
         mStateLayout = view.stateLayout
