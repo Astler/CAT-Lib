@@ -5,7 +5,8 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 
 interface ActivityInterface {
-    fun backPressed(withEndAction: () -> Unit = {})
+    fun backPressed(endAction: () -> Unit = {})
     fun setCurrentFragment(fragment:Fragment)
+    fun setToolbarTitle(title: String)
     fun getActivityContext(): Context
 }
