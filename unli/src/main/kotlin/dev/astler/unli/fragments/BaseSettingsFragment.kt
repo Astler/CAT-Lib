@@ -1,4 +1,4 @@
-package dev.astler.unli.view.fragments
+package dev.astler.unli.fragments
 
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat

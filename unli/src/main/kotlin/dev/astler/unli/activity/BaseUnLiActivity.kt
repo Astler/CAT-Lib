@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
 import dev.astler.unli.AppSettings
 import dev.astler.unli.PreferencesTool
+import dev.astler.unli.R
 import dev.astler.unli.appPrefs
 import java.util.*
 
@@ -27,6 +29,8 @@ abstract class BaseUnLiActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
+
+        setDefaultPreferences()
 
         rewardedVideo = MobileAds.getRewardedVideoAdInstance(this)
 
@@ -50,6 +54,10 @@ abstract class BaseUnLiActivity : AppCompatActivity() {
 
     open fun hideAd() {
 
+    }
+
+    open fun setDefaultPreferences() {
+        PreferenceManager.setDefaultValues(this, R.xml.prefs, false)
     }
 
 
