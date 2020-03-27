@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.MenuItem
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
@@ -11,13 +12,11 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
-import dev.astler.unli.AppSettings
-import dev.astler.unli.PreferencesTool
-import dev.astler.unli.R
-import dev.astler.unli.appPrefs
+import com.google.android.material.navigation.NavigationView
+import dev.astler.unli.*
 import java.util.*
 
-abstract class BaseUnLiActivity : AppCompatActivity() {
+abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var rewardedVideo: RewardedVideoAd? = null
 
@@ -75,6 +74,23 @@ abstract class BaseUnLiActivity : AppCompatActivity() {
             }
         }
     }
+
+    open fun navigationViewInflateMenus(navigationView: NavigationView) {
+        navigationView.inflateMenu(R.menu.base_activity_drawer)
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId) {
+            R.id.rate_app -> this.rateApp()
+            R.id.more_apps -> this.moreApps()
+            R.id.settings -> navToSettingsFragment()
+        }
+
+        return true
+    }
+
+    abstract fun navToSettingsFragment()
 
 //    fun updateBackgroundColor(color: Int = appPrefs.backgroundColor) {
 //        window.decorView.setBackgroundColor(color)

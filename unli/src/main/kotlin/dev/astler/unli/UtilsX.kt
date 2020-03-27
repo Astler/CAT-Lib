@@ -53,7 +53,7 @@ class UtilsX {
         }
 
         @Suppress("DEPRECATION")
-        private fun rateIntentForUri(url: String, context: Context): Intent {
+        fun rateIntentForUri(url: String, context: Context): Intent {
             val intent = Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse(String.format("%s?id=%s", url, context.packageName))
@@ -70,17 +70,6 @@ class UtilsX {
             intent.addFlags(flags)
 
             return intent
-        }
-
-        fun rateIntent(context: Context) {
-            try {
-                val rateIntent = rateIntentForUri("market://details", context)
-                context.startActivity(rateIntent)
-            } catch (e: ActivityNotFoundException) {
-                val rateIntent =
-                        rateIntentForUri("https://play.google.com/store/apps/details", context)
-                context.startActivity(rateIntent)
-            }
         }
 
         fun showKeyboard(activity: AppCompatActivity, editText: EditText) {
@@ -176,6 +165,17 @@ class UtilsX {
 fun Context.canShowAds(): Boolean =
         appPrefs.dayWithoutAds == GregorianCalendar.getInstance()
                 .get(Calendar.DAY_OF_MONTH) && isOnline(this)
+
+fun Context.rateApp() {
+    try {
+        val rateIntent = UtilsX.rateIntentForUri("market://details", this)
+        startActivity(rateIntent)
+    } catch (e: ActivityNotFoundException) {
+        val rateIntent =
+            UtilsX.rateIntentForUri("https://play.google.com/store/apps/details", this)
+        startActivity(rateIntent)
+    }
+}
 
 fun Context.moreApps() {
     try {

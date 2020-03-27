@@ -55,4 +55,9 @@
     <string name="font_size">Font size</string>
     <string name="app_theme">Application Theme</string>
     <string name="nothing_to_show">Nothing here yet</string>
+
+    <string name="settings">Settings</string>
+    <string name="rate_app">Rate app</string>
+    <string name="more_apps">More Apps</string>
+    <string name="other">Other</string>
 </resources>
