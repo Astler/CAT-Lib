@@ -18,7 +18,7 @@ abstract class BaseListFragment: CoreFragment(), RecyclerAdapterSizeListener {
     lateinit var mStateLayout: StateLayout
     lateinit var mRecyclerView: RecyclerView
     lateinit var mFABView: FloatingActionButton
-    protected val mFABVisible = false
+    protected var mFABVisible = false
 
     override fun totalItems(size: Int) {
         if (size <= 0) {
