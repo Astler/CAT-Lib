@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.MenuItem
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
@@ -131,7 +130,6 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
         when(item.itemId) {
             R.id.rate_app -> this.rateApp()
             R.id.more_apps -> this.moreApps()
