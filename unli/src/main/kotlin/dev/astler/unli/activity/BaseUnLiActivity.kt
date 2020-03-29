@@ -1,6 +1,7 @@
 package dev.astler.unli.activity
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -16,11 +17,12 @@ import com.google.android.material.navigation.NavigationView
 import dev.astler.unli.*
 import java.util.*
 
-abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     var rewardedVideo: RewardedVideoAd? = null
+    lateinit var mPreferencesTool: PreferencesTool
 
-    abstract fun preferencesTool(): PreferencesTool?
+    abstract fun initPreferencesTool(): PreferencesTool
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(AppSettings.loadLocale(newBase, newBase.appPrefs.useEnglish))
@@ -28,6 +30,8 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
+
+        mPreferencesTool = initPreferencesTool()
 
         setDefaultPreferences()
 
@@ -41,7 +45,9 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
             override fun onRewardedVideoCompleted() {}
 
             override fun onRewarded(p0: RewardItem?) {
-                preferencesTool()?.dayWithoutAds = GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
+                val preferencesTool = PreferencesTool(this@BaseUnLiActivity)
+
+                preferencesTool.dayWithoutAds = GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
                 hideAd()
             }
 
@@ -58,7 +64,6 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
     open fun setDefaultPreferences() {
         PreferenceManager.setDefaultValues(this, R.xml.prefs, false)
     }
-
 
     fun loadTheme(preferencesTool: PreferencesTool, @StyleRes lightThemeId: Int, @StyleRes darkThemeId: Int) {
         if (preferencesTool.isSystemTheme) {
@@ -91,6 +96,29 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
     }
 
     abstract fun navToSettingsFragment()
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == PreferencesTool.appThemeKey || key == PreferencesTool.appLocaleModeKey || key == PreferencesTool.appLocaleKey) {
+            recreate()
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        val preferencesTool = PreferencesTool(this)
+
+        if (preferencesTool.isSystemTheme) {
+            when (newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    recreate()
+                }
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    recreate()
+                }
+            }
+        }
+    }
 
 //    fun updateBackgroundColor(color: Int = appPrefs.backgroundColor) {
 //        window.decorView.setBackgroundColor(color)
