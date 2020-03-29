@@ -9,22 +9,30 @@ import android.view.MenuItem
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
+import com.google.android.gms.ads.*
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
 import com.google.android.material.navigation.NavigationView
 import dev.astler.unli.*
+import dev.astler.unli.R
+import dev.astler.unli.interfaces.ActivityInterface
 import java.util.*
+import kotlin.collections.ArrayList
 
-abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
+abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener, ActivityInterface {
 
     var rewardedVideo: RewardedVideoAd? = null
+    private lateinit var mInterstitialAd: InterstitialAd
     lateinit var mPreferencesTool: PreferencesTool
 
     abstract fun initPreferencesTool(): PreferencesTool
+
+    open fun getInterstitialAdId() = ""
+
+    open fun getTestDevicesList(): ArrayList<String> {
+        return arrayListOf("46BCDEE9C1F5ED2ADF3A5DB3889DDFB5")
+    }
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(AppSettings.loadLocale(newBase, newBase.appPrefs.useEnglish))
@@ -35,7 +43,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
 
         val testDevices = ArrayList<String>()
         testDevices.add(AdRequest.DEVICE_ID_EMULATOR)
-        testDevices.add("46BCDEE9C1F5ED2ADF3A5DB3889DDFB5")
+        testDevices.addAll(getTestDevicesList())
 
         val requestConfiguration = RequestConfiguration.Builder()
                 .setTestDeviceIds(testDevices)
@@ -67,6 +75,30 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
             override fun onRewardedVideoAdFailedToLoad(p0: Int) {}
 
         }
+
+        mInterstitialAd = InterstitialAd(this)
+
+        if (getInterstitialAdId().isNotEmpty()) {
+
+            mInterstitialAd.adUnitId = getInterstitialAdId()
+            mInterstitialAd.loadAd(AdRequest.Builder().build())
+
+            mInterstitialAd.adListener = object : AdListener() {
+                override fun onAdClosed() {
+                    mInterstitialAd.loadAd(AdRequest.Builder().build())
+                }
+            }
+        }
+    }
+
+    override fun showInterstitialAd() {
+        if (mInterstitialAd.isLoaded) {
+            mInterstitialAd.show()
+        }
+        else {
+            if (!mInterstitialAd.isLoading)
+                mInterstitialAd.loadAd(AdRequest.Builder().build())
+        }
     }
 
     open fun hideAd() {
@@ -77,14 +109,14 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
         PreferenceManager.setDefaultValues(this, R.xml.prefs, false)
     }
 
-    fun loadTheme(preferencesTool: PreferencesTool, @StyleRes lightThemeId: Int, @StyleRes darkThemeId: Int) {
-        if (preferencesTool.isSystemTheme) {
+    fun loadTheme(@StyleRes lightThemeId: Int, @StyleRes darkThemeId: Int) {
+        if (mPreferencesTool.isSystemTheme) {
             when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
                 Configuration.UI_MODE_NIGHT_YES -> setTheme(darkThemeId)
                 Configuration.UI_MODE_NIGHT_NO -> setTheme(lightThemeId)
             }
         } else {
-            if (preferencesTool.isDarkTheme) {
+            if (mPreferencesTool.isDarkTheme) {
                 setTheme(darkThemeId)
             } else {
                 setTheme(lightThemeId)

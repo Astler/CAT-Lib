@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 
 interface ActivityInterface {
     fun backPressed(endAction: () -> Unit = {})
+    fun showInterstitialAd()
     fun setCurrentFragment(fragment:Fragment)
     fun setToolbarTitle(title: String)
     fun getActivityContext(): Context
