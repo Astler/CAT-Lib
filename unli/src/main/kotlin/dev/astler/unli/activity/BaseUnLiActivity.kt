@@ -9,7 +9,9 @@ import android.view.MenuItem
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
@@ -30,6 +32,16 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
+
+        val testDevices = ArrayList<String>()
+        testDevices.add(AdRequest.DEVICE_ID_EMULATOR)
+        testDevices.add("46BCDEE9C1F5ED2ADF3A5DB3889DDFB5")
+
+        val requestConfiguration = RequestConfiguration.Builder()
+                .setTestDeviceIds(testDevices)
+                .build()
+
+        MobileAds.setRequestConfiguration(requestConfiguration)
 
         mPreferencesTool = initPreferencesTool()
 
@@ -119,6 +131,17 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
             }
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        mPreferencesTool.addListener(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mPreferencesTool.unregisterListener(this)
+    }
+
 
 //    fun updateBackgroundColor(color: Int = appPrefs.backgroundColor) {
 //        window.decorView.setBackgroundColor(color)
