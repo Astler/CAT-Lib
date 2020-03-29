@@ -38,22 +38,23 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
         super.attachBaseContext(AppSettings.loadLocale(newBase, newBase.appPrefs.useEnglish))
     }
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
 
         val testDevices = ArrayList<String>()
         testDevices.add(AdRequest.DEVICE_ID_EMULATOR)
         testDevices.addAll(getTestDevicesList())
 
         val requestConfiguration = RequestConfiguration.Builder()
-                .setTestDeviceIds(testDevices)
-                .build()
+            .setTestDeviceIds(testDevices)
+            .build()
 
         MobileAds.setRequestConfiguration(requestConfiguration)
 
-        mPreferencesTool = initPreferencesTool()
-
         setDefaultPreferences()
+
+        mPreferencesTool = initPreferencesTool()
 
         rewardedVideo = MobileAds.getRewardedVideoAdInstance(this)
 
@@ -90,6 +91,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
             }
         }
     }
+
 
     override fun showInterstitialAd() {
         if (mInterstitialAd.isLoaded) {
