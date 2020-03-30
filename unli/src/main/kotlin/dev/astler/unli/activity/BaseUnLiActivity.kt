@@ -40,7 +40,6 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         val testDevices = ArrayList<String>()
         testDevices.add(AdRequest.DEVICE_ID_EMULATOR)
         testDevices.addAll(getTestDevicesList())
@@ -144,6 +143,10 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == PreferencesTool.appThemeKey || key == PreferencesTool.appLocaleModeKey || key == PreferencesTool.appLocaleKey) {
             recreate()
+        }
+
+        if (key == PreferencesTool.dayWithoutAdsKey) {
+            hideAd()
         }
     }
 
