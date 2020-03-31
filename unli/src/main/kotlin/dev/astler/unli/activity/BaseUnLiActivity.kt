@@ -19,7 +19,9 @@ import dev.astler.unli.interfaces.ActivityInterface
 import java.util.*
 import kotlin.collections.ArrayList
 
-abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener, ActivityInterface {
+abstract class BaseUnLiActivity : AppCompatActivity(),
+    NavigationView.OnNavigationItemSelectedListener,
+    SharedPreferences.OnSharedPreferenceChangeListener, ActivityInterface {
 
     lateinit var mRewardedVideo: RewardedVideoAd
     private lateinit var mInterstitialAd: InterstitialAd
@@ -69,7 +71,8 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
 
                 override fun onRewarded(p0: RewardItem?) {
                     val preferencesTool = PreferencesTool(this@BaseUnLiActivity)
-                    preferencesTool.dayWithoutAds = GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
+                    preferencesTool.dayWithoutAds =
+                        GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
                 }
 
                 override fun onRewardedVideoStarted() {}
@@ -98,8 +101,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
     override fun showInterstitialAd() {
         if (mInterstitialAd.isLoaded) {
             mInterstitialAd.show()
-        }
-        else {
+        } else {
             if (!mInterstitialAd.isLoading)
                 mInterstitialAd.loadAd(AdRequest.Builder().build())
         }
@@ -131,12 +133,19 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
         }
     }
 
-    open fun navigationViewInflateMenus(navigationView: NavigationView) {
+    open fun navigationViewInflateMenus(navigationView: NavigationView, menuId: Int) {
+        navigationView.menu.clear()
+
+        if (canShowAds())
+            navigationView.inflateMenu(R.menu.ad_menu)
+
+        navigationView.inflateMenu(menuId)
         navigationView.inflateMenu(R.menu.base_activity_drawer)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
+            R.id.adItem -> showRewardAd()
             R.id.rate_app -> this.rateApp()
             R.id.more_apps -> this.moreApps()
             R.id.settings -> navToSettingsFragment()
