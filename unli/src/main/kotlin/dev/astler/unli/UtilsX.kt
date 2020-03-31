@@ -164,7 +164,7 @@ class UtilsX {
 }
 
 fun Context.canShowAds(): Boolean =
-    appPrefs.dayWithoutAds == GregorianCalendar.getInstance()
+    appPrefs.dayWithoutAds != GregorianCalendar.getInstance()
         .get(Calendar.DAY_OF_MONTH) && isOnline(this)
 
 fun Context.rateApp() {
