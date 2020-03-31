@@ -34,6 +34,8 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
     open fun getInterstitialAdId() = ""
     open fun getRewardedAdId() = ""
 
+    abstract fun updateNavigationMenu()
+
     open fun getTestDevicesList(): ArrayList<String> {
         return arrayListOf("46BCDEE9C1F5ED2ADF3A5DB3889DDFB5")
     }
@@ -65,7 +67,9 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
             mRewardedVideo.rewardedVideoAdListener = object : RewardedVideoAdListener {
                 override fun onRewardedVideoAdClosed() {}
                 override fun onRewardedVideoAdLeftApplication() {}
-                override fun onRewardedVideoAdLoaded() {}
+                override fun onRewardedVideoAdLoaded() {
+                    updateNavigationMenu()
+                }
                 override fun onRewardedVideoAdOpened() {}
                 override fun onRewardedVideoCompleted() {}
 
