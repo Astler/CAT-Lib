@@ -21,6 +21,7 @@ import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -39,12 +40,12 @@ class UtilsX {
         }
 
         fun getStringFromString(
-                context: Context,
-                stringName: String,
-                returnIfNull: String = stringName
+            context: Context,
+            stringName: String,
+            returnIfNull: String = stringName
         ): String {
             val stringId =
-                    context.resources.getIdentifier(stringName, "string", context.packageName)
+                context.resources.getIdentifier(stringName, "string", context.packageName)
             return if (stringId != 0) context.getString(stringId) else returnIfNull
         }
 
@@ -55,8 +56,8 @@ class UtilsX {
         @Suppress("DEPRECATION")
         fun rateIntentForUri(url: String, context: Context): Intent {
             val intent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(String.format("%s?id=%s", url, context.packageName))
+                Intent.ACTION_VIEW,
+                Uri.parse(String.format("%s?id=%s", url, context.packageName))
             )
 
             var flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
@@ -75,7 +76,7 @@ class UtilsX {
         fun showKeyboard(activity: AppCompatActivity, editText: EditText) {
             if (editText.requestFocus()) {
                 val inputMethod =
-                        activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethod.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
             }
         }
@@ -85,16 +86,16 @@ class UtilsX {
             //Если такого View нет, то создадим одно, это для получения window token из него
             val view = activity.currentFocus ?: View(activity)
             val inputMethod =
-                    activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethod.hideSoftInputFromWindow(
-                    view.windowToken,
-                    InputMethodManager.SHOW_IMPLICIT
+                view.windowToken,
+                InputMethodManager.SHOW_IMPLICIT
             )
         }
 
         fun hideKeyboardFrom(context: Context, view: View?) {
             val imm =
-                    context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view?.windowToken, 0)
         }
 
@@ -104,9 +105,9 @@ class UtilsX {
         }
 
         fun tintDrawable(
-                context: Context,
-                @DrawableRes icon: Int,
-                @ColorRes colorId: Int
+            context: Context,
+            @DrawableRes icon: Int,
+            @ColorRes colorId: Int
         ): Drawable? {
             val drawable = ContextCompat.getDrawable(context, icon)
 
@@ -119,9 +120,9 @@ class UtilsX {
         }
 
         fun tintDrawableByAttr(
-                context: Context,
-                @DrawableRes icon: Int,
-                @AttrRes attrId: Int
+            context: Context,
+            @DrawableRes icon: Int,
+            @AttrRes attrId: Int
         ): Drawable? {
             val drawable = ContextCompat.getDrawable(context, icon)
 
@@ -137,7 +138,7 @@ class UtilsX {
         fun isOnline(context: Context): Boolean {
 
             val connMgr =
-                    context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
             if (Build.VERSION.SDK_INT < 23) {
                 val networkInfo = connMgr.activeNetworkInfo
@@ -151,7 +152,7 @@ class UtilsX {
 
                     if (networkCapabilities != null) {
                         return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || networkCapabilities.hasTransport(
-                                NetworkCapabilities.TRANSPORT_WIFI
+                            NetworkCapabilities.TRANSPORT_WIFI
                         )
                     }
                 }
@@ -163,8 +164,8 @@ class UtilsX {
 }
 
 fun Context.canShowAds(): Boolean =
-        appPrefs.dayWithoutAds == GregorianCalendar.getInstance()
-                .get(Calendar.DAY_OF_MONTH) && isOnline(this)
+    appPrefs.dayWithoutAds == GregorianCalendar.getInstance()
+        .get(Calendar.DAY_OF_MONTH) && isOnline(this)
 
 fun Context.rateApp() {
     try {
@@ -183,8 +184,8 @@ fun Context.moreApps() {
         startActivity(intent)
     } catch (e: ActivityNotFoundException) {
         val intent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://play.google.com/store/apps/dev?id=4948748506238999540")
+            Intent.ACTION_VIEW,
+            Uri.parse("https://play.google.com/store/apps/dev?id=4948748506238999540")
         )
         startActivity(intent)
     }
@@ -225,10 +226,18 @@ fun NestedScrollView.hideFABOnScroll(fab: FloatingActionButton) {
 }
 
 fun Context.getColorFromAttr(
-        @AttrRes attrColor: Int,
-        typedValue: TypedValue = TypedValue(),
-        resolveRefs: Boolean = true
+    @AttrRes attrColor: Int,
+    typedValue: TypedValue = TypedValue(),
+    resolveRefs: Boolean = true
 ): Int {
     theme.resolveAttribute(attrColor, typedValue, resolveRefs)
     return typedValue.data
+}
+
+fun String.saveGetStringByName(context: Context): String {
+    val id = context.resources.getIdentifier(this, "string", context.packageName)
+
+    return if (id != 0) {
+        context.getString(id)
+    } else this
 }

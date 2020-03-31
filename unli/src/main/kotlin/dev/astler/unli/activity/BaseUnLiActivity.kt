@@ -21,13 +21,16 @@ import kotlin.collections.ArrayList
 
 abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener, ActivityInterface {
 
-    var rewardedVideo: RewardedVideoAd? = null
+    lateinit var mRewardedVideo: RewardedVideoAd
     private lateinit var mInterstitialAd: InterstitialAd
     lateinit var mPreferencesTool: PreferencesTool
 
-    abstract fun initPreferencesTool(): PreferencesTool
+    open fun initPreferencesTool(): PreferencesTool = PreferencesTool(this)
+
+    override fun getActivityContext() = this
 
     open fun getInterstitialAdId() = ""
+    open fun getRewardedAdId() = ""
 
     open fun getTestDevicesList(): ArrayList<String> {
         return arrayListOf("46BCDEE9C1F5ED2ADF3A5DB3889DDFB5")
@@ -54,25 +57,26 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
 
         mPreferencesTool = initPreferencesTool()
 
-        rewardedVideo = MobileAds.getRewardedVideoAdInstance(this)
+        mRewardedVideo = MobileAds.getRewardedVideoAdInstance(this)
 
-        rewardedVideo?.rewardedVideoAdListener = object : RewardedVideoAdListener {
-            override fun onRewardedVideoAdClosed() {}
-            override fun onRewardedVideoAdLeftApplication() {}
-            override fun onRewardedVideoAdLoaded() {}
-            override fun onRewardedVideoAdOpened() {}
-            override fun onRewardedVideoCompleted() {}
+        if (canShowAds() && getRewardedAdId().isNotEmpty()) {
+            mRewardedVideo.rewardedVideoAdListener = object : RewardedVideoAdListener {
+                override fun onRewardedVideoAdClosed() {}
+                override fun onRewardedVideoAdLeftApplication() {}
+                override fun onRewardedVideoAdLoaded() {}
+                override fun onRewardedVideoAdOpened() {}
+                override fun onRewardedVideoCompleted() {}
 
-            override fun onRewarded(p0: RewardItem?) {
-                val preferencesTool = PreferencesTool(this@BaseUnLiActivity)
+                override fun onRewarded(p0: RewardItem?) {
+                    val preferencesTool = PreferencesTool(this@BaseUnLiActivity)
+                    preferencesTool.dayWithoutAds = GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
+                }
 
-                preferencesTool.dayWithoutAds = GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
-                hideAd()
+                override fun onRewardedVideoStarted() {}
+                override fun onRewardedVideoAdFailedToLoad(p0: Int) {}
             }
 
-            override fun onRewardedVideoStarted() {}
-            override fun onRewardedVideoAdFailedToLoad(p0: Int) {}
-
+            mRewardedVideo.loadAd(getRewardedAdId(), AdRequest.Builder().build())
         }
 
         mInterstitialAd = InterstitialAd(this)
@@ -101,9 +105,12 @@ abstract class BaseUnLiActivity : AppCompatActivity(), NavigationView.OnNavigati
         }
     }
 
-    open fun hideAd() {
-
+    override fun showRewardAd() {
+        if (mRewardedVideo.isLoaded)
+            mRewardedVideo.show()
     }
+
+    open fun hideAd() {}
 
     open fun setDefaultPreferences() {
         PreferenceManager.setDefaultValues(this, R.xml.prefs, false)
