@@ -19,7 +19,7 @@ open class PreferencesTool(context: Context?) {
         const val appLocaleModeDefault = false
 
         const val textSizeKey = "textSizeNew"
-        const val textSizeDefault = 18
+        const val textSizeDefault = "18"
 
         const val useEnglishKey = "useEnglish"
         const val firstStartKey = "firstStart"
@@ -35,7 +35,7 @@ open class PreferencesTool(context: Context?) {
     fun getPreferences(): SharedPreferences = mPreferences
 
     var textSize: Float
-        get() = (getPreferences().getInt(textSizeKey, textSizeDefault)).toFloat()
+        get() = (getPreferences().getString(textSizeKey, textSizeDefault))?.toFloat()?:18f
         set(value) {
             edit(textSizeKey, value.toString())
         }
