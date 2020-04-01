@@ -42,6 +42,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:entryValues="@array/locales_values"
         android:key="appLocale"
         android:title="@string/language"
+        app:iconSpaceReserved="false"
         app:useSimpleSummaryProvider="true"/>
 
     <Preference

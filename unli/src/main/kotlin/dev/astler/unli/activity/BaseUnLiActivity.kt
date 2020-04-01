@@ -77,7 +77,6 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
                 override fun onRewardedVideoAdLoaded() {
                     if (showAdAfterLoading)
                         showRewardAd()
-                    else updateNavigationMenu()
 
                     infoDialog?.dismiss()
                 }
