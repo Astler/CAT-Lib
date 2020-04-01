@@ -6,7 +6,9 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.StyleRes
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.reward.RewardItem
@@ -16,6 +18,7 @@ import com.google.android.material.navigation.NavigationView
 import dev.astler.unli.*
 import dev.astler.unli.R
 import dev.astler.unli.interfaces.ActivityInterface
+import dev.astler.unli.utils.showInfoDialog
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -26,6 +29,8 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
     lateinit var mRewardedVideo: RewardedVideoAd
     private lateinit var mInterstitialAd: InterstitialAd
     lateinit var mPreferencesTool: PreferencesTool
+    private var showAdAfterLoading = false
+    private var infoDialog: AlertDialog? = null
 
     open fun initPreferencesTool(): PreferencesTool = PreferencesTool(this)
 
@@ -46,6 +51,8 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         val testDevices = ArrayList<String>()
         testDevices.add(AdRequest.DEVICE_ID_EMULATOR)
@@ -68,8 +75,13 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
                 override fun onRewardedVideoAdClosed() {}
                 override fun onRewardedVideoAdLeftApplication() {}
                 override fun onRewardedVideoAdLoaded() {
-                    updateNavigationMenu()
+                    if (showAdAfterLoading)
+                        showRewardAd()
+                    else updateNavigationMenu()
+
+                    infoDialog?.dismiss()
                 }
+
                 override fun onRewardedVideoAdOpened() {}
                 override fun onRewardedVideoCompleted() {}
 
@@ -114,6 +126,12 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
     override fun showRewardAd() {
         if (mRewardedVideo.isLoaded)
             mRewardedVideo.show()
+        else {
+            infoDialog = showInfoDialog(R.string.just_a_minute, R.string.ad_is_loading)
+            infoDialog?.show()
+
+            showAdAfterLoading = true
+        }
     }
 
     open fun hideAd() {}

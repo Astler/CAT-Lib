@@ -30,4 +30,7 @@
     <string name="more_apps">Ещё приложения</string>
     <string name="other">Разное</string>
     <string name="ok">OK</string>
+
+    <string name="just_a_minute">Минутку</string>
+    <string name="ad_is_loading">Реклама грузится…</string>
 </resources>

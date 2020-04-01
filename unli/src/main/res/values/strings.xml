@@ -61,4 +61,6 @@
     <string name="more_apps">More Apps</string>
     <string name="other">Other</string>
     <string name="ok">OK</string>
+    <string name="just_a_minute">Just a moment</string>
+    <string name="ad_is_loading">Advertising is loading…</string>
 </resources>
