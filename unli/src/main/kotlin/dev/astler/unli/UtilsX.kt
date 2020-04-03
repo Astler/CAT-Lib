@@ -29,7 +29,6 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import dev.astler.unli.UtilsX.Companion.isOnline
 import java.util.*
 
 class UtilsX {
@@ -133,39 +132,12 @@ class UtilsX {
 
             return drawable
         }
-
-        @Suppress("DEPRECATION")
-        fun isOnline(context: Context): Boolean {
-
-            val connMgr =
-                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-            if (Build.VERSION.SDK_INT < 23) {
-                val networkInfo = connMgr.activeNetworkInfo
-
-                return networkInfo != null && networkInfo.isConnected && networkInfo.type == ConnectivityManager.TYPE_WIFI || networkInfo?.type == ConnectivityManager.TYPE_MOBILE
-            } else {
-                val network = connMgr.activeNetwork
-
-                if (network != null) {
-                    val networkCapabilities = connMgr.getNetworkCapabilities(network)
-
-                    if (networkCapabilities != null) {
-                        return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || networkCapabilities.hasTransport(
-                            NetworkCapabilities.TRANSPORT_WIFI
-                        )
-                    }
-                }
-            }
-
-            return false
-        }
     }
 }
 
 fun Context.canShowAds(): Boolean =
     appPrefs.dayWithoutAds != GregorianCalendar.getInstance()
-        .get(Calendar.DAY_OF_MONTH) && isOnline(this)
+        .get(Calendar.DAY_OF_MONTH) && isOnline()
 
 fun Context.rateApp() {
     try {
@@ -234,10 +206,29 @@ fun Context.getColorFromAttr(
     return typedValue.data
 }
 
-fun String.saveGetStringByName(context: Context): String {
-    val id = context.resources.getIdentifier(this, "string", context.packageName)
+@Suppress("DEPRECATION")
+fun Context.isOnline(): Boolean {
 
-    return if (id != 0) {
-        context.getString(id)
-    } else this
+    val connMgr =
+        getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    if (Build.VERSION.SDK_INT < 23) {
+        val networkInfo = connMgr.activeNetworkInfo
+
+        return networkInfo != null && networkInfo.isConnected && networkInfo.type == ConnectivityManager.TYPE_WIFI || networkInfo?.type == ConnectivityManager.TYPE_MOBILE
+    } else {
+        val network = connMgr.activeNetwork
+
+        if (network != null) {
+            val networkCapabilities = connMgr.getNetworkCapabilities(network)
+
+            if (networkCapabilities != null) {
+                return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || networkCapabilities.hasTransport(
+                    NetworkCapabilities.TRANSPORT_WIFI
+                )
+            }
+        }
+    }
+
+    return false
 }

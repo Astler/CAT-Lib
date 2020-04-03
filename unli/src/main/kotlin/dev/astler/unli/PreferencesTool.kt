@@ -35,7 +35,7 @@ open class PreferencesTool(context: Context?) {
     fun getPreferences(): SharedPreferences = mPreferences
 
     var textSize: Float
-        get() = (getPreferences().getString(textSizeKey, textSizeDefault))?.toFloat()?:18f
+        get() = (getPreferences().getString(textSizeKey, textSizeDefault))?.toFloat() ?: 18f
         set(value) {
             edit(textSizeKey, value.toString())
         }
@@ -43,7 +43,8 @@ open class PreferencesTool(context: Context?) {
     var isDarkTheme: Boolean
         get() = appTheme == "dark"
         set(value) {
-            edit(appThemeKey, "dark")
+            if (value)
+                edit(appThemeKey, "dark")
         }
 
     var isSystemTheme: Boolean
