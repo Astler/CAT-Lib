@@ -5,12 +5,14 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -27,12 +29,19 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.widget.NestedScrollView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dev.astler.unli.UtilsX.Companion.choosePictureActivity
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.util.*
 
 class UtilsX {
     companion object {
+        val choosePictureActivity = 12
+
         fun getIdFromStringName(context: Context, stringName: String): Int {
             val id = context.resources.getIdentifier(stringName, "string", context.packageName)
             return if (id != 0) id else R.string.nothing
@@ -231,4 +240,29 @@ fun Context.isOnline(): Boolean {
     }
 
     return false
+}
+
+fun Fragment.pickImageFromIntent() {
+    val getIntent = Intent(Intent.ACTION_GET_CONTENT)
+    getIntent.type = "image/*"
+
+    val pickIntent =
+            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+    pickIntent.type = "image/*"
+
+    val chooserIntent = Intent.createChooser(getIntent, "Select Image")
+    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent))
+
+    startActivityForResult(chooserIntent, choosePictureActivity)
+}
+
+fun Bitmap.createLocalImage(context: Context, name: String) {
+    try {
+        val file = File(context.filesDir, name)
+        val out = FileOutputStream(file)
+        this.compress(Bitmap.CompressFormat.JPEG, 60, out)
+        out.close()
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
 }
