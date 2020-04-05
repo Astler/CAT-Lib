@@ -269,3 +269,7 @@ fun Bitmap.createLocalImage(context: Context, name: String) {
 fun Date.toHumanView(): String {
     return SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(this)
 }
+
+fun Long.millisToHumanView(): String {
+    return Date(this).toHumanView()
+}
