@@ -36,6 +36,7 @@ import dev.astler.unli.UtilsX.Companion.choosePictureActivity
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
 
 class UtilsX {
@@ -144,9 +145,7 @@ class UtilsX {
     }
 }
 
-fun Context.canShowAds(): Boolean =
-    appPrefs.dayWithoutAds != GregorianCalendar.getInstance()
-        .get(Calendar.DAY_OF_MONTH) && isOnline()
+fun Context.canShowAds(): Boolean = appPrefs.dayWithoutAds != GregorianCalendar.getInstance().get(Calendar.DAY_OF_MONTH) && isOnline()
 
 fun Context.rateApp() {
     try {
@@ -265,4 +264,8 @@ fun Bitmap.createLocalImage(context: Context, name: String) {
     } catch (e: IOException) {
         e.printStackTrace()
     }
+}
+
+fun Date.toHumanView(): String {
+    return SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(this)
 }
