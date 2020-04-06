@@ -13,6 +13,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/fab_color"
+        app:tint="@color/white"
         app:srcCompat="@drawable/ic_add_white_24dp" />
 
     <dev.astler.unli.view.StateLayout
