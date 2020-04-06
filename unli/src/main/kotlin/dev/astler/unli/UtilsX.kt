@@ -48,16 +48,6 @@ class UtilsX {
             return if (id != 0) id else R.string.nothing
         }
 
-        fun getStringFromString(
-            context: Context,
-            stringName: String,
-            returnIfNull: String = stringName
-        ): String {
-            val stringId =
-                context.resources.getIdentifier(stringName, "string", context.packageName)
-            return if (stringId != 0) context.getString(stringId) else returnIfNull
-        }
-
         fun log(text: String, additionalName: String = "") {
             Log.i("ForAstler $additionalName", text)
         }
@@ -272,4 +262,10 @@ fun Date.toHumanView(): String {
 
 fun Long.millisToHumanView(): String {
     return Date(this).toHumanView()
+}
+
+fun String.getResourceByName(context: Context): String {
+    val stringId =
+            context.resources.getIdentifier(this, "string", context.packageName)
+    return if (stringId != 0) context.getString(stringId) else this
 }
