@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import dev.astler.unli.R
 
-fun Context.showInfoDialog(title: String, msg: String): AlertDialog {
+fun Context.showInfoDialog(title: String, msg: CharSequence): AlertDialog {
     val dialog = AlertDialog.Builder(this)
 
     dialog.setPositiveButton(R.string.ok) { _, _ ->

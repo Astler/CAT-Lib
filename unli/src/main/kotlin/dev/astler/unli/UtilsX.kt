@@ -260,6 +260,14 @@ fun Date.toHumanView(): String {
     return SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(this)
 }
 
+fun String.humanViewToMillis(): Long {
+    val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+    val date = simpleDateFormat.parse(this)
+
+    return date?.time?:0L
+}
+
 fun Long.millisToHumanView(): String {
     return Date(this).toHumanView()
 }
