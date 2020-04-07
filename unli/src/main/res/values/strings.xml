@@ -64,4 +64,6 @@
     <string name="just_a_minute">Just a moment</string>
     <string name="ad_is_loading">Advertising is loading…</string>
     <string name="loading">Loading…</string>
+
+    <string name="about">About app</string>
 </resources>

@@ -170,12 +170,14 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
             R.id.rate_app -> this.rateApp()
             R.id.more_apps -> this.moreApps()
             R.id.settings -> navToSettingsFragment()
+            R.id.about -> navToAboutFragment()
         }
 
         return true
     }
 
     abstract fun navToSettingsFragment()
+    abstract fun navToAboutFragment()
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == PreferencesTool.appThemeKey || key == PreferencesTool.appLocaleModeKey || key == PreferencesTool.appLocaleKey) {
