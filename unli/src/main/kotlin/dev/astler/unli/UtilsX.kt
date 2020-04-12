@@ -272,8 +272,8 @@ fun Long.millisToHumanView(): String {
     return Date(this).toHumanView()
 }
 
-fun String.getResourceByName(context: Context): String {
+fun String.getResourceByName(context: Context, returnDef: String = this): String {
     val stringId =
             context.resources.getIdentifier(this, "string", context.packageName)
-    return if (stringId != 0) context.getString(stringId) else this
+    return if (stringId != 0) context.getString(stringId) else returnDef
 }
