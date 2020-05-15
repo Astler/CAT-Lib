@@ -8,8 +8,7 @@ import dev.astler.unli.R
 fun Context.showInfoDialog(title: String, msg: CharSequence): AlertDialog {
     val dialog = AlertDialog.Builder(this)
 
-    dialog.setPositiveButton(R.string.ok) { _, _ ->
-    }
+    dialog.setPositiveButton(R.string.ok) { _, _ -> }
 
     dialog.setTitle(title)
     dialog.setMessage(msg)

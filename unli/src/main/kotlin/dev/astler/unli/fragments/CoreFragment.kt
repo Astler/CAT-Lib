@@ -17,4 +17,9 @@ abstract class CoreFragment: Fragment(), CoreFragmentInterface {
     override fun backPressed() {
         coreListener.backPressed()
     }
+
+    override fun onResume() {
+        super.onResume()
+        coreListener.setCurrentFragment(this)
+    }
 }

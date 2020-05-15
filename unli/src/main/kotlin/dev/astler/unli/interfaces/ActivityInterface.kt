@@ -11,4 +11,6 @@ interface ActivityInterface {
     fun setCurrentFragment(fragment:Fragment)
     fun setToolbarTitle(title: String)
     fun getActivityContext(): Context
+    fun hideToolbar() {}
+    fun showToolbar() {}
 }
