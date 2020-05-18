@@ -19,6 +19,7 @@ abstract class CoreFragment: Fragment(), CoreFragmentInterface {
     }
 
     override fun onResume() {
+
         super.onResume()
         coreListener.setCurrentFragment(this)
     }

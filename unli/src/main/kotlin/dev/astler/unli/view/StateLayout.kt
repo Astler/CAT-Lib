@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import dev.astler.unli.R
-import dev.astler.unli.UtilsX
 
 //based on https://github.com/wangshouquan/StateLayout
 
@@ -53,8 +52,6 @@ class StateLayout @JvmOverloads constructor(context: Context,
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        UtilsX.log("onFinishInflate()")
-
         if (childCount > 1) {
             throw IllegalArgumentException("You must have only one content view.")
         }
@@ -85,9 +82,6 @@ class StateLayout @JvmOverloads constructor(context: Context,
         addView(view)
         view.visibility = View.GONE
 
-
-        UtilsX.log("setViewForState = $state")
-
         viewsMap[state] = view
     }
 
@@ -104,7 +98,7 @@ class StateLayout @JvmOverloads constructor(context: Context,
         }
     }
 
-    override fun onRestoreInstanceState(state: Parcelable?) {
+    override fun onRestoreInstanceState(state: Parcelable) {
         if (state is SavedState) {
             super.onRestoreInstanceState(state.superState)
             activeView = state.state
@@ -129,5 +123,20 @@ class StateLayout @JvmOverloads constructor(context: Context,
             super.writeToParcel(out, flags)
             out.writeInt(state)
         }
+
+        companion object {
+            @JvmField
+            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
+                override fun createFromParcel(`in`: Parcel): SavedState {
+                    return SavedState(`in`)
+                }
+
+                override fun newArray(size: Int): Array<SavedState?> {
+                    return arrayOfNulls(size)
+                }
+            }
+        }
     }
+
+
 }
