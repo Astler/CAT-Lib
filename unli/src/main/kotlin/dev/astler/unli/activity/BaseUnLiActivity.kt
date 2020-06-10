@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.*
+import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
@@ -49,6 +50,12 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         super.attachBaseContext(AppSettings.loadLocale(newBase, newBase.appPrefs.useEnglish))
     }
 
+    open fun getAdRequest(): AdRequest{
+        return AdRequest.Builder().build()
+    }
+
+    open var setTagForChildDirectedTreatment = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -60,9 +67,12 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
 
         val requestConfiguration = RequestConfiguration.Builder()
             .setTestDeviceIds(testDevices)
-            .build()
 
-        MobileAds.setRequestConfiguration(requestConfiguration)
+        if (setTagForChildDirectedTreatment) {
+            requestConfiguration.setTagForChildDirectedTreatment(TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE)
+        }
+
+        MobileAds.setRequestConfiguration(requestConfiguration.build())
 
         setDefaultPreferences()
 
@@ -94,7 +104,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
                 override fun onRewardedVideoAdFailedToLoad(p0: Int) {}
             }
 
-            mRewardedVideo.loadAd(getRewardedAdId(), AdRequest.Builder().build())
+            mRewardedVideo.loadAd(getRewardedAdId(), getAdRequest())
         }
 
         mInterstitialAd = InterstitialAd(this)
@@ -102,11 +112,11 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         if (getInterstitialAdId().isNotEmpty()) {
 
             mInterstitialAd.adUnitId = getInterstitialAdId()
-            mInterstitialAd.loadAd(AdRequest.Builder().build())
+            mInterstitialAd.loadAd(getAdRequest())
 
             mInterstitialAd.adListener = object : AdListener() {
                 override fun onAdClosed() {
-                    mInterstitialAd.loadAd(AdRequest.Builder().build())
+                    mInterstitialAd.loadAd(getAdRequest())
                 }
             }
         }
@@ -118,7 +128,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
             mInterstitialAd.show()
         } else {
             if (!mInterstitialAd.isLoading)
-                mInterstitialAd.loadAd(AdRequest.Builder().build())
+                mInterstitialAd.loadAd(getAdRequest())
         }
     }
 
