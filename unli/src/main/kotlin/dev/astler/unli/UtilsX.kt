@@ -167,11 +167,6 @@ fun ImageView.setAttrTintDrawable(@DrawableRes icon: Int, @AttrRes attrId: Int) 
     setImageDrawable(UtilsX.tintDrawableByAttr(context, icon, attrId))
 }
 
-fun TextView.customTypeface(boldFont: Boolean = false) {
-    typeface = if (boldFont) ResourcesCompat.getFont(context, R.font.google_sans_bold)
-    else ResourcesCompat.getFont(context, R.font.google_sans_reg)
-}
-
 fun RecyclerView.hideFABOnScroll(fab: FloatingActionButton) {
     addOnScrollListener(object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
