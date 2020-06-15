@@ -40,7 +40,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
     open fun getInterstitialAdId() = ""
     open fun getRewardedAdId() = ""
 
-    abstract fun updateNavigationMenu()
+    open fun updateNavigationMenu() {}
 
     open fun getTestDevicesList(): ArrayList<String> {
         return arrayListOf("46BCDEE9C1F5ED2ADF3A5DB3889DDFB5")
