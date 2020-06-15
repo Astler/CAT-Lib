@@ -6,7 +6,7 @@ val preferencesTool: PreferencesTool by lazy {
     UnliApp.prefs
 }
 
-class UnliApp : MultiDexApplication() {
+open class UnliApp : MultiDexApplication() {
 
     companion object {
         lateinit var prefs: PreferencesTool
