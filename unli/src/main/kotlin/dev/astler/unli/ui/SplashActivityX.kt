@@ -1,4 +1,4 @@
-package dev.astler.unli
+package dev.astler.unli.ui
 
 import android.content.Intent
 import android.os.Bundle

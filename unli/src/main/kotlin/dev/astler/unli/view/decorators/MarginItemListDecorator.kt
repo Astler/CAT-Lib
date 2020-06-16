@@ -1,4 +1,4 @@
-package dev.astler.library.view.decorators
+package dev.astler.unli.view.decorators
 
 import android.graphics.Rect
 import android.view.View

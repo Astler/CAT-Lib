@@ -19,6 +19,9 @@ import com.google.android.material.navigation.NavigationView
 import dev.astler.unli.*
 import dev.astler.unli.R
 import dev.astler.unli.interfaces.ActivityInterface
+import dev.astler.unli.utils.canShowAds
+import dev.astler.unli.utils.moreApps
+import dev.astler.unli.utils.rateApp
 import dev.astler.unli.utils.showInfoDialog
 import java.util.*
 import kotlin.collections.ArrayList
@@ -37,8 +40,9 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
 
     override fun getActivityContext() = this
 
-    open fun getInterstitialAdId() = ""
-    open fun getRewardedAdId() = ""
+    open var mInterstitialAdId = ""
+    open var mRewardedAdId = ""
+    open var mAppMenuId = 0
 
     open fun updateNavigationMenu() {}
 
@@ -80,7 +84,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
 
         mRewardedVideo = MobileAds.getRewardedVideoAdInstance(this)
 
-        if (canShowAds() && getRewardedAdId().isNotEmpty()) {
+        if (canShowAds() && mRewardedAdId.isNotEmpty()) {
             mRewardedVideo.rewardedVideoAdListener = object : RewardedVideoAdListener {
                 override fun onRewardedVideoAdClosed() {}
                 override fun onRewardedVideoAdLeftApplication() {}
@@ -104,14 +108,14 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
                 override fun onRewardedVideoAdFailedToLoad(p0: Int) {}
             }
 
-            mRewardedVideo.loadAd(getRewardedAdId(), getAdRequest())
+            mRewardedVideo.loadAd(mRewardedAdId, getAdRequest())
         }
 
         mInterstitialAd = InterstitialAd(this)
 
-        if (getInterstitialAdId().isNotEmpty()) {
+        if (mInterstitialAdId.isNotEmpty()) {
 
-            mInterstitialAd.adUnitId = getInterstitialAdId()
+            mInterstitialAd.adUnitId = mInterstitialAdId
             mInterstitialAd.loadAd(getAdRequest())
 
             mInterstitialAd.adListener = object : AdListener() {
@@ -164,13 +168,15 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         }
     }
 
-    open fun navigationViewInflateMenus(navigationView: NavigationView, menuId: Int) {
+    open fun navigationViewInflateMenus(navigationView: NavigationView) {
         navigationView.menu.clear()
 
         if (canShowAds())
             navigationView.inflateMenu(R.menu.ad_menu)
 
-        navigationView.inflateMenu(menuId)
+        if (mAppMenuId != 0)
+            navigationView.inflateMenu(mAppMenuId)
+
         navigationView.inflateMenu(R.menu.base_activity_drawer)
     }
 
@@ -186,8 +192,8 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         return true
     }
 
-    abstract fun navToSettingsFragment()
-    abstract fun navToAboutFragment()
+    open fun navToSettingsFragment() {}
+    open fun navToAboutFragment() {}
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == PreferencesTool.appThemeKey || key == PreferencesTool.appLocaleModeKey || key == PreferencesTool.appLocaleKey) {

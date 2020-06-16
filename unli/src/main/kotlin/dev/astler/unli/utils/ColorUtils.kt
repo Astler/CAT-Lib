@@ -1,8 +1,6 @@
-package dev.astler.unli
+package dev.astler.unli.utils
 
 import android.graphics.Color
-import android.text.Html
-import androidx.appcompat.app.AppCompatActivity
 
 fun Int.darkenColor(): Int {
     if (this == Color.WHITE) {
