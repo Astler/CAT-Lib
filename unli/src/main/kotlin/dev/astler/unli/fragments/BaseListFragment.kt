@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dev.astler.unli.R
-import dev.astler.unli.hideFABOnScroll
 import dev.astler.unli.interfaces.RecyclerAdapterSizeListener
+import dev.astler.unli.utils.hideFABOnScroll
 import dev.astler.unli.view.StateLayout
 import kotlinx.android.synthetic.main.recycler_view_fragment.view.*
 
