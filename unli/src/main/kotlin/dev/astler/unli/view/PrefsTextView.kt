@@ -31,6 +31,13 @@ open class PrefsTextView(context: Context, attrs: AttributeSet?, defStyleAttr: I
         val typedArray =
             context.theme.obtainStyledAttributes(attrs, R.styleable.PrefsTextView, 0, 0)
 
+        val useBold = typedArray.getBoolean(R.styleable.PrefsTextView_useBoldFont, false)
+
+        val typeface = if (useBold) ResourcesCompat.getFont(context, R.font.google_sans_bold)
+        else ResourcesCompat.getFont(context, R.font.google_sans_reg)
+
+        setTypeface(typeface)
+
         val textSizeModifier =
             typedArray.getInteger(R.styleable.PrefsTextView_textSizeModifier, 0)
         textSize = PreferencesTool(context).textSize + textSizeModifier
