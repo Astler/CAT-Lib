@@ -24,4 +24,9 @@ open class BaseSettingsFragment : PreferenceFragmentCompat() {
             true
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        coreListener.setToolbarTitle(getString(R.string.settings))
+    }
 }

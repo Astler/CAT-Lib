@@ -4,11 +4,11 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
-import dev.astler.unli.PreferencesTool
 import dev.astler.unli.R
+import dev.astler.unli.preferencesTool
 import dev.astler.unli.utils.getColorFromAttr
 
-open class PrefsTextView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
+open class PrefsTextView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = android.R.attr.textViewStyle) :
     AppCompatTextView(context, attrs, defStyleAttr) {
 
     init {
@@ -33,18 +33,12 @@ open class PrefsTextView(context: Context, attrs: AttributeSet?, defStyleAttr: I
 
         val useBold = typedArray.getBoolean(R.styleable.PrefsTextView_useBoldFont, false)
 
-        val typeface = if (useBold) ResourcesCompat.getFont(context, R.font.google_sans_bold)
+        typeface = if (useBold) ResourcesCompat.getFont(context, R.font.google_sans_bold)
         else ResourcesCompat.getFont(context, R.font.google_sans_reg)
 
-        setTypeface(typeface)
+        textSize = preferencesTool.textSize + typedArray.getInteger(R.styleable.PrefsTextView_textSizeModifier, 0)
 
-        val textSizeModifier =
-            typedArray.getInteger(R.styleable.PrefsTextView_textSizeModifier, 0)
-        textSize = PreferencesTool(context).textSize + textSizeModifier
-
-        val changeColor = typedArray.getBoolean(R.styleable.PrefsTextView_changeTextColor, true)
-
-        if (changeColor) {
+        if (typedArray.getBoolean(R.styleable.PrefsTextView_changeTextColor, true)) {
             setTextColor(context.getColorFromAttr(R.attr.contrastColorByTheme))
         }
     }
