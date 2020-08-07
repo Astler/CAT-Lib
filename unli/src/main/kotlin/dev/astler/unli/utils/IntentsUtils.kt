@@ -10,9 +10,7 @@ import dev.astler.unli.utils.IntentsUtils.Companion.choosePictureActivity
 
 class IntentsUtils {
     companion object {
-
         const val choosePictureActivity = 12
-
     }
 }
 
@@ -48,4 +46,18 @@ fun Fragment.pickImageFromIntent() {
     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent))
 
     startActivityForResult(chooserIntent, choosePictureActivity)
+}
+
+fun shareTextIntent(text: String): Intent {
+    val intentShare = Intent(Intent.ACTION_SEND)
+    intentShare.type = "text/plain"
+    intentShare.putExtra(Intent.EXTRA_TEXT, text)
+    return intentShare
+}
+
+fun Context.shareText(pText: String) {
+    try {
+        this.startActivity(shareTextIntent(pText))
+    }
+    catch (e: Exception) {}
 }

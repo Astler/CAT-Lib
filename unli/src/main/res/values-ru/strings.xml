@@ -35,4 +35,6 @@
     <string name="ad_is_loading">Реклама грузится…</string>
     <string name="loading">Загрузка…</string>
     <string name="about">О приложении</string>
+
+    <string name="copy_in_buffer">Текст скопирован</string>
 </resources>

@@ -1,10 +1,8 @@
 package dev.astler.unli.utils
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
@@ -18,8 +16,7 @@ fun log(text: String, additionalName: String = "") {
 @Suppress("DEPRECATION")
 fun Context.isOnline(): Boolean {
 
-    val connMgr =
-        getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val connMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     if (Build.VERSION.SDK_INT < 23) {
         val networkInfo = connMgr.activeNetworkInfo
