@@ -47,7 +47,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
     open fun updateNavigationMenu() {}
 
     open fun getTestDevicesList(): ArrayList<String> {
-        return arrayListOf("46BCDEE9C1F5ED2ADF3A5DB3889DDFB5")
+        return arrayListOf(AdRequest.DEVICE_ID_EMULATOR, "46BCDEE9C1F5ED2ADF3A5DB3889DDFB5")
     }
 
     override fun attachBaseContext(newBase: Context) {

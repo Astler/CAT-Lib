@@ -25,7 +25,7 @@ class ThemeUtils {
     }
 }
 
-fun isDarkTheme(activity: Activity): Boolean {
-    return activity.resources.configuration.uiMode and
+fun Context.isDarkTheme(): Boolean {
+    return resources.configuration.uiMode and
             Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 }
