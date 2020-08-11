@@ -7,17 +7,17 @@ import android.content.res.Resources
 import android.os.Build
 import android.util.DisplayMetrics
 import androidx.core.os.ConfigurationCompat
+import dev.astler.unli.utils.log
 import java.util.*
 
 class AppSettings {
 
     companion object {
 
-        private fun loadLocalePref(context: Context?): String {
-            val nPreferencesTool = PreferencesTool(context)
+        private fun loadLocalePref(): String {
 
-            return if(nPreferencesTool.chooseLanguageManually) {
-                nPreferencesTool.userLanguage
+            return if(preferencesTool.chooseLanguageManually) {
+                preferencesTool.userLanguage
             } else ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0).toString()
         }
 
@@ -28,8 +28,7 @@ class AppSettings {
                 Locale.ENGLISH
             }
             else {
-                val languageTag = loadLocalePref(context)
-                localeForLanguageTag(languageTag)
+                localeForLanguageTag(loadLocalePref())
             }
 
             Locale.setDefault(customLocale)
@@ -49,6 +48,7 @@ class AppSettings {
         }
 
         private fun localeForLanguageTag(languageTag: String): Locale {
+            log(languageTag)
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Locale.forLanguageTag(languageTag.replace("_".toRegex(), "-"))
             } else {
