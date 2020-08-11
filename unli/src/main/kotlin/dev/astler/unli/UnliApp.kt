@@ -1,6 +1,8 @@
 package dev.astler.unli
 
+import android.content.Context
 import androidx.multidex.MultiDexApplication
+import dev.astler.unli.utils.log
 
 val preferencesTool: PreferencesTool by lazy {
     UnliApp.prefs
@@ -12,9 +14,10 @@ open class UnliApp : MultiDexApplication() {
         lateinit var prefs: PreferencesTool
     }
 
-    override fun onCreate() {
-        super.onCreate()
+    override fun attachBaseContext(newBase: Context) {
         prefs = PreferencesTool(applicationContext)
-        //AppCompatDelegate.setDefaultNightMode(ThemeUtils.getDefaultNightMode(applicationContext))
+
+        super.attachBaseContext(AppSettings.loadLocale(newBase, newBase.appPrefs.useEnglish)?:newBase)
+        log("test trest -> " + newBase.appPrefs.userLanguage)
     }
 }
