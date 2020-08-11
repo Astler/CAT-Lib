@@ -1,14 +1,7 @@
 package dev.astler.unli
 
 import android.content.Context
-import android.content.ContextWrapper
-import android.content.res.Configuration
-import android.content.res.Resources
-import android.os.Build
-import android.util.DisplayMetrics
-import androidx.core.os.ConfigurationCompat
-import dev.astler.unli.utils.LocalizationUtil
-import dev.astler.unli.utils.log
+import dev.astler.unli.utils.updateLocale
 import java.util.*
 
 class AppSettings {
@@ -23,7 +16,7 @@ class AppSettings {
 
         @Suppress("deprecation")
         fun loadLocale(context: Context, englishMode: Boolean = false): Context? {
-            return LocalizationUtil.applyLanguage(context, if (englishMode) Locale.ENGLISH else Locale(loadLocalePref()))
+            return updateLocale(context, if (englishMode) Locale.ENGLISH else Locale(loadLocalePref()))
         }
     }
 }
