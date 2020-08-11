@@ -15,7 +15,7 @@ open class UnliApp : MultiDexApplication() {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        prefs = PreferencesTool(applicationContext)
+        prefs = PreferencesTool(newBase)
 
         super.attachBaseContext(AppSettings.loadLocale(newBase, newBase.appPrefs.useEnglish)?:newBase)
         log("test trest -> " + newBase.appPrefs.userLanguage)
