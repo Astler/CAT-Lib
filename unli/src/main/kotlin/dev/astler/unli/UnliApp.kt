@@ -12,12 +12,25 @@ open class UnliApp : MultiDexApplication() {
 
     companion object {
         lateinit var prefs: PreferencesTool
+
+        private lateinit var applicationInstance: UnliApp
+
+        @Synchronized
+        fun getInstance(): UnliApp {
+            return applicationInstance
+        }
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        prefs = PreferencesTool(newBase)
+    override fun onCreate() {
+        super.onCreate()
+        prefs = PreferencesTool(this)
+        applicationInstance = this
+    }
 
-        super.attachBaseContext(AppSettings.loadLocale(newBase, newBase.appPrefs.useEnglish)?:newBase)
-        log("test trest -> " + newBase.appPrefs.userLanguage)
+    fun initAppLanguage(context: Context) {
+        AppSettings.loadLocale(
+                context,
+                prefs.useEnglish
+        )
     }
 }

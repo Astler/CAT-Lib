@@ -63,6 +63,8 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        UnliApp.getInstance().initAppLanguage(this)
+
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         val testDevices = ArrayList<String>()
