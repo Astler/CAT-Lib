@@ -32,13 +32,13 @@ class AppSettings {
 
             Locale.setDefault(customLocale)
 
-            val resources: Resources = context.applicationContext.resources
+            val resources: Resources = context.resources
             val config: Configuration = resources.configuration
 
             val nNewContext = if (Build.VERSION.SDK_INT >= 25) {
-                ContextWrapper(context.createConfigurationContext(config))
+                context.createConfigurationContext(config)
             } else {
-                ContextWrapper(context)
+                context
             }
 
             if (Build.VERSION.SDK_INT >= 19) config.setLocale(customLocale) else config.locale = customLocale
