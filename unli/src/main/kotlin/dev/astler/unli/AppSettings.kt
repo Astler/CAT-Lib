@@ -35,15 +35,19 @@ class AppSettings {
             val resources: Resources = context.applicationContext.resources
             val config: Configuration = resources.configuration
 
-            if (Build.VERSION.SDK_INT >= 19) config.setLocale(customLocale) else config.locale = customLocale
-
-            return if (Build.VERSION.SDK_INT >= 25) {
+            val nNewContext = if (Build.VERSION.SDK_INT >= 25) {
                 ContextWrapper(context.createConfigurationContext(config))
             } else {
-                val metrics: DisplayMetrics = resources.displayMetrics
-                resources.updateConfiguration(config, metrics)
                 ContextWrapper(context)
             }
+
+            if (Build.VERSION.SDK_INT >= 19) config.setLocale(customLocale) else config.locale = customLocale
+
+            val metrics: DisplayMetrics = resources.displayMetrics
+
+            resources.updateConfiguration(config, metrics)
+
+            return nNewContext
         }
 
         private fun localeForLanguageTag(languageTag: String): Locale {
