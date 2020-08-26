@@ -4,7 +4,10 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Bitmap
+import android.view.View
+import android.widget.EditText
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import dev.astler.unli.R
 import java.io.File
 import java.io.FileOutputStream
@@ -41,12 +44,22 @@ fun Bitmap.createLocalImage(context: Context, name: String) {
     }
 }
 
-fun Context.copyToBuffer(text: String) {
+fun Context.copyToBuffer(text: CharSequence) {
     if (text.isNotEmpty()) {
         val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val myClip = ClipData.newPlainText("text", text)
         myClipboard.setPrimaryClip(myClip)
         Toast.makeText(this, R.string.copy_in_buffer, Toast.LENGTH_SHORT).show()
+    }
+}
+
+fun Context.readFromBuffer(): CharSequence {
+    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    return if(clipboard.primaryClip != null) {
+        val item = clipboard.primaryClip?.getItemAt(0)
+         item?.text?:""
+    } else {
+        ""
     }
 }
 
