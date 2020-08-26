@@ -48,14 +48,14 @@ fun Fragment.pickImageFromIntent() {
     startActivityForResult(chooserIntent, choosePictureActivity)
 }
 
-fun shareTextIntent(text: String): Intent {
+fun shareTextIntent(text: CharSequence): Intent {
     val intentShare = Intent(Intent.ACTION_SEND)
     intentShare.type = "text/plain"
     intentShare.putExtra(Intent.EXTRA_TEXT, text)
     return intentShare
 }
 
-fun Context.shareText(pText: String) {
+fun Context.shareText(pText: CharSequence) {
     try {
         this.startActivity(shareTextIntent(pText))
     }
