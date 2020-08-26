@@ -7,9 +7,9 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import dev.astler.unli.adapters.viewholders.BaseOneItemListViewHolder
 
-class BaseOneItemListAdapter<T>(array: ArrayList<T>, @LayoutRes val pLayoutResource: Int, private val mItemLoadListener: LoadItem<T>? = null) : RecyclerView.Adapter<BaseOneItemListViewHolder>() {
+class BaseOneItemListAdapter<T>(@LayoutRes val pLayoutResource: Int, private val mItemLoadListener: LoadItem<T>? = null) : RecyclerView.Adapter<BaseOneItemListViewHolder>() {
 
-    var data = array
+    var data: ArrayList<T> = arrayListOf()
 
     fun addItems(items: List<T>) {
         this.data.clear()
