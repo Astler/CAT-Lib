@@ -6,14 +6,16 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import dev.astler.unli.adapters.viewholders.BaseOneItemListViewHolder
+import dev.astler.unli.interfaces.RecyclerAdapterSizeListener
 
-class BaseOneItemListAdapter<T>(@LayoutRes val pLayoutResource: Int, private val mItemLoadListener: LoadItem<T>? = null) : RecyclerView.Adapter<BaseOneItemListViewHolder>() {
+class BaseOneItemListAdapter<T>(@LayoutRes val pLayoutResource: Int, private val mItemLoadListener: LoadItem<T>? = null, private val mAdapterSizeListener: RecyclerAdapterSizeListener? = null) : RecyclerView.Adapter<BaseOneItemListViewHolder>() {
 
     var data: ArrayList<T> = arrayListOf()
 
     fun addItems(items: List<T>) {
         this.data.clear()
         this.data.addAll(items)
+        mAdapterSizeListener?.totalItems(this.data.size)
         notifyDataSetChanged()
     }
 
