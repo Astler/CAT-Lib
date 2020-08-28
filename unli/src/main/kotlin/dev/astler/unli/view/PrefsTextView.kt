@@ -33,8 +33,8 @@ open class PrefsTextView(context: Context, attrs: AttributeSet? = null, defStyle
 
         val useBold = typedArray.getBoolean(R.styleable.PrefsTextView_useBoldFont, false)
 
-        typeface = if (useBold) ResourcesCompat.getFont(context, R.font.google_sans_bold)
-        else ResourcesCompat.getFont(context, R.font.google_sans_reg)
+        typeface = if (useBold) ResourcesCompat.getFont(context, R.font.sans_font_family)
+        else ResourcesCompat.getFont(context, R.font.sans_font_family)
 
         textSize = preferencesTool.textSize + typedArray.getInteger(R.styleable.PrefsTextView_textSizeModifier, 0)
 
@@ -45,6 +45,14 @@ open class PrefsTextView(context: Context, attrs: AttributeSet? = null, defStyle
 
     fun setThemeColor() {
         setTextColor(context.getColorFromAttr(R.attr.contrastColorByTheme))
+    }
+
+    fun setBoldTypeface() {
+        typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
+    }
+
+    fun setRegTypeface() {
+        typeface = ResourcesCompat.getFont(context, R.font.google_sans_reg)
     }
 
 }
