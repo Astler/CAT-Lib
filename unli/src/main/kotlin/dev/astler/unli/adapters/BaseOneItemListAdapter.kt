@@ -27,10 +27,10 @@ class BaseOneItemListAdapter<T>(@LayoutRes val pLayoutResource: Int, private val
     override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: BaseOneItemListViewHolder, position: Int) {
-        mItemLoadListener?.loadData(data[position], holder.mItemView)
+        mItemLoadListener?.loadData(data[position], holder)
     }
 
     interface LoadItem<T> {
-        fun loadData(pData: T, pItemView: View)
+        fun loadData(pData: T, pHolder: BaseOneItemListViewHolder)
     }
 }
