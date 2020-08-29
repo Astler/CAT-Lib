@@ -28,7 +28,7 @@ import kotlin.collections.ArrayList
 
 abstract class BaseUnLiActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener,
-    SharedPreferences.OnSharedPreferenceChangeListener, ActivityInterface {
+    SharedPreferences.OnSharedPreferenceChangeListener, ActivityInterface, RewardedVideoAdListener {
 
     lateinit var mRewardedVideo: RewardedVideoAd
     private lateinit var mInterstitialAd: InterstitialAd
@@ -87,29 +87,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         mRewardedVideo = MobileAds.getRewardedVideoAdInstance(this)
 
         if (canShowAds() && mRewardedAdId.isNotEmpty()) {
-            mRewardedVideo.rewardedVideoAdListener = object : RewardedVideoAdListener {
-                override fun onRewardedVideoAdClosed() {}
-                override fun onRewardedVideoAdLeftApplication() {}
-                override fun onRewardedVideoAdLoaded() {
-                    if (showAdAfterLoading)
-                        showRewardAd()
-
-                    infoDialog?.dismiss()
-                }
-
-                override fun onRewardedVideoAdOpened() {}
-                override fun onRewardedVideoCompleted() {}
-
-                override fun onRewarded(p0: RewardItem?) {
-                    val preferencesTool = PreferencesTool(this@BaseUnLiActivity)
-                    preferencesTool.dayWithoutAds =
-                        GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
-                }
-
-                override fun onRewardedVideoStarted() {}
-                override fun onRewardedVideoAdFailedToLoad(p0: Int) {}
-            }
-
+            mRewardedVideo.rewardedVideoAdListener = this
             mRewardedVideo.loadAd(mRewardedAdId, getAdRequest())
         }
 
@@ -250,4 +228,24 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
 //        window.statusBarColor = color.darkenColor()
 //    }
 
+    override fun onRewardedVideoAdClosed() {}
+    override fun onRewardedVideoAdLeftApplication() {}
+    override fun onRewardedVideoAdLoaded() {
+        if (showAdAfterLoading)
+            showRewardAd()
+
+        infoDialog?.dismiss()
+    }
+
+    override fun onRewardedVideoAdOpened() {}
+    override fun onRewardedVideoCompleted() {}
+
+    override fun onRewarded(p0: RewardItem?) {
+        val preferencesTool = PreferencesTool(this@BaseUnLiActivity)
+        preferencesTool.dayWithoutAds =
+            GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
+    }
+
+    override fun onRewardedVideoStarted() {}
+    override fun onRewardedVideoAdFailedToLoad(p0: Int) {}
 }
