@@ -15,20 +15,15 @@ class AppSettings {
     companion object {
 
         private fun loadLocalePref(): String {
-            return if(preferencesTool.chooseLanguageManually) {
-                preferencesTool.userLanguage
-            } else ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0).toString()
+            return if(preferencesTool.isSystemLanguage) {
+                ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0).toString()
+            } else preferencesTool.appLanguage
         }
 
         @Suppress("deprecation")
-        fun loadLocale(context: Context, englishMode: Boolean = false): Context? {
+        fun loadLocale(context: Context): Context? {
 
-            val customLocale: Locale = if (englishMode) {
-                Locale.ENGLISH
-            }
-            else {
-                localeForLanguageTag(loadLocalePref())
-            }
+            val customLocale: Locale = localeForLanguageTag(loadLocalePref())
 
             Locale.setDefault(customLocale)
 

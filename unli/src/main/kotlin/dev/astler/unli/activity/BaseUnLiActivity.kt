@@ -51,7 +51,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
     }
 
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(AppSettings.loadLocale(newBase, newBase.appPrefs.useEnglish))
+        super.attachBaseContext(AppSettings.loadLocale(newBase))
     }
 
     open fun getAdRequest(): AdRequest{
@@ -105,7 +105,6 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
             }
         }
     }
-
 
     override fun showInterstitialAd() {
         if (mInterstitialAd.isLoaded) {

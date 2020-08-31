@@ -7,12 +7,14 @@
     <string name="language">App language</string>
 
     <string-array name="locales_string">
+        <item>System</item>
         <item>English</item>
         <item>Русский</item>
         <item>Українська</item>
     </string-array>
 
     <string-array name="locales_values">
+        <item>system</item>
         <item>en</item>
         <item>ru</item>
         <item>uk</item>

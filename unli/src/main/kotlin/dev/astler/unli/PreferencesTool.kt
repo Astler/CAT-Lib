@@ -2,6 +2,8 @@ package dev.astler.unli
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Resources
+import androidx.core.os.ConfigurationCompat
 import androidx.preference.PreferenceManager
 import java.util.*
 
@@ -54,16 +56,23 @@ open class PreferencesTool(context: Context?) {
                 edit(appThemeKey, "system")
         }
 
+    var isSystemLanguage: Boolean
+        get() = appLanguage == "system"
+        set(value) {
+            if (value)
+                edit(appLocaleKey, "system")
+        }
+
     var appTheme: String
         get() = getPreferences().getString(appThemeKey, "system") ?: "system"
         set(value) {
             edit(appThemeKey, value)
         }
 
-    var useEnglish: Boolean
-        get() = getPreferences().getBoolean(useEnglishKey, false)
-        set(useEnglish) {
-            edit(useEnglishKey, useEnglish)
+    var appLanguage: String
+        get() = getPreferences().getString(appLocaleKey, "system") ?: "system"
+        set(value) {
+            edit(appLocaleKey, value)
         }
 
     var isFirstStart: Boolean
@@ -108,9 +117,7 @@ open class PreferencesTool(context: Context?) {
     open fun preferencesToDefault() {
         isSystemTheme = true
         textSize = 18f
-        useEnglish = false
-        chooseLanguageManually = false
-        userLanguage = "en"
+        userLanguage = ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0).toString()
     }
 
     fun edit(name: String, type: Any) {

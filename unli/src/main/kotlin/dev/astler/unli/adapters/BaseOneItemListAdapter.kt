@@ -30,7 +30,7 @@ class BaseOneItemListAdapter<T>(@LayoutRes val pLayoutResource: Int, private val
         mItemLoadListener?.loadData(data[position], holder)
     }
 
-    interface LoadItem<T> {
+    fun interface LoadItem<T> {
         fun loadData(pData: T, pHolder: BaseOneItemListViewHolder)
     }
 }

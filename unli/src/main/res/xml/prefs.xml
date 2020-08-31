@@ -30,14 +30,8 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
     app:iconSpaceReserved="false"
     app:title="@string/language_settings">
 
-    <SwitchPreferenceCompat
-        app:iconSpaceReserved="false"
-        app:key="appLocaleMode"
-        app:title="@string/change_lang_by_user"/>
-
     <ListPreference
-        android:defaultValue="en"
-        android:dependency="appLocaleMode"
+        android:defaultValue="system"
         android:entries="@array/locales_string"
         android:entryValues="@array/locales_values"
         android:key="appLocale"
