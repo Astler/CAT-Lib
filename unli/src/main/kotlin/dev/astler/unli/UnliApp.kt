@@ -29,8 +29,7 @@ open class UnliApp : MultiDexApplication() {
 
     fun initAppLanguage(context: Context) {
         AppSettings.loadLocale(
-                context,
-                prefs.useEnglish
+                context
         )
     }
 }
