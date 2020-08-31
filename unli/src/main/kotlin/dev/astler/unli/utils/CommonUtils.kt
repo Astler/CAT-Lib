@@ -7,7 +7,10 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
+import dev.astler.unli.preferencesTool
 
 fun log(text: String, additionalName: String = "") {
     Log.i("ForAstler $additionalName", text)
@@ -60,5 +63,17 @@ fun Context.moreApps() {
             Uri.parse("https://play.google.com/store/apps/dev?id=4948748506238999540")
         )
         startActivity(intent)
+    }
+}
+
+fun Context.vibrateOnClick() {
+    if (preferencesTool.vibrateOnClick) {
+        val vibe = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        val vibrationTime = 40L
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibe.vibrate(VibrationEffect.createOneShot(vibrationTime, 10))
+        } else {
+            vibe.vibrate(vibrationTime)
+        }
     }
 }

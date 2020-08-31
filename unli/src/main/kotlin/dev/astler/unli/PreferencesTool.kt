@@ -14,6 +14,7 @@ open class PreferencesTool(context: Context?) {
         fun newInstance(context: Context) = PreferencesTool(context)
 
         const val appThemeKey = "appTheme"
+        const val vibrationKey = "keyVibration"
 
         const val appLocaleKey = "appLocale"
         const val appLocaleDefault = "system"
@@ -54,6 +55,13 @@ open class PreferencesTool(context: Context?) {
         set(value) {
             if (value)
                 edit(appThemeKey, "system")
+        }
+
+    var vibrateOnClick: Boolean
+        get() = getPreferences().getBoolean(vibrationKey, false)
+        set(value) {
+            if (value)
+                edit(vibrationKey, "system")
         }
 
     var isSystemLanguage: Boolean
