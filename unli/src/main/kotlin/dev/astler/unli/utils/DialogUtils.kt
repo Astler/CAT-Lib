@@ -25,16 +25,14 @@ fun Context.showInfoDialog(@StringRes title: Int, @StringRes msg: Int): AlertDia
     return this.showInfoDialog(getString(title), getString(msg))
 }
 
-fun Activity.exitDialog(
-
-) {
+fun Activity.exitDialog() {
     val dialog = AlertDialog.Builder(this)
-//        .setTitle(R.string.exiting_app)
-//        .setMessage(R.string.already_leave)
-//        .setPositiveButton(R.string.yes) { _, _ ->
-//            Utils.vibrateOnClick(activity)
-//            this.finish() }
-//        .setNegativeButton(R.string.no) { _, _ -> Utils.vibrateOnClick(activity)}.create()
-
+        .setTitle(R.string.exiting_app)
+        .setMessage(R.string.already_leave)
+        .setPositiveButton(R.string.yes) { _, _ ->
+            this.vibrateOnClick()
+            this.finish()
+        }
+        .setNegativeButton(R.string.no) { _, _ -> this.vibrateOnClick() }.create()
     dialog.show()
 }
