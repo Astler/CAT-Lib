@@ -9,6 +9,7 @@ import androidx.annotation.StyleRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
@@ -34,7 +35,8 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
     private lateinit var mInterstitialAd: InterstitialAd
     lateinit var mPreferencesTool: PreferencesTool
     private var showAdAfterLoading = false
-    private var infoDialog: AlertDialog? = null
+    var infoDialog: AlertDialog? = null
+    var mActiveFragment: Fragment? = null
 
     open fun initPreferencesTool(): PreferencesTool = PreferencesTool(this)
 
@@ -45,6 +47,10 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
     open var mAppMenuId = 0
 
     open fun updateNavigationMenu() {}
+
+    override fun setCurrentFragment(fragment: Fragment) {
+        mActiveFragment = fragment
+    }
 
     open fun getTestDevicesList(): ArrayList<String> {
         return arrayListOf(AdRequest.DEVICE_ID_EMULATOR, "46BCDEE9C1F5ED2ADF3A5DB3889DDFB5")
@@ -66,6 +72,21 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         UnliApp.getInstance().initAppLanguage(this)
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+
+        when {
+            preferencesTool.isSystemTheme -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                delegate.applyDayNight()
+            }
+            preferencesTool.isDarkTheme -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                delegate.applyDayNight()
+            }
+            else -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                delegate.applyDayNight()
+            }
+        }
 
         val testDevices = ArrayList<String>()
         testDevices.add(AdRequest.DEVICE_ID_EMULATOR)
