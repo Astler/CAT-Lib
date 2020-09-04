@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import dev.astler.unli.R
 import dev.astler.unli.preferencesTool
@@ -34,17 +35,17 @@ open class PrefsTextView(context: Context, attrs: AttributeSet? = null, defStyle
 
         val useBold = typedArray.getBoolean(R.styleable.PrefsTextView_useBoldFont, false)
 
-        typeface = ResourcesCompat.getFont(context, R.font.sans_font_family)
+        //typeface = ResourcesCompat.getFont(context, R.font.sans_font_family)
 
         if (useBold)
-            setTypeface(null, Typeface.BOLD)
+            setBoldTypeface()//setTypeface(null, Typeface.BOLD)
         else
-            setTypeface(null, Typeface.NORMAL)
+            setRegTypeface()//setTypeface(null, Typeface.NORMAL)
 
         textSize = preferencesTool.textSize + typedArray.getInteger(R.styleable.PrefsTextView_textSizeModifier, 0)
 
         if (typedArray.getBoolean(R.styleable.PrefsTextView_changeTextColor, true)) {
-            setTextColor(context.getColorFromAttr(R.attr.contrastColorByTheme))
+            setTextColor(ContextCompat.getColor(context, R.color.main_text_color))
         }
     }
 

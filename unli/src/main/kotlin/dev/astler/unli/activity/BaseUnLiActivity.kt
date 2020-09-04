@@ -73,21 +73,6 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
-        when {
-            preferencesTool.isSystemTheme -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                delegate.applyDayNight()
-            }
-            preferencesTool.isDarkTheme -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                delegate.applyDayNight()
-            }
-            else -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                delegate.applyDayNight()
-            }
-        }
-
         val testDevices = ArrayList<String>()
         testDevices.add(AdRequest.DEVICE_ID_EMULATOR)
         testDevices.addAll(getTestDevicesList())
@@ -196,7 +181,22 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
     open fun navToAboutFragment() {}
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == PreferencesTool.appThemeKey || key == PreferencesTool.appLocaleModeKey || key == PreferencesTool.appLocaleKey) {
+
+        if (key == PreferencesTool.appThemeKey) {
+            when {
+                preferencesTool.isSystemTheme -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                }
+                preferencesTool.isDarkTheme -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+                else -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+            }
+        }
+
+        if (key == PreferencesTool.appLocaleKey) {
             recreate()
         }
 
