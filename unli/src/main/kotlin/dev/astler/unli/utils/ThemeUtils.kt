@@ -1,10 +1,8 @@
 package dev.astler.unli.utils
 
-import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
-import dev.astler.unli.PreferencesTool
 import dev.astler.unli.preferencesTool
 
 class ThemeUtils {
