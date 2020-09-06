@@ -69,20 +69,6 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        when {
-            preferencesTool.isSystemTheme -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            }
-            preferencesTool.isDarkTheme -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            }
-            else -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        }
-
-        delegate.applyDayNight()
-
         UnliApp.getInstance().initAppLanguage(this)
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
