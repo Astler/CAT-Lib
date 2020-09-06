@@ -136,6 +136,7 @@ open class PreferencesTool(context: Context?) {
             is Int -> editor.putInt(name, type)
             is Float -> editor.putFloat(name, type)
             is String -> editor.putString(name, type)
+            is Long -> editor.putLong(name, type)
         }
 
         editor.apply()

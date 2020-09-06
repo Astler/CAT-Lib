@@ -45,7 +45,7 @@ open class PrefsTextView(context: Context, attrs: AttributeSet? = null, defStyle
         textSize = preferencesTool.textSize + typedArray.getInteger(R.styleable.PrefsTextView_textSizeModifier, 0)
 
         if (typedArray.getBoolean(R.styleable.PrefsTextView_changeTextColor, true)) {
-            setTextColor(ContextCompat.getColor(context, R.color.main_text_color))
+            setTextColor(context.getColorFromAttr(R.attr.contrastColorByTheme))
         }
     }
 
