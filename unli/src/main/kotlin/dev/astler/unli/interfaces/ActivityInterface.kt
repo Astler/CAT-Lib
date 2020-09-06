@@ -13,4 +13,6 @@ interface ActivityInterface {
     fun getActivityContext(): Context
     fun hideToolbar() {}
     fun showToolbar() {}
+
+    fun setToolbarElevation(pElevation: Float) {}
 }
