@@ -55,6 +55,6 @@ dependencies {
     api 'androidx.navigation:navigation-ui-ktx:2.3.0'
     api "androidx.navigation:navigation-dynamic-features-fragment:2.3.0"
 
-    api 'com.google.android.material:material:1.2.0'
-    api 'com.google.android.gms:play-services-ads:19.3.0'
+    api 'com.google.android.material:material:1.2.1'
+    api 'com.google.android.gms:play-services-ads:19.4.0'
 }
