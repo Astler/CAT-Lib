@@ -10,5 +10,5 @@ interface ActivityInterface {
     fun setToolbarTitle(title: String)
 
     fun setToolbarElevationEnabled(pElevationEnabled: Boolean) {}
-    fun toggleToolbarElevationEnabled(pIsToolbarVisible: Boolean) {}
+    fun toggleToolbar(pIsToolbarVisible: Boolean) {}
 }
