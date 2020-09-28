@@ -40,8 +40,6 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
 
     open fun initPreferencesTool(): PreferencesTool = PreferencesTool(this)
 
-    override fun getActivityContext() = this
-
     open var mInterstitialAdId = ""
     open var mRewardedAdId = ""
     open var mAppMenuId = 0

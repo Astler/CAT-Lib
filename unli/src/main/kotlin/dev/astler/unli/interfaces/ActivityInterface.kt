@@ -1,7 +1,5 @@
 package dev.astler.unli.interfaces
 
-import android.content.Context
-import android.view.MenuItem
 import androidx.fragment.app.Fragment
 
 interface ActivityInterface {
@@ -10,9 +8,7 @@ interface ActivityInterface {
     fun showRewardAd()
     fun setCurrentFragment(fragment:Fragment)
     fun setToolbarTitle(title: String)
-    fun getActivityContext(): Context
-    fun hideToolbar() {}
-    fun showToolbar() {}
 
-    fun setToolbarElevation(pElevation: Float) {}
+    fun setToolbarElevationEnabled(pElevationEnabled: Boolean) {}
+    fun toggleToolbarElevationEnabled(pIsToolbarVisible: Boolean) {}
 }
