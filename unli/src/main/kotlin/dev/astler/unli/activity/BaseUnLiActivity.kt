@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.annotation.NonNull
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
-import com.google.android.gms.ads.reward.RewardItem
-import com.google.android.gms.ads.reward.RewardedVideoAd
-import com.google.android.gms.ads.reward.RewardedVideoAdListener
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdCallback
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.navigation.NavigationView
 import dev.astler.unli.*
 import dev.astler.unli.R
@@ -28,10 +30,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 abstract class BaseUnLiActivity : AppCompatActivity(),
-    NavigationView.OnNavigationItemSelectedListener,
-    SharedPreferences.OnSharedPreferenceChangeListener, ActivityInterface, RewardedVideoAdListener {
+        NavigationView.OnNavigationItemSelectedListener,
+        SharedPreferences.OnSharedPreferenceChangeListener, ActivityInterface {
 
-    lateinit var mRewardedVideo: RewardedVideoAd
+    lateinit var mRewardedVideo: RewardedAd
     private lateinit var mInterstitialAd: InterstitialAd
     lateinit var mPreferencesTool: PreferencesTool
     private var showAdAfterLoading = false
@@ -58,7 +60,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         super.attachBaseContext(AppSettings.loadLocale(newBase))
     }
 
-    open fun getAdRequest(): AdRequest{
+    open fun getAdRequest(): AdRequest {
         return AdRequest.Builder().build()
     }
 
@@ -76,7 +78,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         testDevices.addAll(getTestDevicesList())
 
         val requestConfiguration = RequestConfiguration.Builder()
-            .setTestDeviceIds(testDevices)
+                .setTestDeviceIds(testDevices)
 
         if (setTagForChildDirectedTreatment) {
             requestConfiguration.setTagForChildDirectedTreatment(TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE)
@@ -88,11 +90,10 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
 
         mPreferencesTool = initPreferencesTool()
 
-        mRewardedVideo = MobileAds.getRewardedVideoAdInstance(this)
+        mRewardedVideo = RewardedAd(this, mRewardedAdId)
 
         if (canShowAds() && mRewardedAdId.isNotEmpty()) {
-            mRewardedVideo.rewardedVideoAdListener = this
-            mRewardedVideo.loadAd(mRewardedAdId, getAdRequest())
+            mRewardedVideo.loadAd(AdRequest.Builder().build(), onRewardedAdLoadCallback())
         }
 
         mInterstitialAd = InterstitialAd(this)
@@ -110,6 +111,35 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         }
     }
 
+    open fun onRewardedAdLoadCallback(): RewardedAdLoadCallback = object : RewardedAdLoadCallback() {
+        override fun onRewardedAdLoaded() {
+            if (showAdAfterLoading)
+                showRewardAd()
+
+            infoDialog?.dismiss()
+        }
+
+        override fun onRewardedAdFailedToLoad(adError: LoadAdError) {
+
+        }
+    }
+
+    open fun onRewardedAdCallback(): RewardedAdCallback = object : RewardedAdCallback() {
+        override fun onRewardedAdOpened() {}
+
+        override fun onRewardedAdClosed() {
+            mRewardedVideo.loadAd(AdRequest.Builder().build(), onRewardedAdLoadCallback())
+        }
+
+        override fun onUserEarnedReward(@NonNull reward: RewardItem) {
+            val preferencesTool = PreferencesTool(this@BaseUnLiActivity)
+            preferencesTool.dayWithoutAds =
+                    GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
+        }
+
+        override fun onRewardedAdFailedToShow(adError: AdError) {}
+    }
+
     override fun showInterstitialAd() {
         if (mInterstitialAd.isLoaded) {
             mInterstitialAd.show()
@@ -120,9 +150,9 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
     }
 
     override fun showRewardAd() {
-        if (mRewardedVideo.isLoaded)
-            mRewardedVideo.show()
-        else {
+        if (mRewardedVideo.isLoaded) {
+            mRewardedVideo.show(this, onRewardedAdCallback())
+        } else {
             infoDialog = showInfoDialog(R.string.just_a_minute, R.string.ad_is_loading)
             infoDialog?.show()
 
@@ -219,41 +249,4 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         super.onStop()
         mPreferencesTool.unregisterListener(this)
     }
-
-
-//    fun updateBackgroundColor(color: Int = appPrefs.backgroundColor) {
-//        window.decorView.setBackgroundColor(color)
-//    }
-//
-//    fun updateActionbarColor(color: Int = appPrefs.primaryColor) {
-//        supportActionBar?.setBackgroundDrawable(ColorDrawable(color))
-//        updateActionBarTitle(supportActionBar?.title.toString(), color)
-//        updateStatusbarColor(color)
-//        //setTaskDescription(ActivityManager.TaskDescription(null, null, color))
-//    }
-//
-//    fun updateStatusbarColor(color: Int) {
-//        window.statusBarColor = color.darkenColor()
-//    }
-
-    override fun onRewardedVideoAdClosed() {}
-    override fun onRewardedVideoAdLeftApplication() {}
-    override fun onRewardedVideoAdLoaded() {
-        if (showAdAfterLoading)
-            showRewardAd()
-
-        infoDialog?.dismiss()
-    }
-
-    override fun onRewardedVideoAdOpened() {}
-    override fun onRewardedVideoCompleted() {}
-
-    override fun onRewarded(p0: RewardItem?) {
-        val preferencesTool = PreferencesTool(this@BaseUnLiActivity)
-        preferencesTool.dayWithoutAds =
-            GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
-    }
-
-    override fun onRewardedVideoStarted() {}
-    override fun onRewardedVideoAdFailedToLoad(p0: Int) {}
 }
