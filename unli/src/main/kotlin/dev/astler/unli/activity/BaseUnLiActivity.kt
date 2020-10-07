@@ -70,9 +70,6 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
 
         UnliApp.getInstance().initAppLanguage(this)
-
-        loadTheme(R.style.AppUnliTheme, R.style.AppUnliDarkTheme)
-
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         val testDevices = ArrayList<String>()
@@ -91,6 +88,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         setDefaultPreferences()
 
         mPreferencesTool = initPreferencesTool()
+        loadTheme(R.style.AppUnliTheme, R.style.AppUnliDarkTheme)
 
         mRewardedVideo = RewardedAd(this, mRewardedAdId)
 
