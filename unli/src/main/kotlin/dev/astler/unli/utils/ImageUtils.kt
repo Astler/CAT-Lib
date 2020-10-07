@@ -42,9 +42,7 @@ fun Context.createNoFilterDrawableFromBitmap(pBitmap: Bitmap, pColorRes: Int = -
 
 private fun ImageView.safeGlideLoadWithBackground(
         pRequest: String,
-        pBackgroundColor: Int
-
-) {
+        pBackgroundColor: Int) {
     try {
         val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
                 .override(64, 64)
