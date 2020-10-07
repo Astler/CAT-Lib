@@ -64,6 +64,11 @@
         <item name="android:fitsSystemWindows">false</item>
     </style>
 
+
+    <style name="AppUnliTheme" parent="Theme.BaseUnLiTheme" />
+
+    <style name="AppUnliDarkTheme" parent="Theme.BaseUnLiDarkTheme" />
+
     <style name="Theme.BaseUnLiTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
