@@ -40,7 +40,7 @@ fun Context.createNoFilterDrawableFromBitmap(pBitmap: Bitmap, pColorRes: Int = -
     return drawable
 }
 
-private fun ImageView.safeGlideLoadWithBackground(
+fun ImageView.safeGlideLoadWithBackground(
         pRequest: String,
         pBackgroundColor: Int) {
     try {
