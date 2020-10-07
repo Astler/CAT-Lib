@@ -72,3 +72,17 @@ fun ImageView.safeGlideLoadWithBackground(
         log("UNLI: Image glide load failed: $e")
     }
 }
+
+fun ImageView.safeGlideLoad(pRequest: String) {
+    try {
+        val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
+            .override(64, 64)
+
+        Glide.with(this)
+            .load(pRequest).thumbnail(0.25f)
+            .apply(requestOptions).into(this)
+
+    } catch (e: Exception) {
+        log("UNLI: Image glide load failed: $e")
+    }
+}
