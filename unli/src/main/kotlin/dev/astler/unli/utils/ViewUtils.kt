@@ -9,9 +9,11 @@ import android.widget.ImageView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 fun ImageView.setColorTintDrawable(@DrawableRes icon: Int, @ColorRes colorId: Int) {
@@ -74,4 +76,15 @@ fun View.showView() {
 
 fun View.goneView() {
     visibility = View.GONE
+}
+
+fun Context.simpleTextChip(@StringRes pTextId: Int): View {
+    return simpleTextChip(getString(pTextId))
+}
+
+fun Context.simpleTextChip(pText: String): View {
+    val mChip = Chip(this)
+    mChip.text = pText
+
+    return mChip
 }
