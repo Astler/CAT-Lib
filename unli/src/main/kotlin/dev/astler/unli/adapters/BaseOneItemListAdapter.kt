@@ -19,6 +19,12 @@ class BaseOneItemListAdapter<T>(@LayoutRes val pLayoutResource: Int, private val
         notifyDataSetChanged()
     }
 
+    fun silenceReloadItems(items: List<T>) {
+        this.data.clear()
+        this.data.addAll(items)
+        mAdapterSizeListener?.totalItems(this.data.size)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseOneItemListViewHolder {
         val nHolderItem = LayoutInflater.from(parent.context).inflate(pLayoutResource, parent, false)
         return BaseOneItemListViewHolder(nHolderItem)
