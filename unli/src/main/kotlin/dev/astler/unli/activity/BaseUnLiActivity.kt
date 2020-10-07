@@ -71,6 +71,8 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
 
         UnliApp.getInstance().initAppLanguage(this)
 
+        loadTheme(R.style.AppUnliTheme, R.style.AppUnliDarkTheme)
+
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         val testDevices = ArrayList<String>()
