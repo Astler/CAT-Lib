@@ -5,7 +5,7 @@ import android.content.Context
 import android.text.style.ImageSpan
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
-import dev.astler.library.view.style.VerticalImageSpan
+import dev.astler.unli.view.style.VerticalImageSpan
 import dev.astler.unli.PreferencesTool
 import java.util.regex.Pattern
 
