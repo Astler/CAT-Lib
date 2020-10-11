@@ -81,3 +81,12 @@ fun Context.getColorFromAttr(
     theme.resolveAttribute(attrColor, typedValue, resolveRefs)
     return typedValue.data
 }
+
+fun Context.getDrawableByName(pDrawableName: String): Drawable? {
+    val nDrawableId = resources.getIdentifier(pDrawableName, "drawable", packageName)
+
+    return if (nDrawableId != 0) ContextCompat.getDrawable(
+            this,
+            nDrawableId
+    ) else ContextCompat.getDrawable(this, R.drawable.file)
+}
