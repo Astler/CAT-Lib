@@ -3,8 +3,13 @@
 
     <string name="nothing">Nothing</string>
 
-    <string name="disable_ads">Disable ads for one day</string>
+    <string name="disable_ads">Disable ads</string>
+    <string name="disable_ads_msg">Want to disable ads?</string>
+    <string name="buy_pro">Buy Pro Version</string>
+    <string name="watch_ads">Disable today</string>
     <string name="language">App language</string>
+
+    <string name="something_went_wrong">Something went wrong…</string>
 
     <string-array name="locales_string">
         <item>System</item>

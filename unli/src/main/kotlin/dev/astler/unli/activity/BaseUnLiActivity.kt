@@ -22,10 +22,7 @@ import com.google.android.material.navigation.NavigationView
 import dev.astler.unli.*
 import dev.astler.unli.R
 import dev.astler.unli.interfaces.ActivityInterface
-import dev.astler.unli.utils.canShowAds
-import dev.astler.unli.utils.moreApps
-import dev.astler.unli.utils.rateApp
-import dev.astler.unli.utils.showInfoDialog
+import dev.astler.unli.utils.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -195,7 +192,9 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.adItem -> showRewardAd()
+            R.id.adItem -> {
+                showNoAdsDialog()
+            }
             R.id.rate_app -> this.rateApp()
             R.id.more_apps -> this.moreApps()
             R.id.settings -> navToSettingsFragment()
@@ -203,6 +202,15 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         }
 
         return true
+    }
+
+    private fun showNoAdsDialog() {
+        AlertDialog.Builder(this).setMessage(R.string.disable_ads_msg).setTitle(R.string.disable_ads)
+                .setPositiveButton(R.string.buy_pro) { _, _ ->
+                    openMarketApp("com.astler.knowlegebook_paid")
+                }.setNeutralButton(R.string.watch_ads) { _, _ ->
+                    showRewardAd()
+                }
     }
 
     open fun navToSettingsFragment() {}

@@ -53,6 +53,17 @@ fun Context.rateApp() {
     }
 }
 
+fun Context.openMarketApp(pAppPackageName: String) {
+    try {
+        val rateIntent = rateIntentForUri("market://details", pAppPackageName)
+        startActivity(rateIntent)
+    } catch (e: ActivityNotFoundException) {
+        val rateIntent =
+            rateIntentForUri("https://play.google.com/store/apps/details", pAppPackageName)
+        startActivity(rateIntent)
+    }
+}
+
 fun Context.moreApps() {
     try {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://dev?id=4948748506238999540"))

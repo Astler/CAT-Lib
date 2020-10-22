@@ -5,7 +5,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import dev.astler.unli.R
 import dev.astler.unli.utils.IntentsUtils.Companion.choosePictureActivity
 
 class IntentsUtils {
@@ -15,10 +17,10 @@ class IntentsUtils {
 }
 
 @Suppress("DEPRECATION")
-fun Context.rateIntentForUri(url: String): Intent {
+fun Context.rateIntentForUri(url: String, pPackageName: String = packageName): Intent {
     val intent = Intent(
         Intent.ACTION_VIEW,
-        Uri.parse(String.format("%s?id=%s", url, packageName))
+        Uri.parse(String.format("%s?id=%s", url, pPackageName))
     )
 
     var flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
@@ -60,4 +62,13 @@ fun Context.shareText(pText: CharSequence) {
         this.startActivity(shareTextIntent(pText))
     }
     catch (e: Exception) {}
+}
+
+fun Context.openWebUrl(pUrl: String) {
+    try {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(pUrl)))
+    } catch (e: Exception) {
+        Toast.makeText(this, R.string.something_went_wrong, Toast.LENGTH_SHORT)
+                .show()
+    }
 }

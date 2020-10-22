@@ -2,8 +2,15 @@
 <resources>
     <string name="nothing">Ничего</string>
 
-    <string name="disable_ads">Отключить рекламу на один день</string>
+
+    <string name="disable_ads_msg">Хотите отключить рекламу?</string>
+    <string name="buy_pro">Купить ПРО версию</string>
+    <string name="watch_ads">Отключить сегодня</string>
+
+    <string name="disable_ads">Отключить рекламу</string>
     <string name="language">Язык приложения</string>
+
+    <string name="something_went_wrong">Что-то пошло не так…</string>
 
     <string name="main_prefs">Основные настройки</string>
     <string name="language_settings">Языковые настройки</string>
