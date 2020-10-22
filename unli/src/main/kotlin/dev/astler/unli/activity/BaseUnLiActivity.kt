@@ -210,7 +210,7 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
                     openMarketApp("com.astler.knowlegebook_paid")
                 }.setNeutralButton(R.string.watch_ads) { _, _ ->
                     showRewardAd()
-                }
+                }.create().show()
     }
 
     open fun navToSettingsFragment() {}
