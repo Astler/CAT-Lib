@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.astler.unli.adapters.viewholders.BaseOneItemListViewHolder
 import dev.astler.unli.interfaces.RecyclerAdapterSizeListener
 
-class BaseOneItemListAdapter<T>(@LayoutRes val pLayoutResource: Int, private val mItemLoadListener: LoadItem<T>? = null, private val mAdapterSizeListener: RecyclerAdapterSizeListener? = null) : RecyclerView.Adapter<BaseOneItemListViewHolder>() {
+open class BaseOneItemListAdapter<T>(@LayoutRes val pLayoutResource: Int, private val mItemLoadListener: LoadItem<T>? = null, private val mAdapterSizeListener: RecyclerAdapterSizeListener? = null) : RecyclerView.Adapter<BaseOneItemListViewHolder>() {
 
     var data: ArrayList<T> = arrayListOf()
 
