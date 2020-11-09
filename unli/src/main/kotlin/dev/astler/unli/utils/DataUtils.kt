@@ -29,6 +29,18 @@ fun String.humanViewToMillis(): Long {
     return date?.time ?: 0L
 }
 
+
+fun Int.timeToString(): String? {
+    val seconds = this % 60
+    val minutes = (this - seconds) / 60 % 60
+    val hours = (this - minutes - seconds) / 3600
+    val h = if (hours < 10) "0$hours" else hours.toString()
+    val m = if (minutes < 10) "0$minutes" else minutes.toString()
+    val s = if (seconds < 10) "0$seconds" else seconds.toString()
+
+    return "$h:$m:$s"
+}
+
 fun Long.millisToHumanView(): String {
     return Date(this).toHumanView()
 }

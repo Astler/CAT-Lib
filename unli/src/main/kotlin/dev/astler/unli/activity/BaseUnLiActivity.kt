@@ -257,4 +257,8 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         super.onStop()
         mPreferencesTool.unregisterListener(this)
     }
+
+    override fun setToolbarTitle(title: String) {}
+
+    override fun backPressed(endAction: () -> Unit) {}
 }
