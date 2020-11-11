@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import androidx.core.os.ConfigurationCompat
 import androidx.preference.PreferenceManager
-import java.util.*
 
 open class PreferencesTool(context: Context?) {
 
@@ -36,6 +35,8 @@ open class PreferencesTool(context: Context?) {
     }
 
     fun getPreferences(): SharedPreferences = mPreferences
+
+    fun getString(pName: String, pDef: String = "") = mPreferences.getString(pName, pDef)
 
     var textSize: Float
         get() = (getPreferences().getString(textSizeKey, textSizeDefault))?.toFloat() ?: 18f

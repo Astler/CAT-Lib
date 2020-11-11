@@ -74,6 +74,15 @@ fun View.showView() {
     visibility = View.VISIBLE
 }
 
+fun View.showViewWithCondition(pCondition: Boolean) {
+    if (pCondition) {
+        showView()
+    }
+    else {
+        goneView()
+    }
+}
+
 fun View.goneView() {
     visibility = View.GONE
 }
