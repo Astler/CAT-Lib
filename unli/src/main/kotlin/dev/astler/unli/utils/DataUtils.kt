@@ -56,7 +56,7 @@ fun Bitmap.createLocalImage(context: Context, name: String) {
     }
 }
 
-fun Context.copyToBuffer(pData: CharSequence, pToast: Toast?) {
+fun Context.copyToBuffer(pData: CharSequence, pToast: Toast?): Toast? {
     var nToast = pToast
 
     if (pData.isNotEmpty()) {
@@ -68,6 +68,8 @@ fun Context.copyToBuffer(pData: CharSequence, pToast: Toast?) {
         nToast = Toast.makeText(this, getString(R.string.copied_to_buffer, pData), Toast.LENGTH_SHORT)
         nToast?.show()
     }
+
+    return nToast
 }
 
 fun Context.copyToBuffer(text: CharSequence) {
