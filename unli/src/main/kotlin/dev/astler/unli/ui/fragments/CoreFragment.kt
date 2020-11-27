@@ -1,7 +1,6 @@
-package dev.astler.unli.fragments
+package dev.astler.unli.ui.fragments
 
 import android.content.Context
-import android.util.AttributeSet
 import androidx.fragment.app.Fragment
 import dev.astler.unli.interfaces.ActivityInterface
 import dev.astler.unli.interfaces.CoreFragmentInterface

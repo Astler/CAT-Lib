@@ -1,7 +1,7 @@
 package dev.astler.unli_text
 
 import android.os.Bundle
-import dev.astler.unli.activity.BaseUnLiActivity
+import dev.astler.unli.ui.activity.BaseUnLiActivity
 import dev.astler.unli.view.ShortCodeTextView
 
 class MainActivity : BaseUnLiActivity() {

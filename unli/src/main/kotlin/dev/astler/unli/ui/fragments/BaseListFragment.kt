@@ -1,17 +1,15 @@
-package dev.astler.unli.fragments
+package dev.astler.unli.ui.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import dev.astler.unli.R
+import dev.astler.unli.databinding.RecyclerViewFragmentBinding
 import dev.astler.unli.interfaces.RecyclerAdapterSizeListener
 import dev.astler.unli.utils.hideFABOnScroll
 import dev.astler.unli.view.StateLayout
-import kotlinx.android.synthetic.main.recycler_view_fragment.view.*
 
 abstract class BaseListFragment: CoreFragment(), RecyclerAdapterSizeListener {
 
@@ -29,20 +27,18 @@ abstract class BaseListFragment: CoreFragment(), RecyclerAdapterSizeListener {
         }
     }
 
-    open fun onFABClick() {
-
-    }
+    open fun onFABClick() {}
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.recycler_view_fragment, container, false)
+        val nBinding = RecyclerViewFragmentBinding.inflate(inflater, container, false)
 
-        mStateLayout = view.stateLayout
-        mRecyclerView = view.recyclerView
-        mFABView = view.fab
+        mStateLayout = nBinding.stateLayout
+        mRecyclerView = nBinding.recyclerView
+        mFABView = nBinding.fab
 
         mStateLayout.activeView = StateLayout.loadingView
 
@@ -61,6 +57,6 @@ abstract class BaseListFragment: CoreFragment(), RecyclerAdapterSizeListener {
 
         setHasOptionsMenu(true)
 
-        return view
+        return nBinding.root
     }
 }

@@ -56,6 +56,20 @@ fun Bitmap.createLocalImage(context: Context, name: String) {
     }
 }
 
+fun Context.copyToBuffer(pData: CharSequence, pToast: Toast?) {
+    var nToast = pToast
+
+    if (pData.isNotEmpty()) {
+        val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val myClip = ClipData.newPlainText("text", pData)
+        myClipboard.setPrimaryClip(myClip)
+
+        nToast?.cancel()
+        nToast = Toast.makeText(this, getString(R.string.copied_to_buffer, pData), Toast.LENGTH_SHORT)
+        nToast?.show()
+    }
+}
+
 fun Context.copyToBuffer(text: CharSequence) {
     if (text.isNotEmpty()) {
         val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -67,9 +81,9 @@ fun Context.copyToBuffer(text: CharSequence) {
 
 fun Context.readFromBuffer(): CharSequence {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    return if(clipboard.primaryClip != null) {
+    return if (clipboard.primaryClip != null) {
         val item = clipboard.primaryClip?.getItemAt(0)
-         item?.text?:""
+        item?.text ?: ""
     } else {
         ""
     }

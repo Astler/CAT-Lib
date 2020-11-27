@@ -44,6 +44,7 @@
     <string name="about">О приложении</string>
 
     <string name="copy_in_buffer">Текст скопирован</string>
+    <string name="copied_to_buffer">Текст скопирован: %s</string>
 
     <string name="exiting_app">Уже уходите?</string>
     <string name="already_leave">Выйти из приложения?</string>

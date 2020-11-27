@@ -1,4 +1,4 @@
-package dev.astler.unli.fragments
+package dev.astler.unli.ui.fragments
 
 import android.content.Context
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package dev.astler.unli.activity
+package dev.astler.unli.ui.activity
 
 import android.content.Context
 import android.content.SharedPreferences

@@ -74,6 +74,7 @@
 
     <string name="about">About app</string>
     <string name="copy_in_buffer">The text copied</string>
+    <string name="copied_to_buffer">The text copied: %s</string>
 
     <string name="exiting_app">Already leave?</string>
     <string name="already_leave">Quit the application?</string>
