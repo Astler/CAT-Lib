@@ -5,10 +5,13 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.multidex.MultiDexApplication
+import kotlinx.serialization.json.Json
 
 val preferencesTool: PreferencesTool by lazy {
     UnliApp.prefs
 }
+
+val mJson = Json { allowStructuredMapKeys = true }
 
 open class UnliApp : MultiDexApplication() {
 

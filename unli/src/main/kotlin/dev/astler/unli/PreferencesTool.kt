@@ -142,6 +142,6 @@ open class PreferencesTool(context: Context?) {
 
         editor.apply()
     }
-}
 
-val Context.appPrefs: PreferencesTool get() = PreferencesTool.newInstance(this)
+    fun getBoolean(pKey: String, pDefValue: Boolean = true): Boolean = getPreferences().getBoolean(pKey, pDefValue)
+}
