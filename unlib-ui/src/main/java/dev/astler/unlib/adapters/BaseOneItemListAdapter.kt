@@ -1,11 +1,10 @@
-package dev.astler.unli.adapters
+package dev.astler.unlib.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import dev.astler.unli.adapters.viewholders.BaseOneItemListViewHolder
+import dev.astler.unlib.adapters.viewholders.BaseOneItemListViewHolder
 import dev.astler.unli.interfaces.RecyclerAdapterSizeListener
 
 open class BaseOneItemListAdapter<T>(@LayoutRes val pLayoutResource: Int, private val mItemLoadListener: LoadItem<T>? = null, private val mAdapterSizeListener: RecyclerAdapterSizeListener? = null) : RecyclerView.Adapter<BaseOneItemListViewHolder>() {
