@@ -7,7 +7,7 @@ import android.os.Build
 import androidx.multidex.MultiDexApplication
 import kotlinx.serialization.json.Json
 
-val preferencesTool: PreferencesTool by lazy {
+val gPreferencesTool: PreferencesTool by lazy {
     UnliApp.prefs
 }
 

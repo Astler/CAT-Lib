@@ -16,9 +16,9 @@ class AppSettings {
 
     companion object {
         private fun loadLocalePref(): String {
-            return if(preferencesTool.isSystemLanguage) {
+            return if(gPreferencesTool.isSystemLanguage) {
                 ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0).toString()
-            } else preferencesTool.appLanguage
+            } else gPreferencesTool.appLanguage
         }
 
         @Suppress("deprecation")

@@ -1,8 +1,8 @@
 package dev.astler.unli_text
 
 import android.os.Bundle
-import dev.astler.unli.ui.activity.BaseUnLiActivity
-import dev.astler.unli.view.ShortCodeTextView
+import dev.astler.unlib.ui.activity.BaseUnLiActivity
+import dev.astler.unlib.view.ShortCodeTextView
 
 class MainActivity : BaseUnLiActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
