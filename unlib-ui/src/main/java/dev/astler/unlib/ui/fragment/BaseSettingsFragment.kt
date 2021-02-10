@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import dev.astler.unlib.R
+import dev.astler.unlib.ui.R
 import dev.astler.unlib.ui.interfaces.ActivityInterface
 
 open class BaseSettingsFragment : PreferenceFragmentCompat() {

@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import dev.astler.unlib.R
+import dev.astler.unlib.core.R
 
 fun Context.showInfoDialog(title: String, msg: CharSequence): AlertDialog {
     val dialog = AlertDialog.Builder(this)

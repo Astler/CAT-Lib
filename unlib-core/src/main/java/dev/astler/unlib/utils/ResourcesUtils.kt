@@ -10,7 +10,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import dev.astler.unlib.R
+import dev.astler.unlib.core.R
 import java.util.*
 
 fun Context.getStringResourceId(string: String): Int {

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dev.astler.unli.interfaces.RecyclerAdapterSizeListener
-import dev.astler.unlib.databinding.RecyclerViewFragmentBinding
+import dev.astler.unlib.ui.databinding.RecyclerViewFragmentBinding
 import dev.astler.unlib.ui.fragments.CoreFragment
 import dev.astler.unlib.utils.hideFABOnScroll
 import dev.astler.unlib.view.StateLayout

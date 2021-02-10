@@ -9,7 +9,7 @@ import android.util.AttributeSet
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.drawable.toDrawable
-import dev.astler.unlib.R
+import dev.astler.unlib.ui.R
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.getDrawableByName
 import java.util.regex.Pattern

@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import dev.astler.unlib.R
+import dev.astler.unlib.ui.R
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.getColorFromAttr
 

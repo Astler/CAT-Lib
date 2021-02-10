@@ -19,7 +19,7 @@ import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdCallback
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.navigation.NavigationView
-import dev.astler.unlib.R
+import dev.astler.unlib.ui.R
 import dev.astler.unlib.AppSettings
 import dev.astler.unlib.PreferencesTool
 import dev.astler.unlib.UnliApp

@@ -7,7 +7,7 @@ import android.os.Build
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import dev.astler.unlib.R
+import dev.astler.unlib.core.R
 import dev.astler.unlib.utils.IntentsUtils.Companion.choosePictureActivity
 
 class IntentsUtils {
