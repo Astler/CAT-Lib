@@ -1,3 +1,5 @@
 include ':unli'
 include ':app'
 rootProject.name = "UnLi"
+include ':unlib-core'
+include ':unlib-ui'
