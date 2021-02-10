@@ -11,7 +11,6 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import dev.astler.unlib.gPreferencesTool
 
-
 @Suppress("DEPRECATION")
 fun Context.isOnline(): Boolean {
 
@@ -70,17 +69,5 @@ fun Context.moreApps() {
             Uri.parse("https://play.google.com/store/apps/dev?id=4948748506238999540")
         )
         startActivity(intent)
-    }
-}
-
-fun Context.vibrateOnClick() {
-    if (gPreferencesTool.vibrateOnClick) {
-        val vibe = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        val vibrationTime = 40L
-        if (Build.VERSION.SDK_INT >= 26) {
-            vibe.vibrate(VibrationEffect.createOneShot(vibrationTime, 10))
-        } else {
-            vibe.vibrate(vibrationTime)
-        }
     }
 }
