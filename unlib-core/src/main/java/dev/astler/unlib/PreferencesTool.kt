@@ -146,5 +146,6 @@ open class PreferencesTool(context: Context?) {
     fun getBoolean(pKey: String, pDefValue: Boolean = true): Boolean = getPreferences().getBoolean(pKey, pDefValue)
     fun getString(pKey: String, pDefValue: String = ""): String = getPreferences().getString(pKey, pDefValue)?:pDefValue
     fun getInt(pKey: String, pDefValue: Int = 0): Int = getPreferences().getInt(pKey, pDefValue)
+    fun getLong(pKey: String, pDefValue: Long = 0L): Long = getPreferences().getLong(pKey, pDefValue)
 
 }
