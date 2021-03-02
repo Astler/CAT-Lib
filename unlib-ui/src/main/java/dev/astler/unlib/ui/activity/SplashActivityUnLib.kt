@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 
 open class SplashActivityUnLib : AppCompatActivity() {
 
-    open var mPackageName: String = packageName
+    open val mPackageName: String by lazy {
+        packageName
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
