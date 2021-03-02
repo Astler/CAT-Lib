@@ -14,7 +14,10 @@ import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdCallback
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import dev.astler.unlib.PreferencesTool
 import dev.astler.unlib.UnliApp
 import dev.astler.unlib.gPreferencesTool
@@ -89,6 +92,22 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
 
         UnliApp.getInstance().initAppLanguage(this)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+
+        mRemoteConfig = Firebase.remoteConfig
+
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 3600
+        }
+
+        mRemoteConfig.setConfigSettingsAsync(configSettings)
+
+        mRemoteConfig.fetchAndActivate()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val updated = task.result
+                    infoLog("Config params updated: $updated")
+                }
+            }
 
         val testDevices = ArrayList<String>()
         testDevices.add(AdRequest.DEVICE_ID_EMULATOR)
