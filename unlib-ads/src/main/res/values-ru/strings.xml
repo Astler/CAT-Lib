@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ads_dialog_title">"Приветствую! "</string>
+    <string name="ads_dialog_msg">Вам уже есть 18 лет?\n\nЭти данные не будут нигде сохранены либо отправлены. Ответ влияет лишь на содержимое рекламы в приложении. Спасибо!</string>
+</resources>

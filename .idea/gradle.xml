@@ -13,12 +13,12 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/unli" />
+            <option value="$PROJECT_DIR$/unlib-ads" />
             <option value="$PROJECT_DIR$/unlib-core" />
             <option value="$PROJECT_DIR$/unlib-ui" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
-        <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>
   </component>

@@ -6,9 +6,11 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.ui.interfaces.ActivityInterface
+import dev.astler.unlib.utils.canShowAds
 
-open class BaseSettingsFragment : PreferenceFragmentCompat() {
+open class UnLibSettingsFragment : PreferenceFragmentCompat() {
 
+    private var mPreference: Preference? = null
     lateinit var coreListener: ActivityInterface
 
     override fun onAttach(context: Context) {
@@ -19,9 +21,15 @@ open class BaseSettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.prefs)
 
-        findPreference<Preference>("dayWithoutAds")?.setOnPreferenceClickListener {
+        mPreference = findPreference("dayWithoutAds")
+
+        mPreference?.setOnPreferenceClickListener {
             coreListener.showRewardAd()
             true
+        }
+
+        if (!requireContext().canShowAds()) {
+            mPreference?.isVisible = false
         }
     }
 

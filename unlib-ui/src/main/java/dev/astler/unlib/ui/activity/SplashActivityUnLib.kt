@@ -14,7 +14,6 @@ open class SplashActivityUnLib : AppCompatActivity() {
         infoLog("start ${packageName}.MainActivity", "ForAstler:UNLI")
         startActivity(Intent(Intent.ACTION_VIEW).setClassName(packageName, "${packageName}.MainActivity"))
 
-
         infoLog("Perform splashTasks() in ${javaClass.name}", "ForAstler:UNLI")
         splashTasks()
 

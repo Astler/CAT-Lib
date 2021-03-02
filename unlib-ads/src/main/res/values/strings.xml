@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ads_dialog_title">"Greetings! "</string>
+    <string name="ads_dialog_msg">Are you already 18 years old?\n\nThis information will not be saved or sent anywhere. The answer only affects the content of ads in the app. Thank you!</string>
+</resources>
