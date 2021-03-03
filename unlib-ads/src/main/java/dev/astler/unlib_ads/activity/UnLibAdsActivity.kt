@@ -44,6 +44,10 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
     open var mRewardedAdId = ""
     open var mProPackageName = ""
 
+    open val mConfigAppPackage: String by lazy {
+        packageName.replace(".", "_")
+    }
+
     override fun setCurrentFragment(fragment: Fragment) {
         super.setCurrentFragment(fragment)
 
@@ -58,12 +62,12 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
                 "last_ad_show", 0
             )
 
-        if (mRemoteConfig.getBoolean("show_interstitial_ad_$packageName")
+        if (mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage")
             && canShowAds()
             && nTimeFromStart >= 10000
-            && nTimeFromLastAd >= mRemoteConfig.getLong("ad_pause_$packageName").toInt()
+            && nTimeFromLastAd >= mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt()
         ) {
-            val randNum = Random.nextInt(mRemoteConfig.getLong("ad_chance_$packageName").toInt())
+            val randNum = Random.nextInt(mRemoteConfig.getLong("ad_chance_$mConfigAppPackage").toInt())
 
             if (randNum == 0) {
                 showInterstitialAd()
