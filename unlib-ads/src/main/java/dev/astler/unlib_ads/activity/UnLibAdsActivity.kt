@@ -33,7 +33,7 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
     NavigationView.OnNavigationItemSelectedListener,
     SharedPreferences.OnSharedPreferenceChangeListener, ActivityInterface {
 
-    private lateinit var mRemoteConfig: FirebaseRemoteConfig
+    protected lateinit var mRemoteConfig: FirebaseRemoteConfig
 
     lateinit var mRewardedVideo: RewardedAd
     private lateinit var mInterstitialAd: InterstitialAd
@@ -67,7 +67,10 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
             && nTimeFromStart >= 10000
             && nTimeFromLastAd >= mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt()
         ) {
-            val randNum = Random.nextInt(mRemoteConfig.getLong("ad_chance_$mConfigAppPackage").toInt())
+            val nMaxRand = mRemoteConfig.getLong("ad_chance_$mConfigAppPackage").toInt()
+            val randNum = Random.nextInt(nMaxRand)
+
+            infoLog("AD CHANCE: ${randNum}/${nMaxRand}")
 
             if (randNum == 0) {
                 showInterstitialAd()
