@@ -64,10 +64,6 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
 
         infoLog(mConfigAppPackage)
 
-        infoLog(mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage").toString())
-        infoLog(mRemoteConfig.getLong("ad_chance_$mConfigAppPackage").toInt().toString())
-        infoLog(mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt().toString())
-
         if (mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage")
             && canShowAds()
             && nTimeFromStart >= 10000
@@ -83,6 +79,15 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
 
                 gPreferencesTool.edit("last_ad_show", GregorianCalendar().timeInMillis)
             }
+        }
+        else {
+            infoLog("Ad ERROR!")
+            infoLog(mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage").toString())
+            infoLog("canShowAds = ${canShowAds()}")
+            infoLog("is nTimeFromStart = ${nTimeFromStart >= 10000}")
+            infoLog("nTimeFromStart = $nTimeFromStart")
+            infoLog("nTimeFromLastAd = $nTimeFromLastAd")
+            infoLog("is nTimeFromLastAd = ${nTimeFromLastAd >= mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt()}")
         }
     }
 
