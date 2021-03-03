@@ -62,6 +62,12 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
                 "last_ad_show", 0
             )
 
+        infoLog(mConfigAppPackage)
+
+        infoLog(mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage").toString())
+        infoLog(mRemoteConfig.getLong("ad_chance_$mConfigAppPackage").toInt().toString())
+        infoLog(mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt().toString())
+
         if (mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage")
             && canShowAds()
             && nTimeFromStart >= 10000
