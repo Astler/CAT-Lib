@@ -118,9 +118,9 @@ fun Context.readFileFromFiles(pFileWithPath: String): String {
 fun Bitmap.saveToInternalStorage(pContext: Context, pName:String = "shareImage.png"): Uri {
     val wrapper = ContextWrapper(pContext)
 
-    var file = wrapper.getDir("${pContext.cacheDir}/images", Context.MODE_PRIVATE)
+    var file = wrapper.getDir("${pContext.cacheDir}", Context.MODE_PRIVATE)
 
-    file = File(file, pName)
+    file = File(file, "/images/$pName")
 
     try {
         val stream: OutputStream = FileOutputStream(file)
