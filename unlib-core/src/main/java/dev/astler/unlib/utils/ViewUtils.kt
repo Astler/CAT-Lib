@@ -2,6 +2,8 @@ package dev.astler.unlib.utils
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -96,4 +98,16 @@ fun Context.simpleTextChip(pText: String): View {
     mChip.text = pText
 
     return mChip
+}
+
+fun View.getScreenShotBitmap(): Bitmap? {
+    var screenshot: Bitmap? = null
+    try {
+        screenshot = Bitmap.createBitmap(measuredWidth, measuredHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(screenshot)
+        draw(canvas)
+    } catch (e: Exception) {
+        infoLog("Failed to capture screenshot because:" + e.message)
+    }
+    return screenshot
 }

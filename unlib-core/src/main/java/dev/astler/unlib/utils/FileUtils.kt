@@ -1,6 +1,9 @@
 package dev.astler.unlib.utils
 
 import android.content.Context
+import android.content.ContextWrapper
+import android.graphics.Bitmap
+import android.net.Uri
 import java.io.*
 import java.nio.channels.FileChannel
 import java.nio.charset.Charset
@@ -25,7 +28,6 @@ fun Context.writeToFileInFolder(pFileData: String, pFileName: String, pNameFolde
     }
 }
 
-
 fun File.copyDirectoryImpl(destDir: File) {
     val items = listFiles()
     if (items != null && items.isNotEmpty()) {
@@ -41,10 +43,8 @@ fun File.copyDirectoryImpl(destDir: File) {
 
                 newDir.mkdir()
 
-                // copy the directory (recursive call)
                 anItem.copyDirectory(newDir)
             } else {
-                // copy the file
                 val destFile = File(destDir, anItem.name)
                 anItem.copySingleFile(anItem, destFile)
             }
@@ -113,4 +113,23 @@ fun Context.readFileFromFiles(pFileWithPath: String): String {
     } catch (e: Exception) {
         "SWW"
     }
+}
+
+fun Bitmap.saveToInternalStorage(pContext: Context, pName:String = "shareImage.png"): Uri {
+    val wrapper = ContextWrapper(pContext)
+
+    var file = wrapper.getDir("${pContext.cacheDir}/images", Context.MODE_PRIVATE)
+
+    file = File(file, pName)
+
+    try {
+        val stream: OutputStream = FileOutputStream(file)
+        this.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        stream.flush()
+        stream.close()
+    } catch (e: IOException){
+        infoLog("Failed to save bitmap because:" + e.printStackTrace())
+    }
+
+    return Uri.parse(file.absolutePath)
 }

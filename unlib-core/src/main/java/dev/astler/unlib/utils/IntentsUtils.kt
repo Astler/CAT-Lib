@@ -1,14 +1,22 @@
 package dev.astler.unlib.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import dev.astler.unlib.core.R
 import dev.astler.unlib.utils.IntentsUtils.Companion.choosePictureActivity
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
 
 class IntentsUtils {
     companion object {
@@ -70,5 +78,25 @@ fun Context.openWebUrl(pUrl: String) {
     } catch (e: Exception) {
         Toast.makeText(this, R.string.something_went_wrong, Toast.LENGTH_SHORT)
                 .show()
+    }
+}
+
+fun Context.shareCacheDirBitmap(uri: Uri, pPath: String = "/images/shareImage.png"){
+    val fis = FileInputStream(uri.path)
+    val bitmap = BitmapFactory.decodeStream(fis)
+    fis.close()
+
+    try {
+        val file = File("${this.cacheDir}$pPath")
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(file))
+        val contentUri = FileProvider.getUriForFile(this, this.packageName + ".provider", file)
+
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+        shareIntent.type = "image/*"
+        this.startActivity(Intent.createChooser(shareIntent, "Share Image"))
+    } catch (e: FileNotFoundException) {
+        e.printStackTrace()
     }
 }
