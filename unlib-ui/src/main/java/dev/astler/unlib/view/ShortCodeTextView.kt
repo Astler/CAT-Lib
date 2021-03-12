@@ -4,14 +4,18 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
 import android.util.AttributeSet
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.drawable.toDrawable
+import androidx.core.text.toSpannable
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.getDrawableByName
+import dev.astler.unlib.view.span.CustomTypefaceSpan
 import java.util.regex.Pattern
 
 class ShortCodeTextView @JvmOverloads constructor(
@@ -44,9 +48,52 @@ class ShortCodeTextView @JvmOverloads constructor(
     }
 
     private fun replaceShortCodesWithImages(context: Context, text: CharSequence): Spannable {
-        val spannable = spannableFactory.newSpannable(text)
+        val spannable = addDecorations(spannableFactory.newSpannable(text))
+
         addImages(context, spannable)
         return spannable
+    }
+
+    private fun addDecorations(pSpannable: Spannable): Spannable {
+        var innerSpan = pSpannable
+
+        val boldPattern = Pattern.compile("\\Q[bold text=\\E([a-zA-Z0-9А-Яа-яё.,:@_ ]+?)\\Q/]\\E")
+
+        var matcher = boldPattern.matcher(innerSpan)
+
+        while (matcher.find()) {
+            var set = true
+
+            for (span in innerSpan.getSpans(matcher.start(), matcher.end(), CustomTypefaceSpan::class.java)) {
+                if (innerSpan.getSpanStart(span) >= matcher.start() && innerSpan.getSpanEnd(span) <= matcher.end()) {
+                    innerSpan.removeSpan(span)
+                } else {
+                    set = false
+                    break
+                }
+            }
+
+            if (set) {
+                val resToBold = innerSpan.subSequence(matcher.start(1), matcher.end(1)).toString().trim { it <= ' ' }
+
+                val sb = SpannableStringBuilder(innerSpan)
+
+                sb.replace(matcher.start(), matcher.end(), resToBold)
+
+                val typefaceSpan = CustomTypefaceSpan(ResourcesCompat.getFont(context, R.font.google_sans_bold))
+
+                sb.setSpan(typefaceSpan,
+                    matcher.start(), matcher.end() - (13),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                innerSpan = sb.toSpannable()
+
+                matcher = boldPattern.matcher(sb)
+            }
+        }
+
+        return innerSpan
     }
 
     private fun addImages(context: Context, pSpannable: Spannable) {

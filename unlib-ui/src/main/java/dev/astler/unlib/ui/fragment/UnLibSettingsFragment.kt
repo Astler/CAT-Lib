@@ -28,9 +28,7 @@ open class UnLibSettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
-        if (!requireContext().canShowAds()) {
-            mPreference?.isVisible = false
-        }
+        mPreference?.isVisible = requireContext().canShowAds()
     }
 
     override fun onResume() {
