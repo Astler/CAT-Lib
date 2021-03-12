@@ -2,6 +2,7 @@ package dev.astler.unlib.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -81,14 +82,12 @@ fun Context.openWebUrl(pUrl: String) {
     }
 }
 
-fun Context.shareCacheDirBitmap(uri: Uri, pPath: String = "/images/shareImage.png"){
-    val fis = FileInputStream(uri.path)
-    val bitmap = BitmapFactory.decodeStream(fis)
-    fis.close()
+fun Context.shareImagesDirBitmap(pPath: String = "shareImage.png"){
+    val wrapper = ContextWrapper(this)
+    var file = wrapper.getDir("images", Context.MODE_PRIVATE)
+    file = File(file, pPath)
 
     try {
-        val file = File("${this.cacheDir}$pPath")
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(file))
         val contentUri = FileProvider.getUriForFile(this, this.packageName + ".provider", file)
 
         val shareIntent = Intent()
