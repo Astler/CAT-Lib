@@ -87,7 +87,7 @@ fun Context.shareCacheDirBitmap(uri: Uri, pPath: String = "/images/shareImage.pn
     fis.close()
 
     try {
-        val file = File("${this.cacheDir}$pPath")
+        val file = File("${this.cacheDir}/shareImage.png")
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(file))
         val contentUri = FileProvider.getUriForFile(this, this.packageName + ".provider", file)
 
@@ -100,3 +100,23 @@ fun Context.shareCacheDirBitmap(uri: Uri, pPath: String = "/images/shareImage.pn
         e.printStackTrace()
     }
 }
+
+//fun Activity.shareCacheDirBitmap(uri: Uri){
+//    val fis = FileInputStream(uri.path)  // 2nd line
+//    val bitmap = BitmapFactory.decodeStream(fis)
+//    fis.close()
+//
+//    try {
+//        val file = File("${this.cacheDir}/drawing.png")
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(file))
+//        val contentUri = FileProvider.getUriForFile(this, this.packageName + ".provider", file)
+//
+//        val shareIntent = Intent()
+//        shareIntent.action = Intent.ACTION_SEND
+//        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+//        shareIntent.type = "image/*"
+//        this.startActivity(Intent.createChooser(shareIntent, "Share Image"))
+//    } catch (e: FileNotFoundException) {
+//        e.printStackTrace()
+//    }
+//}
