@@ -6,13 +6,15 @@ import dev.astler.unli.interfaces.CoreFragmentInterface
 import dev.astler.unlib.ui.interfaces.ActivityInterface
 import dev.astler.unlib.utils.getStringResource
 
-abstract class UnLibFragment(pLayoutId: Int = 0): Fragment(pLayoutId), CoreFragmentInterface {
+abstract class UnLibFragment(pLayoutId: Int = 0) : Fragment(pLayoutId), CoreFragmentInterface {
 
     lateinit var coreListener: ActivityInterface
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        coreListener = context as ActivityInterface
+    override fun onAttach(pContext: Context) {
+        super.onAttach(pContext)
+
+        if (pContext is ActivityInterface)
+            coreListener = pContext
     }
 
     override fun backPressed() {
