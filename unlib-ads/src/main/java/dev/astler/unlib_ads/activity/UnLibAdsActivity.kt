@@ -109,7 +109,10 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
         super.onCreate(savedInstanceState)
 
         UnliApp.getInstance().initAppLanguage(this)
+
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+
+        gPreferencesTool.edit("start_time", GregorianCalendar().timeInMillis)
 
         mRemoteConfig = Firebase.remoteConfig
 
