@@ -139,7 +139,7 @@ fun <T> Context.customSearchListDialog(
     pTitle: Int,
     pItems: List<T>,
     pItemsAdapter: BaseOneItemListAdapter<T>,
-    pFilter: (T) -> Boolean
+    pFilter: (T, String) -> Boolean
 ): AlertDialog {
     val nDialogView = DialogChooseItemBinding.inflate(LayoutInflater.from(this))
 
@@ -152,7 +152,7 @@ fun <T> Context.customSearchListDialog(
 
     nDialogView.itemsSearch.doOnTextChanged { pText, _, _, _ ->
         if (!pText.isNullOrEmpty()) {
-            pItemsAdapter.addItems(pItems.filter { pFilter(it) })
+            pItemsAdapter.addItems(pItems.filter { pFilter(it, pText) })
         } else {
             pItemsAdapter.addItems(pItems)
         }
