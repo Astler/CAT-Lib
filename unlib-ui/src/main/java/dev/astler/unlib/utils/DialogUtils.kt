@@ -136,13 +136,12 @@ fun Context.unLibDialog(
 }
 
 fun <T> Context.customSearchListDialog(
-    pLayoutInflater: LayoutInflater,
     pTitle: Int,
     pItems: List<T>,
     pItemsAdapter: BaseOneItemListAdapter<T>,
     pFilter: (T) -> Boolean
 ) {
-    val nDialogView = DialogChooseItemBinding.inflate(pLayoutInflater)
+    val nDialogView = DialogChooseItemBinding.inflate(LayoutInflater.from(this))
 
     val nChooseItemDialog = AlertDialog.Builder(this)
         .setView(nDialogView.root)
