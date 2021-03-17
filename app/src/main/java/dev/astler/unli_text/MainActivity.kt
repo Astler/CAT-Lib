@@ -5,6 +5,7 @@ import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.view.ShortCodeTextView
 
 class MainActivity : BaseUnLiActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

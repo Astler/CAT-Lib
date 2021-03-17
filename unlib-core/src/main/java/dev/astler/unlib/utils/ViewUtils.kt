@@ -107,7 +107,7 @@ fun View.getScreenShotBitmap(): Bitmap? {
         val canvas = Canvas(screenshot)
         draw(canvas)
     } catch (e: Exception) {
-        infoLog("Failed to capture screenshot because:" + e.message)
+        infoLog("UNLIB: Failed to capture screenshot because:" + e.message)
     }
     return screenshot
 }

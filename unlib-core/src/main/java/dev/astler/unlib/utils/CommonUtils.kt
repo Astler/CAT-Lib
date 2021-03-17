@@ -7,24 +7,20 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
-import dev.astler.unlib.gPreferencesTool
 
 @Suppress("DEPRECATION")
 fun Context.isOnline(): Boolean {
-
-    val connMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val nConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     if (Build.VERSION.SDK_INT < 23) {
-        val networkInfo = connMgr.activeNetworkInfo
+        val networkInfo = nConnectivityManager.activeNetworkInfo
 
         return networkInfo != null && networkInfo.isConnected && networkInfo.type == ConnectivityManager.TYPE_WIFI || networkInfo?.type == ConnectivityManager.TYPE_MOBILE
     } else {
-        val network = connMgr.activeNetwork
+        val network = nConnectivityManager.activeNetwork
 
         if (network != null) {
-            val networkCapabilities = connMgr.getNetworkCapabilities(network)
+            val networkCapabilities = nConnectivityManager.getNetworkCapabilities(network)
 
             if (networkCapabilities != null) {
                 return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || networkCapabilities.hasTransport(

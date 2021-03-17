@@ -80,4 +80,6 @@
     <string name="already_leave">Quit the application?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="app_name">UnLib</string>
+    <string name="share">Share with…</string>
 </resources>
