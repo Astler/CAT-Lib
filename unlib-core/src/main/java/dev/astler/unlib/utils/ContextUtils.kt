@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
@@ -81,12 +82,24 @@ fun Context.readFromBuffer(): CharSequence {
 
 fun Context.vibrateOnClick() {
     if (gPreferencesTool.vibrateOnClick) {
-        val vibe = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        val vibrationTime = 40L
-        if (Build.VERSION.SDK_INT >= 26) {
-            vibe.vibrate(VibrationEffect.createOneShot(vibrationTime, 10))
-        } else {
-            vibe.vibrate(vibrationTime)
-        }
+        vibrate()
+    }
+}
+
+fun Context.vibrate(pVibrationTime: Long = 40L) {
+    val vibe = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    if (Build.VERSION.SDK_INT >= 26) {
+        vibe.vibrate(VibrationEffect.createOneShot(pVibrationTime, 10))
+    } else {
+        vibe.vibrate(pVibrationTime)
+    }
+}
+
+fun Context.isPackageInstalled(packageName: String): Boolean {
+    return try {
+        packageManager.getPackageInfo(packageName, 0)
+        true
+    } catch (e: PackageManager.NameNotFoundException) {
+        false
     }
 }
