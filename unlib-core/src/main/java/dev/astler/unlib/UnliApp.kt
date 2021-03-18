@@ -5,18 +5,33 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.multidex.MultiDexApplication
+import dev.astler.unlib.config.AppConfig
+import dev.astler.unlib.core.R
+import dev.astler.unlib.utils.readFileFromAssets
+import dev.astler.unlib.utils.readFileFromRaw
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 val gPreferencesTool: PreferencesTool by lazy {
     UnliApp.prefs
 }
 
+val gAppConfig: AppConfig by lazy {
+    UnliApp.cAppConfig
+}
+
 val mJson = Json { allowStructuredMapKeys = true }
+
+/**
+ * config version: 1
+ * Astler; 19/03/2021
+ */
 
 open class UnliApp : MultiDexApplication() {
 
     companion object {
         lateinit var prefs: PreferencesTool
+        lateinit var cAppConfig: AppConfig
 
         private lateinit var applicationInstance: UnliApp
 
@@ -30,6 +45,16 @@ open class UnliApp : MultiDexApplication() {
         super.onCreate()
         prefs = PreferencesTool(this)
         applicationInstance = this
+
+        val nAppConfig = readFileFromRaw(R.raw.app_config)
+
+        cAppConfig = if (nAppConfig.isNotEmpty()) {
+            mJson.decodeFromString(nAppConfig)
+        }
+        else {
+            AppConfig()
+        }
+
         createNotificationChannels()
     }
 

@@ -84,6 +84,21 @@ fun File.copySingleFile(sourceFile: File, destFile: File) {
     }
 }
 
+fun Context.readFileFromRaw(pFileId: Int, pErrorReturn: String = ""): String {
+    return try {
+        val inputStream = resources.openRawResource(pFileId)
+        val size = inputStream.available()
+        val byteArray = ByteArray(size)
+        inputStream.read(byteArray)
+        inputStream.close()
+
+        String(byteArray, Charset.defaultCharset())
+
+    } catch (e: Exception) {
+        infoLog("UNLIB: Error while reading raw file $e")
+        pErrorReturn
+    }
+}
 
 fun Context.readFileFromAssets(path: String): String {
     return try {
