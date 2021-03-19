@@ -20,6 +20,7 @@ import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import dev.astler.unlib.PreferencesTool
 import dev.astler.unlib.UnliApp
+import dev.astler.unlib.gAppConfig
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.ui.activity.BaseUnLiActivity
@@ -40,9 +41,9 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
     private var showAdAfterLoading = false
     var infoDialog: AlertDialog? = null
 
-    open var mInterstitialAdId = ""
-    open var mRewardedAdId = ""
-    open var mProPackageName = ""
+    open var mInterstitialAdId = gAppConfig.mInterstitialAdId
+    open var mRewardedAdId = gAppConfig.mRewardedAdId
+    open var mProPackageName = gAppConfig.mProPackageName
 
     open val mConfigAppPackage: String by lazy {
         packageName.replace(".", "_")
@@ -99,7 +100,7 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
         return AdRequest.Builder().build()
     }
 
-    open var mNeedAgeCheck: Boolean = false
+    open var mNeedAgeCheck: Boolean = gAppConfig.mNeedAgeCheck
 
     open val setTagForChildDirectedTreatment: Boolean by lazy {
         gPreferencesTool.getBoolean("child_ads", mNeedAgeCheck)
@@ -258,7 +259,7 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
     }
 
     private fun showNoAdsDialog() {
-        if (mProPackageName.isNotEmpty()) {//"com.astler.knowlegebook_paid"
+        if (mProPackageName.isNotEmpty()) {
             unLibDialog(
                 getString(R.string.disable_ads),
                 getString(R.string.disable_ads_msg),
