@@ -8,7 +8,7 @@ import java.util.*
 fun Context.canShowAds(): Boolean {
     return if (
         applicationContext.packageName.endsWith("paid") ||
-        gPreferencesTool.getBoolean(cNoAdsName)
+        gPreferencesTool.getBoolean(cNoAdsName, false)
     ) {
         false
     } else {
