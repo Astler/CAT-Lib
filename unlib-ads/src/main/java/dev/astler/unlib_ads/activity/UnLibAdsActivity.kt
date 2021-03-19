@@ -80,15 +80,18 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
 
                 gPreferencesTool.edit("last_ad_show", GregorianCalendar().timeInMillis)
             }
-        }
-        else {
+        } else {
             infoLog("Ad ERROR!")
             infoLog(mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage").toString())
             infoLog("canShowAds = ${canShowAds()}")
             infoLog("is nTimeFromStart = ${nTimeFromStart >= 10000}")
             infoLog("nTimeFromStart = $nTimeFromStart")
             infoLog("nTimeFromLastAd = $nTimeFromLastAd")
-            infoLog("is nTimeFromLastAd = ${nTimeFromLastAd >= mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt()}")
+            infoLog(
+                "is nTimeFromLastAd = ${
+                    nTimeFromLastAd >= mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt()
+                }"
+            )
         }
     }
 
@@ -263,7 +266,7 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
             unLibDialog(
                 getString(R.string.disable_ads),
                 getString(R.string.disable_ads_msg),
-                getString(R.string.watch_ads), getString(R.string.buy_pro), pPositiveClick = {
+                getString(R.string.buy_pro), getString(R.string.watch_ads), pPositiveClick = {
                     openMarketApp(mProPackageName)
                 }, pNegativeClick = { showRewardAd() })
         } else {
