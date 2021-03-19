@@ -1,3 +1,7 @@
 {
-  "mMainActivityPackage": "dev.astler.unlib"
+  "mMainActivityPackage": "",
+  "mInterstitialAdId": "",
+  "mRewardedAdId": "",
+  "mProPackageName": "",
+  "mNeedAgeCheck": false
 }

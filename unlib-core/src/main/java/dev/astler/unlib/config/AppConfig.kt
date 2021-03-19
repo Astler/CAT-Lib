@@ -4,5 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AppConfig(
-    val mMainActivityPackage: String = ""
+    val mMainActivityPackage: String = "",
+    val mInterstitialAdId: String = "",
+    val mRewardedAdId: String = "",
+    val mProPackageName: String = "",
+    val mNeedAgeCheck: Boolean = false,
 )
