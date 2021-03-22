@@ -8,5 +8,6 @@ data class AppConfig(
     val mInterstitialAdId: String = "",
     val mRewardedAdId: String = "",
     val mProPackageName: String = "",
+    val mLastTestDevice: String = "",
     val mNeedAgeCheck: Boolean = false,
 )

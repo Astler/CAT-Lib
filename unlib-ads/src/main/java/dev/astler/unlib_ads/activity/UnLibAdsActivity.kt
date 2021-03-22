@@ -96,7 +96,7 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
     }
 
     open fun getTestDevicesList(): ArrayList<String> {
-        return arrayListOf(AdRequest.DEVICE_ID_EMULATOR, "46BCDEE9C1F5ED2ADF3A5DB3889DDFB5")
+        return arrayListOf(AdRequest.DEVICE_ID_EMULATOR, "46BCDEE9C1F5ED2ADF3A5DB3889DDFB5", gAppConfig.mLastTestDevice)
     }
 
     open fun getAdRequest(): AdRequest {
