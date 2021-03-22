@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdCallback
@@ -37,7 +39,7 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
     protected lateinit var mRemoteConfig: FirebaseRemoteConfig
 
     lateinit var mRewardedVideo: RewardedAd
-    private lateinit var mInterstitialAd: InterstitialAd
+    private var mInterstitialAd: InterstitialAd? = null
     private var showAdAfterLoading = false
     var infoDialog: AlertDialog? = null
 
@@ -63,17 +65,20 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
                 "last_ad_show", 0
             )
 
-        infoLog(mConfigAppPackage)
+        val nShowAds = mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage")
+        val nAdsPause = mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt()
+        val nAdsChance = mRemoteConfig.getLong("ad_chance_$mConfigAppPackage").toInt()
 
-        if (mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage")
+        infoLog("UNLIB_AD: loaded ads config = $nShowAds, $nAdsPause, $nAdsChance")
+
+        if (nShowAds
             && canShowAds()
             && nTimeFromStart >= 10000
-            && nTimeFromLastAd >= mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt()
+            && nTimeFromLastAd >= nAdsPause
         ) {
-            val nMaxRand = mRemoteConfig.getLong("ad_chance_$mConfigAppPackage").toInt()
-            val randNum = Random.nextInt(nMaxRand)
+            val randNum = Random.nextInt(nAdsChance)
 
-            infoLog("AD CHANCE: ${randNum}/${nMaxRand}")
+            infoLog("UNLIB_AD: AD CHANCE: ${randNum}/${nAdsChance}")
 
             if (randNum == 0) {
                 showInterstitialAd()
@@ -81,17 +86,7 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
                 gPreferencesTool.edit("last_ad_show", GregorianCalendar().timeInMillis)
             }
         } else {
-            infoLog("Ad ERROR!")
-            infoLog(mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage").toString())
-            infoLog("canShowAds = ${canShowAds()}")
-            infoLog("is nTimeFromStart = ${nTimeFromStart >= 10000}")
-            infoLog("nTimeFromStart = $nTimeFromStart")
-            infoLog("nTimeFromLastAd = $nTimeFromLastAd")
-            infoLog(
-                "is nTimeFromLastAd = ${
-                    nTimeFromLastAd >= mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt()
-                }"
-            )
+            infoLog("UNLIB_AD: Dont show ad! Possible reasons?\ncanShowAds = ${canShowAds()}, enabled in config? -> $nShowAds, time from start out? -> ${nTimeFromStart >= 10000}, time from last ad? -> ${nTimeFromLastAd >= nAdsPause}")
         }
     }
 
@@ -172,19 +167,7 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
             mRewardedVideo.loadAd(AdRequest.Builder().build(), onRewardedAdLoadCallback())
         }
 
-        mInterstitialAd = InterstitialAd(this)
-
-        if (mInterstitialAdId.isNotEmpty()) {
-
-            mInterstitialAd.adUnitId = mInterstitialAdId
-            mInterstitialAd.loadAd(getAdRequest())
-
-            mInterstitialAd.adListener = object : AdListener() {
-                override fun onAdClosed() {
-                    mInterstitialAd.loadAd(getAdRequest())
-                }
-            }
-        }
+        loadAd()
     }
 
     open fun onRewardedAdLoadCallback(): RewardedAdLoadCallback =
@@ -218,11 +201,10 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
     }
 
     override fun showInterstitialAd() {
-        if (mInterstitialAd.isLoaded) {
-            mInterstitialAd.show()
+        if (mInterstitialAd != null) {
+            mInterstitialAd?.show(this)
         } else {
-            if (!mInterstitialAd.isLoading)
-                mInterstitialAd.loadAd(getAdRequest())
+            requestNewInterstitial()
         }
     }
 
@@ -284,6 +266,47 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
 
         if (key == PreferencesTool.dayWithoutAdsKey) {
             hideAd()
+        }
+    }
+
+    private fun loadAd() {
+        InterstitialAd.load(
+            this,
+            mInterstitialAdId,
+            getAdRequest(),
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    mInterstitialAd = interstitialAd
+                    mInterstitialAd?.fullScreenContentCallback =
+                        object : FullScreenContentCallback() {
+                            override fun onAdDismissedFullScreenContent() {
+                                super.onAdDismissedFullScreenContent()
+                                mInterstitialAd = null
+                                requestNewInterstitial()
+                            }
+
+                            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                                super.onAdFailedToShowFullScreenContent(adError)
+                                mInterstitialAd = null
+                                requestNewInterstitial()
+                            }
+
+                            override fun onAdShowedFullScreenContent() {
+                                super.onAdShowedFullScreenContent()
+                                this@UnLibAdsActivity.mInterstitialAd = null
+                            }
+                        }
+                }
+
+                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                    mInterstitialAd = null
+                }
+            })
+    }
+
+    private fun requestNewInterstitial() {
+        if (mInterstitialAd == null) {
+            loadAd()
         }
     }
 }
