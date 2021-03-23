@@ -12,6 +12,15 @@ import dev.astler.unlib.adapters.BaseOneItemListAdapter
 import dev.astler.unlib.core.R
 import dev.astler.unlib.ui.databinding.DialogChooseItemBinding
 
+fun Context.unLibInfoDialog(pText: String, pInstantShow: Boolean = true): AlertDialog {
+    val nDialog = AlertDialog.Builder(this).setMessage(pText).create()
+
+    if (pInstantShow)
+        nDialog.show()
+
+    return nDialog
+}
+
 fun Context.showInfoDialog(pTitle: CharSequence, pMsg: CharSequence) {
     unLibDialog(pTitle, pMsg, getString(R.string.ok), pPositiveClick = { })
 }
