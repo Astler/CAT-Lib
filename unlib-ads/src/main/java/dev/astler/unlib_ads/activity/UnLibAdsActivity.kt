@@ -80,11 +80,8 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
 
             infoLog("UNLIB_AD: AD CHANCE: ${randNum}/${nAdsChance}")
 
-            if (randNum == 0) {
+            if (randNum == 0)
                 showInterstitialAd()
-
-                gPreferencesTool.edit("last_ad_show", GregorianCalendar().timeInMillis)
-            }
         } else {
             infoLog("UNLIB_AD: Dont show ad! Possible reasons?\ncanShowAds = ${canShowAds()}, enabled in config? -> $nShowAds, time from start out? -> ${nTimeFromStart >= 10000}, time from last ad? -> ${nTimeFromLastAd >= nAdsPause}")
         }
@@ -203,6 +200,7 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
     override fun showInterstitialAd() {
         if (mInterstitialAd != null) {
             mInterstitialAd?.show(this)
+            gPreferencesTool.edit("last_ad_show", GregorianCalendar().timeInMillis)
         } else {
             requestNewInterstitial()
         }
