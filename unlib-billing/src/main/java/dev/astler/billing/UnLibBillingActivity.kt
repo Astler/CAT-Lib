@@ -9,7 +9,7 @@ import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.utils.infoLog
 
-open class UnLibBillingActivity : BaseUnLiActivity() {
+open class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener {
 
     private val mPurchasesUpdatedListener =
         PurchasesUpdatedListener { billingResult, purchases ->
@@ -55,5 +55,9 @@ open class UnLibBillingActivity : BaseUnLiActivity() {
 
             override fun onBillingServiceDisconnected() {}
         })
+    }
+
+    override fun buyItem(pItemName: String) {
+        mBillingViewModel.buySomething(mBillingClient, this, pItemName)
     }
 }
