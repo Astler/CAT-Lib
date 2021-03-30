@@ -33,7 +33,6 @@ class AppOpenManager(myApplication: AdsUnLibApp): Application.ActivityLifecycleC
         this.mApplication.registerActivityLifecycleCallbacks(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         mLastShowTime = gPreferencesTool.getLong("start_ad_timer", 0)
-        infoLog("START AD:mLastShowTime = $mLastShowTime")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
@@ -42,8 +41,6 @@ class AppOpenManager(myApplication: AdsUnLibApp): Application.ActivityLifecycleC
     }
 
     private fun showAdIfAvailable() {
-        infoLog("START AD: isAdAvailable = $isAdAvailable")
-
         if (!isShowingAd && isAdAvailable) {
             infoLog("START AD: Will show ad.")
             val fullScreenContentCallback: FullScreenContentCallback =
@@ -66,12 +63,10 @@ class AppOpenManager(myApplication: AdsUnLibApp): Application.ActivityLifecycleC
                 }
             appOpenAd!!.show(currentActivity, fullScreenContentCallback)
         } else {
-            infoLog("START AD: Can not show ad.")
             fetchAd()
         }
     }
 
-    /** Request an ad  */
     fun fetchAd() {
         if (isAdAvailable) {
             return

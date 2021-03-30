@@ -104,3 +104,12 @@ fun Context.shareImageByUri(uri: Uri){
         infoLog("UNLIB: Error while creating share image by uri $uri task: $e")
     }
 }
+
+fun Context.openAstlerInGoogle() {
+    startActivity(
+        Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://play.google.com/store/apps/dev?id=4948748506238999540")
+        )
+    )
+}

@@ -37,6 +37,7 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener, ActivityInterface {
 
     protected lateinit var mRemoteConfig: FirebaseRemoteConfig
+    protected var mAdView: AdView? = null
 
     lateinit var mRewardedVideo: RewardedAd
     private var mInterstitialAd: InterstitialAd? = null
@@ -217,7 +218,9 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
         }
     }
 
-    open fun hideAd() {}
+    open fun hideAd() {
+        mAdView?.goneView()
+    }
 
     override fun navigationViewInflateMenus(navigationView: NavigationView) {
         navigationView.menu.clear()
@@ -306,5 +309,20 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(),
         if (mInterstitialAd == null) {
             loadAd()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mAdView?.pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mAdView?.resume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mAdView?.destroy()
     }
 }
