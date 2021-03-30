@@ -9,7 +9,7 @@ import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.utils.infoLog
 
-class UnLibBillingActivity : BaseUnLiActivity() {
+open class UnLibBillingActivity : BaseUnLiActivity() {
 
     private val mPurchasesUpdatedListener =
         PurchasesUpdatedListener { billingResult, purchases ->
