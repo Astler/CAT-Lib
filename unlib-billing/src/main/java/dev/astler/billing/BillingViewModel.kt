@@ -26,6 +26,7 @@ class BillingViewModel(pApp: Application): AndroidViewModel(pApp) {
         GlobalScope.launch(Dispatchers.IO) {
             pBillingClient.querySkuDetailsAsync(params.build()) { _, skuDetailsList ->
                 skuDetailsList?.forEach {
+                    infoLog("loaded = ${it.sku}")
                     mItemsList.add(it)
                 }
             }
@@ -33,6 +34,8 @@ class BillingViewModel(pApp: Application): AndroidViewModel(pApp) {
     }
 
     fun buySomething(pBillingClient: BillingClient, pActivity: Activity, pSku: String = "") {
+        infoLog("try to buy = $pSku")
+
         var nSkuDetails: SkuDetails? = null
 
         mItemsList.forEach {
