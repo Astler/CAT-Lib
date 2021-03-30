@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.*
@@ -32,9 +33,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
-abstract class UnLibAdsActivity : BaseUnLiActivity(),
-    NavigationView.OnNavigationItemSelectedListener,
-    SharedPreferences.OnSharedPreferenceChangeListener, ActivityInterface {
+abstract class UnLibAdsActivity: BaseUnLiActivity() {
 
     protected lateinit var mRemoteConfig: FirebaseRemoteConfig
     protected var mAdView: AdView? = null

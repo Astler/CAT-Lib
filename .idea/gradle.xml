@@ -12,8 +12,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/unli" />
             <option value="$PROJECT_DIR$/unlib-ads" />
+            <option value="$PROJECT_DIR$/unlib-billing" />
             <option value="$PROJECT_DIR$/unlib-core" />
             <option value="$PROJECT_DIR$/unlib-ui" />
           </set>
