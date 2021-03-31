@@ -1,5 +1,6 @@
 package dev.astler.billing
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.android.billingclient.api.*
@@ -9,18 +10,24 @@ import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.utils.infoLog
 
-open class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener {
+abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener {
 
     private val mPurchasesUpdatedListener =
-        PurchasesUpdatedListener { billingResult, purchases ->
-            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
-                for (purchase in purchases) {
-                    if (purchase.sku == cBillingNoAdsName) {
+        PurchasesUpdatedListener { billingResult, pPurchases ->
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && pPurchases != null) {
+                pPurchases.forEach { pPurchase ->
+                    if (pPurchase.sku == cBillingNoAdsName) {
                         gPreferencesTool.edit(cNoAdsName, true)
                     }
+
+                    updatePurchases(pPurchase)
                 }
             }
         }
+
+    open fun updatePurchases(pPurchase: Purchase) {
+
+    }
 
     private val mBillingClient: BillingClient by lazy {
         BillingClient.newBuilder(this)
@@ -42,19 +49,31 @@ open class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener {
                     mBillingViewModel.queryItemsDetails(mBillingClient)
                 }
 
-                mBillingClient.queryPurchases(BillingClient.SkuType.INAPP).purchasesList?.forEach {
-                    infoLog("BILLING: got item = ${it.sku}")
+                mBillingClient.queryPurchases(BillingClient.SkuType.INAPP).purchasesList?.forEach { pPurchase ->
+                    infoLog("BILLING: got item = ${pPurchase.sku}")
 
-                    if (it.sku == cBillingNoAdsName)
+                    if (pPurchase.sku == cBillingNoAdsName)
                         gPreferencesTool.edit(
                             cNoAdsName,
-                            it.purchaseState == Purchase.PurchaseState.PURCHASED
+                            pPurchase.purchaseState == Purchase.PurchaseState.PURCHASED
                         )
+
+                    queryPurchases(pPurchase)
                 }
             }
 
             override fun onBillingServiceDisconnected() {}
         })
+    }
+
+    open fun queryPurchases(pPurchase: Purchase) {
+
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        super.onSharedPreferenceChanged(sharedPreferences, key)
+
+        if (key == cNoAdsName) recreate()
     }
 
     override fun buyItem(pItemName: String) {

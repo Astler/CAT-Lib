@@ -34,7 +34,7 @@ class BillingViewModel(pApp: Application): AndroidViewModel(pApp) {
     }
 
     fun buySomething(pBillingClient: BillingClient, pActivity: Activity, pSku: String = "") {
-        infoLog("try to buy = $pSku")
+        infoLog("BILLING: try to buy = $pSku")
 
         var nSkuDetails: SkuDetails? = null
 
