@@ -8,17 +8,19 @@ import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
 import dev.astler.unlib.cBillingNoAdsName
+import dev.astler.unlib.gAppConfig
 import dev.astler.unlib.utils.infoLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class BillingViewModel(pApp: Application): AndroidViewModel(pApp) {
+class BillingViewModel(pApp: Application) : AndroidViewModel(pApp) {
 
     private val mItemsList = ArrayList<SkuDetails>()
 
     fun queryItemsDetails(pBillingClient: BillingClient) {
-        val skuList = listOf(cBillingNoAdsName)
+        val skuList = ArrayList(gAppConfig.mBillingItems)
+        skuList.add(cBillingNoAdsName)
 
         val params = SkuDetailsParams.newBuilder()
         params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP)

@@ -10,4 +10,5 @@ data class AppConfig(
     val mProPackageName: String = "",
     val mLastTestDevice: String = "",
     val mNeedAgeCheck: Boolean = false,
+    val mBillingItems: List<String> = listOf(),
 )
