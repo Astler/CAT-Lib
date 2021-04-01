@@ -29,7 +29,7 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
 
     }
 
-    private val mBillingClient: BillingClient by lazy {
+    val mBillingClient: BillingClient by lazy {
         BillingClient.newBuilder(this)
             .setListener(mPurchasesUpdatedListener)
             .enablePendingPurchases()
