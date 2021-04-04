@@ -52,6 +52,8 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
                 mBillingClient.queryPurchases(BillingClient.SkuType.INAPP).purchasesList?.forEach { pPurchase ->
                     infoLog("BILLING: got item = ${pPurchase.sku}")
 
+                    infoLog("${pPurchase.purchaseState == Purchase.PurchaseState.PURCHASED}")
+
                     if (pPurchase.sku == cBillingNoAdsName)
                         gPreferencesTool.edit(
                             cNoAdsName,
