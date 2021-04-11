@@ -20,6 +20,8 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
                         gPreferencesTool.edit(cNoAdsName, true)
                     }
 
+                    updatePurchases(pPurchase)
+
                     if (!pPurchase.isAcknowledged) {
                         infoLog("BILLING: Acknowledge pur")
 
@@ -37,7 +39,6 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
                         }
                     }
 
-                    updatePurchases(pPurchase)
                 }
             }
         }
