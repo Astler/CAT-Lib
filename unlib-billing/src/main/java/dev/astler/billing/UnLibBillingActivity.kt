@@ -16,35 +16,33 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
         PurchasesUpdatedListener { billingResult, pPurchases ->
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && pPurchases != null) {
                 pPurchases.forEach { pPurchase ->
-                    if (pPurchase.sku == cBillingNoAdsName) {
-                        gPreferencesTool.edit(cNoAdsName, true)
-                    }
-
                     updatePurchases(pPurchase)
-
-                    if (!pPurchase.isAcknowledged) {
-                        infoLog("BILLING: Acknowledge pur")
-
-                        val acknowledgePurchaseParams =
-                            AcknowledgePurchaseParams.newBuilder()
-                                .setPurchaseToken(pPurchase.purchaseToken).build()
-
-                        mBillingClient.acknowledgePurchase(acknowledgePurchaseParams) {
-                                billingResult ->
-                            val billingResponseCode = billingResult.responseCode
-                            val billingDebugMessage = billingResult.debugMessage
-
-                            infoLog("BILLING: response code: $billingResponseCode")
-                            infoLog("BILLING: debugMessage : $billingDebugMessage")
-                        }
-                    }
-
                 }
             }
         }
-
+    //TODO ACKNOWLEGE CONFIG!
     open fun updatePurchases(pPurchase: Purchase) {
+        if (pPurchase.sku == cBillingNoAdsName) {
+            gPreferencesTool.edit(cNoAdsName, true)
+        }
 
+        if (pPurchase.sku == cBillingNoAdsName) {
+            if (!pPurchase.isAcknowledged) {
+                infoLog("BILLING: Acknowledge pur")
+
+                val acknowledgePurchaseParams =
+                    AcknowledgePurchaseParams.newBuilder()
+                        .setPurchaseToken(pPurchase.purchaseToken).build()
+
+                mBillingClient.acknowledgePurchase(acknowledgePurchaseParams) { billingResult ->
+                    val billingResponseCode = billingResult.responseCode
+                    val billingDebugMessage = billingResult.debugMessage
+
+                    infoLog("BILLING: response code: $billingResponseCode")
+                    infoLog("BILLING: debugMessage : $billingDebugMessage")
+                }
+            }
+        }
     }
 
     val mBillingClient: BillingClient by lazy {
