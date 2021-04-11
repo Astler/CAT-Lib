@@ -20,6 +20,23 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
                         gPreferencesTool.edit(cNoAdsName, true)
                     }
 
+                    if (!pPurchase.isAcknowledged) {
+                        infoLog("BILLING: Acknowledge pur")
+
+                        val acknowledgePurchaseParams =
+                            AcknowledgePurchaseParams.newBuilder()
+                                .setPurchaseToken(pPurchase.purchaseToken).build()
+
+                        mBillingClient.acknowledgePurchase(acknowledgePurchaseParams) {
+                                billingResult ->
+                            val billingResponseCode = billingResult.responseCode
+                            val billingDebugMessage = billingResult.debugMessage
+
+                            infoLog("BILLING: response code: $billingResponseCode")
+                            infoLog("BILLING: debugMessage : $billingDebugMessage")
+                        }
+                    }
+
                     updatePurchases(pPurchase)
                 }
             }
@@ -59,6 +76,22 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
                             cNoAdsName,
                             pPurchase.purchaseState == Purchase.PurchaseState.PURCHASED
                         )
+
+                    if (!pPurchase.isAcknowledged) {
+                        infoLog("BILLING: Acknowledge pur")
+                        val acknowledgePurchaseParams =
+                            AcknowledgePurchaseParams.newBuilder()
+                                .setPurchaseToken(pPurchase.purchaseToken).build()
+
+                        mBillingClient.acknowledgePurchase(acknowledgePurchaseParams) {
+                                billingResult ->
+                            val billingResponseCode = billingResult.responseCode
+                            val billingDebugMessage = billingResult.debugMessage
+
+                            infoLog("BILLING: response code: $billingResponseCode")
+                            infoLog("BILLING: debugMessage : $billingDebugMessage")
+                        }
+                    }
 
                     queryPurchases(pPurchase)
                 }
