@@ -20,7 +20,7 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
                 }
             }
         }
-    //TODO ACKNOWLEGE CONFIG!
+    //TODO ACKNOWLEDGE CONFIG!
     open fun updatePurchases(pPurchase: Purchase) {
         if (pPurchase.sku == cBillingNoAdsName) {
             gPreferencesTool.edit(cNoAdsName, true)
@@ -76,22 +76,6 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
                             pPurchase.purchaseState == Purchase.PurchaseState.PURCHASED
                         )
 
-                    if (!pPurchase.isAcknowledged) {
-                        infoLog("BILLING: Acknowledge pur")
-                        val acknowledgePurchaseParams =
-                            AcknowledgePurchaseParams.newBuilder()
-                                .setPurchaseToken(pPurchase.purchaseToken).build()
-
-                        mBillingClient.acknowledgePurchase(acknowledgePurchaseParams) {
-                                billingResult ->
-                            val billingResponseCode = billingResult.responseCode
-                            val billingDebugMessage = billingResult.debugMessage
-
-                            infoLog("BILLING: response code: $billingResponseCode")
-                            infoLog("BILLING: debugMessage : $billingDebugMessage")
-                        }
-                    }
-
                     queryPurchases(pPurchase)
                 }
             }
@@ -101,7 +85,23 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
     }
 
     open fun queryPurchases(pPurchase: Purchase) {
+        if (pPurchase.sku == cBillingNoAdsName) {
+            if (!pPurchase.isAcknowledged) {
+                infoLog("BILLING: Acknowledge pur")
 
+                val acknowledgePurchaseParams =
+                    AcknowledgePurchaseParams.newBuilder()
+                        .setPurchaseToken(pPurchase.purchaseToken).build()
+
+                mBillingClient.acknowledgePurchase(acknowledgePurchaseParams) { billingResult ->
+                    val billingResponseCode = billingResult.responseCode
+                    val billingDebugMessage = billingResult.debugMessage
+
+                    infoLog("BILLING: response code: $billingResponseCode")
+                    infoLog("BILLING: debugMessage : $billingDebugMessage")
+                }
+            }
+        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
