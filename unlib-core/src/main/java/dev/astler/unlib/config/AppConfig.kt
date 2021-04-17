@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 data class AppConfig(
     val mMainActivityPackage: String = "",
     val mInterstitialAdId: String = "",
+    val mStartAdId: String = "",
     val mRewardedAdId: String = "",
     val mProPackageName: String = "",
     val mLastTestDevice: String = "",

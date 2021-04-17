@@ -13,6 +13,7 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.appopen.AppOpenAd.AppOpenAdLoadCallback
+import dev.astler.unlib.gAppConfig
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.canShowAds
 import dev.astler.unlib.utils.infoLog
@@ -84,7 +85,7 @@ class AppOpenManager(myApplication: AdsUnLibApp): Application.ActivityLifecycleC
         }
 
         AppOpenAd.load(
-            mApplication, AD_UNIT_ID, adRequest,
+            mApplication, gAppConfig.mStartAdId, adRequest,
             AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT, loadCallback
         )
     }
@@ -107,10 +108,6 @@ class AppOpenManager(myApplication: AdsUnLibApp): Application.ActivityLifecycleC
         val dateDifference = Date().time - loadTime
         val numMilliSecondsPerHour: Long = 3600000
         return dateDifference < numMilliSecondsPerHour * numHours
-    }
-
-    companion object {
-        private const val AD_UNIT_ID = "ca-app-pub-1536736011746190/4240499275"
     }
 
     override fun onActivityCreated(pActivity: Activity, p1: Bundle?) {}
