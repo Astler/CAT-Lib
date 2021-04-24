@@ -41,5 +41,4 @@ open class AsyncCell(context: Context) : FrameLayout(context, null, 0) {
     }
 
     open fun createDataBindingView(view: View): View? = view
-
 }
