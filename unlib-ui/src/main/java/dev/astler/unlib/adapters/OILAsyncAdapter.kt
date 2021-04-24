@@ -57,6 +57,6 @@ class OILAsyncAdapter<T> internal constructor(
 
 }
 
-interface LoadOILItem<T> {
+fun interface LoadOILItem<T> {
     fun loadData(pData: T, pHolder: OILAsyncAdapter.OILAsyncViewHolder)
 }
