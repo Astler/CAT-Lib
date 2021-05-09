@@ -181,3 +181,59 @@ fun <T> Context.showCustomSearchListDialog(
 ) {
     customSearchListDialog(pTitle, pItems, pItemsAdapter, pFilter).show()
 }
+
+/**
+ * New dialogs era
+ */
+
+data class RecyclerWithEditFieldDialogProperties(
+    val mTitleId: Int = -1,
+    val mTitle: String = "Empty",
+    val mShowSearchField: Boolean = false,
+    val mShowAction: Boolean = false,
+    val mAction: () -> Unit = {}
+)
+
+fun <T> Context.recyclerWithFieldDialog(
+    pProperties: RecyclerWithEditFieldDialogProperties,
+    pItems: List<T>,
+    pItemsAdapter: BaseOneItemListAdapter<T>,
+    pFilter: (T, CharSequence) -> Boolean
+): AlertDialog {
+    val nDialogView = DialogChooseItemBinding.inflate(LayoutInflater.from(this))
+
+    val nChooseItemDialogBuilder = AlertDialog.Builder(this)
+        .setView(nDialogView.root)
+
+    if (pProperties.mTitleId == -1) nChooseItemDialogBuilder.setTitle(pProperties.mTitle)
+    else nChooseItemDialogBuilder.setTitle(pProperties.mTitleId)
+
+    if (pProperties.mShowAction || pProperties.mShowSearchField) {
+        if (pProperties.mShowAction) {
+            nDialogView.actionButton.showView()
+            nDialogView.actionButton.setOnClickListener {
+                pProperties.mAction()
+            }
+        }
+    }
+    else {
+        nDialogView.searchBar.goneView()
+    }
+
+    val nChooseItemDialog = nChooseItemDialogBuilder.create()
+
+    pItemsAdapter.addItems(pItems)
+
+    nDialogView.itemsSearch.doOnTextChanged { pText, _, _, _ ->
+        if (!pText.isNullOrEmpty()) {
+            pItemsAdapter.addItems(pItems.filter { pFilter(it, pText) })
+        } else {
+            pItemsAdapter.addItems(pItems)
+        }
+    }
+
+    nDialogView.itemsList.layoutManager = LinearLayoutManager(this)
+    nDialogView.itemsList.adapter = pItemsAdapter
+
+    return nChooseItemDialog
+}

@@ -5,21 +5,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
-        app:hintTextColor="?attr/contrastColorByTheme"
-        app:boxStrokeColor="?attr/contrastColorByTheme"
-
+    <LinearLayout
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent">
+        android:orientation="horizontal">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:layout_weight="1"
             android:background="@color/transparent"
-            android:id="@+id/items_search"
-            android:layout_width="match_parent"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            app:boxStrokeColor="?attr/contrastColorByTheme"
+            app:hintTextColor="?attr/contrastColorByTheme">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/items_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:hint="@string/search" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/actionButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/search" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:visibility="gone"/>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/items_list"
