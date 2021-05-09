@@ -186,12 +186,15 @@ fun <T> Context.showCustomSearchListDialog(
  * New dialogs era
  */
 
+enum class RecyclerWithEditFieldDialogMode {
+    EDIT, SEARCH, INFO
+}
+
 data class RecyclerWithEditFieldDialogProperties(
     val mTitleId: Int = -1,
     val mTitle: String = "Empty",
-    val mShowSearchField: Boolean = false,
-    val mShowAction: Boolean = false,
-    val mAction: () -> Unit = {}
+    val mMode: RecyclerWithEditFieldDialogMode = RecyclerWithEditFieldDialogMode.INFO,
+    val mAction: (pInput: CharSequence) -> Unit = {}
 )
 
 fun <T> Context.recyclerWithFieldDialog(
@@ -208,29 +211,33 @@ fun <T> Context.recyclerWithFieldDialog(
     if (pProperties.mTitleId == -1) nChooseItemDialogBuilder.setTitle(pProperties.mTitle)
     else nChooseItemDialogBuilder.setTitle(pProperties.mTitleId)
 
-    if (pProperties.mShowAction || pProperties.mShowSearchField) {
-        if (pProperties.mShowAction) {
-            nDialogView.actionButton.showView()
-            nDialogView.actionButton.setOnClickListener {
-                pProperties.mAction()
+    when (pProperties.mMode) {
+        RecyclerWithEditFieldDialogMode.SEARCH -> {
+            nDialogView.searchBar.showView()
+            nDialogView.actionButton.goneView()
+            nDialogView.itemsSearch.doOnTextChanged { pText, _, _, _ ->
+                if (!pText.isNullOrEmpty()) {
+                    pItemsAdapter.addItems(pItems.filter { pFilter(it, pText) })
+                } else {
+                    pItemsAdapter.addItems(pItems)
+                }
             }
         }
-    }
-    else {
-        nDialogView.searchBar.goneView()
+        RecyclerWithEditFieldDialogMode.EDIT -> {
+            nDialogView.searchBar.showView()
+            nDialogView.actionButton.showView()
+            nDialogView.actionButton.setOnClickListener {
+                pProperties.mAction(nDialogView.itemsSearch.text.toString())
+            }
+        }
+        else -> {
+            nDialogView.searchBar.goneView()
+        }
     }
 
     val nChooseItemDialog = nChooseItemDialogBuilder.create()
 
     pItemsAdapter.addItems(pItems)
-
-    nDialogView.itemsSearch.doOnTextChanged { pText, _, _, _ ->
-        if (!pText.isNullOrEmpty()) {
-            pItemsAdapter.addItems(pItems.filter { pFilter(it, pText) })
-        } else {
-            pItemsAdapter.addItems(pItems)
-        }
-    }
 
     nDialogView.itemsList.layoutManager = LinearLayoutManager(this)
     nDialogView.itemsList.adapter = pItemsAdapter
