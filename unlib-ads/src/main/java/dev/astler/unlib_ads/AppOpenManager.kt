@@ -20,7 +20,7 @@ import dev.astler.unlib.utils.infoLog
 import dev.astler.unlib_ads.activity.AdsUnLibApp
 import java.util.*
 
-class AppOpenManager(myApplication: AdsUnLibApp): Application.ActivityLifecycleCallbacks,
+class AppOpenManager(myApplication: AdsUnLibApp) : Application.ActivityLifecycleCallbacks,
     LifecycleObserver {
     private var appOpenAd: AppOpenAd? = null
     private var loadCallback: AppOpenAdLoadCallback? = null
@@ -62,7 +62,10 @@ class AppOpenManager(myApplication: AdsUnLibApp): Application.ActivityLifecycleC
                         gPreferencesTool.edit("start_ad_timer", mLastShowTime)
                     }
                 }
-            appOpenAd!!.show(currentActivity, fullScreenContentCallback)
+
+            appOpenAd?.fullScreenContentCallback = fullScreenContentCallback
+
+            appOpenAd?.show(currentActivity)
         } else {
             fetchAd()
         }
@@ -74,12 +77,12 @@ class AppOpenManager(myApplication: AdsUnLibApp): Application.ActivityLifecycleC
         }
 
         loadCallback = object : AppOpenAdLoadCallback() {
-            override fun onAppOpenAdLoaded(ad: AppOpenAd) {
-                appOpenAd = ad
+            override fun onAdLoaded(pAd: AppOpenAd) {
+                appOpenAd = pAd
                 loadTime = Date().time
             }
 
-            override fun onAppOpenAdFailedToLoad(pLoadAdError: LoadAdError) {
+            override fun onAdFailedToLoad(pLoadAdError: LoadAdError) {
                 infoLog("START AD: load ad error = ${pLoadAdError.message}")
             }
         }
