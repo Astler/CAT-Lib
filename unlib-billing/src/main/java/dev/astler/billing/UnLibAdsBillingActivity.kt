@@ -3,9 +3,7 @@ package dev.astler.billing
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.*
@@ -13,9 +11,8 @@ import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TR
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.rewarded.RewardItem
-import com.google.android.gms.ads.rewarded.RewardedAd
-import com.google.android.gms.ads.rewarded.RewardedAdCallback
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
+import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -26,21 +23,19 @@ import dev.astler.unlib.UnliApp
 import dev.astler.unlib.gAppConfig
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.ui.R
-import dev.astler.unlib.ui.activity.BaseUnLiActivity
-import dev.astler.unlib.ui.interfaces.ActivityInterface
 import dev.astler.unlib.utils.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
-abstract class UnLibAdsBillingActivity: UnLibBillingActivity() {
+abstract class UnLibAdsBillingActivity: UnLibBillingActivity(), OnUserEarnedRewardListener {
 
     protected lateinit var mRemoteConfig: FirebaseRemoteConfig
     protected var mAdView: AdView? = null
 
-    lateinit var mRewardedVideo: RewardedAd
+    private var mRewardedInterstitialAd: RewardedInterstitialAd? = null
     private var mInterstitialAd: InterstitialAd? = null
-    private var showAdAfterLoading = false
+
     var infoDialog: AlertDialog? = null
 
     open var mInterstitialAdId = gAppConfig.mInterstitialAdId
@@ -88,7 +83,11 @@ abstract class UnLibAdsBillingActivity: UnLibBillingActivity() {
     }
 
     open fun getTestDevicesList(): ArrayList<String> {
-        return arrayListOf(AdRequest.DEVICE_ID_EMULATOR, "46BCDEE9C1F5ED2ADF3A5DB3889DDFB5", gAppConfig.mLastTestDevice)
+        return arrayListOf(
+            AdRequest.DEVICE_ID_EMULATOR,
+            "46BCDEE9C1F5ED2ADF3A5DB3889DDFB5",
+            gAppConfig.mLastTestDevice
+        )
     }
 
     open fun getAdRequest(): AdRequest {
@@ -158,43 +157,13 @@ abstract class UnLibAdsBillingActivity: UnLibBillingActivity() {
 
         setDefaultPreferences()
 
-        mRewardedVideo = RewardedAd(this, mRewardedAdId)
-
-        if (canShowAds() && mRewardedAdId.isNotEmpty()) {
-            mRewardedVideo.loadAd(AdRequest.Builder().build(), onRewardedAdLoadCallback())
-        }
-
         loadAd()
     }
 
-    open fun onRewardedAdLoadCallback(): RewardedAdLoadCallback =
-        object : RewardedAdLoadCallback() {
-            override fun onRewardedAdLoaded() {
-                if (showAdAfterLoading)
-                    showRewardAd()
-
-                infoDialog?.dismiss()
-            }
-
-            override fun onRewardedAdFailedToLoad(adError: LoadAdError) {
-
-            }
-        }
-
-    open fun onRewardedAdCallback(): RewardedAdCallback = object : RewardedAdCallback() {
-        override fun onRewardedAdOpened() {}
-
-        override fun onRewardedAdClosed() {
-            mRewardedVideo.loadAd(AdRequest.Builder().build(), onRewardedAdLoadCallback())
-        }
-
-        override fun onUserEarnedReward(@NonNull reward: RewardItem) {
-            val preferencesTool = PreferencesTool(this@UnLibAdsBillingActivity)
-            preferencesTool.dayWithoutAds =
-                GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
-        }
-
-        override fun onRewardedAdFailedToShow(adError: AdError) {}
+    override fun onUserEarnedReward(p0: RewardItem) {
+        val preferencesTool = PreferencesTool(this@UnLibAdsBillingActivity)
+        preferencesTool.dayWithoutAds =
+            GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
     }
 
     override fun showInterstitialAd() {
@@ -207,14 +176,7 @@ abstract class UnLibAdsBillingActivity: UnLibBillingActivity() {
     }
 
     override fun showRewardAd() {
-        if (mRewardedVideo.isLoaded) {
-            mRewardedVideo.show(this, onRewardedAdCallback())
-        } else {
-            //  infoDialog = showInfoDialog(R.string.just_a_minute, R.string.ad_is_loading)
-            infoDialog?.show()
-
-            showAdAfterLoading = true
-        }
+        mRewardedInterstitialAd?.show(this, this)
     }
 
     open fun hideAd() {
@@ -270,42 +232,86 @@ abstract class UnLibAdsBillingActivity: UnLibBillingActivity() {
     }
 
     private fun loadAd() {
-        InterstitialAd.load(
-            this,
-            mInterstitialAdId,
-            getAdRequest(),
-            object : InterstitialAdLoadCallback() {
-                override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                    mInterstitialAd = interstitialAd
-                    mInterstitialAd?.fullScreenContentCallback =
-                        object : FullScreenContentCallback() {
-                            override fun onAdDismissedFullScreenContent() {
-                                super.onAdDismissedFullScreenContent()
-                                mInterstitialAd = null
-                                requestNewInterstitial()
-                            }
+        if (canShowAds() && mRewardedAdId.isNotEmpty() && mRewardedInterstitialAd == null) {
+            RewardedInterstitialAd.load(
+                this,
+                mRewardedAdId,
+                getAdRequest(),
+                object : RewardedInterstitialAdLoadCallback() {
+                    override fun onAdLoaded(ad: RewardedInterstitialAd) {
+                        mRewardedInterstitialAd = ad
+                        infoLog("mRewardedInterstitialAd onAdLoaded", "ForAstler: ADS")
+                        mRewardedInterstitialAd?.fullScreenContentCallback =
+                            object : FullScreenContentCallback() {
+                                override fun onAdDismissedFullScreenContent() {
+                                    super.onAdDismissedFullScreenContent()
+                                    mRewardedInterstitialAd = null
+                                    requestNewInterstitial()
+                                }
 
-                            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                                super.onAdFailedToShowFullScreenContent(adError)
-                                mInterstitialAd = null
-                                requestNewInterstitial()
-                            }
+                                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                                    super.onAdFailedToShowFullScreenContent(adError)
+                                    mRewardedInterstitialAd = null
+                                    requestNewRewardedInterstitial()
+                                }
 
-                            override fun onAdShowedFullScreenContent() {
-                                super.onAdShowedFullScreenContent()
-                                this@UnLibAdsBillingActivity.mInterstitialAd = null
+                                override fun onAdShowedFullScreenContent() {
+                                    super.onAdShowedFullScreenContent()
+                                    this@UnLibAdsBillingActivity.mRewardedInterstitialAd = null
+                                }
                             }
-                        }
-                }
+                    }
 
-                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                    mInterstitialAd = null
-                }
-            })
+                    override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                        mRewardedInterstitialAd = null
+                        infoLog("mRewardedInterstitialAd onAdFailedToLoad", "ForAstler: ADS")
+                    }
+                })
+        }
+
+        if (mInterstitialAd == null)
+            InterstitialAd.load(
+                this,
+                mInterstitialAdId,
+                getAdRequest(),
+                object : InterstitialAdLoadCallback() {
+                    override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                        mInterstitialAd = interstitialAd
+                        mInterstitialAd?.fullScreenContentCallback =
+                            object : FullScreenContentCallback() {
+                                override fun onAdDismissedFullScreenContent() {
+                                    super.onAdDismissedFullScreenContent()
+                                    mInterstitialAd = null
+                                    requestNewInterstitial()
+                                }
+
+                                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                                    super.onAdFailedToShowFullScreenContent(adError)
+                                    mInterstitialAd = null
+                                    requestNewInterstitial()
+                                }
+
+                                override fun onAdShowedFullScreenContent() {
+                                    super.onAdShowedFullScreenContent()
+                                    this@UnLibAdsBillingActivity.mInterstitialAd = null
+                                }
+                            }
+                    }
+
+                    override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                        mInterstitialAd = null
+                    }
+                })
     }
 
     private fun requestNewInterstitial() {
         if (mInterstitialAd == null) {
+            loadAd()
+        }
+    }
+
+    private fun requestNewRewardedInterstitial() {
+        if (mRewardedInterstitialAd == null) {
             loadAd()
         }
     }

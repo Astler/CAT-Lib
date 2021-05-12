@@ -47,7 +47,6 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(), OnUserEarnedRewardListener
         packageName.replace(".", "_")
     }
 
-
     override fun setCurrentFragment(fragment: Fragment) {
         super.setCurrentFragment(fragment)
 
