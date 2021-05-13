@@ -46,10 +46,10 @@ open class ShortCodeTextView @JvmOverloads constructor(
     }
 
     override fun setText(pText: CharSequence, type: BufferType) {
-        super.setText(replaceShortCodesWithImages(context, spannableFactory.newSpannable(pText)), BufferType.SPANNABLE)
+        super.setText(replaceShortCodes(context, spannableFactory.newSpannable(pText)), BufferType.SPANNABLE)
     }
 
-    open fun replaceShortCodesWithImages(context: Context, pSpannable: Spannable): Spannable {
+    open fun replaceShortCodes(context: Context, pSpannable: Spannable): Spannable {
         var nSpannable = pSpannable
 
         if (nSpannable.contains("[ft"))
