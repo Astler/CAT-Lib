@@ -21,6 +21,7 @@ open class SplashActivityUnLib : AppCompatActivity() {
 
         startActivity(Intent(Intent.ACTION_VIEW).setClassName(packageName, "$mPackageName.MainActivity"))
         splashTasks()
+        overridePendingTransition(0, 0)
         finish()
     }
 

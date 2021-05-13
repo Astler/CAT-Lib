@@ -46,7 +46,7 @@ fun File.copyDirectoryImpl(destDir: File) {
                 anItem.copyDirectory(newDir)
             } else {
                 val destFile = File(destDir, anItem.name)
-                anItem.copySingleFile(anItem, destFile)
+                anItem.copySingleFile(destFile)
             }
         }
     }
@@ -64,9 +64,9 @@ fun File.copyDirectory(destDir: File) {
     copyDirectoryImpl(destDir)
 }
 
-fun File.copySingleFile(sourceFile: File, destFile: File) {
+fun File.copySingleFile(destFile: File) {
     println(
-            "COPY FILE: " + sourceFile.absolutePath
+            "COPY FILE: " + absolutePath
                     + " TO: " + destFile.absolutePath
     )
     if (!destFile.exists()) {
@@ -75,7 +75,7 @@ fun File.copySingleFile(sourceFile: File, destFile: File) {
     var sourceChannel: FileChannel? = null
     var destChannel: FileChannel? = null
     try {
-        sourceChannel = FileInputStream(sourceFile).channel
+        sourceChannel = FileInputStream(this).channel
         destChannel = FileOutputStream(destFile).channel
         sourceChannel.transferTo(0, sourceChannel.size(), destChannel)
     } finally {
@@ -137,14 +137,21 @@ fun Bitmap.saveToInternalStorage(pContext: Context, pName:String = "shareImage.p
 
     file = File(file, pName)
 
-    try {
+    simpleTry {
         val stream: OutputStream = FileOutputStream(file)
         this.compress(Bitmap.CompressFormat.PNG, 100, stream)
         stream.flush()
         stream.close()
-    } catch (e: IOException){
-        infoLog("Failed to save bitmap because:" + e.printStackTrace())
     }
 
     return Uri.parse(file.absolutePath)
+}
+
+fun Bitmap.createLocalImage(context: Context, name: String) {
+    simpleTry {
+        val file = File(context.filesDir, name)
+        val out = FileOutputStream(file)
+        this.compress(Bitmap.CompressFormat.JPEG, 80, out)
+        out.close()
+    }
 }

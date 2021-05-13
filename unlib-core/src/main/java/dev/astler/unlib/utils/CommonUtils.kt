@@ -1,18 +1,14 @@
 package dev.astler.unlib.utils
 
-import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.net.Uri
-import android.os.Build
 
 @Suppress("DEPRECATION")
 fun Context.isOnline(): Boolean {
     val nConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    if (Build.VERSION.SDK_INT < 23) {
+    if (isNotM()) {
         val networkInfo = nConnectivityManager.activeNetworkInfo
 
         return networkInfo != null && networkInfo.isConnected && networkInfo.type == ConnectivityManager.TYPE_WIFI || networkInfo?.type == ConnectivityManager.TYPE_MOBILE
@@ -33,37 +29,18 @@ fun Context.isOnline(): Boolean {
     return false
 }
 
-fun Context.rateApp() {
-    try {
-        val rateIntent = rateIntentForUri("market://details")
-        startActivity(rateIntent)
-    } catch (e: ActivityNotFoundException) {
-        val rateIntent =
-            rateIntentForUri("https://play.google.com/store/apps/details")
-        startActivity(rateIntent)
-    }
+fun Context.openAppInPlayStore(pPackageName: String = packageName) {
+    openPlayStorePage("market://details", "https://play.google.com/store/apps/details", pPackageName)
 }
 
-fun Context.openMarketApp(pAppPackageName: String) {
-    try {
-        val rateIntent = rateIntentForUri("market://details", pAppPackageName)
-        startActivity(rateIntent)
-    } catch (e: ActivityNotFoundException) {
-        val rateIntent =
-            rateIntentForUri("https://play.google.com/store/apps/details", pAppPackageName)
-        startActivity(rateIntent)
-    }
+fun Context.openPlayStoreDeveloperPage(pDeveloperId: String = "4948748506238999540") {
+    openPlayStorePage("market://dev", "https://play.google.com/store/apps/dev", pDeveloperId)
 }
 
-fun Context.moreApps() {
-    try {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://dev?id=4948748506238999540"))
-        startActivity(intent)
-    } catch (e: ActivityNotFoundException) {
-        val intent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("https://play.google.com/store/apps/dev?id=4948748506238999540")
-        )
-        startActivity(intent)
+fun Context.openPlayStorePage(pMarketLink: String, pBrowserLink: String, pDataToOpen: String) {
+    simpleTryCatch(this, {
+        startActivity(playStoreIntent(pMarketLink, pDataToOpen))
+    }) {
+        startActivity(playStoreIntent(pBrowserLink, pDataToOpen))
     }
 }

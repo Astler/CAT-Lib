@@ -259,6 +259,7 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(), OnUserEarnedRewardListener
                                 override fun onAdShowedFullScreenContent() {
                                     super.onAdShowedFullScreenContent()
                                     this@UnLibAdsActivity.mRewardedInterstitialAd = null
+                                    requestNewRewardedInterstitial()
                                 }
                             }
                     }

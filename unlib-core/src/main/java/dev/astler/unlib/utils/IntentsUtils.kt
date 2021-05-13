@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,10 +30,10 @@ class ImagePicker(
 }
 
 @Suppress("DEPRECATION")
-fun Context.rateIntentForUri(url: String, pPackageName: String = packageName): Intent {
+fun playStoreIntent(pUrl: String, pPackageName: String): Intent {
     val intent = Intent(
         Intent.ACTION_VIEW,
-        Uri.parse(String.format("%s?id=%s", url, pPackageName))
+        Uri.parse(String.format("%s?id=%s", pUrl, pPackageName))
     )
 
     var flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
@@ -51,11 +50,13 @@ fun Context.rateIntentForUri(url: String, pPackageName: String = packageName): I
 }
 
 fun Context.openWebUrl(pUrl: String) {
+    simpleTry {
+
+    }
     try {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(pUrl)))
     } catch (e: Exception) {
-        Toast.makeText(this, R.string.something_went_wrong, Toast.LENGTH_SHORT)
-                .show()
+        makeToast(R.string.something_went_wrong)
     }
 }
 

@@ -2,6 +2,7 @@ package dev.astler.unlib.utils
 
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
@@ -15,6 +16,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import dev.astler.unlib.core.R
 import java.util.*
+
+fun dpToPixels(dips: Float): Float = dips * Resources.getSystem().displayMetrics.density + 0.5f
 
 fun Context.getStringResourceId(string: String): Int {
     val id = resources.getIdentifier(string, "string", packageName)
