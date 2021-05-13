@@ -84,11 +84,12 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(), OnUserEarnedRewardListener
     }
 
     open fun getTestDevicesList(): ArrayList<String> {
-        return arrayListOf(
-            AdRequest.DEVICE_ID_EMULATOR,
-            "46BCDEE9C1F5ED2ADF3A5DB3889DDFB5",
-            gAppConfig.mLastTestDevice
+        val nTestDevices = arrayListOf(
+            AdRequest.DEVICE_ID_EMULATOR
         )
+        nTestDevices.addAll(gAppConfig.mTestDevices)
+
+        return nTestDevices
     }
 
     open fun getAdRequest(): AdRequest {
@@ -212,7 +213,7 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(), OnUserEarnedRewardListener
                 getString(R.string.disable_ads),
                 getString(R.string.disable_ads_msg),
                 getString(R.string.buy_pro), getString(R.string.watch_ads), pPositiveClick = {
-                    openMarketApp(mProPackageName)
+                    openAppInPlayStore(mProPackageName)
                 }, pNegativeClick = { showRewardAd() })
         } else {
             unLibDialog(
