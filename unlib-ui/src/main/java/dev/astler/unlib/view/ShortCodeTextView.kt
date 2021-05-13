@@ -175,7 +175,7 @@ open class ShortCodeTextView @JvmOverloads constructor(
         }
     }
 
-    private fun addImages(context: Context, pSpannable: Spannable) {
+    open fun addImages(context: Context, pSpannable: Spannable) {
         val nMatcher = Pattern
             .compile("\\Q[img src=\\E([a-zA-Z0-9._]+?)(?:(?: tint=([a-zA-Z0-9#._]+?)\\Q/]\\E)|(?:\\Q/]\\E))")
             .matcher(pSpannable)
