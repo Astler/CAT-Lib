@@ -16,8 +16,8 @@ import dev.astler.unlib.UnliApp
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.ui.interfaces.ActivityInterface
-import dev.astler.unlib.utils.moreApps
-import dev.astler.unlib.utils.rateApp
+import dev.astler.unlib.utils.openAppInPlayStore
+import dev.astler.unlib.utils.openPlayStoreDeveloperPage
 
 abstract class BaseUnLiActivity : AppCompatActivity(),
         NavigationView.OnNavigationItemSelectedListener,
@@ -83,8 +83,8 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.rate_app -> this.rateApp()
-            R.id.more_apps -> this.moreApps()
+            R.id.rate_app -> this.openAppInPlayStore()
+            R.id.more_apps -> this.openPlayStoreDeveloperPage()
             R.id.settings -> navToSettingsFragment()
             R.id.about -> navToAboutFragment()
         }
