@@ -3,6 +3,7 @@ package dev.astler.unlib.view
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
@@ -15,10 +16,12 @@ import androidx.core.text.toSpannable
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.getDrawableByName
+import dev.astler.unlib.utils.infoLog
+import dev.astler.unlib.view.span.CustomFancyTextSpan
 import dev.astler.unlib.view.span.CustomTypefaceSpan
 import java.util.regex.Pattern
 
-class ShortCodeTextView @JvmOverloads constructor(
+open class ShortCodeTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = android.R.attr.textViewStyle
@@ -42,30 +45,39 @@ class ShortCodeTextView @JvmOverloads constructor(
         iconSize = gPreferencesTool.mTextSize + textSizeModifier
     }
 
-    override fun setText(text: CharSequence, type: BufferType) {
-        val s = replaceShortCodesWithImages(context, text)
-        super.setText(s, BufferType.SPANNABLE)
+    override fun setText(pText: CharSequence, type: BufferType) {
+        super.setText(replaceShortCodesWithImages(context, spannableFactory.newSpannable(pText)), BufferType.SPANNABLE)
     }
 
-    private fun replaceShortCodesWithImages(context: Context, text: CharSequence): Spannable {
-        val spannable = addDecorations(spannableFactory.newSpannable(text))
+    open fun replaceShortCodesWithImages(context: Context, pSpannable: Spannable): Spannable {
+        var nSpannable = pSpannable
 
-        addImages(context, spannable)
-        return spannable
+        if (nSpannable.contains("[ft"))
+            nSpannable = addFancyText(nSpannable)
+
+        if (nSpannable.contains("[img"))
+            addImages(context, nSpannable)
+
+        return nSpannable
     }
 
-    private fun addDecorations(pSpannable: Spannable): Spannable {
+    private fun addFancyText(pSpannable: Spannable): Spannable {
         var innerSpan = pSpannable
 
-        val boldPattern = Pattern.compile("\\Q[bold text=\\E([a-zA-Z0-9А-Яа-яё.,:@_ ]+?)\\Q/]\\E")
+        val nPattern = Pattern
+            .compile("\\Q[ft text=\\E([a-zA-Z0-9А-Яа-яё{}/.,:@_ ]+?)(?:(?: color=([a-zA-Z0-9#._]+?))|(?:))(?:(?: params=([~a-zA-Z0-9#._]+?))|(?:))/]\\Q\\E")
 
-        var matcher = boldPattern.matcher(innerSpan)
+        var nMatcher = nPattern.matcher(innerSpan)
 
-        while (matcher.find()) {
+        while (nMatcher.find()) {
             var set = true
 
-            for (span in innerSpan.getSpans(matcher.start(), matcher.end(), CustomTypefaceSpan::class.java)) {
-                if (innerSpan.getSpanStart(span) >= matcher.start() && innerSpan.getSpanEnd(span) <= matcher.end()) {
+            for (span in innerSpan.getSpans(
+                nMatcher.start(),
+                nMatcher.end(),
+                CustomFancyTextSpan::class.java
+            )) {
+                if (innerSpan.getSpanStart(span) >= nMatcher.start() && innerSpan.getSpanEnd(span) <= nMatcher.end()) {
                     innerSpan.removeSpan(span)
                 } else {
                     set = false
@@ -74,26 +86,93 @@ class ShortCodeTextView @JvmOverloads constructor(
             }
 
             if (set) {
-                val resToBold = innerSpan.subSequence(matcher.start(1), matcher.end(1)).toString().trim { it <= ' ' }
+                val resToBold = innerSpan.subSequence(nMatcher.start(1), nMatcher.end(1)).toString()
+                    .trim { it <= ' ' }
+                val nSecond = if (nMatcher.group(2) != null) innerSpan.subSequence(
+                    nMatcher.start(2),
+                    nMatcher.end(2)
+                ).toString().trim { it <= ' ' } else ""
+                val nThird = if (nMatcher.group(3) != null) innerSpan.subSequence(
+                    nMatcher.start(3),
+                    nMatcher.end(3)
+                ).toString().trim { it <= ' ' } else ""
+
+                val nColorRaw = when {
+                    nSecond.startsWith("#") -> {
+                        nSecond
+                    }
+                    nThird.startsWith("#") -> {
+                        nThird
+                    }
+                    else -> {
+                        ""
+                    }
+                }
+
+                val nColor = if (nColorRaw.isEmpty()) -1 else Color.parseColor(nColorRaw)
+
+                var nParamsRaw = when {
+                    nSecond.startsWith("~") -> {
+                        nSecond
+                    }
+                    nThird.startsWith("~") -> {
+                        nThird
+                    }
+                    else -> {
+                        ""
+                    }
+                }
+
+                val nParamsMap = HashMap<String, String>()
+
+                if (nParamsRaw.isNotEmpty()) {
+                    nParamsRaw = nParamsRaw.replaceFirst("~", "")
+
+                    val nParamsArray = nParamsRaw.split("#")
+
+                    nParamsArray.forEach {
+                        val nData = it.split("_")
+
+                        if (nData.size == 2) {
+                            nParamsMap[nData[0]] = nData[1]
+                        }
+                    }
+                }
+
+                val nRemoveChars = 11 +
+                        (if (nColor != -1) 7 + nColorRaw.length else 0) +
+                        (if (nParamsRaw.isNotEmpty()) 9 + nParamsRaw.length else 0) +
+                        (if (nParamsMap.containsKey("s.after")) -(nParamsMap["s.after"] ?: "0").toInt() else 0)
+
+                val nTypeface = if (nParamsMap.containsKey("tf")) {
+                    getTypefaceByParams(nParamsMap["tf"]?:"")
+                } else null
 
                 val sb = SpannableStringBuilder(innerSpan)
 
-                sb.replace(matcher.start(), matcher.end(), resToBold)
+                sb.replace(nMatcher.start(), nMatcher.end(), resToBold)
 
-                val typefaceSpan = CustomTypefaceSpan(ResourcesCompat.getFont(context, R.font.google_sans_bold))
-
-                sb.setSpan(typefaceSpan,
-                    matcher.start(), matcher.end() - (13),
+                sb.setSpan(
+                    CustomFancyTextSpan(nTypeface, nColor),
+                    nMatcher.start(), nMatcher.end() - nRemoveChars,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
 
                 innerSpan = sb.toSpannable()
 
-                matcher = boldPattern.matcher(sb)
+                nMatcher = nPattern.matcher(innerSpan)
             }
         }
 
         return innerSpan
+    }
+
+    open fun getTypefaceByParams(pKey: String): Typeface? {
+        return when (pKey) {
+            "b" -> ResourcesCompat.getFont(context, R.font.google_sans_bold)
+            //"m" -> ResourcesCompat.getFont(context, R.font.minecraft)
+            else -> null
+        }
     }
 
     private fun addImages(context: Context, pSpannable: Spannable) {
@@ -153,4 +232,5 @@ class ShortCodeTextView @JvmOverloads constructor(
             }
         }
     }
+
 }

@@ -38,9 +38,4 @@ class MainActivity : BaseUnLiActivity() {
 
         findViewById<ShortCodeTextView>(R.id.test).text = nText
     }
-
-    override fun backPressed(endAction: () -> Unit) {}
-
-
-    override fun setToolbarTitle(title: String) {}
 }

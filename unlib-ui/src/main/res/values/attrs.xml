@@ -6,12 +6,14 @@
     <attr name="backgroundColorByTheme" format="reference|color"/>
 
     <declare-styleable name="PrefsTextView">
-
         <attr name="textSizeModifier" format="integer">0</attr>
-        <attr name="useBoldFont" format="boolean">false</attr>
-        <attr name="changeTextColor" format="boolean">true</attr>
-        <attr name="colorInversion" format="boolean">false</attr>
+        <attr name="themeTextColor" format="boolean">true</attr>
 
+        <attr name="textStyle">
+            <flag name="normal" value="10" />
+            <flag name="bold" value="11" />
+            <flag name="italic" value="12" />
+        </attr>
     </declare-styleable>
 
     <declare-styleable name="StateLayout">
