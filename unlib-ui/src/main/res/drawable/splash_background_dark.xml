@@ -5,7 +5,7 @@
         android:drawable="@color/default_background_dark"/>
 
     <item
-        android:drawable="@drawable/ic_splash_logo"
+        android:drawable="@drawable/ic_splash_logo_splash"
         android:gravity="center" />
 
 </layer-list>
