@@ -4,13 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Matrix
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateInterpolator
@@ -19,7 +13,7 @@ import androidx.core.graphics.PathParser
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.utils.VectorDrawableParser
 import dev.astler.unlib.utils.dpToPixels
-import dev.astler.unlib.utils.getColorFromAttr
+import dev.astler.unlib.utils.isAppDarkTheme
 
 class SplashView @JvmOverloads constructor(
     context: Context,
@@ -27,11 +21,15 @@ class SplashView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private val backgroundColor = context.getColorFromAttr(R.attr.colorByTheme)
+    private val backgroundColor = if(context.isAppDarkTheme())
+        ContextCompat.getColor(context, R.color.default_background_dark) else
+            ContextCompat.getColor(context, R.color.default_background_light)
 
     private val iconPaint: Paint = Paint().apply {
         isAntiAlias = true
-        color = Color.WHITE
+        color = if(context.isAppDarkTheme())
+            ContextCompat.getColor(context, R.color.default_background_light)
+        else ContextCompat.getColor(context, R.color.default_background_dark)
         style = Paint.Style.FILL
     }
 
