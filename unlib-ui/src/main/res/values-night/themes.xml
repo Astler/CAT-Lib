@@ -4,6 +4,6 @@
     <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">true</item>
         <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
-        <item name="android:windowBackground">@drawable/splash_background_dark</item>
+        <item name="android:windowBackground">@drawable/splash_background_old_dark</item>
     </style>
 </resources>

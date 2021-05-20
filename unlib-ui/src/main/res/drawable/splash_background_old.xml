@@ -4,7 +4,9 @@
     <item
         android:drawable="@color/white"/>
 
-    <item
-        android:drawable="@drawable/ic_splash_logo_dark"
-        android:gravity="center" />
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/icon_splash" />
+    </item>
 </layer-list>

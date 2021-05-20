@@ -15,7 +15,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import dev.astler.unlib.core.R
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 
 fun dpToPixels(dips: Float): Float = dips * Resources.getSystem().displayMetrics.density + 0.5f
 
@@ -92,8 +92,8 @@ fun Context.getDrawableByName(pDrawableName: String): Drawable? {
     val nDrawableId = resources.getIdentifier(pDrawableName, "drawable", packageName)
 
     return if (nDrawableId != 0) ContextCompat.getDrawable(
-            this,
-            nDrawableId
+        this,
+        nDrawableId
     ) else ContextCompat.getDrawable(this, R.drawable.file)
 }
 
@@ -112,8 +112,8 @@ fun Drawable.toBitmap(): Bitmap? {
         )
     } else {
         Bitmap.createBitmap(
-            this.intrinsicWidth*13,
-            this.intrinsicHeight*13,
+            this.intrinsicWidth * 13,
+            this.intrinsicHeight * 13,
             Bitmap.Config.ARGB_8888
         )
     }
@@ -125,4 +125,8 @@ fun Drawable.toBitmap(): Bitmap? {
     }
 
     return bitmap
+}
+
+fun Context.getContextColor(@ColorRes pColorId: Int): Int {
+    return ContextCompat.getColor(this, pColorId)
 }

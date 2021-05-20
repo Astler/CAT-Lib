@@ -55,8 +55,8 @@ fun Activity.showKeyboard(editText: EditText) {
 }
 
 fun Activity.hideKeyboard() {
-    //Находим View с фокусом, так мы сможем получить правильный window token
-    //Если такого View нет, то создадим одно, это для получения window token из него
+    // Находим View с фокусом, так мы сможем получить правильный window token
+    // Если такого View нет, то создадим одно, это для получения window token из него
     val view = currentFocus ?: View(this)
     val inputMethod =
         getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -78,8 +78,7 @@ fun View.showView() {
 fun View.showViewWithCondition(pCondition: Boolean) {
     if (pCondition) {
         showView()
-    }
-    else {
+    } else {
         goneView()
     }
 }
@@ -109,4 +108,8 @@ fun View.getScreenShotBitmap(): Bitmap? {
         infoLog("UNLIB: Failed to capture screenshot because:" + e.message)
     }
     return screenshot
+}
+
+fun View.getContextColor(@ColorRes pColorId: Int): Int {
+    return context.getContextColor(pColorId)
 }

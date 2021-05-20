@@ -4,16 +4,13 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.*
+import android.graphics.* // ktlint-disable no-wildcard-imports
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateInterpolator
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.PathParser
 import dev.astler.unlib.ui.R
-import dev.astler.unlib.utils.VectorDrawableParser
-import dev.astler.unlib.utils.dpToPixels
-import dev.astler.unlib.utils.isAppDarkTheme
+import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
 
 class SplashView @JvmOverloads constructor(
     context: Context,
@@ -21,15 +18,21 @@ class SplashView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private val backgroundColor = if(context.isAppDarkTheme())
-        ContextCompat.getColor(context, R.color.default_background_dark) else
-            ContextCompat.getColor(context, R.color.default_background_light)
+    private val backgroundColor = getContextColor(
+        if (context.isAppDarkTheme())
+            R.color.default_background_dark
+        else R.color.default_background_light
+    )
 
     private val iconPaint: Paint = Paint().apply {
         isAntiAlias = true
-        color = if(context.isAppDarkTheme())
-            ContextCompat.getColor(context, R.color.default_background_light)
-        else ContextCompat.getColor(context, R.color.default_background_dark)
+
+        color = getContextColor(
+            if (context.isAppDarkTheme())
+                R.color.default_background_light
+            else R.color.default_background_dark
+        )
+
         style = Paint.Style.FILL
     }
 
@@ -56,11 +59,17 @@ class SplashView @JvmOverloads constructor(
     init {
         setLayerType(LAYER_TYPE_SOFTWARE, null)
 
-        VectorDrawableParser.parsedVectorDrawable(resources, R.drawable.ic_splash_logo).run {
-            originalIconPath = this?.pathData?.let { PathParser.createPathFromPathData(it) }
+        if (isL()) {
+            VectorDrawableParser.parsedVectorDrawable(resources, R.drawable.ic_splash_logo).run {
+                originalIconPath = this?.pathData?.let { PathParser.createPathFromPathData(it) }
 
-            logoWidthHeight = dpToPixels(this?.width ?: 0f)
-            viewportWidthHeight = this?.viewportWidth ?: 0f
+                logoWidthHeight = dpToPixels(this?.width ?: 0f)
+                viewportWidthHeight = this?.viewportWidth ?: 0f
+            }
+        } else {
+            originalIconPath = null
+            logoWidthHeight = 0f
+            viewportWidthHeight = 0f
         }
     }
 
