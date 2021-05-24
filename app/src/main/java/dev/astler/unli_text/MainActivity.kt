@@ -1,5 +1,6 @@
 package dev.astler.unli_text
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import dev.astler.unlib.ui.activity.BaseUnLiActivity
@@ -37,5 +38,9 @@ class MainActivity : BaseUnLiActivity() {
         """.trimIndent()
 
         findViewById<ShortCodeTextView>(R.id.test).text = nText
+
+        findViewById<ShortCodeTextView>(R.id.test).setOnClickListener {
+            startActivity(Intent(this, ImageLoadersActivity::class.java))
+        }
     }
 }
