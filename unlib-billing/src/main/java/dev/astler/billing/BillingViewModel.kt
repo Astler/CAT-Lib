@@ -3,7 +3,7 @@ package dev.astler.billing
 import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.android.billingclient.api.*
+import com.android.billingclient.api.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.cBillingNoAdsName
 import dev.astler.unlib.gAppConfig
 import dev.astler.unlib.utils.infoLog

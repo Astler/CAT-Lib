@@ -3,7 +3,7 @@ package dev.astler.billing
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.android.billingclient.api.*
+import com.android.billingclient.api.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.cBillingNoAdsName
 import dev.astler.unlib.cNoAdsName
 import dev.astler.unlib.gPreferencesTool
@@ -16,34 +16,10 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
         PurchasesUpdatedListener { billingResult, pPurchases ->
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && pPurchases != null) {
                 pPurchases.forEach { pPurchase ->
-                    updatePurchases(pPurchase)
+                    queryPurchases(pPurchase)
                 }
             }
         }
-    //TODO ACKNOWLEDGE CONFIG!
-    open fun updatePurchases(pPurchase: Purchase) {
-        if (pPurchase.sku == cBillingNoAdsName) {
-            gPreferencesTool.edit(cNoAdsName, true)
-        }
-
-        if (pPurchase.sku == cBillingNoAdsName) {
-            if (!pPurchase.isAcknowledged) {
-                infoLog("BILLING: Acknowledge pur")
-
-                val acknowledgePurchaseParams =
-                    AcknowledgePurchaseParams.newBuilder()
-                        .setPurchaseToken(pPurchase.purchaseToken).build()
-
-                mBillingClient.acknowledgePurchase(acknowledgePurchaseParams) { billingResult ->
-                    val billingResponseCode = billingResult.responseCode
-                    val billingDebugMessage = billingResult.debugMessage
-
-                    infoLog("BILLING: response code: $billingResponseCode")
-                    infoLog("BILLING: debugMessage : $billingDebugMessage")
-                }
-            }
-        }
-    }
 
     val mBillingClient: BillingClient by lazy {
         BillingClient.newBuilder(this)
@@ -65,18 +41,26 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
                     mBillingViewModel.queryItemsDetails(mBillingClient)
                 }
 
-                mBillingClient.queryPurchases(BillingClient.SkuType.INAPP).purchasesList?.forEach { pPurchase ->
-                    infoLog("BILLING: got item = ${pPurchase.sku}")
+                mBillingClient.queryPurchasesAsync(
+                    BillingClient.SkuType.INAPP
+                ) { _, pList ->
 
-                    infoLog("${pPurchase.purchaseState == Purchase.PurchaseState.PURCHASED}")
+                    pList.forEach { pPurchase ->
 
-                    if (pPurchase.sku == cBillingNoAdsName)
-                        gPreferencesTool.edit(
-                            cNoAdsName,
-                            pPurchase.purchaseState == Purchase.PurchaseState.PURCHASED
-                        )
+                        pPurchase.skus.forEach { pPurchaseSku ->
+                            infoLog("BILLING: got item = $pPurchaseSku")
 
-                    queryPurchases(pPurchase)
+                            if (pPurchaseSku == cBillingNoAdsName)
+                                gPreferencesTool.edit(
+                                    cNoAdsName,
+                                    pPurchase.purchaseState == Purchase.PurchaseState.PURCHASED
+                                )
+                        }
+
+                        infoLog("${pPurchase.purchaseState == Purchase.PurchaseState.PURCHASED}")
+
+                        queryPurchases(pPurchase)
+                    }
                 }
             }
 
@@ -85,20 +69,26 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
     }
 
     open fun queryPurchases(pPurchase: Purchase) {
-        if (pPurchase.sku == cBillingNoAdsName) {
-            if (!pPurchase.isAcknowledged) {
-                infoLog("BILLING: Acknowledge pur")
 
-                val acknowledgePurchaseParams =
-                    AcknowledgePurchaseParams.newBuilder()
-                        .setPurchaseToken(pPurchase.purchaseToken).build()
+        infoLog(pPurchase.orderId)
+        infoLog(pPurchase.originalJson)
 
-                mBillingClient.acknowledgePurchase(acknowledgePurchaseParams) { billingResult ->
-                    val billingResponseCode = billingResult.responseCode
-                    val billingDebugMessage = billingResult.debugMessage
+        pPurchase.skus.forEach {
+            if (it == cBillingNoAdsName) {
+                if (!pPurchase.isAcknowledged) {
+                    infoLog("BILLING: Acknowledge pur")
 
-                    infoLog("BILLING: response code: $billingResponseCode")
-                    infoLog("BILLING: debugMessage : $billingDebugMessage")
+                    val acknowledgePurchaseParams =
+                        AcknowledgePurchaseParams.newBuilder()
+                            .setPurchaseToken(pPurchase.purchaseToken).build()
+
+                    mBillingClient.acknowledgePurchase(acknowledgePurchaseParams) { billingResult ->
+                        val billingResponseCode = billingResult.responseCode
+                        val billingDebugMessage = billingResult.debugMessage
+
+                        infoLog("BILLING: response code: $billingResponseCode")
+                        infoLog("BILLING: debugMessage : $billingDebugMessage")
+                    }
                 }
             }
         }

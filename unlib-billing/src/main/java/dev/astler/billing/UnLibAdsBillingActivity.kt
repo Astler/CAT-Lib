@@ -6,7 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import com.google.android.gms.ads.*
+import com.google.android.gms.ads.* // ktlint-disable no-wildcard-imports
 import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -23,12 +23,12 @@ import dev.astler.unlib.UnliApp
 import dev.astler.unlib.gAppConfig
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.ui.R
-import dev.astler.unlib.utils.*
-import java.util.*
+import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
+import java.util.* // ktlint-disable no-wildcard-imports
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
-abstract class UnLibAdsBillingActivity: UnLibBillingActivity(), OnUserEarnedRewardListener {
+abstract class UnLibAdsBillingActivity : UnLibBillingActivity(), OnUserEarnedRewardListener {
 
     protected lateinit var mRemoteConfig: FirebaseRemoteConfig
     protected var mAdView: AdView? = null
@@ -66,14 +66,14 @@ abstract class UnLibAdsBillingActivity: UnLibBillingActivity(), OnUserEarnedRewa
 
         infoLog("UNLIB_AD: loaded ads config = $nShowAds, $nAdsPause, $nAdsChance")
 
-        if (nShowAds
-            && canShowAds()
-            && nTimeFromStart >= 10000
-            && nTimeFromLastAd >= nAdsPause
+        if (nShowAds &&
+            canShowAds() &&
+            nTimeFromStart >= 10000 &&
+            nTimeFromLastAd >= nAdsPause
         ) {
             val randNum = Random.nextInt(nAdsChance)
 
-            infoLog("UNLIB_AD: AD CHANCE: ${randNum}/${nAdsChance}")
+            infoLog("UNLIB_AD: AD CHANCE: $randNum/$nAdsChance")
 
             if (randNum == 0)
                 showInterstitialAd()
@@ -140,7 +140,8 @@ abstract class UnLibAdsBillingActivity: UnLibBillingActivity(), OnUserEarnedRewa
         }
 
         if (!gPreferencesTool.getBoolean("age_confirmed", false) && mNeedAgeCheck) {
-            unLibDialog(getString(dev.astler.unlib_ads.R.string.ads_dialog_title),
+            unLibDialog(
+                getString(dev.astler.unlib_ads.R.string.ads_dialog_title),
                 getString(dev.astler.unlib_ads.R.string.ads_dialog_msg),
                 getString(R.string.yes), getString(R.string.no),
                 pPositiveClick = {
@@ -211,16 +212,21 @@ abstract class UnLibAdsBillingActivity: UnLibBillingActivity(), OnUserEarnedRewa
             unLibDialog(
                 getString(R.string.disable_ads),
                 getString(R.string.disable_ads_msg),
-                getString(R.string.buy_pro), getString(R.string.watch_ads), pPositiveClick = {
+                getString(R.string.buy_pro), getString(R.string.watch_ads),
+                pPositiveClick = {
                     openAppInPlayStore(mProPackageName)
-                }, pNegativeClick = { showRewardAd() })
+                },
+                pNegativeClick = { showRewardAd() }
+            )
         } else {
             unLibDialog(
                 getString(R.string.disable_ads),
                 getString(R.string.disable_ads_msg),
-                getString(R.string.watch_ads), pPositiveClick = {
+                getString(R.string.watch_ads),
+                pPositiveClick = {
                     showRewardAd()
-                })
+                }
+            )
         }
     }
 
@@ -267,7 +273,8 @@ abstract class UnLibAdsBillingActivity: UnLibBillingActivity(), OnUserEarnedRewa
                         mRewardedInterstitialAd = null
                         infoLog("mRewardedInterstitialAd onAdFailedToLoad", "ForAstler: ADS")
                     }
-                })
+                }
+            )
         }
 
         if (mInterstitialAd == null)
@@ -302,7 +309,8 @@ abstract class UnLibAdsBillingActivity: UnLibBillingActivity(), OnUserEarnedRewa
                     override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                         mInterstitialAd = null
                     }
-                })
+                }
+            )
     }
 
     private fun requestNewInterstitial() {
