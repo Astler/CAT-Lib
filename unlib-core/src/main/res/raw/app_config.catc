@@ -3,6 +3,7 @@
   "mInterstitialAdId": "",
   "mRewardedAdId": "",
   "mProPackageName": "",
+  "mNativeAdId": "",
   "mTestDevices": [
     "46BCDEE9C1F5ED2ADF3A5DB3889DDFB5",
     "9B559EA3121A53E35C510BCC8275351D"

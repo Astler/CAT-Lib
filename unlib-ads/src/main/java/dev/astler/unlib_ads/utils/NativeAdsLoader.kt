@@ -7,6 +7,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
+import dev.astler.unlib.gAppConfig
 
 class NativeAdsLoader private constructor() {
     var adLoader: AdLoader? = null
@@ -16,7 +17,7 @@ class NativeAdsLoader private constructor() {
 
     fun loadAds(context: Context, adRequest: AdRequest?) {
         val build: AdLoader =
-            AdLoader.Builder(context, "ca-app-pub-1536736011746190/4091144556").forNativeAd { unifiedNativeAd ->
+            AdLoader.Builder(context, gAppConfig.mNativeAdId).forNativeAd { unifiedNativeAd ->
                 nativeAdsTmp.add(unifiedNativeAd)
                 if (!adLoader!!.isLoading) {
                     nativeAds.clear()
