@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.net.Uri
-import java.io.*
+import java.io.* // ktlint-disable no-wildcard-imports
 import java.nio.channels.FileChannel
 import java.nio.charset.Charset
 
@@ -12,13 +12,11 @@ fun Context.writeToFileInFolder(pFileData: String, pFileName: String, pNameFolde
     try {
         val nFile = if (pNameFolder.isNotEmpty()) {
             val nDir = File(filesDir.absolutePath + "/$pNameFolder")
-            if(!nDir.exists()) nDir.mkdir()
+            if (!nDir.exists()) nDir.mkdir()
             File(nDir.absolutePath + "/$pFileName$pFileType")
-        }
-        else {
+        } else {
             File(filesDir.absolutePath + "/$pFileName$pFileType")
         }
-
 
         val outputStreamWriter = OutputStreamWriter(nFile.outputStream())
         outputStreamWriter.write(pFileData)
@@ -37,8 +35,8 @@ fun File.copyDirectoryImpl(destDir: File) {
                 val newDir = File(destDir, anItem.name)
 
                 println(
-                        "CREATED DIR: "
-                                + newDir.absolutePath
+                    "CREATED DIR: " +
+                        newDir.absolutePath
                 )
 
                 newDir.mkdir()
@@ -66,8 +64,8 @@ fun File.copyDirectory(destDir: File) {
 
 fun File.copySingleFile(destFile: File) {
     println(
-            "COPY FILE: " + absolutePath
-                    + " TO: " + destFile.absolutePath
+        "COPY FILE: " + absolutePath +
+            " TO: " + destFile.absolutePath
     )
     if (!destFile.exists()) {
         destFile.createNewFile()
@@ -93,7 +91,6 @@ fun Context.readFileFromRaw(pFileId: Int, pErrorReturn: String = ""): String {
         inputStream.close()
 
         String(byteArray, Charset.defaultCharset())
-
     } catch (e: Exception) {
         infoLog("UNLIB: Error while reading raw file $e")
         pErrorReturn
@@ -109,7 +106,6 @@ fun Context.readFileFromAssets(path: String): String {
         inputStream.close()
 
         String(byteArray, Charset.defaultCharset())
-
     } catch (e: Exception) {
         "SWW"
     }
@@ -124,13 +120,12 @@ fun Context.readFileFromFiles(pFileWithPath: String): String {
         inputStream.close()
 
         String(byteArray, Charset.defaultCharset())
-
     } catch (e: Exception) {
         "SWW"
     }
 }
 
-fun Bitmap.saveToInternalStorage(pContext: Context, pName:String = "shareImage.png"): Uri {
+fun Bitmap.saveToInternalStorage(pContext: Context, pName: String = "shareImage.png"): Uri {
     val wrapper = ContextWrapper(pContext)
 
     var file = wrapper.getDir("images", Context.MODE_PRIVATE)

@@ -10,8 +10,7 @@ open class SplashActivityUnLib : AppCompatActivity() {
     open val mPackageName: String by lazy {
         if (gAppConfig.mMainActivityPackage.isNotEmpty()) {
             gAppConfig.mMainActivityPackage
-        }
-        else {
+        } else {
             packageName
         }
     }

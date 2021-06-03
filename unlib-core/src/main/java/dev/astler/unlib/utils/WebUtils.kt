@@ -27,7 +27,7 @@ fun String.getJsonContent(): String {
                 """
                         $line
                         
-                        """.trimIndent()
+                """.trimIndent()
             )
         }
 

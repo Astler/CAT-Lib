@@ -38,9 +38,12 @@ fun Context.openPlayStoreDeveloperPage(pDeveloperId: String = "49487485062389995
 }
 
 fun Context.openPlayStorePage(pMarketLink: String, pBrowserLink: String, pDataToOpen: String) {
-    simpleTryCatch(this, {
-        startActivity(playStoreIntent(pMarketLink, pDataToOpen))
-    }) {
+    simpleTryCatch(
+        this,
+        {
+            startActivity(playStoreIntent(pMarketLink, pDataToOpen))
+        }
+    ) {
         startActivity(playStoreIntent(pBrowserLink, pDataToOpen))
     }
 }

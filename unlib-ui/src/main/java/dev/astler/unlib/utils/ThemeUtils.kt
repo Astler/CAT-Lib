@@ -6,7 +6,7 @@ import dev.astler.unlib.gPreferencesTool
 
 fun Context.isSystemDarkTheme(): Boolean {
     return resources.configuration.uiMode and
-            Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+        Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 }
 
 fun Context.isAppDarkTheme(): Boolean {

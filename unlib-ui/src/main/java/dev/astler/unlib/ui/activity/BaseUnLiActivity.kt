@@ -10,20 +10,30 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
 import dev.astler.unlib.AppSettings
 import dev.astler.unlib.PreferencesTool
 import dev.astler.unlib.UnliApp
 import dev.astler.unlib.gPreferencesTool
+import dev.astler.unlib.interfaces.ActivityInterface
 import dev.astler.unlib.ui.R
-import dev.astler.unlib.ui.interfaces.ActivityInterface
+import dev.astler.unlib.utils.infoLog
 import dev.astler.unlib.utils.openAppInPlayStore
 import dev.astler.unlib.utils.openPlayStoreDeveloperPage
+import java.util.* // ktlint-disable no-wildcard-imports
 
-abstract class BaseUnLiActivity : AppCompatActivity(),
-        NavigationView.OnNavigationItemSelectedListener,
-        SharedPreferences.OnSharedPreferenceChangeListener, ActivityInterface {
+abstract class BaseUnLiActivity :
+    AppCompatActivity(),
+    NavigationView.OnNavigationItemSelectedListener,
+    SharedPreferences.OnSharedPreferenceChangeListener,
+    ActivityInterface {
 
-    //TODO private var mReviewInfo: ReviewInfo? = null
+    private var mReviewInfo: ReviewInfo? = null
+    private val mReviewManager: ReviewManager by lazy {
+        ReviewManagerFactory.create(this)
+    }
 
     var mActiveFragment: Fragment? = null
 
@@ -37,6 +47,21 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
 
     override fun setCurrentFragment(fragment: Fragment) {
         mActiveFragment = fragment
+
+        val nAppReviewTime =
+            GregorianCalendar().timeInMillis - gPreferencesTool.appReviewTime
+
+        if (isReviewLaunchAvailable() && nAppReviewTime >= 200000) {
+
+            mReviewInfo?.let { it1 ->
+                mReviewManager.launchReviewFlow(this, it1)
+                gPreferencesTool.appReviewTime = GregorianCalendar().timeInMillis
+            }
+        }
+    }
+
+    open fun isReviewLaunchAvailable(): Boolean {
+        return true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +73,17 @@ abstract class BaseUnLiActivity : AppCompatActivity(),
         setDefaultPreferences()
 
         loadTheme(R.style.AppUnliTheme, R.style.AppUnliDarkTheme)
+
+        mReviewManager.requestReviewFlow().addOnCompleteListener { request ->
+            if (request.isSuccessful) {
+                mReviewInfo = request.result
+                infoLog(mReviewInfo.toString())
+            } else {
+                request.exception?.message?.let { infoLog(it) }
+            }
+        }
+
+        gPreferencesTool.appReviewTime = GregorianCalendar().timeInMillis
     }
 
     open fun setDefaultPreferences() {

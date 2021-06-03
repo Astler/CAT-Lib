@@ -1,5 +1,5 @@
-package dev.astler.unli.interfaces
+package dev.astler.unlib.interfaces
 
 interface RecyclerAdapterSizeListener {
-    fun totalItems (size: Int)
+    fun totalItems(size: Int)
 }

@@ -8,7 +8,7 @@ fun simpleTry(pContext: Context? = null, pAction: () -> Unit) {
         pAction()
     } catch (pException: Exception) {
         pException.printStackTrace()
-        infoLog("Exception! ${pException.message}")
+        errorLog("Exception! ${pException.message}")
         pContext?.makeToast(R.string.something_went_wrong)
     }
 }
@@ -17,8 +17,9 @@ fun simpleTryCatch(pContext: Context? = null, pAction: () -> Unit, pCatch: () ->
     try {
         pAction()
     } catch (pException: Exception) {
+        pCatch()
         pException.printStackTrace()
-        infoLog("Exception! ${pException.message}")
+        errorLog("Exception! ${pException.message}")
         pContext?.makeToast(R.string.something_went_wrong)
     }
 }

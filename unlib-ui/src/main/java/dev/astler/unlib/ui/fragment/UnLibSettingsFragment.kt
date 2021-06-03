@@ -4,8 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import dev.astler.unlib.interfaces.ActivityInterface
 import dev.astler.unlib.ui.R
-import dev.astler.unlib.ui.interfaces.ActivityInterface
 import dev.astler.unlib.utils.canShowAds
 
 open class UnLibSettingsFragment : PreferenceFragmentCompat() {

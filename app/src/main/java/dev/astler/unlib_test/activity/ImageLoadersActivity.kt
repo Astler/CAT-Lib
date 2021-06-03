@@ -1,4 +1,4 @@
-package dev.astler.unli_text
+package dev.astler.unlib_test.activity
 
 import android.os.Build
 import android.os.Bundle
@@ -8,8 +8,11 @@ import coil.transform.BlurTransformation
 import coil.transform.CircleCropTransformation
 import coil.transform.GrayscaleTransformation
 import coil.transform.RoundedCornersTransformation
-import dev.astler.unli_text.databinding.ActivityImagesBinding
+import dev.astler.unlib.utils.createNoFilterDrawableFromBitmap
+import dev.astler.unlib.utils.getBitmapFromAsset
 import dev.astler.unlib.utils.loadWithBackground
+import dev.astler.unlib_test.R
+import dev.astler.unlib_test.databinding.ActivityImagesBinding
 
 class ImageLoadersActivity : AppCompatActivity() {
 
@@ -50,6 +53,19 @@ class ImageLoadersActivity : AppCompatActivity() {
             transformations(GrayscaleTransformation())
         }
 
-        mImagesBinding.backgroundImage.loadWithBackground("https://static.wikia.nocookie.net/minecraft_ru_gamepedia/images/4/46/Изумруд.png", R.color.fab_color)
+        mImagesBinding.assetsImage.setImageBitmap(getBitmapFromAsset("frozen.png"))
+
+        getBitmapFromAsset("frozen.png")?.let {
+            mImagesBinding.noFilterBitmapAssetsImage.setImageDrawable(createNoFilterDrawableFromBitmap(it))
+        }
+
+        getBitmapFromAsset("frozen.png")?.let {
+            mImagesBinding.coloredNoFilterBitmapAssetsImage.setImageDrawable(createNoFilterDrawableFromBitmap(it, R.color.colorPrimary))
+        }
+
+        mImagesBinding.backgroundImage.loadWithBackground(
+            "https://static.wikia.nocookie.net/minecraft_ru_gamepedia/images/4/46/Изумруд.png",
+            R.color.fab_color
+        )
     }
 }

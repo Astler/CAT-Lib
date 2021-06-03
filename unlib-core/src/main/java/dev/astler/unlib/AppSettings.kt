@@ -7,7 +7,7 @@ import android.os.Build
 import android.util.DisplayMetrics
 import androidx.core.os.ConfigurationCompat
 import dev.astler.unlib.utils.infoLog
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 
 /**
  * Отвечает за выбор языка, работает вроде как нормально, но бывают кейсы без обработки
@@ -16,7 +16,7 @@ class AppSettings {
 
     companion object {
         private fun loadLocalePref(): String {
-            return if(gPreferencesTool.isSystemLanguage) {
+            return if (gPreferencesTool.isSystemLanguage) {
                 ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0).toString()
             } else gPreferencesTool.appLanguage
         }

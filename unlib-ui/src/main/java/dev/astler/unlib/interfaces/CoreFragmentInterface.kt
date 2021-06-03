@@ -1,4 +1,4 @@
-package dev.astler.unli.interfaces
+package dev.astler.unlib.interfaces
 
 interface CoreFragmentInterface {
     fun backPressed()

@@ -16,7 +16,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailabilityLight
 import dev.astler.unlib.core.R
 import dev.astler.unlib.gPreferencesTool
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 
 class ContextUtils(base: Context?) : ContextWrapper(base)
 

@@ -2,9 +2,7 @@ package dev.astler.unlib.utils
 
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.view.LayoutInflater
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,136 +10,89 @@ import dev.astler.unlib.adapters.BaseOneItemListAdapter
 import dev.astler.unlib.core.R
 import dev.astler.unlib.ui.databinding.DialogChooseItemBinding
 
-fun Context.unLibInfoDialog(pText: String, pInstantShow: Boolean = true): AlertDialog {
-    val nDialog = AlertDialog.Builder(this).setMessage(pText).create()
+fun Context.dialog(
+    pTitle: String = "",
+    pMsg: String = "",
+    pInstantDialog: Boolean = true
+): AlertDialog {
+    val nDialog = AlertDialog.Builder(this)
 
-    if (pInstantShow)
-        nDialog.show()
+    if (pTitle.isNotEmpty())
+        nDialog.setTitle(pTitle)
 
-    return nDialog
+    if (pMsg.isNotEmpty())
+        nDialog.setMessage(pMsg)
+
+    val nCreatedDialog = nDialog.create()
+
+    if (pInstantDialog)
+        nCreatedDialog.show()
+
+    return nCreatedDialog
 }
 
-fun Context.showInfoDialog(pTitle: CharSequence, pMsg: CharSequence) {
-    unLibDialog(pTitle, pMsg, getString(R.string.ok), pPositiveClick = { })
+fun Context.okDialog(
+    pTitle: String = "",
+    pMsg: String = "",
+    pOkAction: () -> Unit,
+    pInstantDialog: Boolean = true
+): AlertDialog {
+    return confirmDialog(
+        pTitle,
+        pMsg,
+        pPositiveText = getString(R.string.ok),
+        pPositiveAction = pOkAction,
+        pInstantDialog = pInstantDialog
+    )
 }
 
-fun Context.showInfoMsgDialog(pMsg: CharSequence) {
-    unLibDialog("", pMsg, getString(R.string.ok), pPositiveClick = { })
+fun Context.confirmDialog(
+    pTitle: String = "",
+    pMsg: String = "",
+    pPositiveText: String = "",
+    pNegativeText: String = "",
+    pPositiveAction: (() -> Unit)? = null,
+    pNegativeAction: (() -> Unit)? = null,
+    pInstantDialog: Boolean = true
+): AlertDialog {
+    val nDialog = AlertDialog.Builder(this)
+
+    if (pTitle.isNotEmpty())
+        nDialog.setTitle(pTitle)
+
+    if (pMsg.isNotEmpty())
+        nDialog.setMessage(pMsg)
+
+    if (pPositiveAction != null)
+        nDialog.setPositiveButton(pPositiveText) { _, _ -> pPositiveAction() }
+
+    if (pNegativeAction != null)
+        nDialog.setNegativeButton(pNegativeText) { _, _ -> pNegativeAction() }
+
+    val nCreatedDialog = nDialog.create()
+
+    if (pInstantDialog)
+        nCreatedDialog.show()
+
+    return nCreatedDialog
 }
 
-fun Context.showInfoDialog(@StringRes title: Int, @StringRes msg: Int) {
-    this.showInfoDialog(getString(title), getString(msg))
-}
-
-fun Activity.exitDialog() {
-    confirmDialog(
-        R.string.exiting_app,
+fun Activity.exitDialog(
+    pInstantDialog: Boolean = true
+): AlertDialog {
+    return confirmDialog(
+        getString(R.string.exiting_app),
         getString(R.string.already_leave),
-        getString(R.string.yes),
-        getString(R.string.no),
-        {
+        pPositiveText = getString(R.string.yes),
+        pNegativeText = getString(R.string.no),
+        pPositiveAction = {
             this.vibrateOnClick()
             this.finish()
-        })
-}
-
-fun Context.confirmDialog(
-    @StringRes pTitle: Int,
-    pMsg: CharSequence,
-    pPositiveText: CharSequence,
-    pNegativeText: CharSequence,
-    pPositiveClick: ((pDialogInterface: DialogInterface) -> Unit),
-    pNegativeClick: ((pDialogInterface: DialogInterface) -> Unit) = {}
-) {
-    unLibDialog(
-        getString(pTitle),
-        pMsg,
-        pPositiveText,
-        pNegativeText,
-        pPositiveClick,
-        pNegativeClick
+        },
+        pNegativeAction = {
+        },
+        pInstantDialog = pInstantDialog
     )
-}
-
-fun Context.confirmDialog(
-    @StringRes pTitle: Int,
-    pMsg: CharSequence,
-    @StringRes pPositiveText: Int,
-    @StringRes pNegativeText: Int,
-    pPositiveClick: ((pDialogInterface: DialogInterface) -> Unit),
-    pNegativeClick: ((pDialogInterface: DialogInterface) -> Unit)
-) {
-    unLibDialog(
-        getString(pTitle),
-        pMsg,
-        getString(pPositiveText),
-        getString(pNegativeText),
-        pPositiveClick,
-        pNegativeClick
-    )
-}
-
-fun Context.unLibDialog(
-    @StringRes pTitle: Int,
-    pMsg: CharSequence,
-    pPositiveText: CharSequence,
-    pNegativeText: CharSequence,
-    pPositiveClick: ((pDialogInterface: DialogInterface) -> Unit)? = null,
-    pNegativeClick: ((pDialogInterface: DialogInterface) -> Unit)? = null
-) {
-    unLibDialog(
-        getString(pTitle),
-        pMsg,
-        pPositiveText,
-        pNegativeText,
-        pPositiveClick,
-        pNegativeClick
-    )
-}
-
-fun Context.unLibDialog(
-    @StringRes pTitle: Int,
-    pMsg: CharSequence,
-    @StringRes pPositiveText: Int,
-    @StringRes pNegativeText: Int,
-    pPositiveClick: ((pDialogInterface: DialogInterface) -> Unit)? = null,
-    pNegativeClick: ((pDialogInterface: DialogInterface) -> Unit)? = null
-) {
-    unLibDialog(
-        getString(pTitle),
-        pMsg,
-        getString(pPositiveText),
-        getString(pNegativeText),
-        pPositiveClick,
-        pNegativeClick
-    )
-}
-
-fun Context.unLibDialog(
-    pTitle: CharSequence,
-    pMsg: CharSequence,
-    pPositiveText: CharSequence = "",
-    pNegativeText: CharSequence = "",
-    pPositiveClick: ((pDialogInterface: DialogInterface) -> Unit)? = null,
-    pNegativeClick: ((pDialogInterface: DialogInterface) -> Unit)? = null
-) {
-    val nDialog = AlertDialog.Builder(this)
-    nDialog.setTitle(pTitle)
-    nDialog.setMessage(pMsg)
-
-    if (pPositiveClick != null) {
-        nDialog.setPositiveButton(pPositiveText) { pDialog, _ ->
-            pPositiveClick(pDialog)
-        }
-    }
-
-    if (pNegativeClick != null) {
-        nDialog.setNegativeButton(pNegativeText) { pDialog, _ ->
-            pNegativeClick(pDialog)
-        }
-    }
-
-    nDialog.create().show()
 }
 
 fun <T> Context.customSearchListDialog(

@@ -7,7 +7,6 @@ import android.os.Build
 import androidx.multidex.MultiDexApplication
 import dev.astler.unlib.config.AppConfig
 import dev.astler.unlib.core.R
-import dev.astler.unlib.utils.readFileFromAssets
 import dev.astler.unlib.utils.readFileFromRaw
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -50,8 +49,7 @@ open class UnliApp : MultiDexApplication() {
 
         cAppConfig = if (nAppConfig.isNotEmpty()) {
             mJson.decodeFromString(nAppConfig)
-        }
-        else {
+        } else {
             AppConfig()
         }
 
@@ -62,7 +60,7 @@ open class UnliApp : MultiDexApplication() {
 
     fun initAppLanguage(context: Context) {
         AppSettings.loadLocale(
-                context
+            context
         )
     }
 

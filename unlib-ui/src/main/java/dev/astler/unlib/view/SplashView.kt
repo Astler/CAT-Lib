@@ -11,6 +11,7 @@ import android.view.animation.AccelerateInterpolator
 import androidx.core.graphics.PathParser
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.unlib.utils.special.VectorDrawableParser
 
 class SplashView @JvmOverloads constructor(
     context: Context,

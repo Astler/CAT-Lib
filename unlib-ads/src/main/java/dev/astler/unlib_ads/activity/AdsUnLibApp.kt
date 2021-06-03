@@ -4,7 +4,7 @@ import com.google.android.gms.ads.MobileAds
 import dev.astler.unlib.UnliApp
 import dev.astler.unlib_ads.AppOpenManager
 
-open class AdsUnLibApp: UnliApp() {
+open class AdsUnLibApp : UnliApp() {
     private var mAppOpenManager: AppOpenManager? = null
 
     override fun onCreate() {

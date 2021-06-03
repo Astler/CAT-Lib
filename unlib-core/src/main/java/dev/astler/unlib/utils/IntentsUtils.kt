@@ -51,7 +51,6 @@ fun playStoreIntent(pUrl: String, pPackageName: String): Intent {
 
 fun Context.openWebUrl(pUrl: String) {
     simpleTry {
-
     }
     try {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(pUrl)))
@@ -80,13 +79,12 @@ fun Context.shareText(pText: CharSequence) {
         intentShare.type = "text/plain"
         intentShare.putExtra(Intent.EXTRA_TEXT, pText)
         startActivity(intentShare)
-    }
-    catch (e: Exception) {
+    } catch (e: Exception) {
         infoLog("UNLIB: Error while creating share text task: $e")
     }
 }
 
-fun Context.shareImageByUri(uri: Uri){
+fun Context.shareImageByUri(uri: Uri) {
     val fis = FileInputStream(uri.path)
     val bitmap = BitmapFactory.decodeStream(fis)
     fis.close()

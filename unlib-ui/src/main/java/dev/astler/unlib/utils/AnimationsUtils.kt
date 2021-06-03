@@ -4,7 +4,7 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.view.View
 
-fun View.shakeView() {
+fun View.shake() {
     val animator1 = ObjectAnimator.ofFloat(this, "translationX", -50f)
     animator1.repeatCount = 0
     animator1.duration = 50

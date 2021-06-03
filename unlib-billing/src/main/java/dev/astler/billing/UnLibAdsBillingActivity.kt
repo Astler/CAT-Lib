@@ -140,14 +140,14 @@ abstract class UnLibAdsBillingActivity : UnLibBillingActivity(), OnUserEarnedRew
         }
 
         if (!gPreferencesTool.getBoolean("age_confirmed", false) && mNeedAgeCheck) {
-            unLibDialog(
+            confirmDialog(
                 getString(dev.astler.unlib_ads.R.string.ads_dialog_title),
                 getString(dev.astler.unlib_ads.R.string.ads_dialog_msg),
                 getString(R.string.yes), getString(R.string.no),
-                pPositiveClick = {
+                pPositiveAction = {
                     gPreferencesTool.edit("child_ads", false)
                 },
-                pNegativeClick = {
+                pNegativeAction = {
                     gPreferencesTool.edit("child_ads", true)
                 }
             )
@@ -209,21 +209,21 @@ abstract class UnLibAdsBillingActivity : UnLibBillingActivity(), OnUserEarnedRew
 
     private fun showNoAdsDialog() {
         if (mProPackageName.isNotEmpty()) {
-            unLibDialog(
+            confirmDialog(
                 getString(R.string.disable_ads),
                 getString(R.string.disable_ads_msg),
                 getString(R.string.buy_pro), getString(R.string.watch_ads),
-                pPositiveClick = {
+                pPositiveAction = {
                     openAppInPlayStore(mProPackageName)
                 },
-                pNegativeClick = { showRewardAd() }
+                pNegativeAction = { showRewardAd() }
             )
         } else {
-            unLibDialog(
+            confirmDialog(
                 getString(R.string.disable_ads),
                 getString(R.string.disable_ads_msg),
                 getString(R.string.watch_ads),
-                pPositiveClick = {
+                pPositiveAction = {
                     showRewardAd()
                 }
             )

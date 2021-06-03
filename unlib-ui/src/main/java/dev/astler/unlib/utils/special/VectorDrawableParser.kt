@@ -1,4 +1,4 @@
-package dev.astler.unlib.utils
+package dev.astler.unlib.utils.special
 
 import android.annotation.SuppressLint
 import android.content.res.Resources

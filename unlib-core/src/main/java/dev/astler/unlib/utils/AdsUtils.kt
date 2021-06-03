@@ -3,7 +3,7 @@ package dev.astler.unlib.utils
 import android.content.Context
 import dev.astler.unlib.cNoAdsName
 import dev.astler.unlib.gPreferencesTool
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 
 fun Context.canShowAds(): Boolean {
     return if (

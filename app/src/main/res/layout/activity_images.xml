@@ -64,12 +64,42 @@
         tools:layout_editor_absoluteX="156dp"
         tools:layout_editor_absoluteY="200dp" />
 
+    <ImageView
+        android:id="@+id/assetsImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_launcher_background"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="200dp" />
+
+    <ImageView
+        android:id="@+id/noFilterBitmapAssetsImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_launcher_background"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="200dp" />
+
+    <ImageView
+        android:id="@+id/coloredNoFilterBitmapAssetsImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_launcher_background"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="200dp" />
+
     <androidx.constraintlayout.helper.widget.Flow
         android:id="@+id/flow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:constraint_referenced_ids="coilImage,coilRoundImage,coilBlurImage,roundedImage,grayScaleImage,backgroundImage"
+        app:constraint_referenced_ids="coilImage,coilRoundImage,coilBlurImage,roundedImage,grayScaleImage,backgroundImage,assetsImage,noFilterBitmapAssetsImage,coloredNoFilterBitmapAssetsImage"
         app:flow_horizontalAlign="center"
         app:flow_horizontalGap="8dp"
         app:flow_maxElementsWrap="2"

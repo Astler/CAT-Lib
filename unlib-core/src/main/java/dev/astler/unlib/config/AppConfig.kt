@@ -9,6 +9,7 @@ data class AppConfig(
 
     val mRewardedAdId: String = "",
     val mInterstitialAdId: String = "",
+    val mNativeAdId: String = "",
     val mStartAdId: String = "",
 
     val mNeedAgeCheck: Boolean = false,

@@ -6,13 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import dev.astler.unli.interfaces.RecyclerAdapterSizeListener
+import dev.astler.unlib.interfaces.RecyclerAdapterSizeListener
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.ui.databinding.RecyclerViewFragmentBinding
 import dev.astler.unlib.utils.hideFABOnScroll
 import dev.astler.unlib.view.StateLayout
 
-abstract class UnLibSimpleListFragment(): UnLibFragment(R.layout.recycler_view_fragment), RecyclerAdapterSizeListener {
+abstract class UnLibSimpleListFragment :
+    UnLibFragment(R.layout.recycler_view_fragment),
+    RecyclerAdapterSizeListener {
 
     protected lateinit var mRecyclerViewFragmentBinding: RecyclerViewFragmentBinding
     lateinit var mStateLayout: StateLayout
@@ -23,8 +25,7 @@ abstract class UnLibSimpleListFragment(): UnLibFragment(R.layout.recycler_view_f
     override fun totalItems(size: Int) {
         if (size <= 0) {
             mStateLayout.activeView = StateLayout.errorView
-        }
-        else {
+        } else {
             mStateLayout.activeView = StateLayout.defaultView
         }
     }
@@ -55,8 +56,7 @@ abstract class UnLibSimpleListFragment(): UnLibFragment(R.layout.recycler_view_f
             }
 
             mRecyclerView.hideFABOnScroll(mFABView)
-        }
-        else {
+        } else {
             mFABView.visibility = View.GONE
         }
 

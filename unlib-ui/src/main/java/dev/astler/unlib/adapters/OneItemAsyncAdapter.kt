@@ -5,13 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import dev.astler.unli.interfaces.RecyclerAdapterSizeListener
+import dev.astler.unlib.interfaces.RecyclerAdapterSizeListener
 import dev.astler.unlib.view.AsyncCell
 
 class OILAsyncAdapter<T>(
     @LayoutRes val pLayoutResource: Int,
     private val mItemLoadListener: LoadOILItem<T>? = null,
-    private val mAdapterSizeListener: RecyclerAdapterSizeListener? = null):
+    private val mAdapterSizeListener: RecyclerAdapterSizeListener? = null
+) :
     RecyclerView.Adapter<OILAsyncAdapter.OILAsyncViewHolder>() {
 
     var mItems: ArrayList<T> = arrayListOf()
@@ -53,7 +54,6 @@ class OILAsyncAdapter<T>(
 
     class OILAsyncViewHolder internal constructor(view: ViewGroup) :
         RecyclerView.ViewHolder(view)
-
 }
 
 fun interface LoadOILItem<T> {

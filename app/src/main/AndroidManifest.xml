@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="dev.astler.unli_text">
+    package="dev.astler.unlib_test">
 
     <application
+        android:name="dev.astler.unlib_ads.activity.AdsUnLibApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name="dev.astler.unlib.UnliApp"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppUnliDarkTheme"
         tools:ignore="AllowBackup">
 
-        <activity android:name="dev.astler.unlib.ui.activity.SplashActivityUnLib" android:theme="@style/SplashTheme">
+        <activity
+            android:name="dev.astler.unlib.ui.activity.SplashActivityUnLib"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,12 +23,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".ImageLoadersActivity"/>
+        <activity android:name=".MainActivity" android:theme="@style/AppUnliDarkTheme" />
+        <activity android:name=".activity.ShortcodeTextActivity" />
+        <activity android:name=".activity.TestMenu" android:theme="@style/AppUnliDarkTheme"  />
+        <activity android:name=".activity.ImageLoadersActivity" />
+        <activity android:name=".activity.ads.AdsOpenItemListActivity" />
+        <activity android:name=".activity.ads.AdsTestMenu" android:theme="@style/AppUnliDarkTheme"  />
+        <activity android:name=".activity.AsyncListActivity" android:theme="@style/AppUnliDarkTheme"  />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-1536736011746190~1646338212"/>
+            android:value="ca-app-pub-1536736011746190~1646338212" />
     </application>
 
 </manifest>

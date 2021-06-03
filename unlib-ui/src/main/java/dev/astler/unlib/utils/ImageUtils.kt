@@ -3,13 +3,12 @@ package dev.astler.unlib.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.ShapeDrawable
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import coil.ImageLoader
 import coil.request.ImageRequest
 import java.io.IOException
@@ -29,8 +28,8 @@ fun Context.createNoFilterDrawableFromBitmap(pBitmap: Bitmap, pColorRes: Int = -
     drawable.isFilterBitmap = false
 
     if (pColorRes != -1) {
-        drawable.colorFilter =
-            PorterDuffColorFilter(ContextCompat.getColor(this, pColorRes), PorterDuff.Mode.SRC_ATOP)
+        val color = ContextCompat.getColor(this, pColorRes)
+        DrawableCompat.setTint(drawable, color)
     }
 
     return drawable
@@ -40,25 +39,24 @@ fun ImageView.loadWithBackground(
     pRequest: String,
     pBackgroundColor: Int
 ) {
-    simpleTryCatch(
-        context,
-        {
-            val imageLoader = ImageLoader(context)
+    simpleTry(
+        context
+    ) {
+        val imageLoader = ImageLoader(context)
 
-            val request = ImageRequest.Builder(context)
-                .data(pRequest)
-                .target { drawable ->
-                    val background = ShapeDrawable()
-                    background.paint.color =
-                        ContextCompat.getColor(context, pBackgroundColor)
+        val request = ImageRequest.Builder(context)
+            .data(pRequest)
+            .target { drawable ->
+                val background = ShapeDrawable()
+                background.paint.color =
+                    ContextCompat.getColor(context, pBackgroundColor)
 
-                    val layers = arrayOf(background, drawable)
+                val layers = arrayOf(background, drawable)
 
-                    setImageDrawable(LayerDrawable(layers))
-                }
-                .build()
+                setImageDrawable(LayerDrawable(layers))
+            }
+            .build()
 
-            val disposable = imageLoader.enqueue(request)
-        }
-    ) {}
+        val disposable = imageLoader.enqueue(request)
+    }
 }

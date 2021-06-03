@@ -2,8 +2,8 @@ package dev.astler.unlib.ui.fragment
 
 import android.content.Context
 import androidx.fragment.app.Fragment
-import dev.astler.unli.interfaces.CoreFragmentInterface
-import dev.astler.unlib.ui.interfaces.ActivityInterface
+import dev.astler.unlib.interfaces.ActivityInterface
+import dev.astler.unlib.interfaces.CoreFragmentInterface
 import dev.astler.unlib.utils.getStringResource
 
 abstract class UnLibFragment(pLayoutId: Int = 0) : Fragment(pLayoutId), CoreFragmentInterface {

@@ -4,14 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.annotation.AttrRes
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+import androidx.annotation.* // ktlint-disable no-wildcard-imports
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
@@ -75,6 +74,10 @@ fun View.showView() {
     visibility = View.VISIBLE
 }
 
+fun View.goneView() {
+    visibility = View.GONE
+}
+
 fun View.showViewWithCondition(pCondition: Boolean) {
     if (pCondition) {
         showView()
@@ -82,11 +85,6 @@ fun View.showViewWithCondition(pCondition: Boolean) {
         goneView()
     }
 }
-
-fun View.goneView() {
-    visibility = View.GONE
-}
-
 fun Context.simpleTextChip(@StringRes pTextId: Int): View {
     return simpleTextChip(getString(pTextId))
 }
@@ -98,7 +96,7 @@ fun Context.simpleTextChip(pText: String): View {
     return mChip
 }
 
-fun View.getScreenShotBitmap(): Bitmap? {
+fun View.getCaptureBitmap(): Bitmap? {
     var screenshot: Bitmap? = null
     try {
         screenshot = Bitmap.createBitmap(measuredWidth, measuredHeight, Bitmap.Config.ARGB_8888)
@@ -112,4 +110,8 @@ fun View.getScreenShotBitmap(): Bitmap? {
 
 fun View.getContextColor(@ColorRes pColorId: Int): Int {
     return context.getContextColor(pColorId)
+}
+
+fun ViewGroup.initView(@LayoutRes layout: Int): View {
+    return LayoutInflater.from(context).inflate(layout, this, false)
 }

@@ -1,12 +1,7 @@
 package dev.astler.unlib.utils
 
-import android.content.Context
-import android.graphics.Bitmap
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 
 fun Date.toHumanViewDMY(): String {
     return SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(this)
