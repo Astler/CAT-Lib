@@ -16,7 +16,7 @@ class AdItemViewHolder(view: View) :
         adView = unifiedNativeAdView
         mView = view
         adView.callToActionView = mItemAdBinding.install
-     //   adView.headlineView = mItemAdBinding.adHeadline
+        adView.headlineView = mItemAdBinding.adHeadline
         adView.bodyView = mItemAdBinding.adBody
         adView.iconView = mItemAdBinding.adAppIcon
     }

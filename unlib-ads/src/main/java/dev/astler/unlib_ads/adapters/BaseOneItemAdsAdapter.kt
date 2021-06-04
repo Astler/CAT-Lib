@@ -68,12 +68,12 @@ open class BaseOneItemAdsAdapter<T>(
 
             if (adForPosition == null || !adView.context.canShowAds()) {
                 infoLog("HIDE AD >.<")
-                holder.mItemAdBinding.nativeAd.goneView()
                 holder.mItemAdBinding.adHeadline.goneView()
+                holder.mItemAdBinding.nativeAd.goneView()
             } else {
                 infoLog("SHOW AD >.<")
-                holder.mItemAdBinding.nativeAd.showView()
                 holder.mItemAdBinding.adHeadline.showView()
+                holder.mItemAdBinding.nativeAd.showView()
 
                 (adView.headlineView as TextView).text = adForPosition.headline
                 (adView.bodyView as TextView).text = adForPosition.body
