@@ -7,7 +7,7 @@ import dev.astler.unlib_ads.databinding.ItemAdBinding
 
 class AdItemViewHolder(view: View) :
     ViewHolder(view) {
-    private val mItemAdBinding = ItemAdBinding.bind(view)
+    val mItemAdBinding = ItemAdBinding.bind(view)
     val adView: NativeAdView
     val mView: View
 
@@ -16,7 +16,7 @@ class AdItemViewHolder(view: View) :
         adView = unifiedNativeAdView
         mView = view
         adView.callToActionView = mItemAdBinding.install
-        adView.headlineView = mItemAdBinding.adHeadline
+     //   adView.headlineView = mItemAdBinding.adHeadline
         adView.bodyView = mItemAdBinding.adBody
         adView.iconView = mItemAdBinding.adAppIcon
     }

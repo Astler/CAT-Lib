@@ -2,7 +2,6 @@ package dev.astler.unlib_ads.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,10 +11,7 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import dev.astler.unlib.adapters.viewholders.BaseOneItemListViewHolder
 import dev.astler.unlib.interfaces.RecyclerAdapterSizeListener
-import dev.astler.unlib.utils.canShowAds
-import dev.astler.unlib.utils.goneView
-import dev.astler.unlib.utils.initView
-import dev.astler.unlib.utils.showView
+import dev.astler.unlib.utils.*
 import dev.astler.unlib_ads.R
 import dev.astler.unlib_ads.adapters.viewholders.AdItemViewHolder
 import dev.astler.unlib_ads.utils.NativeAdsLoader
@@ -71,9 +67,14 @@ open class BaseOneItemAdsAdapter<T>(
             val adView: NativeAdView = holder.adView
 
             if (adForPosition == null || !adView.context.canShowAds()) {
-                holder.mView.visibility = View.GONE
+                infoLog("HIDE AD >.<")
+                holder.mItemAdBinding.nativeAd.goneView()
+                holder.mItemAdBinding.adHeadline.goneView()
             } else {
-                holder.mView.visibility = View.VISIBLE
+                infoLog("SHOW AD >.<")
+                holder.mItemAdBinding.nativeAd.showView()
+                holder.mItemAdBinding.adHeadline.showView()
+
                 (adView.headlineView as TextView).text = adForPosition.headline
                 (adView.bodyView as TextView).text = adForPosition.body
 
