@@ -74,7 +74,7 @@ open class OneItemAdsAdapter<T>(
             val adView: NativeAdView = holder.adView
 
             if (adForPosition == null || mCanShowAds) {
-                infoLog("HIDE AD >.<")
+                infoLog("HIDE AD >.< \n mCanShowAds = $mCanShowAds \n adForPosition = $adForPosition")
                 holder.mItemAdBinding.adHeadline.goneView()
                 holder.mItemAdBinding.nativeAd.goneView()
             } else {
