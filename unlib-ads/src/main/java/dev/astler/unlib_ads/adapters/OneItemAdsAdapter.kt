@@ -1,6 +1,5 @@
 package dev.astler.unlib_ads.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -11,34 +10,42 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import dev.astler.unlib.adapters.viewholders.BaseOneItemListViewHolder
 import dev.astler.unlib.interfaces.RecyclerAdapterSizeListener
-import dev.astler.unlib.utils.*
+import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib_ads.R
 import dev.astler.unlib_ads.adapters.viewholders.AdItemViewHolder
 import dev.astler.unlib_ads.utils.NativeAdsLoader
 import kotlin.random.Random
 
-open class BaseOneItemAdsAdapter<T>(
-    context: Context,
+data class OIAdsAdapterConfig(
+    var mCanShowAds: Boolean = false,
+    val mFirstAdPosition: Int = 2,
+    val mAdDelta: Int = 5
+)
+
+open class OneItemAdsAdapter<T>(
     @LayoutRes val pLayoutResource: Int,
+    pData: ArrayList<T> = arrayListOf(),
     private val mItemLoadListener: LoadItem<T>? = null,
     private val mAdapterSizeListener: RecyclerAdapterSizeListener? = null,
-    private val mFirstAdPosition: Int = 2,
-    private val mAdDelta: Int = 5
+    mConfig: OIAdsAdapterConfig = OIAdsAdapterConfig(),
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val mFirstAdPosition: Int = mConfig.mFirstAdPosition
+    private val mAdDelta: Int = mConfig.mAdDelta
+    private var mCanShowAds = mConfig.mCanShowAds
 
     private val adItem = 999
 
-    private var canShowAds = context.canShowAds()
-    var data: ArrayList<T> = arrayListOf()
+    var data: ArrayList<T> = pData
 
-    fun addItems(items: List<T>) {
+    fun setData(items: List<T>) {
         this.data.clear()
         this.data.addAll(items)
         mAdapterSizeListener?.totalItems(this.data.size)
         notifyDataSetChanged()
     }
 
-    fun silenceReloadItems(items: List<T>) {
+    fun silenceSetData(items: List<T>) {
         this.data.clear()
         this.data.addAll(items)
         mAdapterSizeListener?.totalItems(this.data.size)
@@ -66,7 +73,7 @@ open class BaseOneItemAdsAdapter<T>(
             val adForPosition = getAdForPosition()
             val adView: NativeAdView = holder.adView
 
-            if (adForPosition == null || !adView.context.canShowAds()) {
+            if (adForPosition == null || mCanShowAds) {
                 infoLog("HIDE AD >.<")
                 holder.mItemAdBinding.adHeadline.goneView()
                 holder.mItemAdBinding.nativeAd.goneView()
@@ -120,7 +127,7 @@ open class BaseOneItemAdsAdapter<T>(
     override fun getItemCount(): Int {
         mAdapterSizeListener?.totalItems(data.size)
 
-        if (mAdDelta != 0 && canShowAds) {
+        if (mAdDelta != 0 && mCanShowAds) {
             var additionalContent = 0
 
             if (data.size > 0 && mFirstAdPosition > 0 && data.size > mFirstAdPosition)
@@ -159,7 +166,7 @@ open class BaseOneItemAdsAdapter<T>(
     override fun getItemViewType(position: Int): Int {
         return if (position > 0 && mAdDelta != 0 &&
             (position == mFirstAdPosition || (position - mFirstAdPosition) % mAdDelta == 0) &&
-            canShowAds
+            mCanShowAds
         ) {
             return adItem
         } else 0

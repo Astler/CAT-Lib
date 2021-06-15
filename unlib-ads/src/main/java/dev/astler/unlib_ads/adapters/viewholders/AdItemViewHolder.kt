@@ -9,7 +9,7 @@ class AdItemViewHolder(view: View) :
     ViewHolder(view) {
     val mItemAdBinding = ItemAdBinding.bind(view)
     val adView: NativeAdView
-    val mView: View
+    private val mView: View
 
     init {
         val unifiedNativeAdView = mItemAdBinding.nativeAd

@@ -13,24 +13,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <FrameLayout
-                android:id="@+id/frameLayout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:background="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:padding="8dp">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ad_app_icon"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@null"
                 android:padding="3dp"
@@ -45,6 +37,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
                 android:ellipsize="end"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -82,7 +76,6 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:text="@string/install"
                 android:textColor="?attr/contrastColorByTheme"
                 android:visibility="gone"
@@ -95,7 +88,6 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
                 android:text="@string/ad"
                 android:textColor="@color/colorInstall"
                 android:textStyle="bold"

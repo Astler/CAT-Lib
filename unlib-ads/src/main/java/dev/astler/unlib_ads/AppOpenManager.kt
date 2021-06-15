@@ -18,9 +18,10 @@ import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.canShowAds
 import dev.astler.unlib.utils.infoLog
 import dev.astler.unlib_ads.activity.AdsUnLibApp
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 
-class AppOpenManager(myApplication: AdsUnLibApp) : Application.ActivityLifecycleCallbacks,
+class AppOpenManager(myApplication: AdsUnLibApp) :
+    Application.ActivityLifecycleCallbacks,
     LifecycleObserver {
     private var appOpenAd: AppOpenAd? = null
     private var loadCallback: AppOpenAdLoadCallback? = null
@@ -99,11 +100,12 @@ class AppOpenManager(myApplication: AdsUnLibApp) : Application.ActivityLifecycle
     /** Utility method that checks if ad exists and can be shown.  */
     private val isAdAvailable: Boolean
         get() {
-//            infoLog("START AD: Full check")
-//            infoLog("START AD: appOpenAd != null --> ${appOpenAd != null}")
-//            infoLog("START AD: wasLoadTimeLessThanNHoursAgo(4) --> ${wasLoadTimeLessThanNHoursAgo(4)}")
-//            infoLog("START AD: !gPreferencesTool.isFirstStart --> ${!gPreferencesTool.isFirstStart}")
-//            infoLog("START AD: Date().time - mLastShowTime > 3600000 --> ${Date().time - mLastShowTime > 1800000}")
+            infoLog("START AD: Full check")
+            infoLog("START AD: appOpenAd != null --> ${appOpenAd != null}")
+            infoLog("START AD: wasLoadTimeLessThanNHoursAgo(4) --> ${wasLoadTimeLessThanNHoursAgo(4)}")
+            infoLog("START AD: !gPreferencesTool.isFirstStart --> ${!gPreferencesTool.isFirstStart}")
+            infoLog("START AD: Date().time - mLastShowTime > 3600000 --> ${Date().time - mLastShowTime > 1800000}")
+
             return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4) && !gPreferencesTool.isFirstStart && Date().time - mLastShowTime > 1800000 && currentActivity?.canShowAds() == true
         }
 
@@ -132,5 +134,4 @@ class AppOpenManager(myApplication: AdsUnLibApp) : Application.ActivityLifecycle
     override fun onActivityDestroyed(pActivity: Activity) {
         currentActivity = null
     }
-
 }
