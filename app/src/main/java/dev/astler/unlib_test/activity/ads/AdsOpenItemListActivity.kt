@@ -2,8 +2,10 @@ package dev.astler.unlib_test.activity.ads
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import dev.astler.unlib.utils.canShowAds
 import dev.astler.unlib_ads.activity.UnLibAdsActivity
-import dev.astler.unlib_ads.adapters.BaseOneItemAdsAdapter
+import dev.astler.unlib_ads.adapters.OIAdsAdapterConfig
+import dev.astler.unlib_ads.adapters.OneItemAdsAdapter
 import dev.astler.unlib_ads.utils.NativeAdsLoader
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
@@ -12,7 +14,7 @@ import dev.astler.unlib_test.items.TextItem
 class AdsOpenItemListActivity : UnLibAdsActivity() {
 
     private lateinit var mImagesBinding: ActivityRecyclerviewBinding
-    private lateinit var mAdapter: BaseOneItemAdsAdapter<TextItem>
+    private lateinit var mAdapter: OneItemAdsAdapter<TextItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,16 +25,16 @@ class AdsOpenItemListActivity : UnLibAdsActivity() {
 
         NativeAdsLoader.instance?.loadAds(this, getAdRequest())
 
-        mAdapter = BaseOneItemAdsAdapter(
-            this,
+        mAdapter = OneItemAdsAdapter(
             R.layout.item_text,
-            { pData, pHolder ->
+            mItemLoadListener = { pData, pHolder ->
                 val nBind = dev.astler.unlib_test.databinding.ItemTextBinding.bind(pHolder.mItemView)
                 nBind.text.text = pData.text
-            }
+            },
+            mConfig = OIAdsAdapterConfig(canShowAds())
         )
 
-        mAdapter.addItems(
+        mAdapter.setData(
             listOf(
                 TextItem("A 1"),
                 TextItem("A 2"),
