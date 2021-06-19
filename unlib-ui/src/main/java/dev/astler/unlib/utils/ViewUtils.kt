@@ -7,10 +7,13 @@ import android.graphics.Canvas
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsets
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.annotation.* // ktlint-disable no-wildcard-imports
+import androidx.core.view.ViewCompat
+import androidx.core.view.updatePadding
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
@@ -85,6 +88,7 @@ fun View.showViewWithCondition(pCondition: Boolean) {
         goneView()
     }
 }
+
 fun Context.simpleTextChip(@StringRes pTextId: Int): View {
     return simpleTextChip(getString(pTextId))
 }
@@ -114,4 +118,52 @@ fun View.getContextColor(@ColorRes pColorId: Int): Int {
 
 fun ViewGroup.initView(@LayoutRes layout: Int): View {
     return LayoutInflater.from(context).inflate(layout, this, false)
+}
+
+/**
+ * Padding Functions For Status And Navigation Bars
+ */
+
+fun View.setStatusPaddingForView(pAdditionalTopPadding: Int = 0) {
+    setStatusAndNavigationPaddingForView(pBottomPadding = false, pAdditionalTopPadding = pAdditionalTopPadding)
+}
+
+fun View.setNavigationPaddingForView(pAdditionalBottomPadding: Int = 0) {
+    setStatusAndNavigationPaddingForView(pTopPadding = false, pAdditionalBottomPadding = pAdditionalBottomPadding)
+}
+
+@Suppress("DEPRECATION")
+fun View.setStatusAndNavigationPaddingForView(
+    pTopPadding: Boolean = true,
+    pBottomPadding: Boolean = true,
+    pAdditionalTopPadding: Int = 0,
+    pAdditionalBottomPadding: Int = 0
+) {
+    if (isL()) {
+        ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
+            v.updatePadding(
+                top = if (pTopPadding) {
+                    if (isR()) {
+                        insets.getInsets(WindowInsets.Type.systemBars()).top + pAdditionalTopPadding
+                    } else {
+                        insets.systemWindowInsetTop + pAdditionalTopPadding
+                    }
+                } else 0,
+                bottom = if (pBottomPadding) {
+                    if (isR()) {
+                        insets.getInsets(WindowInsets.Type.systemBars()).bottom + pAdditionalBottomPadding
+                    } else {
+                        insets.systemWindowInsetBottom + pAdditionalBottomPadding
+                    }
+                } else 0
+            )
+
+            insets
+        }
+    } else {
+        updatePadding(
+            top = if (pTopPadding) pAdditionalTopPadding else 0,
+            bottom = if (pBottomPadding) pAdditionalBottomPadding else 0
+        )
+    }
 }
