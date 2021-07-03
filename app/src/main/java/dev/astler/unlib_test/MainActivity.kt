@@ -59,7 +59,7 @@ class MainActivity : UnLibAdsActivity() {
 
         findViewById<ShortCodeTextView>(R.id.test).setOnClickListener {
             lifecycleScope.launch {
-                LocalStorage.incrementThemeCounter()
+                LocalStorage.incrementStartupCounter()
             }
             // startActivity(Intent(this, TestMenu::class.java))
         }

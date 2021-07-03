@@ -81,7 +81,7 @@ abstract class BaseUnLiActivity :
         }
     }
 
-    fun loadTheme(@StyleRes lightThemeId: Int, @StyleRes darkThemeId: Int) {
+    open fun loadTheme(@StyleRes lightThemeId: Int, @StyleRes darkThemeId: Int) {
         lifecycleScope.launch {
             var nCurrentTheme = LocalStorage.appTheme()
 

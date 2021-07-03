@@ -221,6 +221,8 @@ suspend inline fun <reified T> DataStore<Preferences>.getDirectValue(
         it[PreferencesKey]
     }.first() ?: pDefaultValue
 
+    infoLog("PreferencesKey = ${PreferencesKey.name}")
+
     return if (PreferencesKey == TEXT_SIZE_KEY) {
         nValue.toString().toFloat() as T
     } else nValue
