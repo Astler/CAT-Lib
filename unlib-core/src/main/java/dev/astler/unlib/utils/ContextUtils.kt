@@ -14,8 +14,12 @@ import android.os.Vibrator
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailabilityLight
+import dev.astler.unlib.LocalStorage
 import dev.astler.unlib.core.R
-import dev.astler.unlib.gPreferencesTool
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import java.util.* // ktlint-disable no-wildcard-imports
 
 class ContextUtils(base: Context?) : ContextWrapper(base)
@@ -79,8 +83,9 @@ fun Context.readFromBuffer(): CharSequence {
 }
 
 fun Context.vibrateOnClick() {
-    if (gPreferencesTool.vibrateOnClick) {
-        vibrate()
+    CoroutineScope(SupervisorJob() + Dispatchers.Main).launch {
+        if (LocalStorage.vibrationActive())
+            vibrate()
     }
 }
 

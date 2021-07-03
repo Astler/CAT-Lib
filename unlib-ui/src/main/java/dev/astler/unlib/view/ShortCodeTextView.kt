@@ -13,12 +13,10 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.text.toSpannable
+import dev.astler.unlib.UnliApp
 import dev.astler.unlib.ui.R
-import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.getDrawableByName
-import dev.astler.unlib.utils.infoLog
 import dev.astler.unlib.view.span.CustomFancyTextSpan
-import dev.astler.unlib.view.span.CustomTypefaceSpan
 import java.util.regex.Pattern
 
 open class ShortCodeTextView @JvmOverloads constructor(
@@ -42,7 +40,7 @@ open class ShortCodeTextView @JvmOverloads constructor(
 
         val textSizeModifier =
             typedArray.getInteger(R.styleable.PrefsTextView_textSizeModifier, 0)
-        iconSize = gPreferencesTool.mTextSize + textSizeModifier
+        iconSize = UnliApp.getInstance().mFontSize + textSizeModifier
     }
 
     override fun setText(pText: CharSequence, type: BufferType) {
@@ -72,11 +70,13 @@ open class ShortCodeTextView @JvmOverloads constructor(
         while (nMatcher.find()) {
             var set = true
 
-            for (span in innerSpan.getSpans(
-                nMatcher.start(),
-                nMatcher.end(),
-                CustomFancyTextSpan::class.java
-            )) {
+            for (
+                span in innerSpan.getSpans(
+                    nMatcher.start(),
+                    nMatcher.end(),
+                    CustomFancyTextSpan::class.java
+                )
+            ) {
                 if (innerSpan.getSpanStart(span) >= nMatcher.start() && innerSpan.getSpanEnd(span) <= nMatcher.end()) {
                     innerSpan.removeSpan(span)
                 } else {
@@ -140,12 +140,12 @@ open class ShortCodeTextView @JvmOverloads constructor(
                 }
 
                 val nRemoveChars = 11 +
-                        (if (nColor != -1) 7 + nColorRaw.length else 0) +
-                        (if (nParamsRaw.isNotEmpty()) 9 + nParamsRaw.length else 0) +
-                        (if (nParamsMap.containsKey("s.after")) -(nParamsMap["s.after"] ?: "0").toInt() else 0)
+                    (if (nColor != -1) 7 + nColorRaw.length else 0) +
+                    (if (nParamsRaw.isNotEmpty()) 9 + nParamsRaw.length else 0) +
+                    (if (nParamsMap.containsKey("s.after")) -(nParamsMap["s.after"] ?: "0").toInt() else 0)
 
                 val nTypeface = if (nParamsMap.containsKey("tf")) {
-                    getTypefaceByParams(nParamsMap["tf"]?:"")
+                    getTypefaceByParams(nParamsMap["tf"] ?: "")
                 } else null
 
                 val sb = SpannableStringBuilder(innerSpan)
@@ -170,7 +170,7 @@ open class ShortCodeTextView @JvmOverloads constructor(
     open fun getTypefaceByParams(pKey: String): Typeface? {
         return when (pKey) {
             "b" -> ResourcesCompat.getFont(context, R.font.google_sans_bold)
-            //"m" -> ResourcesCompat.getFont(context, R.font.minecraft)
+            // "m" -> ResourcesCompat.getFont(context, R.font.minecraft)
             else -> null
         }
     }
@@ -182,11 +182,13 @@ open class ShortCodeTextView @JvmOverloads constructor(
 
         while (nMatcher.find()) {
             var set = true
-            for (span in pSpannable.getSpans(
-                nMatcher.start(),
-                nMatcher.end(),
-                ImageSpan::class.java
-            )) {
+            for (
+                span in pSpannable.getSpans(
+                    nMatcher.start(),
+                    nMatcher.end(),
+                    ImageSpan::class.java
+                )
+            ) {
                 if (pSpannable.getSpanStart(span) >= nMatcher.start() && pSpannable.getSpanEnd(span) <= nMatcher.end()) {
                     pSpannable.removeSpan(span)
                 } else {
@@ -232,5 +234,4 @@ open class ShortCodeTextView @JvmOverloads constructor(
             }
         }
     }
-
 }

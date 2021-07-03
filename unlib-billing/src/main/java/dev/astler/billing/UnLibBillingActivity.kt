@@ -1,14 +1,13 @@
 package dev.astler.billing
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.* // ktlint-disable no-wildcard-imports
-import dev.astler.unlib.cBillingNoAdsName
-import dev.astler.unlib.cNoAdsName
-import dev.astler.unlib.gPreferencesTool
+import dev.astler.unlib.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.utils.infoLog
+import kotlinx.coroutines.launch
 
 abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener {
 
@@ -50,11 +49,14 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
                         pPurchase.skus.forEach { pPurchaseSku ->
                             infoLog("BILLING: got item = $pPurchaseSku")
 
-                            if (pPurchaseSku == cBillingNoAdsName)
-                                gPreferencesTool.edit(
-                                    cNoAdsName,
-                                    pPurchase.purchaseState == Purchase.PurchaseState.PURCHASED
-                                )
+                            if (pPurchaseSku == cBillingNoAdsName) {
+                                lifecycleScope.launch {
+                                    LocalStorage.storeValue(
+                                        PreferencesKeys.ADS_DISABLED_KEY,
+                                        pPurchase.purchaseState == Purchase.PurchaseState.PURCHASED
+                                    )
+                                }
+                            }
                         }
 
                         infoLog("${pPurchase.purchaseState == Purchase.PurchaseState.PURCHASED}")
@@ -92,12 +94,6 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
                 }
             }
         }
-    }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        super.onSharedPreferenceChanged(sharedPreferences, key)
-
-        if (key == cNoAdsName) recreate()
     }
 
     override fun buyItem(pItemName: String) {

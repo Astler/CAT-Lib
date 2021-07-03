@@ -1,11 +1,11 @@
 package dev.astler.unlib_ads.activity
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.ads.* // ktlint-disable no-wildcard-imports
 import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -18,13 +18,12 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
-import dev.astler.unlib.PreferencesTool
-import dev.astler.unlib.UnliApp
-import dev.astler.unlib.gAppConfig
-import dev.astler.unlib.gPreferencesTool
+import dev.astler.unlib.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.unlib_ads.utils.canShowAds
+import kotlinx.coroutines.launch
 import java.util.* // ktlint-disable no-wildcard-imports
 import kotlin.collections.ArrayList
 import kotlin.random.Random
@@ -50,36 +49,33 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(), OnUserEarnedRewardListener
     override fun setCurrentFragment(fragment: Fragment) {
         super.setCurrentFragment(fragment)
 
-        val nTimeFromStart =
-            GregorianCalendar().timeInMillis - gPreferencesTool.getLong(
-                "start_time",
+        lifecycleScope.launch {
+            val nTimeFromStart = LocalStorage.readDirectValue(
+                PreferencesKeys.APP_START_TIME_KEY,
                 GregorianCalendar().timeInMillis
             )
+            val nLastAdTime = LocalStorage.readDirectValue(PreferencesKeys.LAST_AD_TIME_KEY, 0)
 
-        val nTimeFromLastAd =
-            GregorianCalendar().timeInMillis - gPreferencesTool.getLong(
-                "last_ad_show", 0
-            )
+            val nShowAds = mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage")
+            val nAdsPause = mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt()
+            val nAdsChance = mRemoteConfig.getLong("ad_chance_$mConfigAppPackage").toInt()
 
-        val nShowAds = mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage")
-        val nAdsPause = mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt()
-        val nAdsChance = mRemoteConfig.getLong("ad_chance_$mConfigAppPackage").toInt()
+            adLog("UNLIB_AD: loaded ads config = $nShowAds, $nAdsPause, $nAdsChance")
 
-        infoLog("UNLIB_AD: loaded ads config = $nShowAds, $nAdsPause, $nAdsChance")
+            if (nShowAds &&
+                canShowAds() &&
+                nTimeFromStart >= 10000 &&
+                nLastAdTime >= nAdsPause
+            ) {
+                val randNum = Random.nextInt(nAdsChance)
 
-        if (nShowAds &&
-            canShowAds() &&
-            nTimeFromStart >= 10000 &&
-            nTimeFromLastAd >= nAdsPause
-        ) {
-            val randNum = Random.nextInt(nAdsChance)
+                adLog("UNLIB_AD: AD CHANCE: $randNum/$nAdsChance")
 
-            infoLog("UNLIB_AD: AD CHANCE: $randNum/$nAdsChance")
-
-            if (randNum == 0)
-                showInterstitialAd()
-        } else {
-            infoLog("UNLIB_AD: Dont show ad! Possible reasons?\ncanShowAds = ${canShowAds()}, enabled in config? -> $nShowAds, time from start out? -> ${nTimeFromStart >= 10000}, time from last ad? -> ${nTimeFromLastAd >= nAdsPause}")
+                if (randNum == 0)
+                    showInterstitialAd()
+            } else {
+                adLog("UNLIB_AD: Dont show ad! Possible reasons?\ncanShowAds = ${canShowAds()}, enabled in config? -> $nShowAds, time from start out? -> ${nTimeFromStart >= 10000}, time from last ad? -> ${nLastAdTime >= nAdsPause}")
+            }
         }
     }
 
@@ -98,18 +94,18 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(), OnUserEarnedRewardListener
 
     open var mNeedAgeCheck: Boolean = gAppConfig.mNeedAgeCheck
 
-    open val setTagForChildDirectedTreatment: Boolean by lazy {
-        gPreferencesTool.getBoolean("child_ads", mNeedAgeCheck)
-    }
+    open var setTagForChildDirectedTreatment: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        lifecycleScope.launch {
+            setTagForChildDirectedTreatment = LocalStorage.readDirectValue(PreferencesKeys.CHILD_ADS, mNeedAgeCheck)
+        }
+
         UnliApp.getInstance().initAppLanguage(this)
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
-
-        gPreferencesTool.edit("start_time", GregorianCalendar().timeInMillis)
 
         mRemoteConfig = Firebase.remoteConfig
 
@@ -140,39 +136,53 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(), OnUserEarnedRewardListener
             )
         }
 
-        if (!gPreferencesTool.getBoolean("age_confirmed", false) && mNeedAgeCheck) {
-            confirmDialog(
-                getString(dev.astler.unlib_ads.R.string.ads_dialog_title),
-                getString(dev.astler.unlib_ads.R.string.ads_dialog_msg),
-                getString(R.string.yes), getString(R.string.no),
-                pPositiveAction = {
-                    gPreferencesTool.edit("child_ads", false)
-                },
-                pNegativeAction = {
-                    gPreferencesTool.edit("child_ads", true)
-                }
-            )
+        lifecycleScope.launch {
+            if (!LocalStorage.readDirectValue(PreferencesKeys.AGE_CONFIRMED_ADS, false) && mNeedAgeCheck) {
+                confirmDialog(
+                    getString(dev.astler.unlib_ads.R.string.ads_dialog_title),
+                    getString(dev.astler.unlib_ads.R.string.ads_dialog_msg),
+                    getString(R.string.yes), getString(R.string.no),
+                    pPositiveAction = {
+                        lifecycleScope.launch {
+                            LocalStorage.storeValue(PreferencesKeys.CHILD_ADS, false)
+                        }
+                    },
+                    pNegativeAction = {
+                        lifecycleScope.launch {
+                            LocalStorage.storeValue(PreferencesKeys.CHILD_ADS, true)
+                        }
+                    }
+                )
 
-            gPreferencesTool.edit("age_confirmed", true)
+                LocalStorage.storeValue(PreferencesKeys.AGE_CONFIRMED_ADS, true)
+                setTagForChildDirectedTreatment = LocalStorage.readDirectValue(PreferencesKeys.CHILD_ADS, mNeedAgeCheck)
+            }
         }
 
         MobileAds.setRequestConfiguration(requestConfiguration.build())
 
-        setDefaultPreferences()
-
         loadAd()
+
+        lifecycleScope.launch {
+            LocalStorage.noAdsDayWatcher {
+                if (!canShowAds())
+                    hideAd()
+            }
+        }
     }
 
     override fun onUserEarnedReward(p0: RewardItem) {
-        val preferencesTool = PreferencesTool(this@UnLibAdsActivity)
-        preferencesTool.dayWithoutAds =
-            GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
+        lifecycleScope.launch {
+            LocalStorage.setNoDayAds()
+        }
     }
 
     override fun showInterstitialAd() {
         if (mInterstitialAd != null) {
             mInterstitialAd?.show(this)
-            gPreferencesTool.edit("last_ad_show", GregorianCalendar().timeInMillis)
+            lifecycleScope.launch {
+                LocalStorage.setLastAdTime(GregorianCalendar().timeInMillis)
+            }
         } else {
             requestNewInterstitial()
         }
@@ -228,14 +238,6 @@ abstract class UnLibAdsActivity : BaseUnLiActivity(), OnUserEarnedRewardListener
                     showRewardAd()
                 }
             )
-        }
-    }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        super.onSharedPreferenceChanged(sharedPreferences, key)
-
-        if (key == PreferencesTool.dayWithoutAdsKey) {
-            hideAd()
         }
     }
 

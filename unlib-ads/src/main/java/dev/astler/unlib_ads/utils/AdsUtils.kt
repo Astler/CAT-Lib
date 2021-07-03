@@ -1,18 +1,18 @@
-package dev.astler.unlib.utils
+package dev.astler.unlib_ads.utils
 
 import android.content.Context
-import dev.astler.unlib.cNoAdsName
-import dev.astler.unlib.gPreferencesTool
+import dev.astler.unlib.UnliApp
+import dev.astler.unlib.utils.isOnline
 import java.util.* // ktlint-disable no-wildcard-imports
 
 fun Context.canShowAds(): Boolean {
     return if (
         applicationContext.packageName.endsWith("paid") ||
-        gPreferencesTool.getBoolean(cNoAdsName, false)
+        UnliApp.getInstance().mAdsDisabled
     ) {
         false
     } else {
-        gPreferencesTool.dayWithoutAds != GregorianCalendar.getInstance().get(
+        UnliApp.getInstance().mNoAdsDay != GregorianCalendar.getInstance().get(
             Calendar.DAY_OF_MONTH
         ) && isOnline()
     }

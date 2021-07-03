@@ -13,16 +13,23 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.appopen.AppOpenAd.AppOpenAdLoadCallback
+import dev.astler.unlib.LocalStorage
+import dev.astler.unlib.UnliApp
 import dev.astler.unlib.gAppConfig
-import dev.astler.unlib.gPreferencesTool
-import dev.astler.unlib.utils.canShowAds
-import dev.astler.unlib.utils.infoLog
-import dev.astler.unlib_ads.activity.AdsUnLibApp
+import dev.astler.unlib.utils.adLog
+import dev.astler.unlib_ads.utils.canShowAds
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import java.util.* // ktlint-disable no-wildcard-imports
 
 class AppOpenManager(myApplication: AdsUnLibApp) :
     Application.ActivityLifecycleCallbacks,
     LifecycleObserver {
+
+    private val mScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
     private var appOpenAd: AppOpenAd? = null
     private var loadCallback: AppOpenAdLoadCallback? = null
     private val mApplication: AdsUnLibApp = myApplication
@@ -34,7 +41,9 @@ class AppOpenManager(myApplication: AdsUnLibApp) :
     init {
         this.mApplication.registerActivityLifecycleCallbacks(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-        mLastShowTime = gPreferencesTool.getLong("start_ad_timer", 0)
+        mScope.launch {
+            mLastShowTime = LocalStorage.startAdTime()
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
@@ -44,7 +53,7 @@ class AppOpenManager(myApplication: AdsUnLibApp) :
 
     private fun showAdIfAvailable() {
         if (!isShowingAd && isAdAvailable) {
-            infoLog("START AD: Will show ad.")
+            adLog("START AD: Will show ad.")
             val fullScreenContentCallback: FullScreenContentCallback =
                 object : FullScreenContentCallback() {
                     override fun onAdDismissedFullScreenContent() {
@@ -54,13 +63,16 @@ class AppOpenManager(myApplication: AdsUnLibApp) :
                     }
 
                     override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                        infoLog("START AD: Error ${adError.message}.")
+                        adLog("START AD: Error ${adError.message}.")
                     }
 
                     override fun onAdShowedFullScreenContent() {
                         isShowingAd = true
                         mLastShowTime = Date().time
-                        gPreferencesTool.edit("start_ad_timer", mLastShowTime)
+
+                        mScope.launch {
+                            LocalStorage.setStartAdTime(mLastShowTime)
+                        }
                     }
                 }
 
@@ -84,7 +96,7 @@ class AppOpenManager(myApplication: AdsUnLibApp) :
             }
 
             override fun onAdFailedToLoad(pLoadAdError: LoadAdError) {
-                infoLog("START AD: load ad error = ${pLoadAdError.message}")
+                adLog("START AD: load ad error = ${pLoadAdError.message}")
             }
         }
 
@@ -100,13 +112,13 @@ class AppOpenManager(myApplication: AdsUnLibApp) :
     /** Utility method that checks if ad exists and can be shown.  */
     private val isAdAvailable: Boolean
         get() {
-            infoLog("START AD: Full check")
-            infoLog("START AD: appOpenAd != null --> ${appOpenAd != null}")
-            infoLog("START AD: wasLoadTimeLessThanNHoursAgo(4) --> ${wasLoadTimeLessThanNHoursAgo(4)}")
-            infoLog("START AD: !gPreferencesTool.isFirstStart --> ${!gPreferencesTool.isFirstStart}")
-            infoLog("START AD: Date().time - mLastShowTime > 3600000 --> ${Date().time - mLastShowTime > 1800000}")
+            adLog("START AD: Full check")
+            adLog("START AD: appOpenAd != null --> ${appOpenAd != null}")
+            adLog("START AD: wasLoadTimeLessThanNHoursAgo(4) --> ${wasLoadTimeLessThanNHoursAgo(4)}")
+            adLog("START AD: isStart > 2--> ${UnliApp.getInstance().mAppStartCounter > 2}")
+            adLog("START AD: Date().time - mLastShowTime > 3600000 --> ${Date().time - mLastShowTime > 1800000}")
 
-            return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4) && !gPreferencesTool.isFirstStart && Date().time - mLastShowTime > 1800000 && currentActivity?.canShowAds() == true
+            return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4) && UnliApp.getInstance().mAppStartCounter > 2 && Date().time - mLastShowTime > 1800000 && currentActivity?.canShowAds() == true
         }
 
     private fun wasLoadTimeLessThanNHoursAgo(numHours: Long): Boolean {

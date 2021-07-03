@@ -2,11 +2,11 @@ package dev.astler.unlib_test.activity.ads
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import dev.astler.unlib.utils.canShowAds
 import dev.astler.unlib_ads.activity.UnLibAdsActivity
 import dev.astler.unlib_ads.adapters.OIAdsAdapterConfig
 import dev.astler.unlib_ads.adapters.OneItemAdsAdapter
 import dev.astler.unlib_ads.utils.NativeAdsLoader
+import dev.astler.unlib_ads.utils.canShowAds
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.items.TextItem

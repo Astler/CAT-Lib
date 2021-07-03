@@ -1,20 +1,20 @@
 package dev.astler.unlib.view
 
-import android.text.Spannable
 import android.content.Context
+import android.text.Spannable
 import android.text.style.ImageSpan
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
-import dev.astler.unlib.PreferencesTool
+import dev.astler.unlib.UnliApp
 import java.util.regex.Pattern
 
 class TextViewWithImages(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
-        PrefsTextView(context, attrs, defStyleAttr) {
+    PrefsTextView(context, attrs, defStyleAttr) {
 
     constructor(context: Context, attrs: AttributeSet?) : this(
-            context,
-            attrs,
-            android.R.attr.textViewStyle
+        context,
+        attrs,
+        android.R.attr.textViewStyle
     ) {
         initText(attrs)
     }
@@ -40,7 +40,7 @@ class TextViewWithImages(context: Context, attrs: AttributeSet?, defStyleAttr: I
             val matcher = refImg.matcher(spannable)
 
             while (matcher.find()) {
-                  var set = true
+                var set = true
                 for (span in spannable.getSpans(matcher.start(), matcher.end(), ImageSpan::class.java)) {
                     if (spannable.getSpanStart(span) >= matcher.start() && spannable.getSpanEnd(span) <= matcher.end()) {
                         spannable.removeSpan(span)
@@ -57,11 +57,9 @@ class TextViewWithImages(context: Context, attrs: AttributeSet?, defStyleAttr: I
                     if (set) {
                         hasChanges = true
 
-                        val prefsTool = PreferencesTool(context)
-
                         val d = ContextCompat.getDrawable(context, id)
 
-                        val size = (prefsTool.mTextSize * 3).toInt()
+                        val size = (UnliApp.getInstance().mFontSize * 3).toInt()
 
                         d?.setBounds(0, 0, size, size)
                         val imageSpan = VerticalImageSpan(d!!)

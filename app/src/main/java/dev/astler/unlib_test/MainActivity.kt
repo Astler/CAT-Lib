@@ -3,11 +3,14 @@ package dev.astler.unlib_test
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.lifecycleScope
+import dev.astler.unlib.LocalStorage
+import dev.astler.unlib.utils.infoLog
 import dev.astler.unlib.view.ShortCodeTextView
 import dev.astler.unlib.view.SplashView
 import dev.astler.unlib_ads.activity.UnLibAdsActivity
-import dev.astler.unlib_test.activity.TestMenu
 import dev.astler.unlib_test.activity.ads.AdsTestMenu
+import kotlinx.coroutines.launch
 
 class MainActivity : UnLibAdsActivity() {
 
@@ -39,10 +42,26 @@ class MainActivity : UnLibAdsActivity() {
 
         """.trimIndent()
 
+        lifecycleScope.launch {
+            infoLog("AAAAAAAAAAAAAAAAAAAAAAAAAAA!")
+
+            infoLog("Start? = ${LocalStorage.startupTimes()}")
+        }
+
+        lifecycleScope.launch {
+            infoLog("BBBBBBBBBBBBBBBBBB!")
+            LocalStorage.incrementStartupCounter()
+        }
+
         findViewById<ShortCodeTextView>(R.id.test).text = nText
 
+        // findViewById<ShortCodeTextView>(R.id.test).setCompoundDrawables(null, getDrawable(R.drawable.btn_clear), null, null)
+
         findViewById<ShortCodeTextView>(R.id.test).setOnClickListener {
-            startActivity(Intent(this, TestMenu::class.java))
+            lifecycleScope.launch {
+                LocalStorage.incrementThemeCounter()
+            }
+            // startActivity(Intent(this, TestMenu::class.java))
         }
 
         findViewById<ShortCodeTextView>(R.id.test).setOnLongClickListener {
