@@ -16,7 +16,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         app:useSimpleSummaryProvider="true"  />
 
     <ListPreference
-        android:defaultValue="18.0f"
+        android:defaultValue="18"
         android:entries="@array/font_size_names"
         android:entryValues="@array/font_size_values"
         android:key="textSizeNew"

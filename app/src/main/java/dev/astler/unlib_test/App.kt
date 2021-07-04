@@ -27,7 +27,7 @@ class App : AdsUnLibApp() {
 
         super.onCreate()
 
-        enqueueWorkers()
+//        enqueueWorkers()
     }
 
     override fun createNotificationChannels() {
@@ -68,19 +68,19 @@ class App : AdsUnLibApp() {
         )
     }
 
-    private fun enqueueWorkers() {
-        val workManager = WorkManager.getInstance(this)
-
-        val periodicRequests = listOf(
-            "BIN_CLEAN" to PeriodicWorkRequestBuilder<PeriodicTestWorker>(15, TimeUnit.MINUTES)
-                .build(),
-            "SYNC" to PeriodicWorkRequestBuilder<PeriodicTest2Worker>(35, TimeUnit.MINUTES)
-                .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
-                .build(),
-        )
-
-        periodicRequests.forEach { (name, request) ->
-            workManager.enqueueUniquePeriodicWork(name, ExistingPeriodicWorkPolicy.KEEP, request)
-        }
-    }
+//    private fun enqueueWorkers() {
+//        val workManager = WorkManager.getInstance(this)
+//
+//        val periodicRequests = listOf(
+//            "BIN_CLEAN" to PeriodicWorkRequestBuilder<PeriodicTestWorker>(15, TimeUnit.MINUTES)
+//                .build(),
+//            "SYNC" to PeriodicWorkRequestBuilder<PeriodicTest2Worker>(35, TimeUnit.MINUTES)
+//                .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+//                .build(),
+//        )
+//
+//        periodicRequests.forEach { (name, request) ->
+//            workManager.enqueueUniquePeriodicWork(name, ExistingPeriodicWorkPolicy.KEEP, request)
+//        }
+//    }
 }

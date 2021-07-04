@@ -16,11 +16,9 @@ class AppSettings {
 
     companion object {
         private fun loadLocalePref(): String {
-            return if (UnliApp.getInstance().mAppLanguage == cSystemDefault) {
+            return if (gPreferencesTool.isSystemLanguage) {
                 ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0).toString()
-            } else {
-                UnliApp.getInstance().mAppTheme
-            }
+            } else gPreferencesTool.appLanguage
         }
 
         @Suppress("deprecation")

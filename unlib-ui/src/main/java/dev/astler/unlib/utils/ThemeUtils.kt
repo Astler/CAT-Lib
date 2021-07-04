@@ -2,9 +2,7 @@ package dev.astler.unlib.utils
 
 import android.content.Context
 import android.content.res.Configuration
-import dev.astler.unlib.UnliApp
-import dev.astler.unlib.cDark
-import dev.astler.unlib.cSystemDefault
+import dev.astler.unlib.gPreferencesTool
 
 fun Context.isSystemDarkTheme(): Boolean {
     return resources.configuration.uiMode and
@@ -12,5 +10,5 @@ fun Context.isSystemDarkTheme(): Boolean {
 }
 
 fun Context.isAppDarkTheme(): Boolean {
-    return UnliApp.getInstance().mAppTheme == cDark || UnliApp.getInstance().mAppTheme == cSystemDefault && isSystemDarkTheme()
+    return gPreferencesTool.mIsDarkTheme || gPreferencesTool.mIsSystemTheme && isSystemDarkTheme()
 }

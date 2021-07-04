@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dev.astler.unlib.adapters.BaseOneItemListAdapter
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib_ads.activity.UnLibAdsActivity
-import dev.astler.unlib_ads.utils.canShowAds
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.databinding.ItemTextBinding
@@ -85,6 +84,9 @@ class TestMenu : UnLibAdsActivity() {
                 },
                 ClickableItem("Ads Utils") {
                     dialog("Ads Utils", "canShowAds = ${canShowAds()}")
+                },
+                ClickableItem("Services Is?") {
+                    dialog("Services?", "google = ${getMobileServiceSource()}")
                 },
                 // TODO Search List Dialogs
             )
