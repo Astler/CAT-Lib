@@ -54,7 +54,7 @@ abstract class UnLibAdsBillingActivity : UnLibBillingActivity(), OnUserEarnedRew
         mNativeAdLoader = AdLoader.Builder(this, gAppConfig.mNativeAdId)
             .forNativeAd { nativeAd: NativeAd ->
                 if (mNativeAdLoader?.isLoading == true) {
-                    // do nothing
+                    adsLog("Native Ad Banner is loading")
                 } else {
                     pAdBindItem.adHeadline.text = nativeAd.headline
                     pAdBindItem.adBody.text = nativeAd.body
@@ -62,8 +62,12 @@ abstract class UnLibAdsBillingActivity : UnLibBillingActivity(), OnUserEarnedRew
                     if (nativeAd.icon == null) {
                         pAdBindItem.adAppIcon.goneView()
                     } else {
-                        pAdBindItem.adAppIcon.setImageDrawable(nativeAd.icon.drawable)
-                        pAdBindItem.adAppIcon.showView()
+                        val nDrawable = nativeAd.icon?.drawable
+
+                        nDrawable?.let {
+                            pAdBindItem.adAppIcon.setImageDrawable(it)
+                            pAdBindItem.adAppIcon.showView()
+                        }
                     }
 
                     if (nativeAd.callToAction != null) {
