@@ -10,6 +10,8 @@ import com.google.android.gms.ads.* // ktlint-disable no-wildcard-imports
 import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
@@ -24,6 +26,7 @@ import dev.astler.unlib.gAppConfig
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.unlib_ads.databinding.ItemAdBinding
 import java.util.* // ktlint-disable no-wildcard-imports
 import kotlin.collections.ArrayList
 import kotlin.random.Random
@@ -32,6 +35,7 @@ abstract class UnLibAdsBillingActivity : UnLibBillingActivity(), OnUserEarnedRew
 
     protected lateinit var mRemoteConfig: FirebaseRemoteConfig
     protected var mAdView: AdView? = null
+    protected var mNativeAdLoader: AdLoader? = null
 
     private var mRewardedInterstitialAd: RewardedInterstitialAd? = null
     private var mInterstitialAd: InterstitialAd? = null
@@ -44,6 +48,46 @@ abstract class UnLibAdsBillingActivity : UnLibBillingActivity(), OnUserEarnedRew
 
     open val mConfigAppPackage: String by lazy {
         packageName.replace(".", "_")
+    }
+
+    fun loadNativeAdBanner(pAdBindItem: ItemAdBinding) {
+        mNativeAdLoader = AdLoader.Builder(this, gAppConfig.mNativeAdId)
+            .forNativeAd { nativeAd: NativeAd ->
+                if (mNativeAdLoader?.isLoading == true) {
+                    // do nothing
+                } else {
+                    pAdBindItem.adHeadline.text = nativeAd.headline
+                    pAdBindItem.adBody.text = nativeAd.body
+
+                    if (nativeAd.icon == null) {
+                        pAdBindItem.adAppIcon.goneView()
+                    } else {
+                        pAdBindItem.adAppIcon.setImageDrawable(nativeAd.icon.drawable)
+                        pAdBindItem.adAppIcon.showView()
+                    }
+
+                    if (nativeAd.callToAction != null) {
+                        pAdBindItem.install.showView()
+                        pAdBindItem.install.text = nativeAd.callToAction
+                    } else {
+                        pAdBindItem.install.goneView()
+                    }
+
+                    pAdBindItem.nativeAd.setNativeAd(nativeAd)
+                }
+
+                if (isDestroyed) {
+                    nativeAd.destroy()
+                    return@forNativeAd
+                }
+            }
+            .withAdListener(object : AdListener() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    infoLog("error = $adError")
+                }
+            })
+            .withNativeAdOptions(NativeAdOptions.Builder().build())
+            .build()
     }
 
     override fun setCurrentFragment(fragment: Fragment) {
@@ -311,6 +355,10 @@ abstract class UnLibAdsBillingActivity : UnLibBillingActivity(), OnUserEarnedRew
                     }
                 }
             )
+
+        if (mNativeAdLoader != null && canShowAds()) {
+            mNativeAdLoader?.loadAds(getAdRequest(), 3)
+        }
     }
 
     private fun requestNewInterstitial() {
