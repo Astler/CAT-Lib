@@ -75,6 +75,11 @@ abstract class UnLibBillingActivity : BaseUnLiActivity(), PerformBillingListener
 
         pPurchase.skus.forEach {
             if (it == cBillingNoAdsName) {
+                gPreferencesTool.edit(
+                    cNoAdsName,
+                    pPurchase.purchaseState == Purchase.PurchaseState.PURCHASED
+                )
+
                 if (!pPurchase.isAcknowledged) {
                     infoLog("BILLING: Acknowledge pur")
 
