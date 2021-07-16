@@ -60,12 +60,14 @@ abstract class UnLibAdsBillingActivity : UnLibBillingActivity(), OnUserEarnedRew
 
                     if (nativeAd.icon == null) {
                         pAdBindItem.adAppIcon.goneView()
+                        pAdBindItem.adAppIconCard.goneView()
                     } else {
                         val nDrawable = nativeAd.icon?.drawable
 
                         nDrawable?.let {
                             pAdBindItem.adAppIcon.setImageDrawable(it)
                             pAdBindItem.adAppIcon.showView()
+                            pAdBindItem.adAppIconCard.showView()
                         }
                     }
 
