@@ -31,7 +31,7 @@ abstract class BaseUnLiActivity :
     ActivityInterface {
 
     protected var mReviewInfo: ReviewInfo? = null
-    private val mReviewManager: ReviewManager by lazy {
+    protected val mReviewManager: ReviewManager by lazy {
         ReviewManagerFactory.create(this)
     }
 
