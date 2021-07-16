@@ -34,7 +34,6 @@ import kotlin.random.Random
 abstract class UnLibAdsBillingActivity : UnLibBillingActivity(), OnUserEarnedRewardListener {
 
     protected lateinit var mRemoteConfig: FirebaseRemoteConfig
-    protected var mAdView: AdView? = null
     protected var mNativeAdLoader: AdLoader? = null
 
     private var mRewardedInterstitialAd: RewardedInterstitialAd? = null
@@ -229,9 +228,7 @@ abstract class UnLibAdsBillingActivity : UnLibBillingActivity(), OnUserEarnedRew
         mRewardedInterstitialAd?.show(this, this)
     }
 
-    open fun hideAd() {
-        mAdView?.goneView()
-    }
+    open fun hideAd() {}
 
     override fun navigationViewInflateMenus(navigationView: NavigationView) {
         navigationView.menu.clear()
@@ -375,20 +372,5 @@ abstract class UnLibAdsBillingActivity : UnLibBillingActivity(), OnUserEarnedRew
         if (mRewardedInterstitialAd == null) {
             loadAd()
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mAdView?.pause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mAdView?.resume()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mAdView?.destroy()
     }
 }

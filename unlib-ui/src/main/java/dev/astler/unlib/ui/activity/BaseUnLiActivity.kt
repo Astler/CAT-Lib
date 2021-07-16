@@ -30,7 +30,7 @@ abstract class BaseUnLiActivity :
     SharedPreferences.OnSharedPreferenceChangeListener,
     ActivityInterface {
 
-    private var mReviewInfo: ReviewInfo? = null
+    protected var mReviewInfo: ReviewInfo? = null
     private val mReviewManager: ReviewManager by lazy {
         ReviewManagerFactory.create(this)
     }

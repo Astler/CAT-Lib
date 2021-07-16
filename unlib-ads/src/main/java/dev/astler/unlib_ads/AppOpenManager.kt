@@ -15,9 +15,9 @@ import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.appopen.AppOpenAd.AppOpenAdLoadCallback
 import dev.astler.unlib.gAppConfig
 import dev.astler.unlib.gPreferencesTool
+import dev.astler.unlib.utils.adsLog
 import dev.astler.unlib.utils.canShowAds
-import dev.astler.unlib.utils.infoLog
-import java.util.* // ktlint-disable no-wildcard-imports
+import java.util.*
 
 class AppOpenManager(myApplication: AdsUnLibApp) :
     Application.ActivityLifecycleCallbacks,
@@ -43,7 +43,7 @@ class AppOpenManager(myApplication: AdsUnLibApp) :
 
     private fun showAdIfAvailable() {
         if (!isShowingAd && isAdAvailable) {
-            infoLog("START AD: Will show ad.")
+            adsLog("START AD: Will show ad.")
             val fullScreenContentCallback: FullScreenContentCallback =
                 object : FullScreenContentCallback() {
                     override fun onAdDismissedFullScreenContent() {
@@ -53,7 +53,7 @@ class AppOpenManager(myApplication: AdsUnLibApp) :
                     }
 
                     override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                        infoLog("START AD: Error ${adError.message}.")
+                        adsLog("START AD: Error ${adError.message}.")
                     }
 
                     override fun onAdShowedFullScreenContent() {
@@ -83,7 +83,7 @@ class AppOpenManager(myApplication: AdsUnLibApp) :
             }
 
             override fun onAdFailedToLoad(pLoadAdError: LoadAdError) {
-                infoLog("START AD: load ad error = ${pLoadAdError.message}")
+                adsLog("START AD: load ad error = ${pLoadAdError.message}")
             }
         }
 
@@ -99,11 +99,11 @@ class AppOpenManager(myApplication: AdsUnLibApp) :
     /** Utility method that checks if ad exists and can be shown.  */
     private val isAdAvailable: Boolean
         get() {
-            infoLog("START AD: Full check")
-            infoLog("START AD: appOpenAd != null --> ${appOpenAd != null}")
-            infoLog("START AD: wasLoadTimeLessThanNHoursAgo(4) --> ${wasLoadTimeLessThanNHoursAgo(4)}")
-            infoLog("START AD: !gPreferencesTool.isFirstStart --> ${!gPreferencesTool.isFirstStart}")
-            infoLog("START AD: Date().time - mLastShowTime > 3600000 --> ${Date().time - mLastShowTime > 1800000}")
+            adsLog("START AD: Full check")
+            adsLog("START AD: appOpenAd != null --> ${appOpenAd != null}")
+            adsLog("START AD: wasLoadTimeLessThanNHoursAgo(4) --> ${wasLoadTimeLessThanNHoursAgo(4)}")
+            adsLog("START AD: !gPreferencesTool.isFirstStart --> ${!gPreferencesTool.isFirstStart}")
+            adsLog("START AD: Date().time - mLastShowTime > 3600000 --> ${Date().time - mLastShowTime > 1800000}")
 
             return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4) && !gPreferencesTool.isFirstStart && Date().time - mLastShowTime > 1800000 && currentActivity?.canShowAds() == true
         }
