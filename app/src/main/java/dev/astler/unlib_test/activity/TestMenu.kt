@@ -88,6 +88,9 @@ class TestMenu : UnLibAdsActivity() {
                 ClickableItem("Services Is?") {
                     dialog("Services?", "google = ${getMobileServiceSource()}")
                 },
+                ClickableItem("StatusColor") {
+                    startActivity(Intent(this, WindowTestActivity::class.java))
+                },
                 // TODO Search List Dialogs
             )
         )

@@ -31,13 +31,14 @@
         <activity android:name=".activity.ads.AdsOpenItemListActivity" />
         <activity android:name=".activity.ads.AdsTestMenu" android:theme="@style/AppUnliDarkTheme"  />
         <activity android:name=".activity.AsyncListActivity" android:theme="@style/AppUnliDarkTheme"  />
+        <activity android:name=".activity.WindowTestActivity" android:theme="@style/AppUnliDarkTheme"  />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-1536736011746190~1646338212" />
 
         <service
-            android:name="dev.astler.unlib.UnLibFirebaseMessagingService"
+            android:name="dev.astler.unlib.services.UnLibFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

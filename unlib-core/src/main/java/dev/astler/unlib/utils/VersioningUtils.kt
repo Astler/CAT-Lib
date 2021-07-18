@@ -18,5 +18,8 @@ fun isN() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
 @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.LOLLIPOP)
 fun isL() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
 
+@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.P)
+fun isP() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
+
 @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.R)
 fun isR() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R

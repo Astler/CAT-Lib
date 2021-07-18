@@ -22,3 +22,13 @@ fun View.shake() {
     set.play(animator2).before(animator3)
     set.start()
 }
+
+fun View.toggle(): Boolean {
+    return if (rotation == 0f) {
+        animate().setDuration(200).rotation(180f)
+        true
+    } else {
+        animate().setDuration(200).rotation(0f)
+        false
+    }
+}

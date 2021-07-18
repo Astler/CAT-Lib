@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.StyleRes
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -16,12 +17,11 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import dev.astler.unlib.AppSettings
 import dev.astler.unlib.PreferencesTool
 import dev.astler.unlib.UnliApp
+import dev.astler.unlib.data.RemoteConfig
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.interfaces.ActivityInterface
 import dev.astler.unlib.ui.R
-import dev.astler.unlib.utils.infoLog
-import dev.astler.unlib.utils.openAppInPlayStore
-import dev.astler.unlib.utils.openPlayStoreDeveloperPage
+import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
 import java.util.* // ktlint-disable no-wildcard-imports
 
 abstract class BaseUnLiActivity :
@@ -29,6 +29,8 @@ abstract class BaseUnLiActivity :
     NavigationView.OnNavigationItemSelectedListener,
     SharedPreferences.OnSharedPreferenceChangeListener,
     ActivityInterface {
+
+    protected lateinit var mRemoteConfig: RemoteConfig
 
     protected var mReviewInfo: ReviewInfo? = null
     protected val mReviewManager: ReviewManager by lazy {
@@ -67,6 +69,8 @@ abstract class BaseUnLiActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        mRemoteConfig = RemoteConfig.getInstance()
+
         UnliApp.getInstance().initAppLanguage(this)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
@@ -84,6 +88,43 @@ abstract class BaseUnLiActivity :
         }
 
         gPreferencesTool.appReviewTime = GregorianCalendar().timeInMillis
+
+        checkVersion()
+    }
+
+    private fun checkVersion() {
+        mRemoteConfig.fetchData(object : RemoteConfig.OnFetchComplete {
+            override fun onComplete() {
+                simpleTry {
+                    val nInfo = packageManager.getPackageInfo(packageName, 0)
+                    val nVersion = (
+                        if (isP()) {
+                            nInfo.longVersionCode
+                        } else {
+                            nInfo.versionCode
+                        }
+                        ).toLong()
+
+                    if (mRemoteConfig.mAppVersion != 0L && nVersion < mRemoteConfig.mAppVersion) {
+                        showDialogUpdateApp()
+                    }
+                }
+            }
+        })
+    }
+
+    open fun showDialogUpdateApp() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.new_version_title)
+        builder.setMessage(R.string.new_version_text)
+        builder.setPositiveButton(R.string.UPDATE) { dialog, _ ->
+            dialog.cancel()
+            openAppInPlayStore()
+        }
+        builder.setNegativeButton(R.string.close) { dialog, _ ->
+            dialog.cancel()
+        }
+        builder.show()
     }
 
     open fun setDefaultPreferences() {

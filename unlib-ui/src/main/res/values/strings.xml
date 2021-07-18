@@ -81,4 +81,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="search">Search</string>
+
+    <string name="UPDATE">Update</string>
+    <string name="close">Close</string>
+    <string name="new_version_title">New version!</string>
+    <string name="new_version_text">New version text!</string>
 </resources>

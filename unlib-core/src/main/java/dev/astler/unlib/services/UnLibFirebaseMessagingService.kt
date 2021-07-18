@@ -1,4 +1,4 @@
-package dev.astler.unlib
+package dev.astler.unlib.services
 
 import com.google.firebase.messaging.FirebaseMessagingService
 
