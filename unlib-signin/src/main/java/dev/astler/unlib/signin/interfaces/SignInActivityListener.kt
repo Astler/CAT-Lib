@@ -1,4 +1,4 @@
-package dev.astler.unlib.interfaces
+package dev.astler.unlib.signin.interfaces
 
 import com.google.firebase.auth.FirebaseUser
 

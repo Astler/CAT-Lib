@@ -1,4 +1,4 @@
-package dev.astler.unlib.utils
+package dev.astler.unlib.signin.utils
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -11,9 +11,11 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import dev.astler.unlib.R
-import dev.astler.unlib.activity.contracts.SignInActivityContract
-import dev.astler.unlib.interfaces.SignInActivityListener
+import dev.astler.unlib.signin.R
+import dev.astler.unlib.signin.activity.contracts.SignInActivityContract
+import dev.astler.unlib.signin.interfaces.SignInActivityListener
+import dev.astler.unlib.utils.infoLog
+import dev.astler.unlib.utils.simpleTry
 
 private val AppCompatActivity.mAuth: FirebaseAuth? by lazy {
     Firebase.auth

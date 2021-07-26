@@ -1,4 +1,4 @@
-package dev.astler.unlib.activity.contracts
+package dev.astler.unlib.signin.activity.contracts
 
 import android.app.Activity
 import android.content.Context
@@ -6,10 +6,8 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
-import dev.astler.unlib.R
-import dev.astler.unlib.utils.getGoogleSignInClient
+import dev.astler.unlib.signin.utils.getGoogleSignInClient
 import dev.astler.unlib.utils.infoLog
 
 class SignInActivityContract : ActivityResultContract<String, Task<GoogleSignInAccount>?>() {
