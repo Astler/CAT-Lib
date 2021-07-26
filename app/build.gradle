@@ -5,6 +5,7 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'com.guardsquare.proguard'
 }
 
 android {
@@ -28,9 +29,19 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+        }
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+proguard {
+    configurations {
+        release {
+            defaultConfiguration 'proguard-android-optimize.txt'
         }
     }
 }
@@ -39,5 +50,4 @@ dependencies {
     implementation project(':unlib-core')
     implementation project(':unlib-ui')
     implementation project(path: ':unlib-ads')
-
 }

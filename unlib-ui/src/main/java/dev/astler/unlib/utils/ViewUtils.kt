@@ -48,31 +48,6 @@ fun NestedScrollView.hideFABOnScroll(fab: FloatingActionButton) {
     }
 }
 
-fun Activity.showKeyboard(editText: EditText) {
-    if (editText.requestFocus()) {
-        val inputMethod =
-            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethod.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
-    }
-}
-
-fun Activity.hideKeyboard() {
-    // Находим View с фокусом, так мы сможем получить правильный window token
-    // Если такого View нет, то создадим одно, это для получения window token из него
-    val view = currentFocus ?: View(this)
-    val inputMethod =
-        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputMethod.hideSoftInputFromWindow(
-        view.windowToken,
-        InputMethodManager.SHOW_IMPLICIT
-    )
-}
-
-fun Context.hideKeyboardFrom(view: View?) {
-    val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.hideSoftInputFromWindow(view?.windowToken, 0)
-}
-
 fun View.showView() {
     visibility = View.VISIBLE
 }

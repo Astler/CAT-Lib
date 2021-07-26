@@ -19,4 +19,7 @@
     <color name="transparent">#00000000</color>
 
     <color name="transparent_status_test">#7C850000</color>
+
+    <color name="colorAccent">#FF9800</color>
+
 </resources>
