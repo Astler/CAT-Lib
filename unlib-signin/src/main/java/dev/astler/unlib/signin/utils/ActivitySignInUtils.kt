@@ -84,6 +84,10 @@ fun AppCompatActivity.createUserWithEmailAndPassword(pEmail: String? = null, pPa
         return
     }
 
+    if (pEmail.isEmpty() || pPassword.isEmpty()) {
+        return
+    }
+
     getFirebaseAuth().createUserWithEmailAndPassword(pEmail, pPassword)
         ?.addOnCompleteListener(this) { task ->
             val nUser = if (task.isSuccessful) {
@@ -102,6 +106,10 @@ fun AppCompatActivity.createUserWithEmailAndPassword(pEmail: String? = null, pPa
 fun AppCompatActivity.authWithEmailAndPassword(pEmail: String? = null, pPassword: String? = null) {
     if (pEmail == null || pPassword == null) {
         makeToast(R.string.sign_in_error)
+        return
+    }
+
+    if (pEmail.isEmpty() || pPassword.isEmpty()) {
         return
     }
 
