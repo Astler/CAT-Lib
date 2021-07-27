@@ -6,12 +6,10 @@ import com.google.firebase.auth.FirebaseUser
 import dev.astler.unlib.signin.R
 import dev.astler.unlib.signin.databinding.SignInLayoutBinding
 import dev.astler.unlib.signin.interfaces.SignInActivityListener
-import dev.astler.unlib.signin.utils.authWithEmailAndPassword
-import dev.astler.unlib.signin.utils.signInInitializer
-import dev.astler.unlib.signin.utils.signInOnResume
-import dev.astler.unlib.signin.utils.signInWithGoogle
+import dev.astler.unlib.signin.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.ui.activity.BaseUnLiActivity
-import dev.astler.unlib.utils.makeToast
+import dev.astler.unlib.utils.goneView
+import dev.astler.unlib.utils.infoLog
 
 open class SignInActivity : BaseUnLiActivity(R.layout.sign_in_layout), SignInActivityListener {
 
@@ -33,20 +31,33 @@ open class SignInActivity : BaseUnLiActivity(R.layout.sign_in_layout), SignInAct
 
                 authWithEmailAndPassword(nEmailText, nPasswordText)
             }
+
+            register.setOnClickListener {
+                signInButton.goneView()
+                googleSignIn.goneView()
+                or.goneView()
+                register.text = getString(R.string.create_account)
+
+                register.setOnClickListener {
+                    val nEmailText = email.text.toString()
+                    val nPasswordText = password.text.toString()
+
+                    createUserWithEmailAndPassword(nEmailText, nPasswordText)
+                }
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-
         signInOnResume()
     }
 
     override fun updateUI(pUser: FirebaseUser?) {
         if (pUser != null) {
-            makeToast("USER SIGN IN COMPLETED")
+            this.finish()
         } else {
-            makeToast("NO ACTIVE USERS!")
+            infoLog("No Active Users!")
         }
     }
 }

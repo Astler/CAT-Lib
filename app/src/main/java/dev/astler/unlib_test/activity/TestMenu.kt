@@ -41,8 +41,11 @@ class TestMenu : UnLibAdsActivity() {
                 ClickableItem("Coil Images Web") {
                     startActivity(Intent(this, ImageLoadersActivity::class.java))
                 },
-                ClickableItem("Sign In Activity") {
+                ClickableItem("Sign In TEST Activity") {
                     startActivity(Intent(this, SignInTestActivity::class.java))
+                },
+                ClickableItem("Sign In Activity") {
+                    startActivity(Intent(this, dev.astler.unlib.signin.ui.activity.SignInActivity::class.java))
                 },
                 ClickableItem("Shortcode Text") {
                     startActivity(Intent(this, ShortcodeTextActivity::class.java))
