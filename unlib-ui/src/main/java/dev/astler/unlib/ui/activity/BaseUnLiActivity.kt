@@ -24,8 +24,8 @@ import dev.astler.unlib.ui.R
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
 import java.util.* // ktlint-disable no-wildcard-imports
 
-abstract class BaseUnLiActivity :
-    AppCompatActivity(),
+abstract class BaseUnLiActivity(pLayoutId: Int = 0) :
+    AppCompatActivity(pLayoutId),
     NavigationView.OnNavigationItemSelectedListener,
     SharedPreferences.OnSharedPreferenceChangeListener,
     ActivityInterface {

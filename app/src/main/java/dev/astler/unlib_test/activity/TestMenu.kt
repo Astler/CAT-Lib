@@ -7,6 +7,7 @@ import dev.astler.unlib.adapters.BaseOneItemListAdapter
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib_ads.activity.UnLibAdsActivity
 import dev.astler.unlib_test.R
+import dev.astler.unlib_test.activity.signin.SignInTestActivity
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.databinding.ItemTextBinding
 import dev.astler.unlib_test.items.ClickableItem
@@ -39,6 +40,9 @@ class TestMenu : UnLibAdsActivity() {
             listOf(
                 ClickableItem("Coil Images Web") {
                     startActivity(Intent(this, ImageLoadersActivity::class.java))
+                },
+                ClickableItem("Sign In Activity") {
+                    startActivity(Intent(this, SignInTestActivity::class.java))
                 },
                 ClickableItem("Shortcode Text") {
                     startActivity(Intent(this, ShortcodeTextActivity::class.java))

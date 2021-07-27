@@ -1,4 +1,4 @@
-package dev.astler.unlib.signin.activity.contracts
+package dev.astler.unlib.signin.ui.activity.contracts
 
 import android.app.Activity
 import android.content.Context
@@ -18,8 +18,12 @@ class SignInActivityContract : ActivityResultContract<String, Task<GoogleSignInA
         return context.getGoogleSignInClient().signInIntent
     }
 
-    override fun parseResult(resultCode: Int, intent: Intent?): Task<GoogleSignInAccount>? = when {
-        resultCode != Activity.RESULT_OK -> null
-        else -> GoogleSignIn.getSignedInAccountFromIntent(intent)
+    override fun parseResult(resultCode: Int, intent: Intent?): Task<GoogleSignInAccount>? {
+        infoLog("result code = $resultCode")
+
+        return when {
+            resultCode != Activity.RESULT_OK -> null
+            else -> GoogleSignIn.getSignedInAccountFromIntent(intent)
+        }
     }
 }

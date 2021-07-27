@@ -29,13 +29,14 @@
         <activity android:name=".activity.TestMenu" android:theme="@style/AppUnliDarkTheme"  />
         <activity android:name=".activity.ImageLoadersActivity" />
         <activity android:name=".activity.ads.AdsOpenItemListActivity" />
+        <activity android:name=".activity.signin.SignInTestActivity" />
         <activity android:name=".activity.ads.AdsTestMenu" android:theme="@style/AppUnliDarkTheme"  />
         <activity android:name=".activity.AsyncListActivity" android:theme="@style/AppUnliDarkTheme"  />
         <activity android:name=".activity.WindowTestActivity" android:theme="@style/AppUnliDarkTheme"  />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-1536736011746190~1646338212" />
+            android:value="ca-app-pub-1536736011746190~2290849784" />
 
         <service
             android:name="dev.astler.unlib.services.UnLibFirebaseMessagingService"

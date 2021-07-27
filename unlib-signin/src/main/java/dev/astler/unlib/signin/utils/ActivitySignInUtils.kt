@@ -13,68 +13,110 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dev.astler.unlib.signin.R
-import dev.astler.unlib.signin.activity.contracts.SignInActivityContract
 import dev.astler.unlib.signin.interfaces.SignInActivityListener
+import dev.astler.unlib.signin.ui.activity.contracts.SignInActivityContract
 import dev.astler.unlib.utils.infoLog
+import dev.astler.unlib.utils.makeToast
 import dev.astler.unlib.utils.simpleTry
 
-private val AppCompatActivity.mAuth: FirebaseAuth? by lazy {
-    Firebase.auth
-}
-
+private var mFirebaseAuth: FirebaseAuth? = null
 var mSignInGoogleLauncher: ActivityResultLauncher<String>? = null
 
-fun AppCompatActivity.signInInitializer() {
-    mSignInGoogleLauncher = createSingInWithGoogleLauncher()
+fun getFirebaseAuth(): FirebaseAuth {
+    return if (mFirebaseAuth == null) {
+        val nAuth = Firebase.auth
+        mFirebaseAuth = nAuth
+        nAuth
+    } else mFirebaseAuth as FirebaseAuth
 }
 
 fun AppCompatActivity.getFirebaseUser(): FirebaseUser? {
-    return mAuth?.currentUser
+    return getFirebaseAuth().currentUser
 }
 
 fun AppCompatActivity.getFirebaseUserId(): String {
-    return mAuth?.currentUser?.uid ?: ""
+    return getFirebaseAuth().currentUser?.uid ?: ""
 }
 
 fun AppCompatActivity.createSingInWithGoogleLauncher() = registerForActivityResult(SignInActivityContract()) { pTask ->
+    infoLog("task null?:")
+
     if (pTask == null) return@registerForActivityResult
 
     simpleTry {
+        infoLog("return?:")
         val account = pTask.getResult(ApiException::class.java)!!
         infoLog("firebaseAuthWithGoogle:" + account.id)
-
-        if (this is SignInActivityListener)
-            this.authWithGoogle(account.idToken)
+        this.authWithGoogle(account.idToken)
     }
 }
 
-enum class SingInMode {
-    GOOGLE
-}
-
-fun AppCompatActivity.signIn(pSignInMode: SingInMode = SingInMode.GOOGLE, pInput: String = "sign_in") {
-    when (pSignInMode) {
-        SingInMode.GOOGLE -> {
-            mSignInGoogleLauncher?.launch(pInput)
-        }
-    }
+fun AppCompatActivity.signInWithGoogle(pInput: String = "sign_in") {
+    mSignInGoogleLauncher?.launch(pInput)
 }
 
 private fun AppCompatActivity.authWithGoogle(idToken: String? = null) {
     val credential = GoogleAuthProvider.getCredential(idToken, null)
-    mAuth?.signInWithCredential(credential)
-        ?.addOnCompleteListener(this) { task ->
-            if (task.isSuccessful) {
-                infoLog("signInWithCredential:success")
 
-                if (this is SignInActivityListener)
-                    updateUI(mAuth?.currentUser)
+    infoLog("try with google!")
+
+    getFirebaseAuth().signInWithCredential(credential)
+        .addOnCompleteListener(this) { task ->
+
+            infoLog("so? google!")
+
+            val nUser = if (task.isSuccessful) {
+                infoLog("signInWithCredential:success")
+                getFirebaseAuth().currentUser
             } else {
                 infoLog("signInWithCredential:failure ${task.exception}")
-
-                if (this is SignInActivityListener)
-                    updateUI(null)
+                null
             }
+
+            if (this is SignInActivityListener)
+                updateUI(nUser)
+        }
+}
+
+fun AppCompatActivity.createUserWithEmailAndPassword(pEmail: String? = null, pPassword: String? = null) {
+    if (pEmail == null || pPassword == null) {
+        makeToast(R.string.registration_error)
+        return
+    }
+
+    getFirebaseAuth().createUserWithEmailAndPassword(pEmail, pPassword)
+        ?.addOnCompleteListener(this) { task ->
+            val nUser = if (task.isSuccessful) {
+                infoLog("signInWithCredential:success")
+                getFirebaseAuth().currentUser
+            } else {
+                infoLog("signInWithCredential:failure ${task.exception}")
+                null
+            }
+
+            if (this is SignInActivityListener)
+                updateUI(nUser)
+        }
+}
+
+fun AppCompatActivity.authWithEmailAndPassword(pEmail: String? = null, pPassword: String? = null) {
+    if (pEmail == null || pPassword == null) {
+        makeToast(R.string.sign_in_error)
+        return
+    }
+
+    getFirebaseAuth().signInWithEmailAndPassword(pEmail, pPassword)
+        .addOnCompleteListener(this) { task ->
+            val nUser = if (task.isSuccessful) {
+                infoLog("signInWithCredential:success")
+                getFirebaseAuth().currentUser
+            } else {
+                infoLog("signInWithCredential:failure ${task.exception}")
+                null
+            }
+
+            if (this is SignInActivityListener)
+                updateUI(nUser)
         }
 }
 
@@ -93,5 +135,25 @@ fun Context.getGoogleSignInClient(): GoogleSignInClient {
         .requestEmail()
         .build()
 
+    infoLog("TOKEN code = ${getString(R.string.default_web_client_id)}")
+
     return GoogleSignIn.getClient(this, gso)
+}
+
+/**
+ * Activity Functions
+ */
+
+fun AppCompatActivity.signInInitializer() {
+    mSignInGoogleLauncher = createSingInWithGoogleLauncher()
+}
+
+fun AppCompatActivity.signInOnResume() {
+    val currentUser = getFirebaseUser()
+
+    if (this is SignInActivityListener)
+        updateUI(currentUser)
+
+//    if (currentUser == null)
+//        signIn()
 }

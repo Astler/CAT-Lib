@@ -49,5 +49,6 @@ proguard {
 dependencies {
     implementation project(':unlib-core')
     implementation project(':unlib-ui')
+    implementation project(':unlib-signin')
     implementation project(path: ':unlib-ads')
 }

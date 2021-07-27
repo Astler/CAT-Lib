@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="default_web_client_id">NULL</string>
+    <string name="sign_in_error">Sign In Error!</string>
+    <string name="registration_error">Registration Error!</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="or">OR</string>
+    <string name="sign_in_email">Sign In</string>
+    <string name="register">Register</string>
 </resources>

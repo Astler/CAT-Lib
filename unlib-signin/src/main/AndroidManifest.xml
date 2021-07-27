@@ -3,4 +3,8 @@
     package="dev.astler.unlib.signin">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <activity android:name=".ui.activity.SignInActivity" />
+    </application>
 </manifest>
