@@ -1,6 +1,7 @@
 package dev.astler.unlib.signin.utils
 
 import android.content.Context
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -19,6 +20,12 @@ import dev.astler.unlib.utils.simpleTry
 
 private val AppCompatActivity.mAuth: FirebaseAuth? by lazy {
     Firebase.auth
+}
+
+var mSignInGoogleLauncher: ActivityResultLauncher<String>? = null
+
+fun AppCompatActivity.signInInitializer() {
+    mSignInGoogleLauncher = createSingInWithGoogleLauncher()
 }
 
 fun AppCompatActivity.getFirebaseUser(): FirebaseUser? {
@@ -48,7 +55,7 @@ enum class SingInMode {
 fun AppCompatActivity.signIn(pSignInMode: SingInMode = SingInMode.GOOGLE, pInput: String = "sign_in") {
     when (pSignInMode) {
         SingInMode.GOOGLE -> {
-            createSingInWithGoogleLauncher().launch(pInput)
+            mSignInGoogleLauncher?.launch(pInput)
         }
     }
 }
