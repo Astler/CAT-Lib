@@ -9,8 +9,14 @@ import dev.astler.unlib.signin.databinding.SignInLayoutBinding
 import dev.astler.unlib.signin.interfaces.SignInActivityListener
 import dev.astler.unlib.signin.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.ui.activity.BaseUnLiActivity
-import dev.astler.unlib.utils.goneView
-import dev.astler.unlib.utils.infoLog
+import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
+
+const val cSignInModeExtra = "signInMode"
+
+const val cMandatorySignIn = "mandatory"
+const val cOptionalSignIn = "optional"
+const val cOptionalJumpSignIn = "optional_jump"
+const val cRegisterSignIn = "register"
 
 open class SignInActivity : BaseUnLiActivity(), SignInActivityListener {
 
@@ -21,32 +27,59 @@ open class SignInActivity : BaseUnLiActivity(), SignInActivityListener {
 
         setContentView(mActivityMainBinding.root)
 
+        val pMode = intent.getStringExtra(cSignInModeExtra).toString()
+
         signInInitializer()
 
         with(mActivityMainBinding) {
-            googleSignIn.setOnClickListener {
-                signInWithGoogle()
-            }
 
-            signInButton.setOnClickListener {
-                val nEmailText = email.text.toString()
-                val nPasswordText = password.text.toString()
-
-                authWithEmailAndPassword(nEmailText, nPasswordText)
-            }
+            doNotAskAgain.goneView()
 
             register.setOnClickListener {
-                signInButton.goneView()
-                googleSignIn.goneView()
-                or.goneView()
-                register.text = getString(R.string.create_account)
+                this@SignInActivity.startRegisterSignIn()
+                this@SignInActivity.finish()
+            }
 
-                register.setOnClickListener {
-                    val nEmailText = email.text.toString()
-                    val nPasswordText = password.text.toString()
+            when (pMode) {
+                cOptionalSignIn -> {
+                    close.showView()
 
-                    createUserWithEmailAndPassword(nEmailText, nPasswordText)
+                    close.setOnClickListener {
+                        this@SignInActivity.finish()
+                    }
                 }
+                cMandatorySignIn -> {
+                    close.goneView()
+                }
+                cRegisterSignIn -> {
+                    close.showView()
+
+                    close.setOnClickListener {
+                        this@SignInActivity.finish()
+                    }
+
+                    signInButton.goneView()
+                    googleSignIn.goneView()
+                    or.goneView()
+
+                    register.text = getString(R.string.create_account)
+
+                    register.setOnClickListener {
+                        val nEmailText = email.text.toString()
+                        val nPasswordText = password.text.toString()
+
+                        createUserWithEmailAndPassword(nEmailText, nPasswordText)
+                    }
+                }
+            }
+
+            if (getMobileServiceSource() == MobileServicesSource.GOOGLE && pMode != cRegisterSignIn) {
+                googleSignIn.setOnClickListener {
+                    signInWithGoogle()
+                }
+            } else {
+                or.goneView()
+                googleSignIn.goneView()
             }
         }
     }

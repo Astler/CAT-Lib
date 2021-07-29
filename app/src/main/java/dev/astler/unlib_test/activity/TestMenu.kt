@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.astler.unlib.adapters.BaseOneItemListAdapter
+import dev.astler.unlib.signin.utils.startMandatorySignIn
+import dev.astler.unlib.signin.utils.startOptionalSignIn
+import dev.astler.unlib.signin.utils.startRegisterSignIn
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib_ads.activity.UnLibAdsActivity
 import dev.astler.unlib_test.R
@@ -44,8 +47,14 @@ class TestMenu : UnLibAdsActivity() {
                 ClickableItem("Sign In TEST Activity") {
                     startActivity(Intent(this, SignInTestActivity::class.java))
                 },
-                ClickableItem("Sign In Activity") {
-                    startActivity(Intent(this, dev.astler.unlib.signin.ui.activity.SignInActivity::class.java))
+                ClickableItem("Mandatory Sign In Activity") {
+                    startMandatorySignIn()
+                },
+                ClickableItem("Optional Sign In Activity") {
+                    startOptionalSignIn()
+                },
+                ClickableItem("Register Activity") {
+                    startRegisterSignIn()
                 },
                 ClickableItem("Shortcode Text") {
                     startActivity(Intent(this, ShortcodeTextActivity::class.java))

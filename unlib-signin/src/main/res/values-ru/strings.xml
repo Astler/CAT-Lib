@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sign_in_error">Ошибка входа!</string>
+    <string name="registration_error">Ошибка регистрации!</string>
+    <string name="password">Пароль</string>
+    <string name="email">Email</string>
+    <string name="or">ИЛИ</string>
+    <string name="sign_in_email">Войти</string>
+    <string name="register">Регистрация</string>
+    <string name="create_account">Создать аккаунт</string>
+    <string name="do_not_ask_again">Не спрашивать снова</string>
+</resources>
