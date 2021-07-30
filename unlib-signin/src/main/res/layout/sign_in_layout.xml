@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:padding="@dimen/unlib_base_view_margin"
-        android:scrollbars="none"
         android:clipToPadding="false">
 
         <androidx.appcompat.widget.LinearLayoutCompat

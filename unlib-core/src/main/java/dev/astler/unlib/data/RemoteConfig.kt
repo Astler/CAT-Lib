@@ -16,6 +16,7 @@ class RemoteConfig {
 
     fun getBoolean(pName: String): Boolean = mFirebaseRemoteConfig.getBoolean(pName)
     fun getLong(pName: String): Long = mFirebaseRemoteConfig.getLong(pName)
+    fun getString(pName: String): String = mFirebaseRemoteConfig.getString(pName)
 
     val mAppVersion: Long
         get() = mFirebaseRemoteConfig.getLong(APP_VERSION)

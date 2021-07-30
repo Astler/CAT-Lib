@@ -15,9 +15,7 @@ import com.google.firebase.ktx.Firebase
 import dev.astler.unlib.signin.R
 import dev.astler.unlib.signin.interfaces.SignInActivityListener
 import dev.astler.unlib.signin.ui.activity.contracts.SignInActivityContract
-import dev.astler.unlib.utils.infoLog
-import dev.astler.unlib.utils.makeToast
-import dev.astler.unlib.utils.simpleTry
+import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
 
 private var mFirebaseAuth: FirebaseAuth? = null
 var mSignInGoogleLauncher: ActivityResultLauncher<String>? = null
@@ -52,7 +50,8 @@ fun AppCompatActivity.createSingInWithGoogleLauncher() = registerForActivityResu
 }
 
 fun AppCompatActivity.signInWithGoogle(pInput: String = "sign_in") {
-    mSignInGoogleLauncher?.launch(pInput)
+    if (getMobileServiceSource() == MobileServicesSource.GOOGLE)
+        mSignInGoogleLauncher?.launch(pInput)
 }
 
 private fun AppCompatActivity.authWithGoogle(idToken: String? = null) {
