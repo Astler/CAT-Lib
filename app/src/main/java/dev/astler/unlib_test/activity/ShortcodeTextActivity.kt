@@ -3,13 +3,13 @@ package dev.astler.unlib_test.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.view.ShortCodeTextView
 import dev.astler.unlib.view.SplashView
-import dev.astler.unlib_ads.activity.UnLibAdsActivity
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.activity.ads.AdsOpenItemListActivity
 
-class ShortcodeTextActivity : UnLibAdsActivity() {
+class ShortcodeTextActivity : BaseUnLiActivity() {
 
     companion object {
         private const val TARGET_SCAlE = 1f

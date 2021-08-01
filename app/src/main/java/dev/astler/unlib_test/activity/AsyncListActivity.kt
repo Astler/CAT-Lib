@@ -4,13 +4,13 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import dev.astler.unlib.adapters.OILAsyncAdapter
-import dev.astler.unlib_ads.activity.UnLibAdsActivity
+import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.databinding.ItemImageBinding
 import dev.astler.unlib_test.items.ImageItem
 
-class AsyncListActivity : UnLibAdsActivity() {
+class AsyncListActivity : BaseUnLiActivity() {
 
     private lateinit var mListBinding: ActivityRecyclerviewBinding
     private lateinit var mAdapter: OILAsyncAdapter<ImageItem>

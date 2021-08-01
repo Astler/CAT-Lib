@@ -4,14 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.astler.unlib.adapters.BaseOneItemListAdapter
-import dev.astler.unlib_ads.activity.UnLibAdsActivity
+import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib_ads.utils.NativeAdsLoader
+import dev.astler.unlib_ads.utils.getAdRequest
+import dev.astler.unlib_ads.utils.initAds
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.databinding.ItemTextBinding
 import dev.astler.unlib_test.items.ClickableItem
 
-class AdsTestMenu : UnLibAdsActivity() {
+class AdsTestMenu : BaseUnLiActivity() {
 
     private lateinit var mListBinding: ActivityRecyclerviewBinding
     private lateinit var mAdapter: BaseOneItemListAdapter<ClickableItem>
@@ -22,6 +24,8 @@ class AdsTestMenu : UnLibAdsActivity() {
         mListBinding = ActivityRecyclerviewBinding.inflate(layoutInflater)
 
         setContentView(mListBinding.root)
+
+        initAds()
 
         NativeAdsLoader.instance?.loadAds(this, getAdRequest())
 

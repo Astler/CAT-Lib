@@ -2,16 +2,18 @@ package dev.astler.unlib_test.activity.ads
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.utils.canShowAds
-import dev.astler.unlib_ads.activity.UnLibAdsActivity
 import dev.astler.unlib_ads.adapters.OIAdsAdapterConfig
 import dev.astler.unlib_ads.adapters.OneItemAdsAdapter
 import dev.astler.unlib_ads.utils.NativeAdsLoader
+import dev.astler.unlib_ads.utils.getAdRequest
+import dev.astler.unlib_ads.utils.initAds
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.items.TextItem
 
-class AdsOpenItemListActivity : UnLibAdsActivity() {
+class AdsOpenItemListActivity : BaseUnLiActivity() {
 
     private lateinit var mImagesBinding: ActivityRecyclerviewBinding
     private lateinit var mAdapter: OneItemAdsAdapter<TextItem>
@@ -22,6 +24,8 @@ class AdsOpenItemListActivity : UnLibAdsActivity() {
         mImagesBinding = ActivityRecyclerviewBinding.inflate(layoutInflater)
 
         setContentView(mImagesBinding.root)
+
+        initAds()
 
         NativeAdsLoader.instance?.loadAds(this, getAdRequest())
 

@@ -7,15 +7,15 @@ import dev.astler.unlib.adapters.BaseOneItemListAdapter
 import dev.astler.unlib.signin.utils.startMandatorySignIn
 import dev.astler.unlib.signin.utils.startOptionalSignIn
 import dev.astler.unlib.signin.utils.startRegisterSignIn
+import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
-import dev.astler.unlib_ads.activity.UnLibAdsActivity
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.activity.signin.SignInTestActivity
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.databinding.ItemTextBinding
 import dev.astler.unlib_test.items.ClickableItem
 
-class TestMenu : UnLibAdsActivity() {
+class TestMenu : BaseUnLiActivity() {
 
     private lateinit var mListBinding: ActivityRecyclerviewBinding
     private lateinit var mAdapter: BaseOneItemListAdapter<ClickableItem>
