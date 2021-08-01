@@ -30,7 +30,11 @@ abstract class BaseUnLiActivity(pLayoutId: Int = 0) :
     SharedPreferences.OnSharedPreferenceChangeListener,
     ActivityInterface {
 
-    protected lateinit var mRemoteConfig: RemoteConfig
+    open val mConfigAppPackage: String by lazy {
+        packageName.replace(".", "_")
+    }
+
+    lateinit var mRemoteConfig: RemoteConfig
 
     protected var mReviewInfo: ReviewInfo? = null
     protected val mReviewManager: ReviewManager by lazy {
@@ -75,6 +79,8 @@ abstract class BaseUnLiActivity(pLayoutId: Int = 0) :
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         setDefaultPreferences()
+
+        gPreferencesTool.edit("start_time", GregorianCalendar().timeInMillis)
 
         loadTheme(R.style.AppUnliTheme, R.style.AppUnliDarkTheme)
 

@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.view.View
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
+import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.utils.makeToast
 import dev.astler.unlib.view.ShortCodeTextView
 import dev.astler.unlib.view.SplashView
-import dev.astler.unlib_ads.activity.UnLibAdsActivity
 import dev.astler.unlib_test.activity.TestMenu
 import dev.astler.unlib_test.activity.ads.AdsTestMenu
 
-class MainActivity : UnLibAdsActivity() {
+class MainActivity : BaseUnLiActivity() {
 
     companion object {
         private const val TARGET_SCAlE = 1f
