@@ -12,6 +12,7 @@ import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.util.DisplayMetrics
+import android.view.Surface
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -201,4 +202,35 @@ fun AppCompatActivity.getDisplayDensity(): String {
         DisplayMetrics.DENSITY_XXXHIGH -> "XXXHDPI"
         else -> "XXHDPI"
     }
+}
+
+/**
+ */
+
+@Suppress("DEPRECATION")
+fun Activity.setInsetsViaOrientation(pView: View) {
+    val nRotation = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        display?.rotation
+    } else {
+        windowManager.defaultDisplay.rotation
+    }
+
+    var angle = 0
+    angle = when (nRotation) {
+        Surface.ROTATION_90 -> {
+            pView.setStatusAndNavigationPaddingForView(pAngle = -90)
+            -90
+        }
+        Surface.ROTATION_180 -> 180
+        Surface.ROTATION_270 -> {
+            pView.setStatusAndNavigationPaddingForView(pAngle = 90)
+            90
+        }
+        else -> {
+            pView.setStatusAndNavigationPaddingForView(pAngle = 0)
+            0
+        }
+    }
+
+    infoLog("ROTATION = $angle")
 }

@@ -1,18 +1,15 @@
 package dev.astler.unlib.utils
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsets
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.ImageView
 import androidx.annotation.* // ktlint-disable no-wildcard-imports
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
@@ -112,25 +109,59 @@ fun View.setStatusAndNavigationPaddingForView(
     pTopPadding: Boolean = true,
     pBottomPadding: Boolean = true,
     pAdditionalTopPadding: Int = 0,
-    pAdditionalBottomPadding: Int = 0
+    pAdditionalBottomPadding: Int = 0,
+    pAngle: Int = 0
 ) {
+
     if (isL()) {
         ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
             v.updatePadding(
                 top = if (pTopPadding) {
                     if (isR()) {
-                        insets.getInsets(WindowInsets.Type.systemBars()).top + pAdditionalTopPadding
+                        insets.getInsets(WindowInsetsCompat.Type.systemBars()).top + pAdditionalTopPadding
                     } else {
                         insets.systemWindowInsetTop + pAdditionalTopPadding
                     }
                 } else 0,
-                bottom = if (pBottomPadding) {
-                    if (isR()) {
-                        insets.getInsets(WindowInsets.Type.systemBars()).bottom + pAdditionalBottomPadding
-                    } else {
-                        insets.systemWindowInsetBottom + pAdditionalBottomPadding
+                bottom = when (pAngle) {
+                    90 -> 0
+                    -90 -> 0
+                    else -> {
+                        if (pBottomPadding) {
+                            if (isR()) {
+                                insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom + pAdditionalBottomPadding
+                            } else {
+                                insets.systemWindowInsetBottom + pAdditionalBottomPadding
+                            }
+                        } else 0
                     }
-                } else 0
+                },
+                left = when (pAngle) {
+                    90 -> {
+                        if (pBottomPadding) {
+                            if (isR()) {
+                                insets.getInsets(WindowInsetsCompat.Type.navigationBars()).left
+                            } else {
+                                insets.systemWindowInsetLeft
+                            }
+                        } else 0
+                    }
+                    -90 -> 0
+                    else -> 0
+                },
+                right = when (pAngle) {
+                    90 -> 0
+                    -90 -> {
+                        if (pBottomPadding) {
+                            if (isR()) {
+                                insets.getInsets(WindowInsetsCompat.Type.navigationBars()).right
+                            } else {
+                                insets.systemWindowInsetRight
+                            }
+                        } else 0
+                    }
+                    else -> 0
+                }
             )
 
             insets

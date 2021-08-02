@@ -40,6 +40,13 @@ open class SignInActivity : BaseUnLiActivity(), SignInActivityListener {
                 this@SignInActivity.finish()
             }
 
+            signInButton.setOnClickListener {
+                val nEmailText = email.text.toString()
+                val nPasswordText = password.text.toString()
+
+                authWithEmailAndPassword(nEmailText, nPasswordText)
+            }
+
             when (pMode) {
                 cOptionalSignIn -> {
                     close.showView()
