@@ -302,6 +302,11 @@ fun AppCompatActivity.createNativeAdLoader(pAdBindItem: ItemAdBinding): AdLoader
                     pAdBindItem.install.goneView()
                 }
 
+                pAdBindItem.nativeAd.headlineView = pAdBindItem.adHeadline
+                pAdBindItem.nativeAd.bodyView = pAdBindItem.adBody
+                pAdBindItem.nativeAd.iconView = pAdBindItem.adAppIcon
+                pAdBindItem.nativeAd.callToActionView = pAdBindItem.install
+
                 pAdBindItem.nativeAd.setNativeAd(nativeAd)
             }
 
