@@ -9,4 +9,6 @@
     <string name="register">Регистрация</string>
     <string name="create_account">Создать аккаунт</string>
     <string name="do_not_ask_again">Не спрашивать снова</string>
+    <string name="passwords_dont_match">Пароли не совпадают!</string>
+    <string name="password_again">Ещё раз пароль</string>
 </resources>

@@ -50,6 +50,7 @@ open class SignInActivity : BaseUnLiActivity(), SignInActivityListener {
             when (pMode) {
                 cOptionalSignIn -> {
                     close.showView()
+                    passwordAgain.goneView()
 
                     close.setOnClickListener {
                         this@SignInActivity.finish()
@@ -57,6 +58,7 @@ open class SignInActivity : BaseUnLiActivity(), SignInActivityListener {
                 }
                 cMandatorySignIn -> {
                     close.goneView()
+                    passwordAgain.goneView()
                 }
                 cRegisterSignIn -> {
                     close.showView()
@@ -74,8 +76,11 @@ open class SignInActivity : BaseUnLiActivity(), SignInActivityListener {
                     register.setOnClickListener {
                         val nEmailText = email.text.toString()
                         val nPasswordText = password.text.toString()
+                        val nPasswordAgainText = passwordAgain.text.toString()
 
-                        createUserWithEmailAndPassword(nEmailText, nPasswordText)
+                        if (nPasswordText != nPasswordAgainText) {
+                            it.toast(R.string.passwords_dont_match)
+                        } else createUserWithEmailAndPassword(nEmailText, nPasswordText)
                     }
                 }
             }
@@ -89,6 +94,8 @@ open class SignInActivity : BaseUnLiActivity(), SignInActivityListener {
                 googleSignIn.goneView()
             }
         }
+
+        setInsetsViaOrientation(mActivityMainBinding.root)
     }
 
     override fun onResume() {

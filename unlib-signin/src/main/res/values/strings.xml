@@ -11,4 +11,6 @@
     <string name="register">Register</string>
     <string name="create_account">Create Account</string>
     <string name="do_not_ask_again">Don\'t ask again</string>
+    <string name="password_again">Password Again</string>
+    <string name="passwords_dont_match">Passwords Don\'t Match!</string>
 </resources>
