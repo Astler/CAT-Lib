@@ -95,6 +95,7 @@ fun AppCompatActivity.initAds() {
 val mNoAdsRewardListener: OnUserEarnedRewardListener
     get() = OnUserEarnedRewardListener {
         gPreferencesTool.dayWithoutAds = GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
+        gPreferencesTool.unsetRewardAdIsActive()
     }
 
 fun AppCompatActivity.showInterstitialAd() {
@@ -112,6 +113,7 @@ fun getAdRequest(): AdRequest {
 
 fun AppCompatActivity.showRewardAd() {
     mRewardedInterstitialAd?.show(this, mNoAdsRewardListener)
+    gPreferencesTool.setRewardAdIsActive()
 }
 
 fun AppCompatActivity.requestNewInterstitial() {
@@ -141,18 +143,21 @@ private fun AppCompatActivity.loadAd() {
                             override fun onAdDismissedFullScreenContent() {
                                 super.onAdDismissedFullScreenContent()
                                 mRewardedInterstitialAd = null
+                                gPreferencesTool.unsetRewardAdIsActive()
                                 requestNewInterstitial()
                             }
 
                             override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                                 super.onAdFailedToShowFullScreenContent(adError)
                                 mRewardedInterstitialAd = null
+                                gPreferencesTool.unsetRewardAdIsActive()
                                 requestNewRewardedInterstitial()
                             }
 
                             override fun onAdShowedFullScreenContent() {
                                 super.onAdShowedFullScreenContent()
                                 mRewardedInterstitialAd = null
+                                gPreferencesTool.setRewardAdIsActive()
                                 requestNewRewardedInterstitial()
                             }
                         }
@@ -160,6 +165,7 @@ private fun AppCompatActivity.loadAd() {
 
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     mRewardedInterstitialAd = null
+                    gPreferencesTool.unsetRewardAdIsActive()
                     infoLog("mRewardedInterstitialAd onAdFailedToLoad", "ForAstler: ADS")
                 }
             }

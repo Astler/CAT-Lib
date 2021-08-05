@@ -17,7 +17,8 @@ import dev.astler.unlib.gAppConfig
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.adsLog
 import dev.astler.unlib.utils.canShowAds
-import java.util.*
+import dev.astler.unlib_ads.utils.isRewardAdIsActive
+import java.util.* // ktlint-disable no-wildcard-imports
 
 class AppOpenManager(myApplication: AdsUnLibApp) :
     Application.ActivityLifecycleCallbacks,
@@ -105,7 +106,13 @@ class AppOpenManager(myApplication: AdsUnLibApp) :
             adsLog("START AD: !gPreferencesTool.isFirstStart --> ${!gPreferencesTool.isFirstStart}")
             adsLog("START AD: Date().time - mLastShowTime > 3600000 --> ${Date().time - mLastShowTime > 1800000}")
 
-            return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4) && !gPreferencesTool.isFirstStart && Date().time - mLastShowTime > 1800000 && currentActivity?.canShowAds() == true
+            return appOpenAd != null &&
+                wasLoadTimeLessThanNHoursAgo(4) &&
+                !gPreferencesTool.isFirstStart &&
+                Date().time - mLastShowTime > 1800000 &&
+                Date().time - gPreferencesTool.getLong("last_ad_show") > 25000 &&
+                !gPreferencesTool.isRewardAdIsActive() &&
+                currentActivity?.canShowAds() == true
         }
 
     private fun wasLoadTimeLessThanNHoursAgo(numHours: Long): Boolean {
