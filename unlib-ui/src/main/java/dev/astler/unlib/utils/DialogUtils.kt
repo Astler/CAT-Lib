@@ -108,13 +108,13 @@ fun <T> Context.customSearchListDialog(
         .setTitle(pTitle)
         .create()
 
-    pItemsAdapter.addItems(pItems)
+    pItemsAdapter.setData(pItems)
 
     nDialogView.itemsSearch.doOnTextChanged { pText, _, _, _ ->
         if (!pText.isNullOrEmpty()) {
-            pItemsAdapter.addItems(pItems.filter { pFilter(it, pText) })
+            pItemsAdapter.setData(pItems.filter { pFilter(it, pText) })
         } else {
-            pItemsAdapter.addItems(pItems)
+            pItemsAdapter.setData(pItems)
         }
     }
 

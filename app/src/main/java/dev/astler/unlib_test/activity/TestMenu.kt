@@ -39,7 +39,7 @@ class TestMenu : BaseUnLiActivity() {
             }
         )
 
-        mAdapter.addItems(
+        mAdapter.setData(
             listOf(
                 ClickableItem("Coil Images Web") {
                     startActivity(Intent(this, ImageLoadersActivity::class.java))

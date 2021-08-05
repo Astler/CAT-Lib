@@ -41,7 +41,7 @@ class AdsTestMenu : BaseUnLiActivity() {
             }
         )
 
-        mAdapter.addItems(
+        mAdapter.setData(
             listOf(
                 ClickableItem("One Item List With Ad") {
                     startActivity(Intent(this, AdsOpenItemListActivity::class.java))
