@@ -11,14 +11,14 @@ open class BaseOneItemListAdapter<T>(@LayoutRes val pLayoutResource: Int, privat
 
     var data: ArrayList<T> = arrayListOf()
 
-    fun addItems(items: List<T>) {
+    fun setData(items: List<T>) {
         this.data.clear()
         this.data.addAll(items)
         mAdapterSizeListener?.totalItems(this.data.size)
         notifyDataSetChanged()
     }
 
-    fun silenceReloadItems(items: List<T>) {
+    fun setDataSilence(items: List<T>) {
         this.data.clear()
         this.data.addAll(items)
         mAdapterSizeListener?.totalItems(this.data.size)
