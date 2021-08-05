@@ -44,13 +44,17 @@ open class SignInActivity : BaseUnLiActivity(), SignInActivityListener {
                 val nEmailText = email.text.toString()
                 val nPasswordText = password.text.toString()
 
-                authWithEmailAndPassword(nEmailText, nPasswordText)
+                if (nEmailText.isEmpty() || nPasswordText.isEmpty()) {
+                    it.toast(R.string.not_all_fields)
+                } else {
+                    authWithEmailAndPassword(nEmailText, nPasswordText)
+                }
             }
 
             when (pMode) {
                 cOptionalSignIn -> {
                     close.showView()
-                    passwordAgain.goneView()
+                    secondPassword.goneView()
 
                     close.setOnClickListener {
                         this@SignInActivity.finish()
@@ -58,7 +62,7 @@ open class SignInActivity : BaseUnLiActivity(), SignInActivityListener {
                 }
                 cMandatorySignIn -> {
                     close.goneView()
-                    passwordAgain.goneView()
+                    secondPassword.goneView()
                 }
                 cRegisterSignIn -> {
                     close.showView()
@@ -78,9 +82,13 @@ open class SignInActivity : BaseUnLiActivity(), SignInActivityListener {
                         val nPasswordText = password.text.toString()
                         val nPasswordAgainText = passwordAgain.text.toString()
 
-                        if (nPasswordText != nPasswordAgainText) {
-                            it.toast(R.string.passwords_dont_match)
-                        } else createUserWithEmailAndPassword(nEmailText, nPasswordText)
+                        if (nEmailText.isEmpty() || nPasswordText.isEmpty() || nPasswordAgainText.isEmpty()) {
+                            it.toast(R.string.not_all_fields)
+                        } else {
+                            if (nPasswordText != nPasswordAgainText) {
+                                it.toast(R.string.passwords_dont_match)
+                            } else createUserWithEmailAndPassword(nEmailText, nPasswordText)
+                        }
                     }
                 }
             }

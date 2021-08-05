@@ -66,9 +66,11 @@ private fun AppCompatActivity.authWithGoogle(idToken: String? = null) {
 
             val nUser = if (task.isSuccessful) {
                 infoLog("signInWithCredential:success")
+                makeToast("Success!")
                 getFirebaseAuth().currentUser
             } else {
                 infoLog("signInWithCredential:failure ${task.exception}")
+                makeToast(task.exception.toString())
                 null
             }
 
@@ -90,10 +92,12 @@ fun AppCompatActivity.createUserWithEmailAndPassword(pEmail: String? = null, pPa
     getFirebaseAuth().createUserWithEmailAndPassword(pEmail, pPassword)
         ?.addOnCompleteListener(this) { task ->
             val nUser = if (task.isSuccessful) {
-                infoLog("signInWithCredential:success")
+                infoLog("createWithCredential:success")
+                makeToast("Success!")
                 getFirebaseAuth().currentUser
             } else {
-                infoLog("signInWithCredential:failure ${task.exception}")
+                infoLog("createWithCredential:failure ${task.exception}")
+                makeToast(task.exception.toString())
                 null
             }
 
