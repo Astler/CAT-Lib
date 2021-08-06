@@ -161,9 +161,6 @@ abstract class BaseUnLiActivity(pLayoutId: Int = 0) :
         navigationView.inflateMenu(R.menu.base_activity_drawer)
     }
 
-    override fun showInterstitialAd() {}
-    override fun showRewardAd() {}
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.rate_app -> this.openAppInPlayStore()
