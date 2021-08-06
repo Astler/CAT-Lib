@@ -23,10 +23,10 @@ open class UnLibSettingsFragment : PreferenceFragmentCompat() {
 
         mPreference = findPreference("dayWithoutAds")
 
-        mPreference?.setOnPreferenceClickListener {
-            coreListener.showRewardAd()
-            true
-        }
+//        mPreference?.setOnPreferenceClickListener {
+//            coreListener.showRewardAd()
+//            true
+//        }
 
         mPreference?.isVisible = requireContext().canShowAds()
     }

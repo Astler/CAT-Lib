@@ -102,6 +102,11 @@ open class OneItemAdsAdapter<T>(
                 }
 
                 adView.setNativeAd(adForPosition)
+
+                adView.headlineView = holder.mItemAdBinding.adHeadline
+                adView.bodyView = holder.mItemAdBinding.adBody
+                adView.iconView = holder.mItemAdBinding.adAppIcon
+                adView.callToActionView = holder.mItemAdBinding.install
             }
         } else {
             if (holder is BaseOneItemListViewHolder)
