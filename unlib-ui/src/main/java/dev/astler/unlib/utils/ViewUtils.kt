@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.* // ktlint-disable no-wildcard-imports
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
@@ -178,3 +179,10 @@ fun View.setStatusAndNavigationPaddingForView(
 fun View.toast(pTextId: Int, pDuration: Int = Toast.LENGTH_SHORT) {
     context.makeToast(pTextId, pDuration)
 }
+
+fun View.okDialog(
+    pTitle: String = "",
+    pMsg: String = "",
+    pOkAction: () -> Unit = {},
+    pInstantDialog: Boolean = true
+): AlertDialog = context.okDialog(pTitle, pMsg, pOkAction, pInstantDialog)

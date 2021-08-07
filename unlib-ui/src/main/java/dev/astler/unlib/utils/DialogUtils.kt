@@ -34,7 +34,7 @@ fun Context.dialog(
 fun Context.okDialog(
     pTitle: String = "",
     pMsg: String = "",
-    pOkAction: () -> Unit,
+    pOkAction: () -> Unit = {},
     pInstantDialog: Boolean = true
 ): AlertDialog {
     return confirmDialog(
