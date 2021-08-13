@@ -45,7 +45,7 @@ class OILAsyncAdapter<T>(
 
     inner class OILItemAsync(context: Context) : AsyncCell(context) {
 
-        override val layoutId = pLayoutResource
+        override var layoutId = pLayoutResource
 
         override fun createDataBindingView(view: View): View {
             return view

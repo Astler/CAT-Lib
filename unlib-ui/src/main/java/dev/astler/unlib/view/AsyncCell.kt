@@ -13,7 +13,7 @@ open class AsyncCell(context: Context) : FrameLayout(context, null, 0) {
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
     }
 
-    open val layoutId = -1
+    open var layoutId = -1
     private var isInflated = false
     private val bindingFunctions: MutableList<AsyncCell.() -> Unit> = mutableListOf()
 

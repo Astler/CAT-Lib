@@ -12,7 +12,7 @@ open class PrefsTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = android.R.attr.textViewStyle
-): AppCompatTextView(context, attrs, defStyleAttr) {
+) : AppCompatTextView(context, attrs, defStyleAttr) {
 
     init {
         initText(attrs)
@@ -24,7 +24,7 @@ open class PrefsTextView @JvmOverloads constructor(
 
         textSize = gPreferencesTool.mTextSize + typedArray.getInteger(R.styleable.PrefsTextView_textSizeModifier, 0)
 
-        when(typedArray.getInteger(R.styleable.PrefsTextView_textStyle, 10)) {
+        when (typedArray.getInteger(R.styleable.PrefsTextView_textStyle, 10)) {
             11 -> {
                 setBoldTypeface()
             }
