@@ -27,7 +27,7 @@ abstract class UnLibFragment(pLayoutId: Int = 0) : Fragment(pLayoutId), CoreFrag
         coreListener.setCurrentFragment(this)
     }
 
-    fun getStringByName(pName: String): String {
-        return requireContext().getStringResource(pName)
+    fun getStringByName(pName: String, pReturnDef: String = ""): String {
+        return requireContext().getStringResource(pName, returnDef = pReturnDef)
     }
 }
