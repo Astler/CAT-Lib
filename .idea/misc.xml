@@ -17,6 +17,8 @@
         <entry key="..\:/Apps/UnLi/unlib-ui/src/main/res/drawable/selected_dot.xml" value="0.290625" />
         <entry key="..\:/Apps/UnLi/unlib-ui/src/main/res/drawable/tab_selector.xml" value="0.290625" />
         <entry key="..\:/Apps/UnLi/unlib-ui/src/main/res/layout/fragment_view_pager2.xml" value="0.24547101449275363" />
+        <entry key="..\:/Apps/UnLi/unlib-ui/src/main/res/layout/loading_view.xml" value="0.264" />
+        <entry key="..\:/Apps/UnLi/unlib-ui/src/main/res/layout/part_linear_progress.xml" value="0.264" />
         <entry key="..\:/Apps/UnLi/unlib-ui/src/main/res/layout/recycler_view_fragment.xml" value="0.3433224755700326" />
       </map>
     </option>

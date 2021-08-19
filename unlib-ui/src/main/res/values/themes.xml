@@ -32,6 +32,7 @@
         <item name="android:fitsSystemWindows">false</item>
 
         <item name="materialButtonStyle">@style/MaterialButtonUnlib</item>
+        <item name="linearProgressIndicatorStyle">@style/Widget.App.CircularProgressIndicator</item>
     </style>
 
     <style name="Theme.BaseUnLiDarkTheme" parent="Theme.MaterialComponents.NoActionBar">
@@ -66,6 +67,15 @@
         <item name="android:fitsSystemWindows">false</item>
 
         <item name="materialButtonStyle">@style/MaterialButtonUnlib</item>
+        <item name="linearProgressIndicatorStyle">@style/Widget.App.CircularProgressIndicator</item>
+    </style>
+
+    <style name="Widget.App.CircularProgressIndicator" parent="Widget.MaterialComponents.CircularProgressIndicator">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.CircularProgressIndicator</item>
+    </style>
+
+    <style name="ThemeOverlay.App.CircularProgressIndicator" parent="">
+        <item name="colorPrimary">@color/orange_dark</item>
     </style>
 
     <style name="MaterialButtonUnlib" parent="Widget.MaterialComponents.Button">
