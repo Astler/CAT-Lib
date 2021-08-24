@@ -23,3 +23,18 @@ fun simpleTryCatch(pContext: Context? = null, pAction: () -> Unit, pCatch: () ->
         pContext?.makeToast(R.string.something_went_wrong)
     }
 }
+
+fun <T> typedTry(
+    pContext: Context? = null,
+    pFallBack: T? = null,
+    pAction: () -> T
+): T? {
+    return try {
+        pAction()
+    } catch (pException: Exception) {
+        pException.printStackTrace()
+        errorLog("Exception! ${pException.message}")
+        pContext?.makeToast(R.string.something_went_wrong)
+        pFallBack
+    }
+}

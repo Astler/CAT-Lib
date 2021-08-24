@@ -1,5 +1,6 @@
 package dev.astler.unlib.utils
 
+import android.text.format.DateUtils
 import java.text.SimpleDateFormat
 import java.util.* // ktlint-disable no-wildcard-imports
 
@@ -36,4 +37,34 @@ fun Long.millisToHumanViewDMY(): String {
 
 fun Long.millisToHumanViewDMYT(): String {
     return Date(this).toHumanViewDMYT()
+}
+
+/**
+ * From KAHelpers
+ */
+
+fun Date.millisecondsSince(date: Date) = (time - date.time)
+fun Date.secondsSince(date: Date): Double = millisecondsSince(date) / 1000.0
+fun Date.minutesSince(date: Date): Double = secondsSince(date) / 60
+fun Date.hoursSince(date: Date): Double = minutesSince(date) / 60
+fun Date.daysSince(date: Date): Double = hoursSince(date) / 24
+fun Date.weeksSince(date: Date): Double = daysSince(date) / 7
+fun Date.monthsSince(date: Date): Double = weeksSince(date) / 4
+fun Date.yearsSince(date: Date): Double = monthsSince(date) / 12
+
+val currentDate get() = Date(System.currentTimeMillis())
+
+inline val now: Long
+    get() = Calendar.getInstance().timeInMillis
+
+fun Date.isToday(): Boolean {
+    return DateUtils.isToday(this.time)
+}
+
+fun Date.isYesterday(): Boolean {
+    return DateUtils.isToday(this.time + DateUtils.DAY_IN_MILLIS)
+}
+
+fun Date.isTomorrow(): Boolean {
+    return DateUtils.isToday(this.time - DateUtils.DAY_IN_MILLIS)
 }
