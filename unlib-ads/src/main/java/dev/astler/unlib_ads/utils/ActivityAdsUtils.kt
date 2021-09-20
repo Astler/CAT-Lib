@@ -288,19 +288,6 @@ fun AppCompatActivity.createNativeAdLoader(pAdBindItem: ItemAdBinding): AdLoader
                 pAdBindItem.adHeadline.text = nativeAd.headline
                 pAdBindItem.adBody.text = nativeAd.body
 
-                if (nativeAd.icon == null) {
-                    pAdBindItem.adAppIcon.goneView()
-                    pAdBindItem.adAppIconCard.goneView()
-                } else {
-                    val nDrawable = nativeAd.icon?.drawable
-
-                    nDrawable?.let {
-                        pAdBindItem.adAppIcon.setImageDrawable(it)
-                        pAdBindItem.adAppIcon.showView()
-                        pAdBindItem.adAppIconCard.showView()
-                    }
-                }
-
                 if (nativeAd.callToAction != null) {
                     pAdBindItem.install.showView()
                     pAdBindItem.install.text = nativeAd.callToAction
@@ -310,7 +297,7 @@ fun AppCompatActivity.createNativeAdLoader(pAdBindItem: ItemAdBinding): AdLoader
 
                 pAdBindItem.nativeAd.headlineView = pAdBindItem.adHeadline
                 pAdBindItem.nativeAd.bodyView = pAdBindItem.adBody
-                pAdBindItem.nativeAd.iconView = pAdBindItem.adAppIcon
+                pAdBindItem.nativeAd.mediaView = pAdBindItem.adAppIcon
                 pAdBindItem.nativeAd.callToActionView = pAdBindItem.install
 
                 pAdBindItem.nativeAd.setNativeAd(nativeAd)
