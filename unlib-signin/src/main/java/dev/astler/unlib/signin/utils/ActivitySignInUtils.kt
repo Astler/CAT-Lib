@@ -28,11 +28,11 @@ fun getFirebaseAuth(): FirebaseAuth {
     } else mFirebaseAuth as FirebaseAuth
 }
 
-fun AppCompatActivity.getFirebaseUser(): FirebaseUser? {
+fun getFirebaseUser(): FirebaseUser? {
     return getFirebaseAuth().currentUser
 }
 
-fun AppCompatActivity.getFirebaseUserId(): String {
+fun getFirebaseUserId(): String {
     return getFirebaseAuth().currentUser?.uid ?: ""
 }
 
@@ -90,7 +90,7 @@ fun AppCompatActivity.createUserWithEmailAndPassword(pEmail: String? = null, pPa
     }
 
     getFirebaseAuth().createUserWithEmailAndPassword(pEmail, pPassword)
-        ?.addOnCompleteListener(this) { task ->
+        .addOnCompleteListener(this) { task ->
             val nUser = if (task.isSuccessful) {
                 infoLog("createWithCredential:success")
                 makeToast("Success!")

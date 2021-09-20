@@ -1,4 +1,4 @@
-package dev.astler.unlib_compose.composable.apps
+package dev.astler.unlib_compose.screens.apps
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

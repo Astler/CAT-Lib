@@ -166,7 +166,7 @@ private fun AppCompatActivity.loadAd() {
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     mRewardedInterstitialAd = null
                     gPreferencesTool.unsetRewardAdIsActive()
-                    infoLog("mRewardedInterstitialAd onAdFailedToLoad", "ForAstler: ADS")
+                    infoLog("mRewardedInterstitialAd onAdFailedToLoad: ${loadAdError.message}", "ForAstler: ADS")
                 }
             }
         )
