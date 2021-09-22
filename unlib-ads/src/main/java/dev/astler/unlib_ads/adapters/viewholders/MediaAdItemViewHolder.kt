@@ -1,7 +1,6 @@
 package dev.astler.unlib_ads.adapters.viewholders
 
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.gms.ads.nativead.NativeAd
@@ -9,12 +8,12 @@ import com.google.android.gms.ads.nativead.NativeAdView
 import dev.astler.unlib.utils.goneView
 import dev.astler.unlib.utils.infoLog
 import dev.astler.unlib.utils.showView
-import dev.astler.unlib_ads.databinding.ItemAdBinding
+import dev.astler.unlib_ads.databinding.ItemMediaAdBinding
 
-class AdItemViewHolder(view: View) :
+class MediaAdItemViewHolder(view: View) :
     ViewHolder(view) {
-    val mItemAdBinding = ItemAdBinding.bind(view)
-    val adView: NativeAdView
+    private val mItemAdBinding = ItemMediaAdBinding.bind(view)
+    private val adView: NativeAdView
     private val mView: View
 
     init {
@@ -24,10 +23,10 @@ class AdItemViewHolder(view: View) :
         adView.callToActionView = mItemAdBinding.install
         adView.headlineView = mItemAdBinding.adHeadline
         adView.bodyView = mItemAdBinding.adBody
-        adView.iconView = mItemAdBinding.adAppIcon
+        adView.mediaView = mItemAdBinding.adAppIcon
     }
 
-    fun initNativeBanner(pNativeAd: NativeAd?, pCanShowAds: Boolean) {
+    fun initNativeMediaBanner(pNativeAd: NativeAd?, pCanShowAds: Boolean) {
         val adView: NativeAdView = adView
 
         infoLog("AD >.< \n mCanShowAds = $pCanShowAds \n adForPosition = $pNativeAd", "Ads")
@@ -43,13 +42,6 @@ class AdItemViewHolder(view: View) :
 
             (adView.headlineView as TextView).text = pNativeAd.headline
             (adView.bodyView as TextView).text = pNativeAd.body
-
-            if (pNativeAd.icon == null) {
-                adView.iconView?.goneView()
-            } else {
-                (adView.iconView as ImageView).setImageDrawable(pNativeAd.icon?.drawable)
-                adView.iconView?.showView()
-            }
 
             if (pNativeAd.callToAction != null) {
                 adView.callToActionView?.showView()
