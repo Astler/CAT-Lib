@@ -38,7 +38,7 @@ class AdsOpenItemListActivity : BaseUnLiActivity() {
             mConfig = OIAdsAdapterConfig(canShowAds())
         )
 
-        mAdapter.setData(
+        mAdapter.data =
             listOf(
                 TextItem("A 1"),
                 TextItem("A 2"),
@@ -61,7 +61,6 @@ class AdsOpenItemListActivity : BaseUnLiActivity() {
                 TextItem("A 19"),
                 TextItem("A 20")
             )
-        )
 
         mImagesBinding.list.layoutManager = LinearLayoutManager(this)
         mImagesBinding.list.adapter = mAdapter
