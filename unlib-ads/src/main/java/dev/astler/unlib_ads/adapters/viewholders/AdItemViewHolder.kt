@@ -46,9 +46,11 @@ class AdItemViewHolder(view: View) :
 
             if (pNativeAd.icon == null) {
                 adView.iconView?.goneView()
+                mItemAdBinding.adAppIconCard.goneView()
             } else {
                 (adView.iconView as ImageView).setImageDrawable(pNativeAd.icon?.drawable)
                 adView.iconView?.showView()
+                mItemAdBinding.adAppIconCard.showView()
             }
 
             if (pNativeAd.callToAction != null) {
