@@ -18,6 +18,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
+fun View.clickDialog(@StringRes pDialogMsgId: Int) {
+    setOnClickListener {
+        context.dialog(pMsg = context.getString(pDialogMsgId))
+    }
+}
+
+fun View.clickDialog(pDialogMsg: String) {
+    setOnClickListener {
+        context.dialog(pMsg = pDialogMsg)
+    }
+}
+
 fun ImageView.setColorTintDrawable(@DrawableRes icon: Int, @ColorRes colorId: Int) {
     setImageDrawable(context.tintDrawable(icon, colorId))
 }

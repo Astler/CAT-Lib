@@ -9,9 +9,7 @@ import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
 import com.google.android.material.navigation.NavigationView
-import dev.astler.unlib.PreferencesTool
-import dev.astler.unlib.gAppConfig
-import dev.astler.unlib.gPreferencesTool
+import dev.astler.unlib.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
@@ -244,37 +242,50 @@ fun NavigationView.addNoAdsItem() {
 }
 
 fun BaseUnLiActivity.interstitialAdsShowTry() {
-    val nTimeFromStart =
-        GregorianCalendar().timeInMillis - gPreferencesTool.getLong(
-            "start_time",
-            GregorianCalendar().timeInMillis
-        )
-
-    val nTimeFromLastAd =
-        GregorianCalendar().timeInMillis - gPreferencesTool.getLong(
-            "last_ad_show", 0
-        )
+    if (!canShowAds()) {
+        adsLog("Can't show ads!")
+        return
+    }
 
     val nShowAds = mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage")
+
+    if (!nShowAds) {
+        adsLog("Ads disabled in remote config!")
+        return
+    }
+
     val nAdsPause = mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt()
     val nAdsChance = mRemoteConfig.getLong("ad_chance_$mConfigAppPackage").toInt()
 
-    infoLog("UNLIB_AD: loaded ads config = $nShowAds, $nAdsPause, $nAdsChance")
+    adsLog("Loaded ads remote config = $nAdsPause, $nAdsChance")
 
-    if (nShowAds &&
-        canShowAds() &&
-        nTimeFromStart >= 10000 &&
-        nTimeFromLastAd >= nAdsPause
-    ) {
-        val randNum = Random.nextInt(nAdsChance)
+    val nIsTimeFromStartPassed = cStartTime.hasPrefsTimePassed(10000)
 
-        infoLog("UNLIB_AD: AD CHANCE: $randNum/$nAdsChance")
-
-        if (randNum == 0)
-            showInterstitialAd()
-    } else {
-        infoLog("UNLIB_AD: Dont show ad! Possible reasons?\ncanShowAds = ${canShowAds()}, enabled in config? -> $nShowAds, time from start out? -> ${nTimeFromStart >= 10000}, time from last ad? -> ${nTimeFromLastAd >= nAdsPause}")
+    if (!nIsTimeFromStartPassed) {
+        adsLog("nIsTimeFromStartPassed not passed!")
+        return
     }
+
+    val nIsTimeFromResumePassed = cResumeTime.hasPrefsTimePassed(5000)
+
+    if (!nIsTimeFromResumePassed) {
+        adsLog("nIsTimeFromResumePassed not passed!")
+        return
+    }
+
+    val nIsAdsPausePassed = "last_ad_show".hasPrefsTimePassed(nAdsPause.toLong())
+
+    if (!nIsAdsPausePassed) {
+        adsLog("nIsAdsPausePassed not passed!")
+        return
+    }
+
+    val randNum = Random.nextInt(nAdsChance)
+
+    adsLog("AD CHANCE: $randNum/$nAdsChance")
+
+    if (randNum == 0)
+        showInterstitialAd()
 }
 
 fun AppCompatActivity.createNativeAdLoader(pAdBindItem: ItemAdBinding): AdLoader {
