@@ -1,4 +1,4 @@
-package dev.astler.unlib_compose.data
+package dev.astler.unlib_compose.data.settings
 
 import kotlinx.coroutines.flow.StateFlow
 

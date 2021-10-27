@@ -7,8 +7,8 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
-import dev.astler.unlib_compose.data.AppTheme
-import dev.astler.unlib_compose.data.Settings
+import dev.astler.unlib_compose.data.settings.AppTheme
+import dev.astler.unlib_compose.data.settings.Settings
 
 val Red200 = Color(0xfff297a2)
 val Red300 = Color(0xffea6d7e)

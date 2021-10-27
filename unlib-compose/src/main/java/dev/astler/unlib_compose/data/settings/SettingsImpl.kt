@@ -1,11 +1,9 @@
-package dev.astler.unlib_compose.modules
+package dev.astler.unlib_compose.data.settings
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.astler.unlib_compose.data.AppTheme
-import dev.astler.unlib_compose.data.Settings
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 import kotlin.properties.ReadWriteProperty
