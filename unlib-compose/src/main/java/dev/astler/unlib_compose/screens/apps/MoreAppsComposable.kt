@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.astler.unlib.utils.openAppInPlayStore
 import dev.astler.unlib_compose.R
-import dev.astler.unlib_compose.theme.UnLibTheme
+import dev.astler.unlib_compose.theme.UnlibComposeTheme
 
 data class AppItem(
     val pAppId: String,
@@ -36,7 +36,7 @@ val nAppsData = arrayOf(
 @Preview(name = "Dark Mode")
 @Composable
 fun PreviewFun() {
-    UnLibTheme(true) {
+    UnlibComposeTheme(true) {
         AppsList()
     }
 }
@@ -44,7 +44,7 @@ fun PreviewFun() {
 @Preview(name = "Light Mode")
 @Composable
 fun PreviewFunLight() {
-    UnLibTheme(false) {
+    UnlibComposeTheme(false) {
         AppsList()
     }
 }

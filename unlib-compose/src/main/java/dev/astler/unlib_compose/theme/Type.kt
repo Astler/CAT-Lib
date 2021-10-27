@@ -42,11 +42,11 @@ val UnLibTypography = Typography(
     body1 = TextStyle(
         fontFamily = GoogleSans,
         fontWeight = FontWeight.Normal,
-        fontSize = 18.sp
+        fontSize = 16.sp
     ),
     body2 = TextStyle(
         fontFamily = GoogleSans,
-        fontSize = 16.sp
+        fontSize = 14.sp
     ),
     button = TextStyle(
         fontFamily = GoogleSans,
