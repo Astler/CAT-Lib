@@ -3,7 +3,9 @@ package dev.astler.unlib.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import dev.astler.unlib.adapters.diffutils.UniversalDiffUtil
 import dev.astler.unlib.adapters.viewholders.BaseOneItemListViewHolder
 import dev.astler.unlib.interfaces.RecyclerAdapterSizeListener
 
@@ -12,10 +14,15 @@ open class BaseOneItemListAdapter<T>(@LayoutRes val pLayoutResource: Int, privat
     var data: ArrayList<T> = arrayListOf()
 
     fun setData(items: List<T>) {
+
+        val callback = UniversalDiffUtil(data, items)
+        val productDiffResult = DiffUtil.calculateDiff(callback)
+
         this.data.clear()
         this.data.addAll(items)
         mAdapterSizeListener?.totalItems(this.data.size)
-        notifyDataSetChanged()
+
+        productDiffResult.dispatchUpdatesTo(this)
     }
 
     fun setDataSilence(items: List<T>) {

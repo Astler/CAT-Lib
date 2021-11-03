@@ -15,8 +15,7 @@ project.afterEvaluate {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 31
 
     buildFeatures {
         viewBinding true
@@ -24,7 +23,7 @@ android {
 
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 30
+        targetSdkVersion 31
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -42,7 +41,7 @@ dependencies {
     implementation project(':unlib-core')
     implementation project(':unlib-ui')
 
-    api 'com.google.android.gms:play-services-ads:20.2.0'
+    api 'com.google.android.gms:play-services-ads:20.4.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
