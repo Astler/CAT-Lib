@@ -55,6 +55,11 @@ class MainActivity : BaseUnLiActivity() {
             true
         }
 
+//        findViewById<ShortCodeTextView>(R.id.test).setOnLongClickListener {
+//            startActivity(Intent(this, AdsTestMenu::class.java))
+//            true
+//        }
+
         Firebase.messaging.subscribeToTopic("weather")
             .addOnCompleteListener { task ->
                 var msg = "MESSAGE"
