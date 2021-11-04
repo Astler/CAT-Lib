@@ -16,8 +16,7 @@ project.afterEvaluate {
 }
 
 android {
-    compileSdk 30
-    buildToolsVersion "30.0.3"
+    compileSdk 31
 
     buildFeatures {
         viewBinding true
@@ -25,7 +24,7 @@ android {
 
     defaultConfig {
         minSdk 19
-        targetSdk 30
+        targetSdk 31
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
