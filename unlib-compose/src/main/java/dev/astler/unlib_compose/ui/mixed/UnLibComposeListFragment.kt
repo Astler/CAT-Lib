@@ -19,7 +19,7 @@ import dev.astler.unlib_compose.R
 @AndroidEntryPoint
 abstract class UnLibComposeListFragment<T> : UnLibComposeCoreFragment() {
     @Composable
-    open fun ItemsList(modifier: Modifier, contentPadding: PaddingValues = PaddingValues(0.dp), pData: Array<T>?) {
+    open fun ItemsList(modifier: Modifier = Modifier, contentPadding: PaddingValues = PaddingValues(0.dp), pData: Array<T>?) {
 
         if (pData == null) {
             LoadingScreen()
