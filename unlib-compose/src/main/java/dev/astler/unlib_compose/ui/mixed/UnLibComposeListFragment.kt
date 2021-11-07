@@ -17,7 +17,7 @@ import dev.astler.unlib_compose.R
 @AndroidEntryPoint
 abstract class UnLibComposeListFragment<T> : UnLibComposeCoreFragment() {
     @Composable
-    open fun ItemsList(pData: Array<T>?) {
+    open fun ItemsList(modifier: Modifier, pData: Array<T>?) {
 
         if (pData == null) {
             LoadingScreen()
@@ -29,7 +29,7 @@ abstract class UnLibComposeListFragment<T> : UnLibComposeCoreFragment() {
             return
         }
 
-        LazyColumn {
+        LazyColumn(modifier) {
             items(pData) { pItem ->
                 ContentItem(pItem)
             }
