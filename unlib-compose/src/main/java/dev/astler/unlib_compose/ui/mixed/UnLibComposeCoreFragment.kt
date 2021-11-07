@@ -8,19 +8,13 @@ import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.unlib.interfaces.ActivityInterface
 import dev.astler.unlib.interfaces.CoreFragmentInterface
 import dev.astler.unlib.utils.getStringResource
-import dev.astler.unlib_compose.data.settings.Settings
-import dev.astler.unlib_compose.theme.ThemedUnlib
-import javax.inject.Inject
+import dev.astler.unlib.utils.isAppDarkTheme
+import dev.astler.unlib_compose.theme.UnlibComposeTheme
 
-@AndroidEntryPoint
 abstract class UnLibComposeCoreFragment : Fragment(), CoreFragmentInterface {
-
-    @Inject
-    lateinit var mSettings: Settings
 
     open var mFragmentTag = "core"
     open var mHasOptionsMenu = false
@@ -42,7 +36,7 @@ abstract class UnLibComposeCoreFragment : Fragment(), CoreFragmentInterface {
 
         val nView = ComposeView(requireContext()).apply {
             setContent {
-                ThemedUnlib(pSettings = mSettings) {
+                UnlibComposeTheme(requireContext().isAppDarkTheme()) {
                     ScreenContent()
                 }
             }
@@ -52,8 +46,7 @@ abstract class UnLibComposeCoreFragment : Fragment(), CoreFragmentInterface {
     }
 
     @Composable
-    open fun ScreenContent() {
-    }
+    open fun ScreenContent() {}
 
     override fun onResume() {
         super.onResume()
