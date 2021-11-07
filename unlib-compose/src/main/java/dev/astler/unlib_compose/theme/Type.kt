@@ -8,7 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import dev.astler.unlib_compose.R
 
-private val GoogleSans = FontFamily(
+val GoogleSans = FontFamily(
     Font(R.font.google_sans_reg),
     Font(R.font.google_sans_bold, FontWeight.Bold)
 )

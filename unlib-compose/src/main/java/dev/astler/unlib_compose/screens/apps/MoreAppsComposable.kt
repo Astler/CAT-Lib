@@ -3,8 +3,6 @@ package dev.astler.unlib_compose.screens.apps
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -14,11 +12,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.astler.unlib.utils.openAppInPlayStore
 import dev.astler.unlib_compose.R
-import dev.astler.unlib_compose.theme.UnlibComposeTheme
 
 data class AppItem(
     val pAppId: String,
@@ -32,31 +28,6 @@ val nAppsData = arrayOf(
     AppItem("gtb", R.string.app_name, R.string.app_name, R.drawable.gtb),
     AppItem("kb", R.string.app_name, R.string.app_name, R.drawable.kb),
 )
-
-@Preview(name = "Dark Mode")
-@Composable
-fun PreviewFun() {
-    UnlibComposeTheme(true) {
-        AppsList()
-    }
-}
-
-@Preview(name = "Light Mode")
-@Composable
-fun PreviewFunLight() {
-    UnlibComposeTheme(false) {
-        AppsList()
-    }
-}
-
-@Composable
-fun AppsList() {
-    LazyColumn {
-        items(nAppsData) { pApp ->
-            AppItem(pApp)
-        }
-    }
-}
 
 @Composable
 fun AppItem(pAppData: AppItem) {
