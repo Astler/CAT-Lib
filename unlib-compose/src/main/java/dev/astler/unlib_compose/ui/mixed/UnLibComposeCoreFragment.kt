@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.unlib.interfaces.ActivityInterface
 import dev.astler.unlib.interfaces.CoreFragmentInterface
 import dev.astler.unlib.utils.getStringResource
@@ -15,6 +16,7 @@ import dev.astler.unlib_compose.data.settings.Settings
 import dev.astler.unlib_compose.theme.ThemedUnlib
 import javax.inject.Inject
 
+@AndroidEntryPoint
 abstract class UnLibComposeCoreFragment : Fragment(), CoreFragmentInterface {
 
     @Inject
