@@ -7,8 +7,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.astler.unlib.adapters.BaseOneItemListAdapter
-import dev.astler.unlib.core.R
+import dev.astler.unlib.items.DialogSimpleTextItem
+import dev.astler.unlib.ui.R
 import dev.astler.unlib.ui.databinding.DialogChooseItemBinding
+import dev.astler.unlib.ui.databinding.DialogChooseItemWithSearchBinding
+import dev.astler.unlib.ui.databinding.ItemPrefsTextBinding
 
 fun Context.dialog(
     pTitle: String = "",
@@ -101,7 +104,7 @@ fun <T> Context.customSearchListDialog(
     pItemsAdapter: BaseOneItemListAdapter<T>,
     pFilter: (T, CharSequence) -> Boolean
 ): AlertDialog {
-    val nDialogView = DialogChooseItemBinding.inflate(LayoutInflater.from(this))
+    val nDialogView = DialogChooseItemWithSearchBinding.inflate(LayoutInflater.from(this))
 
     val nChooseItemDialog = AlertDialog.Builder(this)
         .setView(nDialogView.root)
@@ -131,4 +134,58 @@ fun <T> Context.showCustomSearchListDialog(
     pFilter: (T, CharSequence) -> Boolean
 ) {
     customSearchListDialog(pTitle, pItems, pItemsAdapter, pFilter).show()
+}
+
+/**
+ * NEW!
+ */
+
+fun <T> Context.listDialog(
+    pTitle: Int,
+    pItems: List<T>,
+    pItemsAdapter: BaseOneItemListAdapter<T>
+): AlertDialog {
+    val nDialogView = DialogChooseItemBinding.inflate(LayoutInflater.from(this))
+
+    val nChooseItemDialog = AlertDialog.Builder(this)
+        .setView(nDialogView.root)
+        .setTitle(pTitle)
+        .create()
+
+    pItemsAdapter.setData(pItems)
+
+    nDialogView.itemsList.layoutManager = LinearLayoutManager(this)
+    nDialogView.itemsList.adapter = pItemsAdapter
+
+    return nChooseItemDialog
+}
+
+fun Context.baseListDialog(
+    pTitle: Int,
+    pItems: List<DialogSimpleTextItem>,
+    pOnItemClicked: (String) -> Unit
+): AlertDialog {
+    val nDialogView = DialogChooseItemBinding.inflate(LayoutInflater.from(this))
+
+    val nChooseItemDialog = AlertDialog.Builder(this)
+        .setView(nDialogView.root)
+        .setTitle(pTitle)
+        .create()
+
+    val nItemsAdapter = BaseOneItemListAdapter<DialogSimpleTextItem>(R.layout.item_prefs_text, { pData, pHolder ->
+        val nMenuItemBind = ItemPrefsTextBinding.bind(pHolder.itemView)
+        nMenuItemBind.text.text = pData.itemTitle
+
+        nMenuItemBind.root.setOnClickListener {
+            pOnItemClicked(pData.clickType)
+            nChooseItemDialog.dismiss()
+        }
+    })
+
+    nItemsAdapter.setData(pItems)
+
+    nDialogView.itemsList.layoutManager = LinearLayoutManager(this)
+    nDialogView.itemsList.adapter = nItemsAdapter
+
+    return nChooseItemDialog
 }
