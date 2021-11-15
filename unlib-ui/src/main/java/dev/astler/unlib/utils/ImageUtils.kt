@@ -39,9 +39,7 @@ fun ImageView.loadWithBackground(
     pRequest: String,
     pBackgroundColor: Int
 ) {
-    simpleTry(
-        context
-    ) {
+    trySimple {
         val imageLoader = ImageLoader(context)
 
         val request = ImageRequest.Builder(context)

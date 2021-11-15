@@ -94,6 +94,7 @@ fun View.getCaptureBitmap(): Bitmap? {
     } catch (e: Exception) {
         infoLog("UNLIB: Failed to capture screenshot because:" + e.message)
     }
+
     return screenshot
 }
 
@@ -125,65 +126,57 @@ fun View.setStatusAndNavigationPaddingForView(
     pAdditionalBottomPadding: Int = 0,
     pAngle: Int = 0
 ) {
-
-    if (isL()) {
-        ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
-            v.updatePadding(
-                top = if (pTopPadding) {
-                    if (isR()) {
-                        insets.getInsets(WindowInsetsCompat.Type.systemBars()).top + pAdditionalTopPadding
-                    } else {
-                        insets.systemWindowInsetTop + pAdditionalTopPadding
-                    }
-                } else 0,
-                bottom = when (pAngle) {
-                    90 -> 0
-                    -90 -> 0
-                    else -> {
-                        if (pBottomPadding) {
-                            if (isR()) {
-                                insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom + pAdditionalBottomPadding
-                            } else {
-                                insets.systemWindowInsetBottom + pAdditionalBottomPadding
-                            }
-                        } else 0
-                    }
-                },
-                left = when (pAngle) {
-                    90 -> {
-                        if (pBottomPadding) {
-                            if (isR()) {
-                                insets.getInsets(WindowInsetsCompat.Type.navigationBars()).left
-                            } else {
-                                insets.systemWindowInsetLeft
-                            }
-                        } else 0
-                    }
-                    -90 -> 0
-                    else -> 0
-                },
-                right = when (pAngle) {
-                    90 -> 0
-                    -90 -> {
-                        if (pBottomPadding) {
-                            if (isR()) {
-                                insets.getInsets(WindowInsetsCompat.Type.navigationBars()).right
-                            } else {
-                                insets.systemWindowInsetRight
-                            }
-                        } else 0
-                    }
-                    else -> 0
+    ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
+        v.updatePadding(
+            top = if (pTopPadding) {
+                if (isR()) {
+                    insets.getInsets(WindowInsetsCompat.Type.systemBars()).top + pAdditionalTopPadding
+                } else {
+                    insets.systemWindowInsetTop + pAdditionalTopPadding
                 }
-            )
-
-            insets
-        }
-    } else {
-        updatePadding(
-            top = if (pTopPadding) pAdditionalTopPadding else 0,
-            bottom = if (pBottomPadding) pAdditionalBottomPadding else 0
+            } else 0,
+            bottom = when (pAngle) {
+                90 -> 0
+                -90 -> 0
+                else -> {
+                    if (pBottomPadding) {
+                        if (isR()) {
+                            insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom + pAdditionalBottomPadding
+                        } else {
+                            insets.systemWindowInsetBottom + pAdditionalBottomPadding
+                        }
+                    } else 0
+                }
+            },
+            left = when (pAngle) {
+                90 -> {
+                    if (pBottomPadding) {
+                        if (isR()) {
+                            insets.getInsets(WindowInsetsCompat.Type.navigationBars()).left
+                        } else {
+                            insets.systemWindowInsetLeft
+                        }
+                    } else 0
+                }
+                -90 -> 0
+                else -> 0
+            },
+            right = when (pAngle) {
+                90 -> 0
+                -90 -> {
+                    if (pBottomPadding) {
+                        if (isR()) {
+                            insets.getInsets(WindowInsetsCompat.Type.navigationBars()).right
+                        } else {
+                            insets.systemWindowInsetRight
+                        }
+                    } else 0
+                }
+                else -> 0
+            }
         )
+
+        insets
     }
 }
 

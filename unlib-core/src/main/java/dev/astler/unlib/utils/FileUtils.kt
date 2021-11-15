@@ -132,7 +132,7 @@ fun Bitmap.saveToInternalStorage(pContext: Context, pName: String = "shareImage.
 
     file = File(file, pName)
 
-    simpleTry {
+    trySimple {
         val stream: OutputStream = FileOutputStream(file)
         this.compress(Bitmap.CompressFormat.PNG, 100, stream)
         stream.flush()
@@ -143,7 +143,7 @@ fun Bitmap.saveToInternalStorage(pContext: Context, pName: String = "shareImage.
 }
 
 fun Bitmap.createLocalImage(context: Context, name: String) {
-    simpleTry {
+    trySimple {
         val file = File(context.filesDir, name)
         val out = FileOutputStream(file)
         this.compress(Bitmap.CompressFormat.JPEG, 80, out)

@@ -40,7 +40,7 @@ fun String.getJsonContent(): String {
         ex.printStackTrace()
     } finally {
         if (nConnection != null) {
-            simpleTry {
+            trySimple {
                 nConnection.disconnect()
             }
         }

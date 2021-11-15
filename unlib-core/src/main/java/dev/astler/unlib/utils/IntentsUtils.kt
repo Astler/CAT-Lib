@@ -50,12 +50,8 @@ fun playStoreIntent(pUrl: String, pPackageName: String): Intent {
 }
 
 fun Context.openWebUrl(pUrl: String) {
-    simpleTry {
-    }
-    try {
+    trySimple {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(pUrl)))
-    } catch (e: Exception) {
-        toast(R.string.something_went_wrong)
     }
 }
 

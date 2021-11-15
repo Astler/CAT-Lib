@@ -3,28 +3,28 @@ package dev.astler.unlib.utils
 import android.content.Context
 import dev.astler.unlib.core.R
 
-fun simpleTry(pContext: Context? = null, pAction: () -> Unit) {
+fun trySimple(pAction: () -> Unit) {
     try {
         pAction()
     } catch (pException: Exception) {
-        pException.printStackTrace()
         errorLog("Exception! ${pException.message}")
-        pContext?.toast(R.string.something_went_wrong)
     }
 }
 
-fun simpleTryCatch(pContext: Context? = null, pAction: () -> Unit, pCatch: () -> Unit) {
-    try {
-        pAction()
+fun <B, T : Any> tryWithParameters(
+    pTryParameter: B,
+    pCatchParameter: B,
+    pAction: (B) -> T
+): T? {
+    return try {
+        pAction(pTryParameter)
     } catch (pException: Exception) {
-        pCatch()
-        pException.printStackTrace()
         errorLog("Exception! ${pException.message}")
-        pContext?.toast(R.string.something_went_wrong)
+        pAction(pCatchParameter)
     }
 }
 
-fun <T> typedTry(
+fun <T> tryWithDefault(
     pContext: Context? = null,
     pFallBack: T? = null,
     pAction: () -> T

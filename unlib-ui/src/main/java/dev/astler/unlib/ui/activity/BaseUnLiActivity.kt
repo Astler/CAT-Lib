@@ -101,7 +101,7 @@ abstract class BaseUnLiActivity(pLayoutId: Int = 0) :
     private fun checkVersion() {
         mRemoteConfig.fetchData(object : RemoteConfig.OnFetchComplete {
             override fun onComplete() {
-                simpleTry {
+                trySimple {
                     val nInfo = packageManager.getPackageInfo(packageName, 0)
                     val nVersion = (
                         if (isP()) {
