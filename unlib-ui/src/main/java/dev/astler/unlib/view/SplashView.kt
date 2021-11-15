@@ -60,17 +60,11 @@ class SplashView @JvmOverloads constructor(
     init {
         setLayerType(LAYER_TYPE_SOFTWARE, null)
 
-        if (isL()) {
-            VectorDrawableParser.parsedVectorDrawable(resources, R.drawable.ic_splash_logo).run {
-                originalIconPath = this?.pathData?.let { PathParser.createPathFromPathData(it) }
+        VectorDrawableParser.parsedVectorDrawable(resources, R.drawable.ic_splash_logo).run {
+            originalIconPath = this?.pathData?.let { PathParser.createPathFromPathData(it) }
 
-                logoWidthHeight = dpToPixels(this?.width ?: 0f)
-                viewportWidthHeight = this?.viewportWidth ?: 0f
-            }
-        } else {
-            originalIconPath = null
-            logoWidthHeight = 0f
-            viewportWidthHeight = 0f
+            logoWidthHeight = dpToPixels(this?.width ?: 0f)
+            viewportWidthHeight = this?.viewportWidth ?: 0f
         }
     }
 
