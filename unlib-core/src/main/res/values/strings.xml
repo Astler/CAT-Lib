@@ -82,4 +82,5 @@
     <string name="no">No</string>
     <string name="app_name">UnLib</string>
     <string name="share">Share with…</string>
+    <string name="toast">Toast</string>
 </resources>
