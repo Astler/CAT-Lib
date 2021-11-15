@@ -66,11 +66,11 @@ private fun AppCompatActivity.authWithGoogle(idToken: String? = null) {
 
             val nUser = if (task.isSuccessful) {
                 infoLog("signInWithCredential:success")
-                makeToast("Success!")
+                toast("Success!")
                 getFirebaseAuth().currentUser
             } else {
                 infoLog("signInWithCredential:failure ${task.exception}")
-                makeToast(task.exception.toString())
+                toast(task.exception.toString())
                 null
             }
 
@@ -81,7 +81,7 @@ private fun AppCompatActivity.authWithGoogle(idToken: String? = null) {
 
 fun AppCompatActivity.createUserWithEmailAndPassword(pEmail: String? = null, pPassword: String? = null) {
     if (pEmail == null || pPassword == null) {
-        makeToast(R.string.registration_error)
+        toast(R.string.registration_error)
         return
     }
 
@@ -93,11 +93,11 @@ fun AppCompatActivity.createUserWithEmailAndPassword(pEmail: String? = null, pPa
         .addOnCompleteListener(this) { task ->
             val nUser = if (task.isSuccessful) {
                 infoLog("createWithCredential:success")
-                makeToast("Success!")
+                toast("Success!")
                 getFirebaseAuth().currentUser
             } else {
                 infoLog("createWithCredential:failure ${task.exception}")
-                makeToast(task.exception.toString())
+                toast(task.exception.toString())
                 null
             }
 
@@ -108,7 +108,7 @@ fun AppCompatActivity.createUserWithEmailAndPassword(pEmail: String? = null, pPa
 
 fun AppCompatActivity.authWithEmailAndPassword(pEmail: String? = null, pPassword: String? = null) {
     if (pEmail == null || pPassword == null) {
-        makeToast(R.string.sign_in_error)
+        toast(R.string.sign_in_error)
         return
     }
 

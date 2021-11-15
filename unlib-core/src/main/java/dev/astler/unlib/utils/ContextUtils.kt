@@ -11,7 +11,6 @@ import android.os.Build
 import android.os.LocaleList
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailabilityLight
 import dev.astler.unlib.core.R
@@ -44,26 +43,12 @@ fun updateLocale(pContext: Context, localeToSwitchTo: Locale?): ContextWrapper {
     return ContextUtils(context)
 }
 
-fun Context.copyToBuffer(pData: CharSequence, pToast: Toast?): Toast {
-    val nToast = makeToast(getString(R.string.copied_to_buffer, pData), pToast = pToast, pShowToast = false)
-
-    if (pData.isNotEmpty()) {
-        val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val myClip = ClipData.newPlainText("text", pData)
-        myClipboard.setPrimaryClip(myClip)
-
-        nToast.show()
-    }
-
-    return nToast
-}
-
 fun Context.copyToBuffer(pData: CharSequence) {
     if (pData.isNotEmpty()) {
         val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val myClip = ClipData.newPlainText("text", pData)
         myClipboard.setPrimaryClip(myClip)
-        makeToast(getString(R.string.copied_to_buffer, pData))
+        toast(getString(R.string.copied_to_buffer, pData))
     }
 }
 

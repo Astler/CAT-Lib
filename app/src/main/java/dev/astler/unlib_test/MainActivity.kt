@@ -6,7 +6,7 @@ import android.view.View
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import dev.astler.unlib.ui.activity.BaseUnLiActivity
-import dev.astler.unlib.utils.makeToast
+import dev.astler.unlib.utils.toast
 import dev.astler.unlib.view.ShortCodeTextView
 import dev.astler.unlib.view.SplashView
 import dev.astler.unlib_test.activity.TestMenu
@@ -66,7 +66,7 @@ class MainActivity : BaseUnLiActivity() {
                 if (!task.isSuccessful) {
                     msg += " Not Good"
                 }
-                makeToast(msg)
+                toast(msg)
             }
     }
 }

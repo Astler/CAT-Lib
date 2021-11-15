@@ -55,7 +55,7 @@ fun Context.openWebUrl(pUrl: String) {
     try {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(pUrl)))
     } catch (e: Exception) {
-        makeToast(R.string.something_went_wrong)
+        toast(R.string.something_went_wrong)
     }
 }
 

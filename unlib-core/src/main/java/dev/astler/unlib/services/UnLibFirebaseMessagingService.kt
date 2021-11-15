@@ -13,7 +13,7 @@ open class UnLibFirebaseMessagingService : FirebaseMessagingService() {
 //        val handler = Handler(Looper.getMainLooper())
 //
 //        handler.post {
-//            baseContext.makeToast(remoteMessage.data)
+//            baseContext.toast(remoteMessage.data)
 //        }
 //    }
 }

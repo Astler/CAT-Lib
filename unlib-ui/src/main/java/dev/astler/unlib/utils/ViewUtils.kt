@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.annotation.* // ktlint-disable no-wildcard-imports
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
@@ -186,10 +185,6 @@ fun View.setStatusAndNavigationPaddingForView(
             bottom = if (pBottomPadding) pAdditionalBottomPadding else 0
         )
     }
-}
-
-fun View.toast(pTextId: Int, pDuration: Int = Toast.LENGTH_SHORT) {
-    context.makeToast(pTextId, pDuration)
 }
 
 fun View.okDialog(

@@ -1,6 +1,7 @@
 package dev.astler.unlib.utils
 
 import android.content.Context
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -14,7 +15,7 @@ fun Context.toast(
     pToastText: CharSequence = cToastDefaultText,
     pToastLength: Int = Toast.LENGTH_SHORT,
     pShowToast: Boolean = true
-) {
+): Toast? {
     globalToast?.cancel()
 
     val nToast = Toast.makeText(
@@ -27,14 +28,16 @@ fun Context.toast(
         nToast.show()
 
     globalToast = nToast
+
+    return nToast
 }
 
 fun Context.toast(
     pToastRes: Int = R.string.app_name,
     pToastLength: Int = Toast.LENGTH_SHORT,
     pShowToast: Boolean = true
-) {
-    toast(resources.getText(pToastRes), pToastLength, pShowToast)
+): Toast? {
+    return toast(resources.getText(pToastRes), pToastLength, pShowToast)
 }
 
 fun Fragment.safeToast(
@@ -74,5 +77,25 @@ fun AppCompatActivity.safeToast(
 ) {
     lifecycleScope.launchWhenResumed {
         toast(pToastText, pToastLength, pShowToast)
+    }
+}
+
+fun View.toast(pTextId: Int, pDuration: Int = Toast.LENGTH_SHORT) {
+    context.toast(pTextId, pDuration)
+}
+
+fun View.toast(pToastText: CharSequence = cToastDefaultText, pDuration: Int = Toast.LENGTH_SHORT) {
+    context.toast(pToastText, pDuration)
+}
+
+fun View.toastOnClick(pTextId: Int, pDuration: Int = Toast.LENGTH_SHORT) {
+    setOnClickListener {
+        context.toast(pTextId, pDuration)
+    }
+}
+
+fun View.toastOnClick(pToastText: CharSequence = cToastDefaultText, pDuration: Int = Toast.LENGTH_SHORT) {
+    setOnClickListener {
+        context.toast(pToastText, pDuration)
     }
 }

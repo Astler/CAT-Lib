@@ -75,7 +75,7 @@ class TestMenu : BaseUnLiActivity() {
                     okDialog(
                         "Title", "Message",
                         {
-                            makeToast("Action!")
+                            toast("Action!")
                         }
                     )
                 },
@@ -85,10 +85,10 @@ class TestMenu : BaseUnLiActivity() {
                         "Yes",
                         "No",
                         pPositiveAction = {
-                            makeToast("Action Yes!")
+                            toast("Action Yes!")
                         },
                         pNegativeAction = {
-                            makeToast("Action No!")
+                            toast("Action No!")
                         }
                     )
                 },

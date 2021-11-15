@@ -9,7 +9,7 @@ fun simpleTry(pContext: Context? = null, pAction: () -> Unit) {
     } catch (pException: Exception) {
         pException.printStackTrace()
         errorLog("Exception! ${pException.message}")
-        pContext?.makeToast(R.string.something_went_wrong)
+        pContext?.toast(R.string.something_went_wrong)
     }
 }
 
@@ -20,7 +20,7 @@ fun simpleTryCatch(pContext: Context? = null, pAction: () -> Unit, pCatch: () ->
         pCatch()
         pException.printStackTrace()
         errorLog("Exception! ${pException.message}")
-        pContext?.makeToast(R.string.something_went_wrong)
+        pContext?.toast(R.string.something_went_wrong)
     }
 }
 
@@ -34,7 +34,7 @@ fun <T> typedTry(
     } catch (pException: Exception) {
         pException.printStackTrace()
         errorLog("Exception! ${pException.message}")
-        pContext?.makeToast(R.string.something_went_wrong)
+        pContext?.toast(R.string.something_went_wrong)
         pFallBack
     }
 }
