@@ -8,9 +8,9 @@ import coil.transform.BlurTransformation
 import coil.transform.CircleCropTransformation
 import coil.transform.GrayscaleTransformation
 import coil.transform.RoundedCornersTransformation
-import dev.astler.unlib.utils.createNoFilterDrawableFromBitmap
 import dev.astler.unlib.utils.getBitmapFromAsset
 import dev.astler.unlib.utils.loadWithBackground
+import dev.astler.unlib.utils.toNoFilterDrawable
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityImagesBinding
 
@@ -56,11 +56,11 @@ class ImageLoadersActivity : AppCompatActivity() {
         mImagesBinding.assetsImage.setImageBitmap(getBitmapFromAsset("frozen.png"))
 
         getBitmapFromAsset("frozen.png")?.let {
-            mImagesBinding.noFilterBitmapAssetsImage.setImageDrawable(createNoFilterDrawableFromBitmap(it))
+            mImagesBinding.noFilterBitmapAssetsImage.setImageDrawable(it.toNoFilterDrawable(this))
         }
 
         getBitmapFromAsset("frozen.png")?.let {
-            mImagesBinding.coloredNoFilterBitmapAssetsImage.setImageDrawable(createNoFilterDrawableFromBitmap(it, R.color.colorPrimary))
+            mImagesBinding.coloredNoFilterBitmapAssetsImage.setImageDrawable(it.toNoFilterDrawable(this, R.color.colorPrimary))
         }
 
         mImagesBinding.backgroundImage.loadWithBackground(
