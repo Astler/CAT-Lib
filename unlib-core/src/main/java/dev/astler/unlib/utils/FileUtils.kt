@@ -3,6 +3,7 @@ package dev.astler.unlib.utils
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import java.io.* // ktlint-disable no-wildcard-imports
 import java.nio.channels.FileChannel
@@ -94,6 +95,12 @@ fun Context.readFileFromRaw(pFileId: Int, pErrorReturn: String = ""): String {
     } catch (e: Exception) {
         infoLog("UNLIB: Error while reading raw file $e")
         pErrorReturn
+    }
+}
+
+fun Context.getBitmapFromAsset(strName: String): Bitmap? {
+    return tryWithDefault(null) {
+        BitmapFactory.decodeStream(assets.open(strName))
     }
 }
 

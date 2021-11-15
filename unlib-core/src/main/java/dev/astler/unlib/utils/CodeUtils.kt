@@ -1,8 +1,5 @@
 package dev.astler.unlib.utils
 
-import android.content.Context
-import dev.astler.unlib.core.R
-
 fun trySimple(pAction: () -> Unit) {
     try {
         pAction()
@@ -25,16 +22,13 @@ fun <B, T : Any> tryWithParameters(
 }
 
 fun <T> tryWithDefault(
-    pContext: Context? = null,
     pFallBack: T? = null,
     pAction: () -> T
 ): T? {
     return try {
         pAction()
     } catch (pException: Exception) {
-        pException.printStackTrace()
         errorLog("Exception! ${pException.message}")
-        pContext?.toast(R.string.something_went_wrong)
         pFallBack
     }
 }

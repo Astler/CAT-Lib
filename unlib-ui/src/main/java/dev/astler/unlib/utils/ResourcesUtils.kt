@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
@@ -41,13 +40,9 @@ fun Context.getStringResource(
 
 fun Context.getStringResByLanguage(id: Int, locale: Locale): String {
     return if (id != 0) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            val configuration = Configuration()
-            configuration.setLocale(locale)
-            createConfigurationContext(configuration).getText(id).toString()
-        } else {
-            getString(id)
-        }
+        val configuration = Configuration()
+        configuration.setLocale(locale)
+        createConfigurationContext(configuration).getText(id).toString()
     } else "SWW"
 }
 
@@ -60,6 +55,19 @@ fun Context.tintDrawable(
     drawable?.let {
         val color = ContextCompat.getColor(this, colorId)
         DrawableCompat.setTint(it, color)
+    }
+
+    return drawable
+}
+
+fun Bitmap.toNoFilterDrawable(context: Context, pColorRes: Int = -1): BitmapDrawable {
+    val drawable = BitmapDrawable(context.resources, this)
+    drawable.setAntiAlias(false)
+    drawable.isFilterBitmap = false
+
+    if (pColorRes != -1) {
+        val color = ContextCompat.getColor(context, pColorRes)
+        DrawableCompat.setTint(drawable, color)
     }
 
     return drawable
