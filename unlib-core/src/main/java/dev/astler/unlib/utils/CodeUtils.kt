@@ -21,10 +21,22 @@ fun <B, T : Any> tryWithParameters(
     }
 }
 
-fun <T> tryWithDefault(
+fun <T> tryWithNullDefault(
     pFallBack: T? = null,
     pAction: () -> T
 ): T? {
+    return try {
+        pAction()
+    } catch (pException: Exception) {
+        errorLog("Exception! ${pException.message}")
+        pFallBack
+    }
+}
+
+fun <T> tryWithDefault(
+    pFallBack: T,
+    pAction: () -> T
+): T {
     return try {
         pAction()
     } catch (pException: Exception) {
