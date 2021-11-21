@@ -10,6 +10,8 @@ import dev.astler.unlib.signin.interfaces.SignInActivityListener
 import dev.astler.unlib.signin.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.unlib.utils.views.goneView
+import dev.astler.unlib.utils.views.showView
 
 const val cSignInModeExtra = "signInMode"
 

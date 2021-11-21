@@ -13,6 +13,8 @@ import dev.astler.unlib.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.unlib.utils.views.goneView
+import dev.astler.unlib.utils.views.showView
 import dev.astler.unlib_ads.databinding.ItemAdBinding
 import dev.astler.unlib_ads.interfaces.HideAdListener
 import java.util.* // ktlint-disable no-wildcard-imports

@@ -9,6 +9,7 @@ import com.google.android.gms.ads.nativead.NativeAd
 import dev.astler.unlib.adapters.viewholders.BaseOneItemListViewHolder
 import dev.astler.unlib.interfaces.RecyclerAdapterSizeListener
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.unlib.utils.views.inflateById
 import dev.astler.unlib_ads.R
 import dev.astler.unlib_ads.adapters.diffutils.OneItemDiffUtil
 import dev.astler.unlib_ads.adapters.viewholders.AdItemViewHolder
@@ -115,8 +116,8 @@ open class OneItemAdsAdapter<T>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            adItem -> AdItemViewHolder(parent.initView(R.layout.item_ad))
-            adMediaItem -> MediaAdItemViewHolder(parent.initView(R.layout.item_media_ad))
+            adItem -> AdItemViewHolder(parent.inflateById(R.layout.item_ad))
+            adMediaItem -> MediaAdItemViewHolder(parent.inflateById(R.layout.item_media_ad))
             else -> {
                 val nHolderItem =
                     LayoutInflater.from(parent.context).inflate(pLayoutResource, parent, false)

@@ -9,7 +9,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dev.astler.unlib.interfaces.RecyclerAdapterSizeListener
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.ui.databinding.RecyclerViewFragmentBinding
-import dev.astler.unlib.utils.hideFABOnScroll
+import dev.astler.unlib.utils.views.hideFABOnScroll
 import dev.astler.unlib.view.StateLayout
 
 abstract class UnLibSimpleListFragment :

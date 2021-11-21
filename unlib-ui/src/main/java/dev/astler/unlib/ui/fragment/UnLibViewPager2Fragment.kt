@@ -9,7 +9,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.ui.databinding.FragmentViewPager2Binding
-import dev.astler.unlib.utils.setStatusPaddingForView
+import dev.astler.unlib.utils.views.setStatusPaddingForView
 
 abstract class UnLibViewPager2Fragment(pLayoutId: Int = R.layout.fragment_view_pager2) : UnLibFragment(pLayoutId) {
 
