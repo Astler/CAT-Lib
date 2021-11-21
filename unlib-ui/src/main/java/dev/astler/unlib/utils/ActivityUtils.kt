@@ -24,15 +24,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
-
-/**
- * Some items from: https://github.com/FunkyMuse/KAHelpers/blob/master/activity/src/main/java/com/crazylegend/activity/ActivityExtensions.kt
- */
-
-/**
- * Status Bar Block
- * TODO Узнать что сделать с Deprecated FLAG_TRANSLUCENT_STATUS!
- */
+import dev.astler.unlib.utils.views.setStatusAndNavigationPaddingForView
 
 fun Activity.setStatusBarColor(@ColorRes color: Int) {
 
@@ -182,27 +174,6 @@ private val Activity.statusBarHeight: Int
         val id = resources.getIdentifier("status_bar_height", "dimen", "android")
         return resources.getDimensionPixelSize(id)
     }
-
-/**
- * Наверное буду использовать только для тестов
- */
-
-fun AppCompatActivity.getDisplayDensity(): String {
-    val metrics = DisplayMetrics()
-    this.windowManager.defaultDisplay.getMetrics(metrics)
-    return when (metrics.densityDpi) {
-        DisplayMetrics.DENSITY_LOW -> "LDPI"
-        DisplayMetrics.DENSITY_MEDIUM -> "MDPI"
-        DisplayMetrics.DENSITY_HIGH -> "HDPI"
-        DisplayMetrics.DENSITY_XHIGH -> "XHDPI"
-        DisplayMetrics.DENSITY_XXHIGH -> "XXHDPI"
-        DisplayMetrics.DENSITY_XXXHIGH -> "XXXHDPI"
-        else -> "XXHDPI"
-    }
-}
-
-/**
- */
 
 @Suppress("DEPRECATION")
 fun Activity.setInsetsViaOrientation(pView: View) {

@@ -1,6 +1,8 @@
 package dev.astler.unlib_compose.theme
 
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Typography
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -12,6 +14,14 @@ val GoogleSans = FontFamily(
     Font(R.font.google_sans_reg),
     Font(R.font.google_sans_bold, FontWeight.Bold)
 )
+
+@Composable
+fun getPrefsTextStyle(bold: Boolean = false): TextStyle {
+    return MaterialTheme.typography.body1.copy(
+        fontFamily = GoogleSans,
+        fontWeight = if (bold) FontWeight.Bold else FontWeight.Normal
+    )
+}
 
 val UnLibTypography = Typography(
     h4 = TextStyle(

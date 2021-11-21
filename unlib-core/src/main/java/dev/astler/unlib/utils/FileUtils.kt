@@ -98,6 +98,20 @@ fun Context.readFileFromRaw(pFileId: Int, pErrorReturn: String = ""): String {
     }
 }
 
+fun File.readFileFromFiles(): String {
+    return try {
+        val inputStream = inputStream()
+        val size = inputStream.available()
+        val byteArray = ByteArray(size)
+        inputStream.read(byteArray)
+        inputStream.close()
+
+        String(byteArray, Charset.defaultCharset())
+    } catch (e: Exception) {
+        "I can\'t read this file! $absolutePath"
+    }
+}
+
 fun Context.getBitmapFromAsset(strName: String): Bitmap? {
     return tryWithDefault(null) {
         BitmapFactory.decodeStream(assets.open(strName))

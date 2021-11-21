@@ -1,4 +1,4 @@
-package dev.astler.unlib.utils
+package dev.astler.unlib.utils.views
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -6,13 +6,26 @@ import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.ShapeDrawable
 import android.net.Uri
 import android.widget.ImageView
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import coil.ImageLoader
 import coil.request.Disposable
 import coil.request.ImageRequest
+import dev.astler.unlib.utils.tintDrawable
+import dev.astler.unlib.utils.tintDrawableByAttr
+import dev.astler.unlib.utils.tryWithDefault
 import okhttp3.HttpUrl
 import java.io.File
+
+fun ImageView.setColorTintDrawable(@DrawableRes icon: Int, @ColorRes colorId: Int) {
+    setImageDrawable(context.tintDrawable(icon, colorId))
+}
+
+fun ImageView.setAttrTintDrawable(@DrawableRes icon: Int, @AttrRes attrId: Int) {
+    setImageDrawable(context.tintDrawableByAttr(icon, attrId))
+}
 
 fun ImageView.loadWithBackground(pRequest: String, pBackgroundColor: Int): Disposable? {
     return tryWithDefault(null) {
