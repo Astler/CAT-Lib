@@ -9,14 +9,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dev.astler.unlib.interfaces.RecyclerAdapterSizeListener
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.ui.databinding.RecyclerViewFragmentBinding
-import dev.astler.unlib.utils.views.hideFABOnScroll
-import dev.astler.unlib.utils.views.setBottomMarginInsets
-import dev.astler.unlib.utils.views.setNavigationPaddingForView
-import dev.astler.unlib.utils.views.setStatusAndNavigationPaddingForView
+import dev.astler.unlib.utils.canShowAds
+import dev.astler.unlib.utils.views.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.view.StateLayout
 
 enum class ListInsetsType {
-    WITH_ACTION_BAR, SYSTEM, BOTTOM, DISMISS
+    SYSTEM_WITH_ACTION_BAR, SYSTEM, TOP, TOP_WITH_ACTION_BAR, BOTTOM, DISMISS
 }
 
 abstract class UnLibSimpleInsetsListFragment :
@@ -28,6 +26,7 @@ abstract class UnLibSimpleInsetsListFragment :
     lateinit var mRecyclerView: RecyclerView
     lateinit var mFABView: FloatingActionButton
     protected open var mFABVisible = false
+    protected open var mWithBottomAds = false
     protected open var mListInsetsType = ListInsetsType.BOTTOM
 
     override fun totalItems(size: Int) {
@@ -71,14 +70,23 @@ abstract class UnLibSimpleInsetsListFragment :
         mFABView.setBottomMarginInsets()
 
         when (mListInsetsType) {
-            ListInsetsType.WITH_ACTION_BAR -> {
+            ListInsetsType.SYSTEM_WITH_ACTION_BAR -> {
                 mRecyclerView.setStatusAndNavigationPaddingForView(pAdditionalTopPadding = resources.getDimensionPixelSize(R.dimen.toolbar_height))
             }
             ListInsetsType.SYSTEM -> {
                 mRecyclerView.setStatusAndNavigationPaddingForView()
             }
             ListInsetsType.BOTTOM -> {
-                mRecyclerView.setNavigationPaddingForView()
+                val nAddBottomPadding = !mWithBottomAds || !requireContext().canShowAds()
+
+                if (nAddBottomPadding)
+                    mRecyclerView.setNavigationPaddingForView()
+            }
+            ListInsetsType.TOP -> {
+                mRecyclerView.setStatusPaddingForView()
+            }
+            ListInsetsType.TOP_WITH_ACTION_BAR -> {
+                mRecyclerView.setStatusPaddingForView(pAdditionalTopPadding = resources.getDimensionPixelSize(R.dimen.toolbar_height))
             }
             else -> {}
         }
