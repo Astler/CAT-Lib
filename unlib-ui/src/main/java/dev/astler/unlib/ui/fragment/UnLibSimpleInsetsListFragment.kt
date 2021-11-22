@@ -71,10 +71,18 @@ abstract class UnLibSimpleInsetsListFragment :
 
         when (mListInsetsType) {
             ListInsetsType.SYSTEM_WITH_ACTION_BAR -> {
-                mRecyclerView.setStatusAndNavigationPaddingForView(pAdditionalTopPadding = resources.getDimensionPixelSize(R.dimen.toolbar_height))
+                val nAddBottomPadding = !mWithBottomAds || !requireContext().canShowAds()
+
+                if (nAddBottomPadding)
+                    mRecyclerView.setStatusAndNavigationPaddingForView(pAdditionalTopPadding = resources.getDimensionPixelSize(R.dimen.toolbar_height))
+                else mRecyclerView.setStatusPaddingForView(pAdditionalTopPadding = resources.getDimensionPixelSize(R.dimen.toolbar_height))
             }
             ListInsetsType.SYSTEM -> {
-                mRecyclerView.setStatusAndNavigationPaddingForView()
+                val nAddBottomPadding = !mWithBottomAds || !requireContext().canShowAds()
+
+                if (nAddBottomPadding)
+                    mRecyclerView.setStatusAndNavigationPaddingForView()
+                else mRecyclerView.setStatusPaddingForView()
             }
             ListInsetsType.BOTTOM -> {
                 val nAddBottomPadding = !mWithBottomAds || !requireContext().canShowAds()
