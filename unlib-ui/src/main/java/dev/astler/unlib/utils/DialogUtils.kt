@@ -13,6 +13,33 @@ import dev.astler.unlib.ui.databinding.DialogChooseItemBinding
 import dev.astler.unlib.ui.databinding.DialogChooseItemWithSearchBinding
 import dev.astler.unlib.ui.databinding.ItemPrefsTextBinding
 
+fun Context.yesNoDialog(
+    pTitle: String = "",
+    pMsg: String = "",
+    pPositiveAction: (() -> Unit)? = null,
+    pInstantDialog: Boolean = true
+): AlertDialog {
+    val nDialog = AlertDialog.Builder(this)
+
+    if (pTitle.isNotEmpty())
+        nDialog.setTitle(pTitle)
+
+    if (pMsg.isNotEmpty())
+        nDialog.setMessage(pMsg)
+
+    if (pPositiveAction != null)
+        nDialog.setPositiveButton(R.string.yes) { _, _ -> pPositiveAction() }
+
+    nDialog.setNegativeButton(R.string.no) { dialog, _ -> dialog?.dismiss() }
+
+    val nCreatedDialog = nDialog.create()
+
+    if (pInstantDialog)
+        nCreatedDialog.show()
+
+    return nCreatedDialog
+}
+
 fun Context.dialog(
     pTitle: String = "",
     pMsg: String = "",
