@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import dev.astler.unlib.ui.R
 import dev.astler.unlib.view.MarginItemListDecorator
 
 fun Context.getPossibleColumnsForScreenWight(imageWidth: Int = 50): Int {
@@ -19,11 +18,6 @@ fun RecyclerView.setupCardList(pAdapter: RecyclerView.Adapter<out RecyclerView.V
     addItemDecoration(MarginItemListDecorator(22))
     adapter = pAdapter
     clipToPadding = false
-    setStatusAndNavigationPaddingForView(
-        pAdditionalTopPadding = resources.getDimensionPixelSize(
-            R.dimen.toolbar_height
-        )
-    )
 }
 
 fun RecyclerView.hideFABOnScroll(fab: FloatingActionButton) {

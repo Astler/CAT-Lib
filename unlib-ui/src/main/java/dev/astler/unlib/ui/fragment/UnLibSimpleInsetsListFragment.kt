@@ -71,7 +71,7 @@ abstract class UnLibSimpleInsetsListFragment :
 
         when (mListInsetsType) {
             ListInsetsType.SYSTEM_WITH_ACTION_BAR -> {
-                val nAddBottomPadding = ! (mWithBottomAds && requireContext().canShowAds())
+                val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds())
 
                 if (nAddBottomPadding)
                     mRecyclerView.setStatusAndNavigationPaddingForView(pAdditionalTopPadding = resources.getDimensionPixelSize(R.dimen.toolbar_height))
