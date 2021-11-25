@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import dev.astler.unlib.view.MarginItemListDecorator
 import dev.astler.unlib.view.decorators.GridSpacingItemDecoration
 import dev.astler.unlib.view.decorators.MarginHorizontalListDecorator
+import dev.astler.unlib.view.decorators.MarginItemListDecorator
 
 fun Context.getPossibleColumnsForScreenWight(imageWidth: Int = 50): Int {
     val displayMetrics = resources.displayMetrics
@@ -63,7 +63,7 @@ fun RecyclerView.setupNestedList(
     nLinearLayoutManager.initialPrefetchItemCount = 5
 
     if (addMargin)
-        addItemDecoration(MarginHorizontalListDecorator(margin))
+        addItemDecoration(MarginItemListDecorator(margin))
 
     setHasFixedSize(fixedSize)
     setItemViewCacheSize(20)
