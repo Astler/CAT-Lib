@@ -4,10 +4,10 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.FrameLayout
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
-import com.facebook.shimmer.ShimmerFrameLayout
 
-open class AsyncCell(context: Context) : ShimmerFrameLayout(context, null, 0) {
+open class AsyncCell(context: Context) : FrameLayout(context, null, 0) {
 
     init {
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)

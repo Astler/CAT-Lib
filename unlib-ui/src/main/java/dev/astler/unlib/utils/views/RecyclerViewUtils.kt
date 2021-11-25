@@ -24,14 +24,20 @@ fun RecyclerView.setupCardList(pAdapter: RecyclerView.Adapter<out RecyclerView.V
     clipToPadding = false
 }
 
-fun RecyclerView.setupNestedGrid(pAdapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>, itemWidth: Int) {
+fun RecyclerView.setupNestedGrid(
+    pAdapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>,
+    itemWidth: Int,
+    addMargin: Boolean = true,
+    margin: Int = 8
+) {
     ViewCompat.setNestedScrollingEnabled(this, false)
 
     val nItems = context.getPossibleColumnsForScreenWight(itemWidth) - 1
 
     val nGridManager = GridLayoutManager(context, nItems)
 
-    addItemDecoration(GridSpacingItemDecoration(nItems, 8, true))
+    if (addMargin)
+        addItemDecoration(GridSpacingItemDecoration(nItems, margin, true))
 
     nGridManager.isItemPrefetchEnabled = true
     nGridManager.initialPrefetchItemCount = 10
@@ -43,7 +49,12 @@ fun RecyclerView.setupNestedGrid(pAdapter: RecyclerView.Adapter<out RecyclerView
     adapter = pAdapter
 }
 
-fun RecyclerView.setupNestedList(pAdapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>, fixedSize: Boolean = true) {
+fun RecyclerView.setupNestedList(
+    pAdapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>,
+    fixedSize: Boolean = true,
+    addMargin: Boolean = true,
+    margin: Int = 8
+) {
     ViewCompat.setNestedScrollingEnabled(this, false)
 
     val nLinearLayoutManager = LinearLayoutManager(context)
@@ -51,7 +62,8 @@ fun RecyclerView.setupNestedList(pAdapter: RecyclerView.Adapter<out RecyclerView
     nLinearLayoutManager.isItemPrefetchEnabled = true
     nLinearLayoutManager.initialPrefetchItemCount = 5
 
-    addItemDecoration(MarginHorizontalListDecorator(8))
+    if (addMargin)
+        addItemDecoration(MarginHorizontalListDecorator(margin))
 
     setHasFixedSize(fixedSize)
     setItemViewCacheSize(20)
@@ -60,7 +72,11 @@ fun RecyclerView.setupNestedList(pAdapter: RecyclerView.Adapter<out RecyclerView
     adapter = pAdapter
 }
 
-fun RecyclerView.setupHorizontalScroll(pAdapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>) {
+fun RecyclerView.setupHorizontalScroll(
+    pAdapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>,
+    addMargin: Boolean = true,
+    margin: Int = 8
+) {
     ViewCompat.setNestedScrollingEnabled(this, false)
 
     val nLinearLayoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -73,9 +89,8 @@ fun RecyclerView.setupHorizontalScroll(pAdapter: RecyclerView.Adapter<out Recycl
 
     clipToPadding = false
 
-    addItemDecoration(MarginHorizontalListDecorator(8))
-
-    isTransitionGroup = true
+    if (addMargin)
+        addItemDecoration(MarginHorizontalListDecorator(margin))
 
     layoutManager = nLinearLayoutManager
     adapter = pAdapter
