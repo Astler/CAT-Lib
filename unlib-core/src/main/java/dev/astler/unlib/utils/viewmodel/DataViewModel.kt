@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 
 open class DataViewModel<T>(pApp: Application) : AndroidViewModel(pApp) {
 
-    private val mData = MutableLiveData<T>(null)
+    protected val mData = MutableLiveData<T>(null)
 
     fun getData(loadData: () -> T) = mData.loadDataWithCoroutine(viewModelScope) {
         loadData()
