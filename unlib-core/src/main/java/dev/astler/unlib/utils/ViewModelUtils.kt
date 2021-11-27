@@ -1,7 +1,10 @@
 package dev.astler.unlib.utils
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,4 +26,13 @@ fun <T> MutableLiveData<T>.loadDataWithCoroutine(
     }
 
     return this
+}
+
+class DataViewModel<T>(pApp: Application) : AndroidViewModel(pApp) {
+
+    private val mData = MutableLiveData<T>(null)
+
+    fun getData(loadData: () -> T) = mData.loadDataWithCoroutine(viewModelScope) {
+        loadData()
+    }
 }
