@@ -2,6 +2,7 @@ package dev.astler.unlib.utils.views
 
 import android.content.Context
 import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,24 @@ fun Context.getPossibleColumnsForScreenWight(imageWidth: Int = 50): Int {
 fun RecyclerView.setupCardList(pAdapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>) {
     layoutManager = LinearLayoutManager(context)
     addItemDecoration(MarginItemListDecorator(22))
+    adapter = pAdapter
+    clipToPadding = false
+}
+
+fun RecyclerView.setupList(
+    pAdapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>,
+    addMargin: Boolean = false,
+    margin: Int = 8,
+    addDividers: Boolean = false
+) {
+    layoutManager = LinearLayoutManager(context)
+
+    if (addMargin)
+        addItemDecoration(MarginItemListDecorator(margin))
+
+    if (addDividers)
+        addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+
     adapter = pAdapter
     clipToPadding = false
 }
