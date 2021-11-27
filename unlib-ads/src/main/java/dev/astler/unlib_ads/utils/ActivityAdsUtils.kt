@@ -298,35 +298,8 @@ fun AppCompatActivity.createNativeAdLoader(pAdBindItem: ItemAdBinding): AdLoader
             if (nAdLoader?.isLoading == true) {
                 adsLog("Native Ad Banner is loading")
             } else {
-                pAdBindItem.adHeadline.text = nativeAd.headline
-                pAdBindItem.adBody.text = nativeAd.body
-
-                if (nativeAd.callToAction != null) {
-                    pAdBindItem.install.showView()
-                    pAdBindItem.install.text = nativeAd.callToAction
-                } else {
-                    pAdBindItem.install.goneView()
-                }
-
-                if (nativeAd.icon == null) {
-                    pAdBindItem.adAppIcon.goneView()
-                    pAdBindItem.adAppIconCard.goneView()
-                } else {
-                    val nDrawable = nativeAd.icon?.drawable
-
-                    nDrawable?.let {
-                        pAdBindItem.adAppIcon.setImageDrawable(it)
-                        pAdBindItem.adAppIcon.showView()
-                        pAdBindItem.adAppIconCard.showView()
-                    }
-                }
-
-                pAdBindItem.nativeAd.headlineView = pAdBindItem.adHeadline
-                pAdBindItem.nativeAd.bodyView = pAdBindItem.adBody
-                // pAdBindItem.nativeAd.mediaView = pAdBindItem.adAppIcon
-                pAdBindItem.nativeAd.callToActionView = pAdBindItem.install
-
-                pAdBindItem.nativeAd.setNativeAd(nativeAd)
+                adsLog("Native Ad Banner is loaded")
+                nativeAd.setupNativeBanner(pAdBindItem)
             }
 
             if (isDestroyed) {
@@ -343,4 +316,35 @@ fun AppCompatActivity.createNativeAdLoader(pAdBindItem: ItemAdBinding): AdLoader
         .build()
 
     return nAdLoader
+}
+
+fun NativeAd.setupNativeBanner(pAdBindItem: ItemAdBinding) {
+    pAdBindItem.adHeadline.text = headline
+    pAdBindItem.adBody.text = body
+
+    if (callToAction != null) {
+        pAdBindItem.install.showView()
+        pAdBindItem.install.text = callToAction
+    } else {
+        pAdBindItem.install.goneView()
+    }
+
+    if (icon == null) {
+        pAdBindItem.adAppIcon.goneView()
+        pAdBindItem.adAppIconCard.goneView()
+    } else {
+        val nDrawable = icon?.drawable
+
+        nDrawable?.let {
+            pAdBindItem.adAppIcon.setImageDrawable(it)
+            pAdBindItem.adAppIcon.showView()
+            pAdBindItem.adAppIconCard.showView()
+        }
+    }
+
+    pAdBindItem.nativeAd.headlineView = pAdBindItem.adHeadline
+    pAdBindItem.nativeAd.bodyView = pAdBindItem.adBody
+    pAdBindItem.nativeAd.callToActionView = pAdBindItem.install
+
+    pAdBindItem.nativeAd.setNativeAd(this)
 }

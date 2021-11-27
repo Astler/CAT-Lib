@@ -53,6 +53,13 @@ class NativeAdsLoader private constructor() {
         return nativeAds[i]
     }
 
+    fun getRandomNativeAd(): NativeAd? {
+        if (nativeAds.isEmpty())
+            return null
+
+        return nativeAds.random()
+    }
+
     companion object {
         const val NUMBER_OF_ADS = 5
         var instance: NativeAdsLoader? = null
