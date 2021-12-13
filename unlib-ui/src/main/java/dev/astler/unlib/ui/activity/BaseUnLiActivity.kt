@@ -14,11 +14,8 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
-import dev.astler.unlib.AppSettings
-import dev.astler.unlib.PreferencesTool
-import dev.astler.unlib.UnliApp
+import dev.astler.unlib.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.data.RemoteConfig
-import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.interfaces.ActivityInterface
 import dev.astler.unlib.ui.R
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
@@ -80,7 +77,7 @@ abstract class BaseUnLiActivity(pLayoutId: Int = 0) :
 
         setDefaultPreferences()
 
-        gPreferencesTool.edit("start_time", GregorianCalendar().timeInMillis)
+        gPreferencesTool.edit(cStartTime, GregorianCalendar().timeInMillis)
 
         loadTheme(R.style.AppUnliTheme, R.style.AppUnliDarkTheme)
 
@@ -211,6 +208,11 @@ abstract class BaseUnLiActivity(pLayoutId: Int = 0) :
     override fun onStop() {
         super.onStop()
         gPreferencesTool.unregisterListener(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        gPreferencesTool.appResumeTime = GregorianCalendar().timeInMillis
     }
 
     override fun setToolbarTitle(title: String) {}
