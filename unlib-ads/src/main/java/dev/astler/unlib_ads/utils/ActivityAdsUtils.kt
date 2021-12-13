@@ -275,7 +275,7 @@ fun BaseUnLiActivity.interstitialAdsShowTry() {
         return
     }
 
-    val nIsAdsPausePassed = "last_ad_show".hasPrefsTimePassed(nAdsPause.toLong())
+    val nIsAdsPausePassed = "last_ad_show".hasPrefsTimePassed(nAdsPause.toLong(), 0L)
 
     if (!nIsAdsPausePassed) {
         adsLog("nIsAdsPausePassed not passed! $nIsAdsPausePassed")
