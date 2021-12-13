@@ -41,7 +41,7 @@ dependencies {
     implementation project(':unlib-core')
     implementation project(':unlib-ui')
 
-    api 'com.google.android.gms:play-services-ads:20.4.0'
+    api 'com.google.android.gms:play-services-ads:20.5.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

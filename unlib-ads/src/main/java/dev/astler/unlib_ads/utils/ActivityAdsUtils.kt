@@ -264,21 +264,21 @@ fun BaseUnLiActivity.interstitialAdsShowTry() {
     val nIsTimeFromStartPassed = cStartTime.hasPrefsTimePassed(10000)
 
     if (!nIsTimeFromStartPassed) {
-        adsLog("nIsTimeFromStartPassed not passed!")
+        adsLog("nIsTimeFromStartPassed not passed! = $nIsTimeFromStartPassed")
         return
     }
 
     val nIsTimeFromResumePassed = cResumeTime.hasPrefsTimePassed(5000)
 
     if (!nIsTimeFromResumePassed) {
-        adsLog("nIsTimeFromResumePassed not passed!")
+        adsLog("nIsTimeFromResumePassed not passed! = $nIsTimeFromResumePassed")
         return
     }
 
     val nIsAdsPausePassed = "last_ad_show".hasPrefsTimePassed(nAdsPause.toLong())
 
     if (!nIsAdsPausePassed) {
-        adsLog("nIsAdsPausePassed not passed!")
+        adsLog("nIsAdsPausePassed not passed! $nIsAdsPausePassed")
         return
     }
 
