@@ -12,12 +12,12 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/cat-ui" />
             <option value="$PROJECT_DIR$/unlib-ads" />
             <option value="$PROJECT_DIR$/unlib-billing" />
             <option value="$PROJECT_DIR$/unlib-compose" />
             <option value="$PROJECT_DIR$/unlib-core" />
             <option value="$PROJECT_DIR$/unlib-signin" />
-            <option value="$PROJECT_DIR$/unlib-ui" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -3,13 +3,13 @@ package dev.astler.unlib_test.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import dev.astler.unlib.ui.activity.BaseUnLiActivity
-import dev.astler.unlib.view.ShortCodeTextView
-import dev.astler.unlib.view.SplashView
+import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.cat_ui.views.CatShortCodeTextView
+import dev.astler.cat_ui.views.custom.SplashView
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.activity.ads.AdsOpenItemListActivity
 
-class ShortcodeTextActivity : BaseUnLiActivity() {
+class ShortcodeTextActivity : CatActivity() {
 
     companion object {
         private const val TARGET_SCAlE = 1f
@@ -39,13 +39,13 @@ class ShortcodeTextActivity : BaseUnLiActivity() {
 
         """.trimIndent()
 
-        findViewById<ShortCodeTextView>(R.id.test).text = nText
+        findViewById<CatShortCodeTextView>(R.id.test).text = nText
 
-        findViewById<ShortCodeTextView>(R.id.test).setOnClickListener {
+        findViewById<CatShortCodeTextView>(R.id.test).setOnClickListener {
             startActivity(Intent(this, ImageLoadersActivity::class.java))
         }
 
-        findViewById<ShortCodeTextView>(R.id.test).setOnLongClickListener {
+        findViewById<CatShortCodeTextView>(R.id.test).setOnLongClickListener {
             startActivity(Intent(this, AdsOpenItemListActivity::class.java))
             true
         }

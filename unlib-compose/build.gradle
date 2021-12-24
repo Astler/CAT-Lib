@@ -51,8 +51,8 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion '1.5.31'
-        kotlinCompilerExtensionVersion "1.1.0-beta03"
+        kotlinCompilerVersion '1.6.10'
+        kotlinCompilerExtensionVersion "1.1.0-rc02"
     }
 
     packagingOptions {
@@ -64,7 +64,7 @@ android {
 
 dependencies {
     implementation project(':unlib-core')
-    implementation project(':unlib-ui')
+    implementation project(':cat-ui')
 
     api 'androidx.core:core-ktx:1.7.0'
 
@@ -73,9 +73,9 @@ dependencies {
     api "androidx.compose.ui:ui:$compose_version"
     api "androidx.compose.material:material:$compose_version"
     api 'androidx.activity:activity-compose:1.4.0'
-    api "androidx.navigation:navigation-compose:2.4.0-beta02"
+    api "androidx.navigation:navigation-compose:2.4.0-rc01"
     api "androidx.compose.runtime:runtime-livedata:$compose_version"
-    api "androidx.compose.compiler:compiler:1.1.0-beta03"
+    api "androidx.compose.compiler:compiler:1.1.0-rc02"
 
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"

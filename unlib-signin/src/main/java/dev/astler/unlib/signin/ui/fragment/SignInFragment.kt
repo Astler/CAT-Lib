@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
+import dev.astler.cat_ui.fragments.CatFragment
 import dev.astler.unlib.signin.R
 import dev.astler.unlib.signin.databinding.SignInLayoutBinding
 import dev.astler.unlib.signin.utils.authWithEmailAndPassword
 import dev.astler.unlib.signin.utils.signInWithGoogle
-import dev.astler.unlib.ui.fragment.UnLibFragment
 
-class SignInFragment(private val mId: Int = R.layout.sign_in_layout) : UnLibFragment(mId) {
+class SignInFragment(private val mId: Int = R.layout.sign_in_layout) : CatFragment(mId) {
 
     private val mFragmentBinding by viewBinding<SignInLayoutBinding>()
 
@@ -35,5 +35,9 @@ class SignInFragment(private val mId: Int = R.layout.sign_in_layout) : UnLibFrag
                 }
             }
         }
+    }
+
+    override fun onFragmentBackPressed(endAction: () -> Unit) {
+
     }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="contrastColorByTheme" format="reference|color"/>
+    <attr name="colorByTheme" format="reference|color"/>
+    <attr name="titleColorByTheme" format="reference|color"/>
+    <attr name="backgroundColorByTheme" format="reference|color"/>
+
+    <attr name="isLightStatusBar" format="boolean"/>
+
+    <declare-styleable name="CatTextView">
+        <attr name="textSizeModifier" format="integer">0</attr>
+        <attr name="themeTextColor" format="boolean">true</attr>
+
+        <attr name="textStyle">
+            <flag name="normal" value="10" />
+            <flag name="bold" value="11" />
+            <flag name="italic" value="12" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="StateLayout">
+        <attr name="unli_loading_view" format="reference" />
+        <attr name="unli_error_view" format="reference" />
+    </declare-styleable>
+</resources>

@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.view.View
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
-import dev.astler.unlib.ui.activity.BaseUnLiActivity
+import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.cat_ui.views.CatShortCodeTextView
 import dev.astler.unlib.utils.toast
-import dev.astler.unlib.view.ShortCodeTextView
-import dev.astler.unlib.view.SplashView
+import dev.astler.cat_ui.views.custom.SplashView
 import dev.astler.unlib_test.activity.TestMenu
 import dev.astler.unlib_test.activity.ads.AdsTestMenu
 
-class MainActivity : BaseUnLiActivity() {
+class MainActivity : CatActivity() {
 
     companion object {
         private const val TARGET_SCAlE = 1f
@@ -42,20 +42,20 @@ class MainActivity : BaseUnLiActivity() {
 
         """.trimIndent()
 
-        findViewById<ShortCodeTextView>(R.id.test).text = nText
+        findViewById<CatShortCodeTextView>(R.id.test).text = nText
 
-        // findViewById<ShortCodeTextView>(R.id.test).setCompoundDrawables(null, getDrawable(R.drawable.btn_clear), null, null)
+        // findViewById<CatShortCodeTextView>(R.id.test).setCompoundDrawables(null, getDrawable(R.drawable.btn_clear), null, null)
 
-        findViewById<ShortCodeTextView>(R.id.test).setOnClickListener {
+        findViewById<CatShortCodeTextView>(R.id.test).setOnClickListener {
             startActivity(Intent(this, TestMenu::class.java))
         }
 
-        findViewById<ShortCodeTextView>(R.id.test).setOnLongClickListener {
+        findViewById<CatShortCodeTextView>(R.id.test).setOnLongClickListener {
             startActivity(Intent(this, AdsTestMenu::class.java))
             true
         }
 
-//        findViewById<ShortCodeTextView>(R.id.test).setOnLongClickListener {
+//        findViewById<CatShortCodeTextView>(R.id.test).setOnLongClickListener {
 //            startActivity(Intent(this, AdsTestMenu::class.java))
 //            true
 //        }

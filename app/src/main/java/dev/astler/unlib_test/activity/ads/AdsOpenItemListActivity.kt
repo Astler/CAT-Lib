@@ -2,7 +2,7 @@ package dev.astler.unlib_test.activity.ads
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import dev.astler.unlib.ui.activity.BaseUnLiActivity
+import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.unlib.utils.canShowAds
 import dev.astler.unlib_ads.adapters.OIAdsAdapterConfig
 import dev.astler.unlib_ads.adapters.OneItemAdsAdapter
@@ -13,7 +13,7 @@ import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.items.TextItem
 
-class AdsOpenItemListActivity : BaseUnLiActivity() {
+class AdsOpenItemListActivity : CatActivity() {
 
     private lateinit var mImagesBinding: ActivityRecyclerviewBinding
     private lateinit var mAdapter: OneItemAdsAdapter<TextItem>

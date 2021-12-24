@@ -9,12 +9,15 @@ import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
 import com.google.android.material.navigation.NavigationView
+import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.cat_ui.cResumeTime
+import dev.astler.cat_ui.cStartTime
+import dev.astler.cat_ui.utils.confirmDialog
+import dev.astler.unlib_ads.R
 import dev.astler.unlib.* // ktlint-disable no-wildcard-imports
-import dev.astler.unlib.ui.R
-import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
-import dev.astler.unlib.utils.views.goneView
-import dev.astler.unlib.utils.views.showView
+import dev.astler.cat_ui.utils.views.goneView
+import dev.astler.cat_ui.utils.views.showView
 import dev.astler.unlib_ads.databinding.ItemAdBinding
 import dev.astler.unlib_ads.interfaces.HideAdListener
 import java.util.* // ktlint-disable no-wildcard-imports
@@ -33,7 +36,7 @@ import kotlin.random.Random
  *   to click listener and navigationView.addNoAdsItem() to menu init
  */
 
-val cNoAdsMenuItemId = R.id.adItem
+val cNoAdsMenuItemId = dev.astler.cat_ui.R.id.adItem
 
 private var mRewardedInterstitialAd: RewardedInterstitialAd? = null
 private var mInterstitialAd: InterstitialAd? = null
@@ -243,7 +246,7 @@ fun NavigationView.addNoAdsItem() {
         inflateMenu(R.menu.ad_menu)
 }
 
-fun BaseUnLiActivity.interstitialAdsShowTry() {
+fun CatActivity.interstitialAdsShowTry() {
     if (!canShowAds()) {
         adsLog("Can't show ads!")
         return

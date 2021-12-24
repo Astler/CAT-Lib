@@ -5,6 +5,8 @@
     <attr name="titleColorByTheme" format="reference|color"/>
     <attr name="backgroundColorByTheme" format="reference|color"/>
 
+    <attr name="isLightStatusBar" format="boolean"/>
+
     <declare-styleable name="PrefsTextView">
 
         <attr name="textSizeModifier" format="integer">0</attr>

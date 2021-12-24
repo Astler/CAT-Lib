@@ -39,7 +39,7 @@ android {
 
 dependencies {
     implementation project(':unlib-core')
-    implementation project(':unlib-ui')
+    implementation project(':cat-ui')
 
     api 'com.google.android.gms:play-services-ads:20.5.0'
 

@@ -3,17 +3,17 @@ package dev.astler.unlib_test.activity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
-import dev.astler.unlib.adapters.OILAsyncAdapter
-import dev.astler.unlib.ui.activity.BaseUnLiActivity
+import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.cat_ui.adapters.CatOneTypeAdapter
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.databinding.ItemImageBinding
 import dev.astler.unlib_test.items.ImageItem
 
-class AsyncListActivity : BaseUnLiActivity() {
+class AsyncListActivity : CatActivity() {
 
     private lateinit var mListBinding: ActivityRecyclerviewBinding
-    private lateinit var mAdapter: OILAsyncAdapter<ImageItem>
+    private lateinit var mAdapter: CatOneTypeAdapter<ImageItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +22,7 @@ class AsyncListActivity : BaseUnLiActivity() {
 
         setContentView(mListBinding.root)
 
-        mAdapter = OILAsyncAdapter(
+        mAdapter = CatOneTypeAdapter(
             R.layout.item_image,
             { pData, pHolder ->
                 val nBind = ItemImageBinding.bind(pHolder.itemView)
@@ -30,7 +30,7 @@ class AsyncListActivity : BaseUnLiActivity() {
             }
         )
 
-        mAdapter.addItems(
+        mAdapter.setData(
             listOf(
                 ImageItem("https://cdn.pixabay.com/photo/2018/05/26/21/21/blue-berries-3432295_960_720.jpg"),
                 ImageItem("https://cdn.pixabay.com/photo/2021/05/22/20/33/woman-6274584_960_720.jpg"),

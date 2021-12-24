@@ -5,11 +5,7 @@ import android.app.NotificationManager
 import android.os.Build
 import android.os.StrictMode
 import androidx.core.content.ContextCompat
-import androidx.work.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib_ads.AdsUnLibApp
-import dev.astler.unlib_test.workers.PeriodicTest2Worker
-import dev.astler.unlib_test.workers.PeriodicTestWorker
-import java.util.concurrent.TimeUnit
 
 class App : AdsUnLibApp() {
 

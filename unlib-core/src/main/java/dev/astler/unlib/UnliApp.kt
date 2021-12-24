@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
 import dev.astler.unlib.config.AppConfig
 import dev.astler.unlib.core.R
@@ -26,6 +27,16 @@ val mJson = Json { allowStructuredMapKeys = true }
  * Astler; 19/03/2021
  */
 
+fun getDefaultNightMode() = when (UnliApp.prefs.appTheme) {
+    "light" -> AppCompatDelegate.MODE_NIGHT_NO
+    "dark" -> AppCompatDelegate.MODE_NIGHT_YES
+    else -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+    } else {
+        AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+    }
+}
+
 open class UnliApp : MultiDexApplication() {
 
     companion object {
@@ -43,6 +54,9 @@ open class UnliApp : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         prefs = PreferencesTool(this)
+
+        AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
+
         applicationInstance = this
 
         val nAppConfig = readFileFromRaw(R.raw.app_config)

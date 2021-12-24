@@ -57,7 +57,7 @@
                 app:layout_constraintStart_toEndOf="@+id/ad_app_icon_card"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <dev.astler.unlib.view.PrefsTextView
+                <dev.astler.cat_ui.views.CatTextView
                     android:id="@+id/ad_headline"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

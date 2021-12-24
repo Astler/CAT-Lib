@@ -3,11 +3,13 @@ package dev.astler.unlib_test.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import dev.astler.unlib.adapters.BaseOneItemListAdapter
+import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.cat_ui.adapters.CatOneTypeAdapter
+import dev.astler.cat_ui.utils.*
+import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.signin.utils.startMandatorySignIn
 import dev.astler.unlib.signin.utils.startOptionalSignIn
 import dev.astler.unlib.signin.utils.startRegisterSignIn
-import dev.astler.unlib.ui.activity.BaseUnLiActivity
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.activity.signin.SignInTestActivity
@@ -15,10 +17,10 @@ import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.databinding.ItemTextBinding
 import dev.astler.unlib_test.items.ClickableItem
 
-class TestMenu : BaseUnLiActivity() {
+class TestMenu : CatActivity() {
 
     private lateinit var mListBinding: ActivityRecyclerviewBinding
-    private lateinit var mAdapter: BaseOneItemListAdapter<ClickableItem>
+    private lateinit var mAdapter: CatOneTypeAdapter<ClickableItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +29,7 @@ class TestMenu : BaseUnLiActivity() {
 
         setContentView(mListBinding.root)
 
-        mAdapter = BaseOneItemListAdapter(
+        mAdapter = CatOneTypeAdapter(
             R.layout.item_text,
             { pData, pHolder ->
                 val nBind = ItemTextBinding.bind(pHolder.mItemView)
@@ -41,6 +43,24 @@ class TestMenu : BaseUnLiActivity() {
 
         mAdapter.setData(
             listOf(
+                ClickableItem("Theme Utils") {
+                    dialog(
+                        "Theme Utils",
+                        "isSystemDarkTheme = ${isSystemDarkMode}\nisAppDarkTheme = ${isAppDarkTheme()}\npreferencesSetting = ${gPreferencesTool.appTheme}"
+                    )
+                },
+                ClickableItem("Set Dark Theme") {
+                    gPreferencesTool.appTheme = "dark"
+                },
+                ClickableItem("Set Light Theme") {
+                    gPreferencesTool.appTheme = "light"
+                },
+                ClickableItem("Set System Theme") {
+                    gPreferencesTool.appTheme = "system"
+                },
+                ClickableItem("Set AUTO Theme") {
+                    gPreferencesTool.appTheme = "auto"
+                },
                 ClickableItem("Coil Images Web") {
                     startActivity(Intent(this, ImageLoadersActivity::class.java))
                 },
@@ -95,9 +115,7 @@ class TestMenu : BaseUnLiActivity() {
                 ClickableItem("Exit Dialog") {
                     exitDialog()
                 },
-                ClickableItem("Theme Utils") {
-                    dialog("Theme Utils", "isSystemDarkTheme = ${isSystemDarkTheme()}\nisAppDarkTheme = ${isAppDarkTheme()}")
-                },
+
                 ClickableItem("Ads Utils") {
                     dialog("Ads Utils", "canShowAds = ${canShowAds()}")
                 },

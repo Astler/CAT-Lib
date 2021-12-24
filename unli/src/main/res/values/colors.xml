@@ -16,4 +16,8 @@
 
     <color name="default_background_light">#FFF</color>
     <color name="default_background_dark">#222224</color>
+
+    <color name="prefs_text_default_color">#222224</color>
+
+
 </resources>

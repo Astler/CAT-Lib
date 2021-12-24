@@ -10,13 +10,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppUnliDarkTheme"
         tools:ignore="AllowBackup">
 
         <activity
-            android:exported="true"
-            android:name="dev.astler.unlib.ui.activity.SplashActivityUnLib"
-            android:theme="@style/SplashTheme">
+            android:name="dev.astler.cat_ui.activities.CatSplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,15 +22,28 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" android:theme="@style/AppUnliDarkTheme" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="uiMode"
+
+            android:theme="@style/DayNightAppTheme" />
         <activity android:name=".activity.ShortcodeTextActivity" />
-        <activity android:name=".activity.TestMenu" android:theme="@style/AppUnliDarkTheme"  />
+        <activity
+            android:name=".activity.TestMenu"
+            android:theme="@style/DayNightAppTheme"
+            android:configChanges="uiMode" />
         <activity android:name=".activity.ImageLoadersActivity" />
         <activity android:name=".activity.ads.AdsOpenItemListActivity" />
         <activity android:name=".activity.signin.SignInTestActivity" />
-        <activity android:name=".activity.ads.AdsTestMenu" android:theme="@style/AppUnliDarkTheme"  />
-        <activity android:name=".activity.AsyncListActivity" android:theme="@style/AppUnliDarkTheme"  />
-        <activity android:name=".activity.WindowTestActivity" android:theme="@style/AppUnliDarkTheme"  />
+        <activity
+            android:name=".activity.ads.AdsTestMenu"
+            android:theme="@style/DayNightAppTheme" />
+        <activity
+            android:name=".activity.AsyncListActivity"
+            android:theme="@style/DayNightAppTheme" />
+        <activity
+            android:name=".activity.WindowTestActivity"
+            android:theme="@style/DayNightAppTheme" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

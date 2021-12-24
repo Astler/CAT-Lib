@@ -6,10 +6,9 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.nativead.NativeAd
-import dev.astler.unlib.adapters.viewholders.BaseOneItemListViewHolder
-import dev.astler.unlib.interfaces.RecyclerAdapterSizeListener
-import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
-import dev.astler.unlib.utils.views.inflateById
+import dev.astler.cat_ui.adapters.viewholders.CatOneTypeViewHolder
+import dev.astler.cat_ui.interfaces.RecyclerAdapterSizeListener
+import dev.astler.cat_ui.utils.views.inflateById
 import dev.astler.unlib_ads.R
 import dev.astler.unlib_ads.adapters.diffutils.OneItemDiffUtil
 import dev.astler.unlib_ads.adapters.viewholders.AdItemViewHolder
@@ -106,12 +105,12 @@ open class OneItemAdsAdapter<T>(
             field = value
 
             productDiffResult.dispatchUpdatesTo(this)
-            mAdapterSizeListener?.totalItems(value.size)
+            mAdapterSizeListener?.setLoadedItems(value.size)
         }
 
     fun silenceSetData(items: List<T>) {
         data = items
-        mAdapterSizeListener?.totalItems(this.data.size)
+        mAdapterSizeListener?.setLoadedItems(this.data.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -121,7 +120,7 @@ open class OneItemAdsAdapter<T>(
             else -> {
                 val nHolderItem =
                     LayoutInflater.from(parent.context).inflate(pLayoutResource, parent, false)
-                BaseOneItemListViewHolder(nHolderItem)
+                CatOneTypeViewHolder(nHolderItem)
             }
         }
     }
@@ -138,13 +137,13 @@ open class OneItemAdsAdapter<T>(
         } else if (holder is MediaAdItemViewHolder) {
             holder.initNativeMediaBanner(getAdForPosition(), mConfig.canShowAds())
         } else {
-            if (holder is BaseOneItemListViewHolder)
+            if (holder is CatOneTypeViewHolder)
                 mItemLoadListener?.loadData(data[mConfig.getItemRealPosition(position)], holder)
         }
     }
 
     override fun getItemCount(): Int {
-        mAdapterSizeListener?.totalItems(data.size)
+        mAdapterSizeListener?.setLoadedItems(data.size)
         return mConfig.calcRecyclerSize(data.size)
     }
 
@@ -155,6 +154,6 @@ open class OneItemAdsAdapter<T>(
     }
 
     fun interface LoadItem<T> {
-        fun loadData(pData: T, pHolder: BaseOneItemListViewHolder)
+        fun loadData(pData: T, pHolder: CatOneTypeViewHolder)
     }
 }

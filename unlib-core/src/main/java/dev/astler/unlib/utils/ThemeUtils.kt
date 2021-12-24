@@ -1,14 +1,16 @@
 package dev.astler.unlib.utils
 
 import android.content.Context
-import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_MASK
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.appcompat.app.AppCompatDelegate.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.gPreferencesTool
 
-fun Context.isSystemDarkTheme(): Boolean {
-    return resources.configuration.uiMode and
-        Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-}
+val Context.isSystemDarkMode
+    get() = if (getDefaultNightMode() == MODE_NIGHT_FOLLOW_SYSTEM)
+        resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
+    else getDefaultNightMode() == MODE_NIGHT_YES
 
 fun Context.isAppDarkTheme(): Boolean {
-    return gPreferencesTool.mIsDarkTheme || gPreferencesTool.mIsSystemTheme && isSystemDarkTheme()
+    return gPreferencesTool.mIsDarkTheme || gPreferencesTool.mIsSystemTheme && isSystemDarkMode
 }

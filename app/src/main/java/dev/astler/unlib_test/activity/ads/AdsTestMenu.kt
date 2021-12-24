@@ -3,8 +3,8 @@ package dev.astler.unlib_test.activity.ads
 import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import dev.astler.unlib.adapters.BaseOneItemListAdapter
-import dev.astler.unlib.ui.activity.BaseUnLiActivity
+import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.cat_ui.adapters.CatOneTypeAdapter
 import dev.astler.unlib_ads.utils.NativeAdsLoader
 import dev.astler.unlib_ads.utils.getAdRequest
 import dev.astler.unlib_ads.utils.initAds
@@ -13,10 +13,10 @@ import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.databinding.ItemTextBinding
 import dev.astler.unlib_test.items.ClickableItem
 
-class AdsTestMenu : BaseUnLiActivity() {
+class AdsTestMenu : CatActivity() {
 
     private lateinit var mListBinding: ActivityRecyclerviewBinding
-    private lateinit var mAdapter: BaseOneItemListAdapter<ClickableItem>
+    private lateinit var mAdapter: CatOneTypeAdapter<ClickableItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class AdsTestMenu : BaseUnLiActivity() {
 
         NativeAdsLoader.instance?.loadAds(this, getAdRequest())
 
-        mAdapter = BaseOneItemListAdapter(
+        mAdapter = CatOneTypeAdapter(
             R.layout.item_text,
             { pData, pHolder ->
                 val nBind = ItemTextBinding.bind(pHolder.mItemView)

@@ -1,7 +1,3 @@
 <resources>
-    <style name="AppUnliDarkTheme" parent="Theme.BaseUnLiDarkTheme">
-        <item name="colorPrimary">#FF9800</item>
-        <item name="android:fitsSystemWindows">true</item>
-    </style>
 
 </resources>
