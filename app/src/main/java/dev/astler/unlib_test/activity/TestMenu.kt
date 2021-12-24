@@ -17,17 +17,14 @@ import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.databinding.ItemTextBinding
 import dev.astler.unlib_test.items.ClickableItem
 
-class TestMenu : CatActivity() {
+class TestMenu : CatActivity<ActivityRecyclerviewBinding>() {
 
-    private lateinit var mListBinding: ActivityRecyclerviewBinding
     private lateinit var mAdapter: CatOneTypeAdapter<ClickableItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mListBinding = ActivityRecyclerviewBinding.inflate(layoutInflater)
-
-        setContentView(mListBinding.root)
+        setContentView(mViewBinding.root)
 
         mAdapter = CatOneTypeAdapter(
             R.layout.item_text,
@@ -129,7 +126,9 @@ class TestMenu : CatActivity() {
             )
         )
 
-        mListBinding.list.layoutManager = LinearLayoutManager(this)
-        mListBinding.list.adapter = mAdapter
+        mViewBinding.list.layoutManager = LinearLayoutManager(this)
+        mViewBinding.list.adapter = mAdapter
     }
+
+    override fun getViewBinding() = ActivityRecyclerviewBinding.inflate(layoutInflater)
 }

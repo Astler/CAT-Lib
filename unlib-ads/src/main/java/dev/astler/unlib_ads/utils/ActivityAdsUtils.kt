@@ -1,6 +1,7 @@
 package dev.astler.unlib_ads.utils
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
 import com.google.android.gms.ads.* // ktlint-disable no-wildcard-imports
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -13,11 +14,11 @@ import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.cResumeTime
 import dev.astler.cat_ui.cStartTime
 import dev.astler.cat_ui.utils.confirmDialog
-import dev.astler.unlib_ads.R
-import dev.astler.unlib.* // ktlint-disable no-wildcard-imports
-import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.cat_ui.utils.views.goneView
 import dev.astler.cat_ui.utils.views.showView
+import dev.astler.unlib.* // ktlint-disable no-wildcard-imports
+import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.unlib_ads.R
 import dev.astler.unlib_ads.databinding.ItemAdBinding
 import dev.astler.unlib_ads.interfaces.HideAdListener
 import java.util.* // ktlint-disable no-wildcard-imports
@@ -76,8 +77,8 @@ fun AppCompatActivity.initAds() {
 
     if (!gPreferencesTool.getBoolean("age_confirmed", false) && mNeedAgeCheck) {
         confirmDialog(
-            getString(dev.astler.unlib_ads.R.string.ads_dialog_title),
-            getString(dev.astler.unlib_ads.R.string.ads_dialog_msg),
+            getString(R.string.ads_dialog_title),
+            getString(R.string.ads_dialog_msg),
             getString(R.string.yes), getString(R.string.no),
             pPositiveAction = {
                 gPreferencesTool.edit("child_ads", false)
@@ -246,7 +247,7 @@ fun NavigationView.addNoAdsItem() {
         inflateMenu(R.menu.ad_menu)
 }
 
-fun CatActivity.interstitialAdsShowTry() {
+fun CatActivity<ViewBinding>.interstitialAdsShowTry() {
     if (!canShowAds()) {
         adsLog("Can't show ads!")
         return

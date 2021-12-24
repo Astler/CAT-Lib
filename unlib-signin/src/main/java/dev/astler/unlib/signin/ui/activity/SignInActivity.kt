@@ -6,13 +6,13 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.firebase.auth.FirebaseUser
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.setInsetsViaOrientation
+import dev.astler.cat_ui.utils.views.goneView
+import dev.astler.cat_ui.utils.views.showView
 import dev.astler.unlib.signin.R
 import dev.astler.unlib.signin.databinding.SignInLayoutBinding
 import dev.astler.unlib.signin.interfaces.SignInActivityListener
 import dev.astler.unlib.signin.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
-import dev.astler.cat_ui.utils.views.goneView
-import dev.astler.cat_ui.utils.views.showView
 
 const val cSignInModeExtra = "signInMode"
 
@@ -21,7 +21,7 @@ const val cOptionalSignIn = "optional"
 const val cOptionalJumpSignIn = "optional_jump"
 const val cRegisterSignIn = "register"
 
-open class SignInActivity : CatActivity(), SignInActivityListener {
+open class SignInActivity : CatActivity<SignInLayoutBinding>(), SignInActivityListener {
 
     private val mActivityMainBinding: SignInLayoutBinding by viewBinding(CreateMethod.INFLATE)
 
@@ -121,4 +121,6 @@ open class SignInActivity : CatActivity(), SignInActivityListener {
             infoLog("No Active Users!")
         }
     }
+
+    override fun getViewBinding() = SignInLayoutBinding.inflate(layoutInflater)
 }

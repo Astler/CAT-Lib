@@ -13,17 +13,14 @@ import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.items.TextItem
 
-class AdsOpenItemListActivity : CatActivity() {
+class AdsOpenItemListActivity : CatActivity<ActivityRecyclerviewBinding>(R.layout.activity_recyclerview) {
 
-    private lateinit var mImagesBinding: ActivityRecyclerviewBinding
     private lateinit var mAdapter: OneItemAdsAdapter<TextItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mImagesBinding = ActivityRecyclerviewBinding.inflate(layoutInflater)
-
-        setContentView(mImagesBinding.root)
+        setContentView(mViewBinding.root)
 
         initAds()
 
@@ -62,7 +59,9 @@ class AdsOpenItemListActivity : CatActivity() {
                 TextItem("A 20")
             )
 
-        mImagesBinding.list.layoutManager = LinearLayoutManager(this)
-        mImagesBinding.list.adapter = mAdapter
+        mViewBinding.list.layoutManager = LinearLayoutManager(this)
+        mViewBinding.list.adapter = mAdapter
     }
+
+    override fun getViewBinding() = ActivityRecyclerviewBinding.inflate(layoutInflater)
 }

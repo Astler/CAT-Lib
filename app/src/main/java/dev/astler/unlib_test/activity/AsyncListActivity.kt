@@ -10,17 +10,14 @@ import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.databinding.ItemImageBinding
 import dev.astler.unlib_test.items.ImageItem
 
-class AsyncListActivity : CatActivity() {
+class AsyncListActivity : CatActivity<ActivityRecyclerviewBinding>() {
 
-    private lateinit var mListBinding: ActivityRecyclerviewBinding
     private lateinit var mAdapter: CatOneTypeAdapter<ImageItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mListBinding = ActivityRecyclerviewBinding.inflate(layoutInflater)
-
-        setContentView(mListBinding.root)
+        setContentView(mViewBinding.root)
 
         mAdapter = CatOneTypeAdapter(
             R.layout.item_image,
@@ -41,7 +38,9 @@ class AsyncListActivity : CatActivity() {
             )
         )
 
-        mListBinding.list.layoutManager = LinearLayoutManager(this)
-        mListBinding.list.adapter = mAdapter
+        mViewBinding.list.layoutManager = LinearLayoutManager(this)
+        mViewBinding.list.adapter = mAdapter
     }
+
+    override fun getViewBinding() = ActivityRecyclerviewBinding.inflate(layoutInflater)
 }

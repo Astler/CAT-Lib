@@ -7,12 +7,13 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.views.CatShortCodeTextView
-import dev.astler.unlib.utils.toast
 import dev.astler.cat_ui.views.custom.SplashView
+import dev.astler.unlib.utils.toast
 import dev.astler.unlib_test.activity.TestMenu
 import dev.astler.unlib_test.activity.ads.AdsTestMenu
+import dev.astler.unlib_test.databinding.ActivityMainBinding
 
-class MainActivity : CatActivity() {
+class MainActivity : CatActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     companion object {
         private const val TARGET_SCAlE = 1f
@@ -22,7 +23,6 @@ class MainActivity : CatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         findViewById<SplashView>(R.id.splash_view)
             .animateLogo()
@@ -69,4 +69,6 @@ class MainActivity : CatActivity() {
                 toast(msg)
             }
     }
+
+    override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
 }

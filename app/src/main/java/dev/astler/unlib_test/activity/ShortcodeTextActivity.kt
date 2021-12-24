@@ -8,8 +8,9 @@ import dev.astler.cat_ui.views.CatShortCodeTextView
 import dev.astler.cat_ui.views.custom.SplashView
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.activity.ads.AdsOpenItemListActivity
+import dev.astler.unlib_test.databinding.ActivityMainBinding
 
-class ShortcodeTextActivity : CatActivity() {
+class ShortcodeTextActivity : CatActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     companion object {
         private const val TARGET_SCAlE = 1f
@@ -19,7 +20,6 @@ class ShortcodeTextActivity : CatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         findViewById<SplashView>(R.id.splash_view)
             .animateLogo()
@@ -50,4 +50,6 @@ class ShortcodeTextActivity : CatActivity() {
             true
         }
     }
+
+    override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
 }
