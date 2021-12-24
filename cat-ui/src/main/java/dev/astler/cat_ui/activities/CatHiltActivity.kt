@@ -1,3 +1,5 @@
 package dev.astler.cat_ui.activities
 
-class CatHiltActivity : CatActivity()
+import androidx.viewbinding.ViewBinding
+
+abstract class CatHiltActivity<VB : ViewBinding> : CatActivity<VB>()
