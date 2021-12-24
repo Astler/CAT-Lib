@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.adapters.CatOneTypeAdapter
-import dev.astler.cat_ui.utils.*
+import dev.astler.cat_ui.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.signin.utils.startMandatorySignIn
 import dev.astler.unlib.signin.utils.startOptionalSignIn

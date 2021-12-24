@@ -12,7 +12,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="8dp"
         android:text="@string/ad"
-        android:textColor="@color/colorAccent"
+        android:textColor="?attr/colorAccent"
         android:textStyle="bold" />
 
     <com.google.android.gms.ads.nativead.NativeAdView

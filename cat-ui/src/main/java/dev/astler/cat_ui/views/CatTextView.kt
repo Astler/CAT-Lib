@@ -32,7 +32,7 @@ open class CatTextView @JvmOverloads constructor(
             }
         }
     }
-    
+
     fun setBoldTypeface() {
         typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
     }

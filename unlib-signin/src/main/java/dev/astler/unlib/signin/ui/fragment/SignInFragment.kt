@@ -10,7 +10,7 @@ import dev.astler.unlib.signin.databinding.SignInLayoutBinding
 import dev.astler.unlib.signin.utils.authWithEmailAndPassword
 import dev.astler.unlib.signin.utils.signInWithGoogle
 
-class SignInFragment(private val mId: Int = R.layout.sign_in_layout) : CatFragment(mId) {
+class SignInFragment(mId: Int = R.layout.sign_in_layout) : CatFragment(mId) {
 
     private val mFragmentBinding by viewBinding<SignInLayoutBinding>()
 
@@ -38,6 +38,5 @@ class SignInFragment(private val mId: Int = R.layout.sign_in_layout) : CatFragme
     }
 
     override fun onFragmentBackPressed(endAction: () -> Unit) {
-
     }
 }

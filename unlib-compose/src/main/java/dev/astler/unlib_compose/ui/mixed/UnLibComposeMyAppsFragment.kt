@@ -19,6 +19,5 @@ class UnLibComposeMyAppsFragment : UnLibComposeListFragment<AppItem>() {
     }
 
     override fun onFragmentBackPressed(endAction: () -> Unit) {
-
     }
 }
