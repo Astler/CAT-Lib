@@ -33,7 +33,8 @@
             android:configChanges="uiMode" />
         <activity android:name=".activity.ImageLoadersActivity" />
         <activity android:name=".activity.ads.AdsOpenItemListActivity" />
-        <activity android:name=".activity.signin.SignInTestActivity" />
+        <activity android:name=".activity.signin.SignInTestActivity"
+            android:theme="@style/DayNightAppTheme" />
         <activity
             android:name=".activity.ads.AdsTestMenu"
             android:theme="@style/DayNightAppTheme" />

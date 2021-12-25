@@ -5,19 +5,19 @@ import android.content.Intent
 import dev.astler.unlib.signin.ui.activity.* // ktlint-disable no-wildcard-imports
 
 fun Context.startMandatorySignIn() {
-    startSignInActivity(cMandatorySignIn)
+    startSignInActivity(CatSignInMode.MANDATORY.toString())
 }
 
 fun Context.startOptionalSignIn() {
-    startSignInActivity()
+    startSignInActivity(CatSignInMode.OPTIONAL.toString())
 }
 
 fun Context.startRegisterSignIn() {
-    startSignInActivity(cRegisterSignIn)
+    startSignInActivity(CatSignInMode.REGISTER.toString())
 }
 
-private fun Context.startSignInActivity(pExtraValue: String = cOptionalSignIn) {
+private fun Context.startSignInActivity(signInMode: String) {
     val intent = Intent(this, SignInActivity::class.java)
-    intent.putExtra(cSignInModeExtra, pExtraValue)
+    intent.putExtra(cSignInModeExtra, signInMode)
     startActivity(intent)
 }

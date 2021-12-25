@@ -5,10 +5,12 @@ import com.google.firebase.auth.FirebaseUser
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.setInsetsViaOrientation
 import dev.astler.cat_ui.utils.views.goneView
+import dev.astler.cat_ui.utils.views.goneViews
 import dev.astler.cat_ui.utils.views.showView
 import dev.astler.unlib.signin.R
 import dev.astler.unlib.signin.databinding.SignInLayoutBinding
 import dev.astler.unlib.signin.interfaces.SignInActivityListener
+import dev.astler.unlib.signin.ui.activity.CatSignInMode.Companion.fromString
 import dev.astler.unlib.signin.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.utils.MobileServicesSource
 import dev.astler.unlib.utils.getMobileServiceSource
@@ -17,10 +19,16 @@ import dev.astler.unlib.utils.toast
 
 const val cSignInModeExtra = "signInMode"
 
-const val cMandatorySignIn = "mandatory"
-const val cOptionalSignIn = "optional"
-const val cOptionalJumpSignIn = "optional_jump"
-const val cRegisterSignIn = "register"
+enum class CatSignInMode {
+    MANDATORY,
+    OPTIONAL,
+    OPTIONAL_JUMP,
+    REGISTER;
+
+    companion object {
+        fun String.fromString() = valueOf(this)
+    }
+}
 
 open class SignInActivity : CatActivity<SignInLayoutBinding>(), SignInActivityListener {
 
@@ -28,8 +36,6 @@ open class SignInActivity : CatActivity<SignInLayoutBinding>(), SignInActivityLi
         super.onCreate(savedInstanceState)
 
         setContentView(mViewBinding.root)
-
-        val pMode = intent.getStringExtra(cSignInModeExtra).toString()
 
         signInInitializer()
 
@@ -40,6 +46,20 @@ open class SignInActivity : CatActivity<SignInLayoutBinding>(), SignInActivityLi
             register.setOnClickListener {
                 this@SignInActivity.startRegisterSignIn()
                 this@SignInActivity.finish()
+            }
+
+            createAccount.setOnClickListener {
+                val nEmailText = email.text.toString()
+                val nPasswordText = password.text.toString()
+                val nPasswordAgainText = passwordAgain.text.toString()
+
+                if (nEmailText.isEmpty() || nPasswordText.isEmpty() || nPasswordAgainText.isEmpty()) {
+                    it.toast(R.string.not_all_fields)
+                } else {
+                    if (nPasswordText != nPasswordAgainText) {
+                        it.toast(R.string.passwords_dont_match)
+                    } else createUserWithEmailAndPassword(nEmailText, nPasswordText)
+                }
             }
 
             signInButton.setOnClickListener {
@@ -53,8 +73,10 @@ open class SignInActivity : CatActivity<SignInLayoutBinding>(), SignInActivityLi
                 }
             }
 
-            when (pMode) {
-                cOptionalSignIn -> {
+            val signInMode = intent.getStringExtra(cSignInModeExtra)?.fromString()
+
+            when (signInMode) {
+                CatSignInMode.OPTIONAL -> {
                     close.showView()
                     secondPassword.goneView()
 
@@ -62,40 +84,28 @@ open class SignInActivity : CatActivity<SignInLayoutBinding>(), SignInActivityLi
                         this@SignInActivity.finish()
                     }
                 }
-                cMandatorySignIn -> {
+                CatSignInMode.MANDATORY -> {
                     close.goneView()
                     secondPassword.goneView()
                 }
-                cRegisterSignIn -> {
+                CatSignInMode.REGISTER -> {
                     close.showView()
 
                     close.setOnClickListener {
                         this@SignInActivity.finish()
                     }
 
-                    signInButton.goneView()
-                    googleSignIn.goneView()
-                    or.goneView()
-
-                    register.text = getString(R.string.create_account)
-
-                    register.setOnClickListener {
-                        val nEmailText = email.text.toString()
-                        val nPasswordText = password.text.toString()
-                        val nPasswordAgainText = passwordAgain.text.toString()
-
-                        if (nEmailText.isEmpty() || nPasswordText.isEmpty() || nPasswordAgainText.isEmpty()) {
-                            it.toast(R.string.not_all_fields)
-                        } else {
-                            if (nPasswordText != nPasswordAgainText) {
-                                it.toast(R.string.passwords_dont_match)
-                            } else createUserWithEmailAndPassword(nEmailText, nPasswordText)
-                        }
-                    }
+                    goneViews(
+                        register,
+                        signInButton,
+                        googleSignIn,
+                        or
+                    )
                 }
+                else -> {}
             }
 
-            if (getMobileServiceSource() == MobileServicesSource.GOOGLE && pMode != cRegisterSignIn) {
+            if (getMobileServiceSource() == MobileServicesSource.GOOGLE && signInMode != CatSignInMode.REGISTER) {
                 googleSignIn.setOnClickListener {
                     signInWithGoogle()
                 }
