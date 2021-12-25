@@ -8,7 +8,7 @@ enum class AppTheme {
     SYSTEM;
 
     companion object {
-        fun fromString(string: String) = valueOf(string)
+        fun fromString(string: String) = valueOf(string.uppercase())
     }
 }
 
