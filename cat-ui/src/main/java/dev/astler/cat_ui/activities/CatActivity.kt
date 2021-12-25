@@ -26,8 +26,8 @@ interface ActivityInterface {
     fun toggleToolbar(pIsToolbarVisible: Boolean) {}
 }
 
-abstract class CatActivity<VB : ViewBinding>(pLayoutId: Int = 0) :
-    CatBindingActivity<VB>(pLayoutId),
+abstract class CatActivity<VB : ViewBinding> :
+    CatBindingActivity<VB>(),
     SharedPreferences.OnSharedPreferenceChangeListener,
     ActivityInterface {
 

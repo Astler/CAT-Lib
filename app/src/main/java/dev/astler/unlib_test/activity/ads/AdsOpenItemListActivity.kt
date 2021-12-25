@@ -13,7 +13,7 @@ import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.items.TextItem
 
-class AdsOpenItemListActivity : CatActivity<ActivityRecyclerviewBinding>(R.layout.activity_recyclerview) {
+class AdsOpenItemListActivity : CatActivity<ActivityRecyclerviewBinding>() {
 
     private lateinit var mAdapter: OneItemAdsAdapter<TextItem>
 

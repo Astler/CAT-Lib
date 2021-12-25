@@ -4,13 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import dev.astler.cat_ui.activities.CatActivity
-import dev.astler.cat_ui.views.CatShortCodeTextView
 import dev.astler.cat_ui.views.custom.SplashView
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.activity.ads.AdsOpenItemListActivity
 import dev.astler.unlib_test.databinding.ActivityMainBinding
 
-class ShortcodeTextActivity : CatActivity<ActivityMainBinding>(R.layout.activity_main) {
+class ShortcodeTextActivity : CatActivity<ActivityMainBinding>() {
 
     companion object {
         private const val TARGET_SCAlE = 1f
@@ -39,13 +38,13 @@ class ShortcodeTextActivity : CatActivity<ActivityMainBinding>(R.layout.activity
 
         """.trimIndent()
 
-        findViewById<CatShortCodeTextView>(R.id.test).text = nText
+        mViewBinding.test.text = nText
 
-        findViewById<CatShortCodeTextView>(R.id.test).setOnClickListener {
+        mViewBinding.test.setOnClickListener {
             startActivity(Intent(this, ImageLoadersActivity::class.java))
         }
 
-        findViewById<CatShortCodeTextView>(R.id.test).setOnLongClickListener {
+        mViewBinding.test.setOnLongClickListener {
             startActivity(Intent(this, AdsOpenItemListActivity::class.java))
             true
         }

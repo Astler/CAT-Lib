@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
-abstract class CatBindingActivity<VB : ViewBinding>(pLayoutId: Int = 0) : AppCompatActivity(pLayoutId) {
+abstract class CatBindingActivity<VB : ViewBinding> : AppCompatActivity() {
 
     protected lateinit var mViewBinding: VB
 

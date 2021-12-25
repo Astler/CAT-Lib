@@ -2,18 +2,15 @@ package dev.astler.unlib_test
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import dev.astler.cat_ui.activities.CatActivity
-import dev.astler.cat_ui.views.CatShortCodeTextView
-import dev.astler.cat_ui.views.custom.SplashView
 import dev.astler.unlib.utils.toast
 import dev.astler.unlib_test.activity.TestMenu
 import dev.astler.unlib_test.activity.ads.AdsTestMenu
 import dev.astler.unlib_test.databinding.ActivityMainBinding
 
-class MainActivity : CatActivity<ActivityMainBinding>(R.layout.activity_main) {
+class MainActivity : CatActivity<ActivityMainBinding>() {
 
     companion object {
         private const val TARGET_SCAlE = 1f
@@ -24,10 +21,11 @@ class MainActivity : CatActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        findViewById<SplashView>(R.id.splash_view)
-            .animateLogo()
+        setContentView(mViewBinding.root)
 
-        findViewById<View>(R.id.test)
+        mViewBinding.splashView.animateLogo()
+
+        mViewBinding.test
             .animate()
             .scaleX(TARGET_SCAlE)
             .scaleY(TARGET_SCAlE)
@@ -42,20 +40,20 @@ class MainActivity : CatActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         """.trimIndent()
 
-        findViewById<CatShortCodeTextView>(R.id.test).text = nText
+        mViewBinding.test.text = nText
 
-        // findViewById<CatShortCodeTextView>(R.id.test).setCompoundDrawables(null, getDrawable(R.drawable.btn_clear), null, null)
+        // mViewBinding.test.setCompoundDrawables(null, getDrawable(R.drawable.btn_clear), null, null)
 
-        findViewById<CatShortCodeTextView>(R.id.test).setOnClickListener {
+        mViewBinding.test.setOnClickListener {
             startActivity(Intent(this, TestMenu::class.java))
         }
 
-        findViewById<CatShortCodeTextView>(R.id.test).setOnLongClickListener {
+        mViewBinding.test.setOnLongClickListener {
             startActivity(Intent(this, AdsTestMenu::class.java))
             true
         }
 
-//        findViewById<CatShortCodeTextView>(R.id.test).setOnLongClickListener {
+//        mViewBinding.test.setOnLongClickListener {
 //            startActivity(Intent(this, AdsTestMenu::class.java))
 //            true
 //        }

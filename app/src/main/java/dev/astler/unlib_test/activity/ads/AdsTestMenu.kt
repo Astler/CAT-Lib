@@ -13,7 +13,7 @@ import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.databinding.ItemTextBinding
 import dev.astler.unlib_test.items.ClickableItem
 
-class AdsTestMenu : CatActivity<ActivityRecyclerviewBinding>(R.layout.activity_recyclerview) {
+class AdsTestMenu : CatActivity<ActivityRecyclerviewBinding>() {
     private lateinit var mAdapter: CatOneTypeAdapter<ClickableItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
