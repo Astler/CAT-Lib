@@ -23,7 +23,8 @@
                 android:layout_height="150dp"
                 android:contentDescription="@string/app_name"
                 android:paddingBottom="@dimen/unlib_base_view_margin"
-                app:srcCompat="@drawable/icon_splash" />
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
