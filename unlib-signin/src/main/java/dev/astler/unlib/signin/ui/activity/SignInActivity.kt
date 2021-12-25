@@ -1,8 +1,6 @@
 package dev.astler.unlib.signin.ui.activity
 
 import android.os.Bundle
-import by.kirich1409.viewbindingdelegate.CreateMethod
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.firebase.auth.FirebaseUser
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.setInsetsViaOrientation
@@ -12,7 +10,10 @@ import dev.astler.unlib.signin.R
 import dev.astler.unlib.signin.databinding.SignInLayoutBinding
 import dev.astler.unlib.signin.interfaces.SignInActivityListener
 import dev.astler.unlib.signin.utils.* // ktlint-disable no-wildcard-imports
-import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.unlib.utils.MobileServicesSource
+import dev.astler.unlib.utils.getMobileServiceSource
+import dev.astler.unlib.utils.infoLog
+import dev.astler.unlib.utils.toast
 
 const val cSignInModeExtra = "signInMode"
 
@@ -23,18 +24,16 @@ const val cRegisterSignIn = "register"
 
 open class SignInActivity : CatActivity<SignInLayoutBinding>(), SignInActivityListener {
 
-    private val mActivityMainBinding: SignInLayoutBinding by viewBinding(CreateMethod.INFLATE)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(mActivityMainBinding.root)
+        setContentView(mViewBinding.root)
 
         val pMode = intent.getStringExtra(cSignInModeExtra).toString()
 
         signInInitializer()
 
-        with(mActivityMainBinding) {
+        with(mViewBinding) {
 
             doNotAskAgain.goneView()
 
@@ -106,7 +105,7 @@ open class SignInActivity : CatActivity<SignInLayoutBinding>(), SignInActivityLi
             }
         }
 
-        setInsetsViaOrientation(mActivityMainBinding.root)
+        setInsetsViaOrientation(mViewBinding.root)
     }
 
     override fun onResume() {
