@@ -12,7 +12,18 @@ enum class AppTheme {
     }
 }
 
+enum class AppLanguage {
+    EN,
+    RU,
+    UA;
+
+    companion object {
+        fun fromString(string: String) = valueOf(string.uppercase())
+    }
+}
+
 interface Settings {
     val themeStream: StateFlow<AppTheme>
+    val languageStream: StateFlow<AppLanguage>
     var theme: AppTheme
 }

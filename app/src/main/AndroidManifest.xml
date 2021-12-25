@@ -25,7 +25,6 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="uiMode"
-
             android:theme="@style/DayNightAppTheme" />
         <activity android:name=".activity.ShortcodeTextActivity" />
         <activity
