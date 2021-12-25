@@ -8,7 +8,7 @@ import dev.astler.cat_ui.utils.getStringResource
 
 abstract class CatFragment(pLayoutId: Int = 0) : Fragment(pLayoutId), CoreFragmentInterface {
 
-    lateinit var coreListener: ActivityInterface
+    var coreListener: ActivityInterface? = null
 
     override fun onAttach(pContext: Context) {
         super.onAttach(pContext)
@@ -18,13 +18,13 @@ abstract class CatFragment(pLayoutId: Int = 0) : Fragment(pLayoutId), CoreFragme
     }
 
     fun backPressed() {
-        coreListener.onFragmentBackPressed()
+        coreListener?.onFragmentBackPressed()
     }
 
     override fun onResume() {
 
         super.onResume()
-        coreListener.setCurrentFragment(this)
+        coreListener?.setCurrentFragment(this)
     }
 
     fun getStringByName(pName: String, pReturnDef: String = ""): String {

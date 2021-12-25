@@ -3,12 +3,12 @@ package dev.astler.unlib_compose.data.settings
 import kotlinx.coroutines.flow.StateFlow
 
 enum class AppTheme {
-    MODE_DAY,
-    MODE_NIGHT,
-    MODE_AUTO;
+    DARK,
+    LIGHT,
+    SYSTEM;
 
     companion object {
-        fun fromOrdinal(ordinal: Int) = values()[ordinal]
+        fun fromString(string: String) = valueOf(string)
     }
 }
 

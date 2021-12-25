@@ -43,9 +43,9 @@ fun ThemedUnlib(pSettings: Settings, content: @Composable () -> Unit) {
     val nTheme = pSettings.themeStream.collectAsState()
 
     val nUseDarkColors = when (nTheme.value) {
-        AppTheme.MODE_AUTO -> isSystemInDarkTheme()
-        AppTheme.MODE_DAY -> false
-        AppTheme.MODE_NIGHT -> true
+        AppTheme.SYSTEM -> isSystemInDarkTheme()
+        AppTheme.LIGHT -> false
+        AppTheme.DARK -> true
     }
 
     UnlibComposeTheme(nUseDarkColors, content)
