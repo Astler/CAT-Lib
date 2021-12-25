@@ -1,3 +1,5 @@
 package dev.astler.cat_ui.fragments
 
-abstract class CatHiltFragment : CatFragment()
+import androidx.annotation.LayoutRes
+
+abstract class CatHiltFragment(@LayoutRes layoutId: Int) : CatFragment(layoutId)
