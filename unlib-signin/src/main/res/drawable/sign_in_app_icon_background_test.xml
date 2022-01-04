@@ -4,14 +4,14 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108"
-    android:tint="@color/sign_in_icon_background"
+    android:tint="@android:color/holo_red_dark"
     android:autoMirrored="true">
 
     <group
         android:scaleX="3.8009"
         android:scaleY="3.8009"
-        android:translateX="8.3892"
-        android:translateY="2.5">
+        android:translateX="10.3892"
+        android:translateY="3.3892">
 
         <path
             android:fillColor="#303F9F"
