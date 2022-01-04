@@ -24,13 +24,16 @@
                 android:contentDescription="@string/app_name"
                 android:paddingBottom="@dimen/unlib_base_view_margin"
                 android:scaleType="centerCrop"
+                android:background="@drawable/sign_in_app_icon_background"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/unlib_base_view_margin"
+                app:cardBackgroundColor="@color/cat_card_background"
                 app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
                 app:contentPadding="8dp">
 
                 <LinearLayout
