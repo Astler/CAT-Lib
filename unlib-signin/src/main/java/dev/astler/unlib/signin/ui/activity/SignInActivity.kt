@@ -79,6 +79,7 @@ open class SignInActivity : CatActivity<SignInLayoutBinding>(), SignInActivityLi
                 CatSignInMode.OPTIONAL -> {
                     close.showView()
                     secondPassword.goneView()
+                    createAccount.goneView()
 
                     close.setOnClickListener {
                         this@SignInActivity.finish()
@@ -87,9 +88,12 @@ open class SignInActivity : CatActivity<SignInLayoutBinding>(), SignInActivityLi
                 CatSignInMode.MANDATORY -> {
                     close.goneView()
                     secondPassword.goneView()
+                    createAccount.goneView()
                 }
                 CatSignInMode.REGISTER -> {
                     close.showView()
+                    createAccount.showView()
+                    register.goneView()
 
                     close.setOnClickListener {
                         this@SignInActivity.finish()
