@@ -3,7 +3,6 @@ package dev.astler.billing
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.viewbinding.ViewBinding
 import com.android.billingclient.api.* // ktlint-disable no-wildcard-imports
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.unlib.cBillingNoAdsName
@@ -11,7 +10,7 @@ import dev.astler.unlib.cNoAdsName
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.infoLog
 
-abstract class UnLibBillingActivity<VB : ViewBinding> : CatActivity<VB>(), PerformBillingListener {
+abstract class UnLibBillingActivity : CatActivity(), PerformBillingListener {
 
     private val mPurchasesUpdatedListener =
         PurchasesUpdatedListener { billingResult, pPurchases ->

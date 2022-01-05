@@ -10,7 +10,7 @@ import dev.astler.unlib_test.activity.TestMenu
 import dev.astler.unlib_test.activity.ads.AdsTestMenu
 import dev.astler.unlib_test.databinding.ActivityMainBinding
 
-class MainActivity : CatActivity<ActivityMainBinding>() {
+class MainActivity : CatActivity() {
 
     companion object {
         private const val TARGET_SCAlE = 1f
@@ -18,8 +18,12 @@ class MainActivity : CatActivity<ActivityMainBinding>() {
         private const val SCALE_ANIMATION_DURATION = 800L
     }
 
+    private lateinit var mViewBinding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mViewBinding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(mViewBinding.root)
 
@@ -34,6 +38,7 @@ class MainActivity : CatActivity<ActivityMainBinding>() {
             .start()
 
         val nText = """
+            😶‍🌫️, 🧔🏻‍♀️, 🧑🏿‍❤️‍🧑🏾
             Okay. Let's try that! [img src=file/]
             New I will add few similar files [img src=file tint=#FF0000/][img src=file tint=#00FF00/][img src=file tint=#0000FF/]
             And now - error flag = [img src=faile/] and error flag with color [img src=faile tint=#00FFFF/]
@@ -67,6 +72,4 @@ class MainActivity : CatActivity<ActivityMainBinding>() {
                 toast(msg)
             }
     }
-
-    override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
 }

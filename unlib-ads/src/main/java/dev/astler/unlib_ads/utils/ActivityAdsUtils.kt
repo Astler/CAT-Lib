@@ -1,7 +1,6 @@
 package dev.astler.unlib_ads.utils
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewbinding.ViewBinding
 import com.google.android.gms.ads.* // ktlint-disable no-wildcard-imports
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -247,7 +246,7 @@ fun NavigationView.addNoAdsItem() {
         inflateMenu(R.menu.ad_menu)
 }
 
-fun CatActivity<ViewBinding>.interstitialAdsShowTry() {
+fun CatActivity.interstitialAdsShowTry() {
     if (!canShowAds()) {
         adsLog("Can't show ads!")
         return

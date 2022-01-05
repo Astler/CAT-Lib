@@ -14,19 +14,29 @@
         <item name="contrastColorByTheme">@color/prefs_text_default_color</item>
         <item name="colorByTheme">@color/black</item>
 
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">
+            @android:color/transparent
+        </item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent
+        </item>
         <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
-        <item name="android:windowAllowEnterTransitionOverlap" tools:targetApi="lollipop">true</item>
-        <item name="android:windowAllowReturnTransitionOverlap" tools:targetApi="lollipop">true</item>
-        <item name="android:windowSharedElementEnterTransition" tools:targetApi="lollipop">@transition/enter_anim</item>
-        <item name="android:windowSharedElementExitTransition" tools:targetApi="lollipop">@transition/exit_anim</item>
+        <item name="android:windowAllowEnterTransitionOverlap" tools:targetApi="lollipop">true
+        </item>
+        <item name="android:windowAllowReturnTransitionOverlap" tools:targetApi="lollipop">true
+        </item>
+        <item name="android:windowSharedElementEnterTransition" tools:targetApi="lollipop">
+            @transition/enter_anim
+        </item>
+        <item name="android:windowSharedElementExitTransition" tools:targetApi="lollipop">
+            @transition/exit_anim
+        </item>
         <item name="android:fitsSystemWindows">false</item>
 
         <item name="materialButtonStyle">@style/MaterialButtonUnlib</item>
         <item name="linearProgressIndicatorStyle">@style/Widget.App.CircularProgressIndicator</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
-
+    
     <style name="MaterialButtonUnlib" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/orange_dark</item>
     </style>

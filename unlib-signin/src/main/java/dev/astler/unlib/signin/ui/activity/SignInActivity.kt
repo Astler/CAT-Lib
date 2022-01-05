@@ -30,10 +30,14 @@ enum class CatSignInMode {
     }
 }
 
-open class SignInActivity : CatActivity<SignInLayoutBinding>(), SignInActivityListener {
+open class SignInActivity : CatActivity(), SignInActivityListener {
+
+    lateinit var mViewBinding: SignInLayoutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mViewBinding = SignInLayoutBinding.inflate(layoutInflater)
 
         setContentView(mViewBinding.root)
 
@@ -134,6 +138,4 @@ open class SignInActivity : CatActivity<SignInLayoutBinding>(), SignInActivityLi
             infoLog("No Active Users!")
         }
     }
-
-    override fun getViewBinding() = SignInLayoutBinding.inflate(layoutInflater)
 }

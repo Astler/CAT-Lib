@@ -9,7 +9,7 @@ import dev.astler.unlib_test.R
 import dev.astler.unlib_test.activity.ads.AdsOpenItemListActivity
 import dev.astler.unlib_test.databinding.ActivityMainBinding
 
-class ShortcodeTextActivity : CatActivity<ActivityMainBinding>() {
+class ShortcodeTextActivity : CatActivity() {
 
     companion object {
         private const val TARGET_SCAlE = 1f
@@ -17,8 +17,12 @@ class ShortcodeTextActivity : CatActivity<ActivityMainBinding>() {
         private const val SCALE_ANIMATION_DURATION = 800L
     }
 
+    private lateinit var mViewBinding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mViewBinding = ActivityMainBinding.inflate(layoutInflater)
 
         findViewById<SplashView>(R.id.splash_view)
             .animateLogo()
@@ -49,6 +53,4 @@ class ShortcodeTextActivity : CatActivity<ActivityMainBinding>() {
             true
         }
     }
-
-    override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
 }

@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import androidx.viewbinding.ViewBinding
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -26,8 +26,8 @@ interface ActivityInterface {
     fun toggleToolbar(pIsToolbarVisible: Boolean) {}
 }
 
-abstract class CatActivity<VB : ViewBinding> :
-    CatBindingActivity<VB>(),
+abstract class CatActivity :
+    AppCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener,
     ActivityInterface {
 
