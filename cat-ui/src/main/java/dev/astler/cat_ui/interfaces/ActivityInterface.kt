@@ -7,5 +7,5 @@ interface ActivityInterface : CoreFragmentInterface {
 
     fun setToolbarTitle(title: String)
     fun setToolbarElevationEnabled(pElevationEnabled: Boolean) {}
-    fun setToolbarVisibility(pIsToolbarVisible: Boolean) {}
+    fun toggleToolbar(pIsToolbarVisible: Boolean) {}
 }

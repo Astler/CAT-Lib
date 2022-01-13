@@ -12,19 +12,11 @@ import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import dev.astler.cat_ui.appResumeTime
 import dev.astler.cat_ui.cStartTime
+import dev.astler.cat_ui.interfaces.ActivityInterface
 import dev.astler.unlib.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.data.RemoteConfig
 import dev.astler.unlib.utils.infoLog
 import java.util.* // ktlint-disable no-wildcard-imports
-
-interface ActivityInterface {
-    fun backPressed(endAction: () -> Unit = {})
-    fun setCurrentFragment(fragment: Fragment)
-    fun setToolbarTitle(title: String)
-
-    fun setToolbarElevationEnabled(pElevationEnabled: Boolean) {}
-    fun toggleToolbar(pIsToolbarVisible: Boolean) {}
-}
 
 abstract class CatActivity :
     AppCompatActivity(),
@@ -130,6 +122,4 @@ abstract class CatActivity :
     }
 
     override fun setToolbarTitle(title: String) {}
-
-    override fun backPressed(endAction: () -> Unit) {}
 }
