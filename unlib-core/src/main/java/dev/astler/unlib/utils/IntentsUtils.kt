@@ -15,14 +15,14 @@ import dev.astler.unlib.cRegistryKey
 import dev.astler.unlib.core.R
 import java.io.File
 import java.io.FileInputStream
-import java.io.FileNotFoundException
 import java.io.FileOutputStream
 
 class ImagePicker(
     pActivityResultRegistry: ActivityResultRegistry,
     pCallback: (pImageUri: Uri?) -> Unit
 ) {
-    private val mGetContent: ActivityResultLauncher<String> = pActivityResultRegistry.register(cRegistryKey, ActivityResultContracts.GetContent(), pCallback)
+    private val mGetContent: ActivityResultLauncher<String> =
+        pActivityResultRegistry.register(cRegistryKey, ActivityResultContracts.GetContent(), pCallback)
 
     fun pickImage() {
         mGetContent.launch(cMimetypeImages)
@@ -56,7 +56,7 @@ fun Context.openWebUrl(pUrl: String) {
 }
 
 fun Context.shareApp(pAppId: String, pShareText: String) {
-    try {
+    trySimple {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
@@ -64,19 +64,17 @@ fun Context.shareApp(pAppId: String, pShareText: String) {
         shareMessage = "${shareMessage}https://play.google.com/store/apps/details?id=$pAppId"
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share)))
-    } catch (e: Exception) {
-        infoLog("UNLIB: Error while creating share app task: $e")
     }
 }
 
 fun Context.shareText(pText: CharSequence) {
-    try {
-        val intentShare = Intent(Intent.ACTION_SEND)
-        intentShare.type = "text/plain"
-        intentShare.putExtra(Intent.EXTRA_TEXT, pText)
-        startActivity(intentShare)
-    } catch (e: Exception) {
-        infoLog("UNLIB: Error while creating share text task: $e")
+    trySimple {
+        startActivity(
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, pText)
+            }
+        )
     }
 }
 
@@ -85,7 +83,7 @@ fun Context.shareImageByUri(uri: Uri) {
     val bitmap = BitmapFactory.decodeStream(fis)
     fis.close()
 
-    try {
+    trySimple {
         val file = File("${this.cacheDir}/shareImage.png")
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(file))
         val contentUri = FileProvider.getUriForFile(this, this.packageName + ".provider", file)
@@ -95,8 +93,6 @@ fun Context.shareImageByUri(uri: Uri) {
         shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
         shareIntent.type = "image/*"
         this.startActivity(Intent.createChooser(shareIntent, "Share Image"))
-    } catch (e: FileNotFoundException) {
-        infoLog("UNLIB: Error while creating share image by uri $uri task: $e")
     }
 }
 

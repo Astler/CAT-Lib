@@ -10,7 +10,7 @@ import java.nio.channels.FileChannel
 import java.nio.charset.Charset
 
 fun Context.writeToFileInFolder(pFileData: String, pFileName: String, pNameFolder: String = "", pFileType: String = ".json") {
-    try {
+    trySimple {
         val nFile = if (pNameFolder.isNotEmpty()) {
             val nDir = File(filesDir.absolutePath + "/$pNameFolder")
             if (!nDir.exists()) nDir.mkdir()
@@ -22,8 +22,6 @@ fun Context.writeToFileInFolder(pFileData: String, pFileName: String, pNameFolde
         val outputStreamWriter = OutputStreamWriter(nFile.outputStream())
         outputStreamWriter.write(pFileData)
         outputStreamWriter.close()
-    } catch (e: IOException) {
-        infoLog("UNLI: File write failed: $e")
     }
 }
 
@@ -84,7 +82,7 @@ fun File.copySingleFile(destFile: File) {
 }
 
 fun Context.readFileFromRaw(pFileId: Int, pErrorReturn: String = ""): String {
-    return try {
+    return tryWithDefault(pErrorReturn) {
         val inputStream = resources.openRawResource(pFileId)
         val size = inputStream.available()
         val byteArray = ByteArray(size)
@@ -92,14 +90,11 @@ fun Context.readFileFromRaw(pFileId: Int, pErrorReturn: String = ""): String {
         inputStream.close()
 
         String(byteArray, Charset.defaultCharset())
-    } catch (e: Exception) {
-        infoLog("UNLIB: Error while reading raw file $e")
-        pErrorReturn
     }
 }
 
 fun File.readFileFromFiles(): String {
-    return try {
+    return tryWithDefault("I can\'t read this file! $absolutePath") {
         val inputStream = inputStream()
         val size = inputStream.available()
         val byteArray = ByteArray(size)
@@ -107,8 +102,6 @@ fun File.readFileFromFiles(): String {
         inputStream.close()
 
         String(byteArray, Charset.defaultCharset())
-    } catch (e: Exception) {
-        "I can\'t read this file! $absolutePath"
     }
 }
 
@@ -119,7 +112,7 @@ fun Context.getBitmapFromAsset(strName: String): Bitmap? {
 }
 
 fun Context.readFileFromAssets(path: String): String {
-    return try {
+    return tryWithDefault("Error $path") {
         val inputStream = assets.open(path)
         val size = inputStream.available()
         val byteArray = ByteArray(size)
@@ -127,13 +120,11 @@ fun Context.readFileFromAssets(path: String): String {
         inputStream.close()
 
         String(byteArray, Charset.defaultCharset())
-    } catch (e: Exception) {
-        "SWW"
     }
 }
 
-fun Context.readFileFromFiles(pFileWithPath: String): String {
-    return try {
+fun Context.readFileFromFiles(pFileWithPath: String, pFallback: String = ""): String {
+    return tryWithDefault(pFallback) {
         val inputStream = File(filesDir, pFileWithPath).inputStream()
         val size = inputStream.available()
         val byteArray = ByteArray(size)
@@ -141,8 +132,6 @@ fun Context.readFileFromFiles(pFileWithPath: String): String {
         inputStream.close()
 
         String(byteArray, Charset.defaultCharset())
-    } catch (e: Exception) {
-        "SWW"
     }
 }
 

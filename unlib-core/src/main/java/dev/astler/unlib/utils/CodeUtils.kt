@@ -1,5 +1,8 @@
 package dev.astler.unlib.utils
 
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
+
 fun <K, V> Map<K, V>.getValueOrDefault(key: K, default: V): V {
     val nValue = if (containsKey(key)) {
         get(key)
@@ -13,8 +16,20 @@ fun <K, V> Map<K, V>.getValueOrDefault(key: K, default: V): V {
 fun trySimple(pAction: () -> Unit) {
     try {
         pAction()
-    } catch (pException: Exception) {
-        errorLog("Exception! ${pException.message}")
+    } catch (e: Exception) {
+        Firebase.crashlytics.recordException(e)
+        errorLog("Exception! ${e.message}")
+    }
+}
+
+fun tryFinally(pAction: () -> Unit, pFinally: () -> Unit) {
+    try {
+        pAction()
+    } catch (e: Exception) {
+        Firebase.crashlytics.recordException(e)
+        errorLog("Exception! ${e.message}")
+    } finally {
+        pFinally()
     }
 }
 
@@ -25,8 +40,9 @@ fun <B, T : Any> tryWithParameters(
 ): T? {
     return try {
         pAction(pTryParameter)
-    } catch (pException: Exception) {
-        errorLog("Exception! ${pException.message}")
+    } catch (e: Exception) {
+        Firebase.crashlytics.recordException(e)
+        errorLog("Exception! ${e.message}")
         pAction(pCatchParameter)
     }
 }
@@ -37,8 +53,9 @@ fun <T> tryWithNullDefault(
 ): T? {
     return try {
         pAction()
-    } catch (pException: Exception) {
-        errorLog("Exception! ${pException.message}")
+    } catch (e: Exception) {
+        Firebase.crashlytics.recordException(e)
+        errorLog("Exception! ${e.message}")
         pFallBack
     }
 }
@@ -49,8 +66,9 @@ fun <T> tryWithDefault(
 ): T {
     return try {
         pAction()
-    } catch (pException: Exception) {
-        errorLog("Exception! ${pException.message}")
+    } catch (e: Exception) {
+        Firebase.crashlytics.recordException(e)
+        errorLog("Exception! ${e.message}")
         pFallBack
     }
 }

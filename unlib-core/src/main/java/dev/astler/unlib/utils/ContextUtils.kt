@@ -4,7 +4,6 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
@@ -80,11 +79,9 @@ fun Context.vibrate(pVibrationTime: Long = 40L) {
 }
 
 fun Context.isPackageInstalled(packageName: String): Boolean {
-    return try {
+    return tryWithDefault(false) {
         packageManager.getPackageInfo(packageName, 0)
         true
-    } catch (e: PackageManager.NameNotFoundException) {
-        false
     }
 }
 
