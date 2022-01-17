@@ -14,7 +14,7 @@
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="8dp">
+        android:paddingBottom="16dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
@@ -52,7 +52,6 @@
         android:fadingEdge="horizontal"
         android:fadingEdgeLength="20dp"
         android:paddingStart="16dp"
-        android:paddingTop="8dp"
         android:paddingEnd="16dp"
         android:requiresFadingEdge="vertical" />
 </LinearLayout>
