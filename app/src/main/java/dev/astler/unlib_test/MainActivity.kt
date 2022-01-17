@@ -37,7 +37,7 @@ class MainActivity : CatActivity() {
             .setDuration(SCALE_ANIMATION_DURATION)
             .start()
 
-        val nText = """
+        val nText = """ Папка: [ft text=ASTLER = Vlad params=~tf_b/]
             😶‍🌫️, 🧔🏻‍♀️, 🧑🏿‍❤️‍🧑🏾
             Okay. Let's try that! [img src=file/]
             New I will add few similar files [img src=file tint=#FF0000/][img src=file tint=#00FF00/][img src=file tint=#0000FF/]

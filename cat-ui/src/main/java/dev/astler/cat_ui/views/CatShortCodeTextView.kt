@@ -14,11 +14,11 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.text.toSpannable
 import dev.astler.cat_ui.R
-import dev.astler.cat_ui.views.custom.VerticalImageSpan
-import dev.astler.unlib.gPreferencesTool
 import dev.astler.cat_ui.utils.getDrawableByName
-import dev.astler.unlib.utils.infoLog
+import dev.astler.cat_ui.views.custom.VerticalImageSpan
 import dev.astler.cat_ui.views.span.CustomFancyTextSpan
+import dev.astler.unlib.gPreferencesTool
+import dev.astler.unlib.utils.infoLog
 import java.util.regex.Pattern
 
 open class CatShortCodeTextView @JvmOverloads constructor(
@@ -65,7 +65,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         var innerSpan = pSpannable
 
         val nPattern = Pattern
-            .compile("\\Q[ft text=\\E([a-zA-Z0-9А-Яа-яё{}/.,:@_ ]+?)(?:(?: color=([a-zA-Z0-9#._]+?))|(?:))(?:(?: params=([~a-zA-Z0-9#._]+?))|(?:))/]\\Q\\E")
+            .compile("\\Q[ft text=\\E([a-zA-Z0-9А-Яа-яё{}/.,=:@_ ]+?)(?:(?: color=([a-zA-Z0-9#._]+?))|(?:))(?:(?: params=([~a-zA-Z0-9#._]+?))|(?:))/]\\Q\\E")
 
         var nMatcher = nPattern.matcher(innerSpan)
 
