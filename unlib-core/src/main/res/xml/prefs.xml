@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto">
-<PreferenceCategory
+    <Preference
+        android:key="dayWithoutAds"
+        android:title="@string/disable_ads"
+        app:iconSpaceReserved="false" />
+
+    <PreferenceCategory
     android:title="@string/main_prefs"
     app:allowDividerBelow="true"
     app:iconSpaceReserved="false">
@@ -38,11 +43,6 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:title="@string/language"
         app:iconSpaceReserved="false"
         app:useSimpleSummaryProvider="true"/>
-
-    <Preference
-        android:key="dayWithoutAds"
-        app:iconSpaceReserved="false"
-        android:title="@string/disable_ads" />
 
 </PreferenceCategory>
 

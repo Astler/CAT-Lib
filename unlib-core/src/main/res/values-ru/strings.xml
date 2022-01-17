@@ -7,7 +7,7 @@
     <string name="buy_pro">Купить ПРО версию</string>
     <string name="watch_ads">Отключить сегодня</string>
 
-    <string name="disable_ads">Отключить рекламу</string>
+    <string name="disable_ads">Отключить рекламу на день</string>
     <string name="language">Язык приложения</string>
 
     <string name="something_went_wrong">Что-то пошло не так…</string>
