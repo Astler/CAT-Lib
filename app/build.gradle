@@ -5,11 +5,10 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
-    id 'com.guardsquare.proguard'
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     buildFeatures {
         viewBinding true
@@ -18,7 +17,7 @@ android {
     defaultConfig {
         applicationId "dev.astler.unlib_test"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
 
@@ -36,14 +35,6 @@ android {
         }
     }
     namespace 'dev.astler.unlib_test'
-}
-
-proguard {
-    configurations {
-        release {
-            defaultConfiguration 'proguard-android-optimize.txt'
-        }
-    }
 }
 
 dependencies {
