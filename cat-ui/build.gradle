@@ -16,7 +16,7 @@ project.afterEvaluate {
 
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     buildFeatures {
         viewBinding true
@@ -24,10 +24,9 @@ android {
 
     defaultConfig {
         minSdk 21
-        targetSdk 31
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {

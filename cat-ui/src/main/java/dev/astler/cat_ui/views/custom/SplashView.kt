@@ -82,11 +82,11 @@ class SplashView @JvmOverloads constructor(
 
             // Completely hide view when animation ends
             addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                     this@SplashView.visibility = GONE
                 }
 
-                override fun onAnimationCancel(animation: Animator?) {
+                override fun onAnimationCancel(animation: Animator) {
                     this@SplashView.visibility = GONE
                 }
             })
