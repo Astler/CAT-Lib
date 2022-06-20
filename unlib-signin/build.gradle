@@ -44,13 +44,14 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'dev.astler.unlib.signin'
 }
 
 dependencies {
     implementation project(':unlib-core')
     implementation project(':cat-ui')
 
-    api platform('com.google.firebase:firebase-bom:29.0.2')
+    api platform('com.google.firebase:firebase-bom:30.1.0')
     api 'com.google.firebase:firebase-auth-ktx'
-    api 'com.google.android.gms:play-services-auth:20.0.0'
+    api 'com.google.android.gms:play-services-auth:20.2.0'
 }

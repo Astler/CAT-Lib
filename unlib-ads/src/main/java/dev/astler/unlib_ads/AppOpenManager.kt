@@ -66,7 +66,9 @@ class AppOpenManager(myApplication: AdsUnLibApp) :
 
             appOpenAd?.fullScreenContentCallback = fullScreenContentCallback
 
-            appOpenAd?.show(currentActivity)
+            currentActivity?.let {
+                appOpenAd?.show(it)
+            }
         } else {
             fetchAd()
         }
@@ -90,7 +92,7 @@ class AppOpenManager(myApplication: AdsUnLibApp) :
 
         AppOpenAd.load(
             mApplication, gAppConfig.mStartAdId, adRequest,
-            AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT, loadCallback
+            AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT, loadCallback as AppOpenAdLoadCallback
         )
     }
 

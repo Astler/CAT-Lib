@@ -7,7 +7,7 @@ import androidx.core.os.ConfigurationCompat
 import androidx.preference.PreferenceManager
 import dev.astler.unlib.core.R
 
-open class PreferencesTool(context: Context?) {
+open class PreferencesTool(context: Context) {
 
     companion object {
         const val appThemeKey = "appTheme"

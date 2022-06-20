@@ -35,13 +35,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    namespace 'dev.astler.unlib_ads'
 }
 
 dependencies {
     implementation project(':unlib-core')
     implementation project(':cat-ui')
 
-    api 'com.google.android.gms:play-services-ads:20.5.0'
+    api 'com.google.android.gms:play-services-ads:21.0.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

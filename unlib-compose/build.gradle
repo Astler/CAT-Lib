@@ -60,13 +60,14 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    namespace 'dev.astler.unlib_compose'
 }
 
 dependencies {
     implementation project(':unlib-core')
     implementation project(':cat-ui')
 
-    api 'androidx.core:core-ktx:1.7.0'
+    api 'androidx.core:core-ktx:1.8.0'
 
     api "androidx.compose.ui:ui-tooling:$compose_version"
     api "androidx.compose.ui:ui-tooling-preview:$compose_version"

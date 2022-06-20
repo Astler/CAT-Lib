@@ -35,6 +35,7 @@ android {
             minifyEnabled false
         }
     }
+    namespace 'dev.astler.unlib_test'
 }
 
 proguard {
