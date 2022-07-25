@@ -1,7 +1,9 @@
 package dev.astler.unlib.signin.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dev.astler.cat_ui.fragments.CatFragment
@@ -10,9 +12,12 @@ import dev.astler.unlib.signin.databinding.SignInLayoutBinding
 import dev.astler.unlib.signin.utils.authWithEmailAndPassword
 import dev.astler.unlib.signin.utils.signInWithGoogle
 
-class SignInFragment(mId: Int = R.layout.sign_in_layout) : CatFragment(mId) {
+class SignInFragment : CatFragment<SignInLayoutBinding>() {
 
     private val mFragmentBinding by viewBinding<SignInLayoutBinding>()
+
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> SignInLayoutBinding
+        get() = SignInLayoutBinding::inflate
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,8 +40,5 @@ class SignInFragment(mId: Int = R.layout.sign_in_layout) : CatFragment(mId) {
                 }
             }
         }
-    }
-
-    override fun onFragmentBackPressed(endAction: () -> Unit) {
     }
 }

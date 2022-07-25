@@ -17,7 +17,7 @@ enum class ListInsetsType {
     SYSTEM_WITH_ACTION_BAR, SYSTEM, TOP, TOP_WITH_ACTION_BAR, BOTTOM, DISMISS
 }
 
-abstract class CatListFragment : CatFragment(R.layout.recycler_view_fragment), RecyclerAdapterSizeListener {
+abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(R.layout.recycler_view_fragment), RecyclerAdapterSizeListener {
 
     private lateinit var mRecyclerViewFragmentBinding: RecyclerViewFragmentBinding
     lateinit var mStateLayout: CatStateLayout
@@ -36,6 +36,9 @@ abstract class CatListFragment : CatFragment(R.layout.recycler_view_fragment), R
     }
 
     open fun onFABClick() {}
+
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> RecyclerViewFragmentBinding
+        get() = RecyclerViewFragmentBinding::inflate
 
     override fun onCreateView(
         inflater: LayoutInflater,

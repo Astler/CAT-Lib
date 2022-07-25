@@ -1,7 +1,9 @@
 package dev.astler.cat_ui.fragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -11,7 +13,7 @@ import dev.astler.cat_ui.databinding.FragmentViewPager2Binding
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.cat_ui.utils.views.setStatusPaddingForView
 
-abstract class CatViewPagerFragment(pLayoutId: Int = R.layout.fragment_view_pager2) : CatFragment(pLayoutId) {
+abstract class CatViewPagerFragment : CatFragment<FragmentViewPager2Binding>() {
 
     open val mSelectedPageSaveName: String = "selected_page"
     open val mSelectedDefaultValue: Int = 0
@@ -20,24 +22,28 @@ abstract class CatViewPagerFragment(pLayoutId: Int = R.layout.fragment_view_page
 
     private val mFragmentWorldEditBinding by viewBinding<FragmentViewPager2Binding>()
 
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentViewPager2Binding
+        get() = FragmentViewPager2Binding::inflate
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(mFragmentWorldEditBinding) {
             viewPager.adapter = getAdapter()
 
-            val nLastChosenItem = gPreferencesTool.getInt(mSelectedPageSaveName, mSelectedDefaultValue)
+            val nLastChosenItem =
+                gPreferencesTool.getInt(mSelectedPageSaveName, mSelectedDefaultValue)
 
             viewPager.setCurrentItem(nLastChosenItem, false)
 
             viewPager.registerOnPageChangeCallback(object :
-                    ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        super.onPageSelected(position)
+                ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
 
-                        gPreferencesTool.edit(mSelectedPageSaveName, position)
-                    }
-                })
+                    gPreferencesTool.edit(mSelectedPageSaveName, position)
+                }
+            })
 
             TabLayoutMediator(tabView, viewPager) { tab, position ->
             }.attach()
