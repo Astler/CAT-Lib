@@ -35,6 +35,10 @@ abstract class CatActivity :
         packageName.replace(".", "_")
     }
 
+    override fun callBackPressed() {
+        onBackPressedDispatcher.onBackPressed()
+    }
+
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(AppSettings.loadLocale(newBase))
     }

@@ -9,9 +9,12 @@ import dev.astler.cat_ui.utils.getStringResource
 abstract class CatFragment(pLayoutId: Int = 0) : Fragment(pLayoutId), CoreFragmentInterface {
 
     var coreListener: ActivityInterface? = null
+    protected lateinit var safeContext: Context
 
     override fun onAttach(pContext: Context) {
         super.onAttach(pContext)
+
+        safeContext = pContext
 
         if (pContext is ActivityInterface)
             coreListener = pContext
@@ -22,12 +25,11 @@ abstract class CatFragment(pLayoutId: Int = 0) : Fragment(pLayoutId), CoreFragme
     }
 
     override fun onResume() {
-
         super.onResume()
         coreListener?.setCurrentFragment(this)
     }
 
     fun getStringByName(pName: String, pReturnDef: String = ""): String {
-        return requireContext().getStringResource(pName, returnDef = pReturnDef)
+        return safeContext.getStringResource(pName, returnDef = pReturnDef)
     }
 }
