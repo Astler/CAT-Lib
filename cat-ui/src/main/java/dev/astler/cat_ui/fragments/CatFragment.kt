@@ -18,7 +18,7 @@ abstract class CatFragment<VB : ViewBinding>(pLayoutId: Int = 0) : Fragment(pLay
 
     protected var coreListener: ActivityInterface? = null
     protected lateinit var safeContext: Context
-    protected var binding = _binding!!
+    protected val binding get() = _binding!!
 
     abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
     open val addMenuProvider: Boolean = true
