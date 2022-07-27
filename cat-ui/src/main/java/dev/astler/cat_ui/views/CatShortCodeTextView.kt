@@ -1,17 +1,19 @@
 package dev.astler.cat_ui.views
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
+import android.os.Bundle
+import android.os.Parcelable
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
 import android.util.AttributeSet
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.graphics.drawable.toBitmap
-import androidx.core.graphics.drawable.toDrawable
+import androidx.core.text.getSpans
 import androidx.core.text.toSpannable
 import dev.astler.cat_ui.R
 import dev.astler.cat_ui.utils.getDrawableByName
@@ -19,6 +21,7 @@ import dev.astler.cat_ui.views.custom.VerticalImageSpan
 import dev.astler.cat_ui.views.span.CustomFancyTextSpan
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.infoLog
+import kotlinx.coroutines.*
 import java.util.regex.Pattern
 
 open class CatShortCodeTextView @JvmOverloads constructor(
@@ -32,55 +35,128 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         private val spannableFactory = Spannable.Factory.getInstance()
     }
 
-    private var iconSize = 18f
+    private var emptyDrawable: Drawable? = null
+
+    private var _spannableData: Spannable? = null
+    protected val spannableData: Spannable get() = _spannableData!!
+
+    protected var iconSize = 18f
+    protected var scope: CoroutineScope? = null
+
+    open val emptyIconId: Int = R.drawable.ic_splash_logo
 
     init {
         initText(attrs)
+
+        freezesText = true
+
+        scope = CoroutineScope(Job() + Dispatchers.Main)
 
         val typedArray =
             context.theme.obtainStyledAttributes(attrs, R.styleable.CatTextView, 0, 0)
 
         val textSizeModifier =
             typedArray.getInteger(R.styleable.CatTextView_textSizeModifier, 0)
+
         iconSize = gPreferencesTool.mTextSize + textSizeModifier
+
+        emptyDrawable = ContextCompat.getDrawable(context, emptyIconId)
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        val bundle = Bundle()
+        bundle.putParcelable("superState", super.onSaveInstanceState())
+        bundle.putInt("height", height)
+        infoLog("HEIGHT = $height")
+
+        return bundle
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state is Bundle) {
+            height = state.getInt("height")
+            infoLog("HEIGHT = $height")
+            super.onRestoreInstanceState(state.getParcelable("superState"))
+        } else {
+            super.onRestoreInstanceState(state)
+        }
     }
 
     override fun setText(pText: CharSequence, type: BufferType) {
-        super.setText(replaceShortCodes(context, spannableFactory.newSpannable(pText)), BufferType.SPANNABLE)
+        if (pText.isEmpty() && _spannableData.isNullOrEmpty()) {
+            super.setText(pText, BufferType.NORMAL)
+            return
+        }
+
+        if (pText.contains("[") || pText.contains("]")) {
+            scope?.launch(Dispatchers.IO) {
+                val nText = processShortCodes(context, spannableFactory.newSpannable(pText))
+
+                withContext(Dispatchers.Main) {
+                    super.setText(nText, BufferType.SPANNABLE)
+                }
+            }
+        } else {
+            super.setText(pText, BufferType.NORMAL)
+        }
     }
 
-    open fun replaceShortCodes(context: Context, pSpannable: Spannable): Spannable {
-        var nSpannable = pSpannable
-
-        if (nSpannable.contains("[ft"))
-            nSpannable = addFancyText(nSpannable)
-
-        if (nSpannable.contains("[img"))
-            addImages(context, nSpannable)
-
-        return nSpannable
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        scope?.cancel()
     }
 
-    private fun addFancyText(pSpannable: Spannable): Spannable {
-        var innerSpan = pSpannable
+    protected fun showSpannableText() {
+        setText(spannableData, BufferType.SPANNABLE)
+    }
 
+    protected fun updateSpannable(spannable: Spannable) {
+        _spannableData = spannable;
+    }
+
+    open suspend fun processShortCodes(context: Context, pSpannable: Spannable): Spannable {
+        if (!_spannableData.isNullOrEmpty()) return spannableData
+
+        _spannableData = pSpannable
+
+        if (spannableData.contains("[ft"))
+            addFancyText()
+
+        if (spannableData.contains("[img"))
+            addImages(context)
+
+        return spannableData
+    }
+
+    open fun getTypefaceByParams(pKey: String): Typeface? {
+        return when (pKey) {
+            "b" -> ResourcesCompat.getFont(context, R.font.google_sans_bold)
+            // "m" -> ResourcesCompat.getFont(context, R.font.minecraft)
+            else -> null
+        }
+    }
+
+    protected open suspend fun addFancyText() {
         val nPattern = Pattern
-            .compile("\\Q[ft text=\\E([a-zA-Z0-9А-Яа-яё{}/.,=:@_ ]+?)(?:(?: color=([a-zA-Z0-9#._]+?))|(?:))(?:(?: params=([~a-zA-Z0-9#._]+?))|(?:))/]\\Q\\E")
+            .compile("\\Q[ft text=\\E([a-zA-Z\\dА-Яа-яё{}/.,=:@_ ]+?)(?:(?: color=([a-zA-Z\\d#._]+?))|(?:))(?:(?: params=([~a-zA-Z\\d#._]+?))|(?:))/]\\Q\\E")
 
-        var nMatcher = nPattern.matcher(innerSpan)
+        var nMatcher = nPattern.matcher(spannableData)
 
         while (nMatcher.find()) {
             var set = true
 
             for (
-                span in innerSpan.getSpans(
-                    nMatcher.start(),
-                    nMatcher.end(),
-                    CustomFancyTextSpan::class.java
-                )
+            span in spannableData.getSpans(
+                nMatcher.start(),
+                nMatcher.end(),
+                CustomFancyTextSpan::class.java
+            )
             ) {
-                if (innerSpan.getSpanStart(span) >= nMatcher.start() && innerSpan.getSpanEnd(span) <= nMatcher.end()) {
-                    innerSpan.removeSpan(span)
+                if (spannableData.getSpanStart(span) >= nMatcher.start() && spannableData.getSpanEnd(
+                        span
+                    ) <= nMatcher.end()
+                ) {
+                    spannableData.removeSpan(span)
                 } else {
                     set = false
                     break
@@ -88,13 +164,14 @@ open class CatShortCodeTextView @JvmOverloads constructor(
             }
 
             if (set) {
-                val resToBold = innerSpan.subSequence(nMatcher.start(1), nMatcher.end(1)).toString()
-                    .trim { it <= ' ' }
-                val nSecond = if (nMatcher.group(2) != null) innerSpan.subSequence(
+                val resToBold =
+                    spannableData.subSequence(nMatcher.start(1), nMatcher.end(1)).toString()
+                        .trim { it <= ' ' }
+                val nSecond = if (nMatcher.group(2) != null) spannableData.subSequence(
                     nMatcher.start(2),
                     nMatcher.end(2)
                 ).toString().trim { it <= ' ' } else ""
-                val nThird = if (nMatcher.group(3) != null) innerSpan.subSequence(
+                val nThird = if (nMatcher.group(3) != null) spannableData.subSequence(
                     nMatcher.start(3),
                     nMatcher.end(3)
                 ).toString().trim { it <= ' ' } else ""
@@ -142,15 +219,16 @@ open class CatShortCodeTextView @JvmOverloads constructor(
                 }
 
                 val nRemoveChars = 11 +
-                    (if (nColor != -1) 7 + nColorRaw.length else 0) +
-                    (if (nParamsRaw.isNotEmpty()) 9 + nParamsRaw.length else 0) +
-                    (if (nParamsMap.containsKey("s.after")) -(nParamsMap["s.after"] ?: "0").toInt() else 0)
+                        (if (nColor != -1) 7 + nColorRaw.length else 0) +
+                        (if (nParamsRaw.isNotEmpty()) 9 + nParamsRaw.length else 0) +
+                        (if (nParamsMap.containsKey("s.after")) -(nParamsMap["s.after"]
+                            ?: "0").toInt() else 0)
 
                 val nTypeface = if (nParamsMap.containsKey("tf")) {
                     getTypefaceByParams(nParamsMap["tf"] ?: "")
                 } else null
 
-                val sb = SpannableStringBuilder(innerSpan)
+                val sb = SpannableStringBuilder(spannableData)
 
                 sb.replace(nMatcher.start(), nMatcher.end(), resToBold)
 
@@ -160,85 +238,108 @@ open class CatShortCodeTextView @JvmOverloads constructor(
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
 
-                innerSpan = sb.toSpannable()
+                _spannableData = sb.toSpannable()
 
-                nMatcher = nPattern.matcher(innerSpan)
+                nMatcher = nPattern.matcher(spannableData)
             }
         }
-
-        return innerSpan
     }
 
-    open fun getTypefaceByParams(pKey: String): Typeface? {
-        return when (pKey) {
-            "b" -> ResourcesCompat.getFont(context, R.font.google_sans_bold)
-            // "m" -> ResourcesCompat.getFont(context, R.font.minecraft)
-            else -> null
-        }
-    }
+    protected open fun addImages(context: Context) {
+        scope?.launch(Dispatchers.IO) {
+            val nMatcher = Pattern
+                .compile("\\Q[img src=\\E([a-zA-Z\\d._]+?)(?:(?: tint=([a-zA-Z\\d#._]+?)\\Q/]\\E)|(?:\\Q/]\\E))")
+                .matcher(spannableData)
 
-    open fun addImages(context: Context, pSpannable: Spannable) {
-        val nMatcher = Pattern
-            .compile("\\Q[img src=\\E([a-zA-Z0-9._]+?)(?:(?: tint=([a-zA-Z0-9#._]+?)\\Q/]\\E)|(?:\\Q/]\\E))")
-            .matcher(pSpannable)
-
-        while (nMatcher.find()) {
-            var set = true
-            for (
-                span in pSpannable.getSpans(
+            while (nMatcher.find()) {
+                var set = true
+                for (
+                span in spannableData.getSpans(
                     nMatcher.start(),
                     nMatcher.end(),
                     ImageSpan::class.java
                 )
-            ) {
-                if (pSpannable.getSpanStart(span) >= nMatcher.start() && pSpannable.getSpanEnd(span) <= nMatcher.end()) {
-                    pSpannable.removeSpan(span)
-                } else {
-                    set = false
-                    break
-                }
-            }
-
-            val nImageResourceName =
-                pSpannable.subSequence(nMatcher.start(1), nMatcher.end(1)).toString()
-                    .trim { it <= ' ' }
-
-            val nTintColor = if (nMatcher.group(2) != null) {
-                pSpannable.subSequence(nMatcher.start(2), nMatcher.end(2)).toString()
-                    .trim { it <= ' ' }
-            } else ""
-
-            if (set) {
-                context.getDrawableByName(nImageResourceName)?.let {
-                    var nSize = (iconSize * context.resources.displayMetrics.density).toInt()
-
-                    if (nSize <= 0) {
-                        infoLog("Error! Bitmap size = $nSize")
-                        nSize = 1
+                ) {
+                    if (spannableData.getSpanStart(span) >= nMatcher.start() && spannableData.getSpanEnd(
+                            span
+                        ) <= nMatcher.end()
+                    ) {
+                        spannableData.removeSpan(span)
+                    } else {
+                        set = false
+                        break
                     }
+                }
 
-                    val nBitmapImg = Bitmap.createScaledBitmap(it.toBitmap(), nSize, nSize, false)
-                    val nDrawable = nBitmapImg?.toDrawable(context.resources)
+                val nImageResourceName =
+                    spannableData.subSequence(nMatcher.start(1), nMatcher.end(1)).toString()
+                        .trim { it <= ' ' }
 
-                    if (nTintColor.isNotEmpty())
-                        nDrawable?.let { bitmapDrawable ->
-                            DrawableCompat.setTint(bitmapDrawable, Color.parseColor(nTintColor))
-                        }
+                val nTintColor = if (nMatcher.group(2) != null) {
+                    spannableData.subSequence(nMatcher.start(2), nMatcher.end(2)).toString()
+                        .trim { it <= ' ' }
+                } else ""
 
-                    nDrawable?.setBounds(0, 0, nSize, nSize)
+                if (set) {
+                    val nSize = (iconSize * context.resources.displayMetrics.density).toInt()
 
-                    nDrawable?.let {
-                        val imageSpan = VerticalImageSpan(nDrawable)
+                    setImageSpanInPosition(
+                        emptyDrawable,
+                        nTintColor,
+                        nSize,
+                        nMatcher.start(),
+                        nMatcher.end()
+                    )
 
-                        pSpannable.setSpan(
-                            imageSpan,
+                    getShortCodeDrawable(nImageResourceName) {
+                        setImageSpanInPosition(
+                            it,
+                            nTintColor,
+                            nSize,
                             nMatcher.start(),
-                            nMatcher.end(),
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                            nMatcher.end()
                         )
                     }
                 }
             }
+
+            withContext(Dispatchers.Main) {
+                showSpannableText()
+            }
         }
+    }
+
+    protected open fun getShortCodeDrawable(pName: String, onComplete: (Drawable?) -> Unit) {
+        context.getDrawableByName(pName)?.let {
+            onComplete(it)
+        }
+    }
+
+    private fun setImageSpanInPosition(
+        drawable: Drawable?,
+        tintColor: String,
+        size: Int,
+        start: Int,
+        end: Int
+    ) {
+        if (drawable == null) return
+
+        if (tintColor.isNotEmpty())
+            DrawableCompat.setTint(drawable, Color.parseColor(tintColor))
+
+        drawable.setBounds(0, 0, size, size)
+
+        val imageSpan = VerticalImageSpan(drawable)
+
+        spannableData.getSpans<VerticalImageSpan>(start, end).forEach {
+            spannableData.removeSpan(it)
+        }
+
+        spannableData.setSpan(
+            imageSpan,
+            start,
+            end,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
     }
 }
