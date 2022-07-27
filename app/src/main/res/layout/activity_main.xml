@@ -16,6 +16,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <dev.astler.cat_ui.views.CatShortCodeTextView
+        android:id="@+id/test2"
+        android:text="Let\'s try that! [img src=file/]"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <dev.astler.cat_ui.views.CatTextView
         android:id="@+id/astler_test"
         android:layout_width="match_parent"

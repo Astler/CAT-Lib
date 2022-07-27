@@ -41,13 +41,15 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     protected val spannableData: Spannable get() = _spannableData!!
 
     protected var iconSize = 18f
-    protected val scope: CoroutineScope by lazy {
-        CoroutineScope(Job() + Dispatchers.Main)
-    }
+    protected var scope: CoroutineScope? = null
 
     open val emptyIconId: Int = R.drawable.ic_splash_logo
 
     init {
+        if (scope == null) {
+            scope = CoroutineScope(Job() + Dispatchers.Main)
+        }
+
         initText(attrs)
 
         freezesText = true
@@ -58,7 +60,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         val textSizeModifier =
             typedArray.getInteger(R.styleable.CatTextView_textSizeModifier, 0)
 
-        iconSize = gPreferencesTool.mTextSize + textSizeModifier
+        iconSize = if (!isInEditMode) gPreferencesTool.mTextSize else 18f + textSizeModifier
 
         emptyDrawable = ContextCompat.getDrawable(context, emptyIconId)
     }
@@ -83,6 +85,10 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     }
 
     override fun setText(pText: CharSequence, type: BufferType) {
+        if (scope == null) {
+            scope = CoroutineScope(Job() + Dispatchers.Main)
+        }
+
         if (pText.isEmpty() && _spannableData.isNullOrEmpty()) {
             super.setText(pText, BufferType.NORMAL)
             return

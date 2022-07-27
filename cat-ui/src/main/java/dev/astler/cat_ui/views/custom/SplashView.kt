@@ -4,7 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.* // ktlint-disable no-wildcard-imports
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateInterpolator
@@ -14,7 +14,7 @@ import dev.astler.cat_ui.utils.dpToPixels
 import dev.astler.cat_ui.utils.getColorFromAttr
 import dev.astler.cat_ui.utils.special.VectorDrawableParser
 import dev.astler.cat_ui.utils.views.getContextColor
-import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.unlib.utils.*
 
 class SplashView @JvmOverloads constructor(
     context: Context,
@@ -28,9 +28,13 @@ class SplashView @JvmOverloads constructor(
         isAntiAlias = true
 
         color = getContextColor(
-            if (context.isAppDarkTheme())
-                R.color.white
-            else R.color.default_background_dark
+            if (!isInEditMode) {
+                if (context.isAppDarkTheme())
+                    R.color.white
+                else R.color.default_background_dark
+            } else {
+                R.color.default_background_dark
+            }
         )
 
         style = Paint.Style.FILL
@@ -73,14 +77,12 @@ class SplashView @JvmOverloads constructor(
             duration = SCALE_ANIMATION_DURATION
             interpolator = AccelerateInterpolator()
 
-            // Update scale
             addUpdateListener {
                 scale = it.animatedValue as Float
                 requestLayout()
                 postInvalidate()
             }
 
-            // Completely hide view when animation ends
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     this@SplashView.visibility = GONE
@@ -94,7 +96,6 @@ class SplashView @JvmOverloads constructor(
             start()
         }
 
-        // Alpha animation
         ValueAnimator.ofInt(255, 1).apply {
             duration = ALPHA_ANIMATION_DURATION
             interpolator = AccelerateInterpolator()
@@ -113,13 +114,10 @@ class SplashView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        // Draw background color to hide content
         canvas.drawColor(backgroundColor)
 
-        // Draw a "cutout" in the background
         canvas.drawCircle(width / 2f, height / 2f, MASK_FINAL_RADIUS * this.scale, maskPaint)
 
-        // Draw logo
         drawLogo(
             canvas,
             scaledLogoWidthHeight,
