@@ -41,7 +41,9 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     protected val spannableData: Spannable get() = _spannableData!!
 
     protected var iconSize = 18f
-    protected var scope: CoroutineScope? = null
+    protected val scope: CoroutineScope by lazy {
+        CoroutineScope(Job() + Dispatchers.Main)
+    }
 
     open val emptyIconId: Int = R.drawable.ic_splash_logo
 
@@ -49,8 +51,6 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         initText(attrs)
 
         freezesText = true
-
-        scope = CoroutineScope(Job() + Dispatchers.Main)
 
         val typedArray =
             context.theme.obtainStyledAttributes(attrs, R.styleable.CatTextView, 0, 0)
@@ -61,8 +61,6 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         iconSize = gPreferencesTool.mTextSize + textSizeModifier
 
         emptyDrawable = ContextCompat.getDrawable(context, emptyIconId)
-
-        setText(text)
     }
 
     override fun onSaveInstanceState(): Parcelable {
