@@ -24,6 +24,8 @@ class ShortcodeTextActivity : CatActivity() {
 
         mViewBinding = ActivityMainBinding.inflate(layoutInflater)
 
+        setContentView(mViewBinding.root)
+
         findViewById<SplashView>(R.id.splash_view)
             .animateLogo()
 

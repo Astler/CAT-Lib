@@ -326,7 +326,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         }
     }
 
-    private fun setImageSpanInPosition(
+    protected open fun setImageSpanInPosition(
         drawable: Drawable?,
         tintColor: String,
         size: Int,
@@ -342,9 +342,9 @@ open class CatShortCodeTextView @JvmOverloads constructor(
 
         val imageSpan = VerticalImageSpan(drawable)
 
-        spannableData.getSpans<VerticalImageSpan>(start, end).forEach {
-            spannableData.removeSpan(it)
-        }
+//        spannableData.getSpans<VerticalImageSpan>(start, end).forEach {
+//            spannableData.removeSpan(it)
+//        }
 
         spannableData.setSpan(
             imageSpan,
