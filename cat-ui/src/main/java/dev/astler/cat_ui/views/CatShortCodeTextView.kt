@@ -111,13 +111,15 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     }
 
     protected fun updateSpannable(spannable: Spannable) {
-        _spannableData = spannable;
+        _spannableData = spannable
     }
 
-    open suspend fun processShortCodes(context: Context, pSpannable: Spannable): Spannable {
-        if (!_spannableData.isNullOrEmpty()) return spannableData
+    protected fun getSpannable() = _spannableData
 
-        _spannableData = pSpannable
+    open suspend fun processShortCodes(context: Context, pSpannable: Spannable): Spannable {
+        if (!getSpannable().isNullOrEmpty()) return spannableData
+
+        updateSpannable(pSpannable)
 
         if (spannableData.contains("[ft"))
             addFancyText()
@@ -309,7 +311,10 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         }
     }
 
-    protected open fun getShortCodeDrawable(pName: String, onComplete: (Drawable?) -> Unit) {
+    protected open suspend fun getShortCodeDrawable(
+        pName: String,
+        onComplete: (Drawable?) -> Unit
+    ) {
         context.getDrawableByName(pName)?.let {
             onComplete(it)
         }
