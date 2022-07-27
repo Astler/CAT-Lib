@@ -61,6 +61,8 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         iconSize = gPreferencesTool.mTextSize + textSizeModifier
 
         emptyDrawable = ContextCompat.getDrawable(context, emptyIconId)
+
+        setText(text)
     }
 
     override fun onSaveInstanceState(): Parcelable {
