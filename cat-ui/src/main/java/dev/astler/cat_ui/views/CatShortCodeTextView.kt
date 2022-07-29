@@ -83,12 +83,6 @@ open class CatShortCodeTextView @JvmOverloads constructor(
             height = state.getInt("height")
             lang = state.getString("lastLang") ?: ""
 
-            if (!isInEditMode) {
-                if (gPreferencesTool.appLanguage != lang) {
-                    _spannableData = null
-                }
-            }
-
             super.onRestoreInstanceState(state.getParcelable("superState"))
         } else {
             super.onRestoreInstanceState(state)
@@ -134,7 +128,13 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     protected fun getSpannable() = _spannableData
 
     open suspend fun processShortCodes(context: Context, pSpannable: Spannable): Spannable {
-        if (!getSpannable().isNullOrEmpty()) return spannableData
+        if (!getSpannable().isNullOrEmpty()) {
+            if (!isInEditMode) {
+                if (gPreferencesTool.appLanguage == lang) {
+                    return spannableData
+                }
+            }
+        }
 
         updateSpannable(pSpannable)
 
