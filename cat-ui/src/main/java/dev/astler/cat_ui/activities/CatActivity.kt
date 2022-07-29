@@ -109,6 +109,7 @@ abstract class CatActivity :
                 when (gPreferencesTool.appLanguage) {
                     "ru" -> Locales.Russian
                     "ua" -> Locales.Ukrainian
+                    "en" -> Locales.English
                     else -> ConfigurationCompat.getLocales(Resources.getSystem().configuration)
                         .get(0) ?: Locale.ENGLISH
                 }
