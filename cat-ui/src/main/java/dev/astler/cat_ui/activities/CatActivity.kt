@@ -1,25 +1,29 @@
 package dev.astler.cat_ui.activities
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
+import com.zeugmasolutions.localehelper.Locales
 import dev.astler.cat_ui.appResumeTime
 import dev.astler.cat_ui.cStartTime
 import dev.astler.cat_ui.interfaces.ActivityInterface
-import dev.astler.unlib.* // ktlint-disable no-wildcard-imports
+import dev.astler.unlib.PreferencesTool
 import dev.astler.unlib.data.RemoteConfig
+import dev.astler.unlib.gPreferencesTool
+import dev.astler.unlib.getDefaultNightMode
 import dev.astler.unlib.utils.infoLog
-import java.util.* // ktlint-disable no-wildcard-imports
+import java.util.*
 
 abstract class CatActivity :
-    AppCompatActivity(),
+    LocaleAwareCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener,
     ActivityInterface {
 
@@ -39,16 +43,11 @@ abstract class CatActivity :
         onBackPressedDispatcher.onBackPressed()
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(AppSettings.loadLocale(newBase))
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         mRemoteConfig = RemoteConfig.getInstance()
 
-        UnliApp.getInstance().initAppLanguage(this)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         gPreferencesTool.loadDefaultPreferences(this)
@@ -106,7 +105,14 @@ abstract class CatActivity :
         }
 
         if (key == PreferencesTool.appLocaleKey) {
-            recreate()
+            updateLocale(
+                when (gPreferencesTool.appLanguage) {
+                    "ru" -> Locales.Russian
+                    "ua" -> Locales.Ukrainian
+                    else -> ConfigurationCompat.getLocales(Resources.getSystem().configuration)
+                        .get(0) ?: Locale.ENGLISH
+                }
+            )
         }
     }
 

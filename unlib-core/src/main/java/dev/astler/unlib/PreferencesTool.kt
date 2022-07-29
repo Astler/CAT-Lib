@@ -15,13 +15,10 @@ open class PreferencesTool(context: Context) {
 
         const val appLocaleKey = "appLocale"
         const val appLocaleDefault = "system"
-        const val appLocaleModeKey = "appLocaleMode"
-        const val appLocaleModeDefault = false
 
         const val textSizeKey = "textSizeNew"
         const val textSizeDefault = "18"
 
-        const val useEnglishKey = "useEnglish"
         const val firstStartKey = "firstStart"
         const val dayWithoutAdsKey = "dayWithoutAds"
     }
@@ -94,12 +91,6 @@ open class PreferencesTool(context: Context) {
         get() = getPreferences().getInt(dayWithoutAdsKey, -1)
         set(value) {
             edit(dayWithoutAdsKey, value)
-        }
-
-    var chooseLanguageManually: Boolean
-        get() = getPreferences().getBoolean(appLocaleModeKey, appLocaleModeDefault)
-        set(value) {
-            edit(appLocaleModeKey, value)
         }
 
     var userLanguage: String

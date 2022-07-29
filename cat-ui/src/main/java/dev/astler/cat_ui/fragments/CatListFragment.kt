@@ -66,8 +66,6 @@ abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(R.layo
             mFABView.visibility = View.GONE
         }
 
-        setHasOptionsMenu(true)
-
         mFABView.setBottomMarginInsets()
 
         when (mListInsetsType) {

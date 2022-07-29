@@ -5,7 +5,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.multidex.MultiDexApplication
+import com.zeugmasolutions.localehelper.LocaleAwareApplication
 import dev.astler.unlib.config.AppConfig
 import dev.astler.unlib.core.R
 import dev.astler.unlib.utils.readFileFromRaw
@@ -37,7 +37,7 @@ fun getDefaultNightMode() = when (UnliApp.prefs.appTheme) {
     }
 }
 
-open class UnliApp : MultiDexApplication() {
+open class UnliApp : LocaleAwareApplication() {
 
     companion object {
         lateinit var prefs: PreferencesTool
@@ -71,12 +71,6 @@ open class UnliApp : MultiDexApplication() {
     }
 
     open fun createNotificationChannels() {}
-
-    fun initAppLanguage(context: Context) {
-        AppSettings.loadLocale(
-            context
-        )
-    }
 
     fun createNotificationChannel(pName: String = packageName, pDescription: String = "", pChannelId: String = "unli_default") {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
