@@ -35,7 +35,6 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     }
 
     private var emptyDrawable: Drawable? = null
-    private var lang: String? = ""
 
     private var _spannableData: Spannable? = null
     protected val spannableData: Spannable get() = _spannableData!!
@@ -48,10 +47,6 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     init {
         if (scope == null) {
             scope = CoroutineScope(Job() + Dispatchers.Main)
-        }
-
-        if (lang.isNullOrEmpty() && !isInEditMode) {
-            lang = gPreferencesTool.appLanguage
         }
 
         initText(attrs)
@@ -71,9 +66,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
 
     override fun onSaveInstanceState(): Parcelable {
         val bundle = Bundle()
-        bundle.putParcelable("superState", super.onSaveInstanceState())
         bundle.putInt("height", height)
-        bundle.putString("lastLang", lang)
 
         return bundle
     }
@@ -81,9 +74,8 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     override fun onRestoreInstanceState(state: Parcelable?) {
         if (state is Bundle) {
             height = state.getInt("height")
-            lang = state.getString("lastLang") ?: ""
 
-            super.onRestoreInstanceState(state.getParcelable("superState"))
+            super.onRestoreInstanceState(state)
         } else {
             super.onRestoreInstanceState(state)
         }
@@ -129,11 +121,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
 
     open suspend fun processShortCodes(context: Context, pSpannable: Spannable): Spannable {
         if (!getSpannable().isNullOrEmpty()) {
-            if (!isInEditMode) {
-                if (gPreferencesTool.appLanguage == lang) {
-                    return spannableData
-                }
-            }
+            return spannableData
         }
 
         updateSpannable(pSpannable)
