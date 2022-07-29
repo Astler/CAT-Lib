@@ -35,6 +35,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     }
 
     private var emptyDrawable: Drawable? = null
+    private var lang: String = ""
 
     private var _spannableData: Spannable? = null
     protected val spannableData: Spannable get() = _spannableData!!
@@ -64,15 +65,11 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         emptyDrawable = ContextCompat.getDrawable(context, emptyIconId)
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
-        super.onConfigurationChanged(newConfig)
-        _spannableData = null
-    }
-
     override fun onSaveInstanceState(): Parcelable {
         val bundle = Bundle()
         bundle.putParcelable("superState", super.onSaveInstanceState())
         bundle.putInt("height", height)
+        bundle.putString("lastLang", lang)
 
         return bundle
     }
@@ -80,6 +77,14 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     override fun onRestoreInstanceState(state: Parcelable?) {
         if (state is Bundle) {
             height = state.getInt("height")
+            lang = state.getString("lastLang") ?: ""
+
+            if (!isInEditMode) {
+                if (gPreferencesTool.appLanguage != lang) {
+                    _spannableData = null
+                }
+            }
+
             super.onRestoreInstanceState(state.getParcelable("superState"))
         } else {
             super.onRestoreInstanceState(state)
@@ -87,6 +92,10 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     }
 
     override fun setText(pText: CharSequence, type: BufferType) {
+        if (lang.isEmpty() && !isInEditMode) {
+            lang = gPreferencesTool.appLanguage
+        }
+
         if (scope == null) {
             scope = CoroutineScope(Job() + Dispatchers.Main)
         }
