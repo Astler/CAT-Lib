@@ -67,7 +67,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     override fun onSaveInstanceState(): Parcelable {
         val bundle = Bundle()
         bundle.putInt("height", height)
-
+        bundle.putParcelable("superState", super.onSaveInstanceState())
         return bundle
     }
 
