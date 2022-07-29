@@ -35,7 +35,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     }
 
     private var emptyDrawable: Drawable? = null
-    private var lang: String = ""
+    private var lang: String? = ""
 
     private var _spannableData: Spannable? = null
     protected val spannableData: Spannable get() = _spannableData!!
@@ -48,6 +48,10 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     init {
         if (scope == null) {
             scope = CoroutineScope(Job() + Dispatchers.Main)
+        }
+
+        if (lang.isNullOrEmpty() && !isInEditMode) {
+            lang = gPreferencesTool.appLanguage
         }
 
         initText(attrs)
@@ -92,10 +96,6 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     }
 
     override fun setText(pText: CharSequence, type: BufferType) {
-        if (lang.isEmpty() && !isInEditMode) {
-            lang = gPreferencesTool.appLanguage
-        }
-
         if (scope == null) {
             scope = CoroutineScope(Job() + Dispatchers.Main)
         }
