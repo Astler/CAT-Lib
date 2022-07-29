@@ -1,6 +1,7 @@
 package dev.astler.cat_ui.views
 
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
@@ -13,14 +14,12 @@ import android.util.AttributeSet
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.text.getSpans
 import androidx.core.text.toSpannable
 import dev.astler.cat_ui.R
 import dev.astler.cat_ui.utils.getDrawableByName
 import dev.astler.cat_ui.views.custom.VerticalImageSpan
 import dev.astler.cat_ui.views.span.CustomFancyTextSpan
 import dev.astler.unlib.gPreferencesTool
-import dev.astler.unlib.utils.infoLog
 import kotlinx.coroutines.*
 import java.util.regex.Pattern
 
@@ -65,11 +64,15 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         emptyDrawable = ContextCompat.getDrawable(context, emptyIconId)
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration?) {
+        super.onConfigurationChanged(newConfig)
+        _spannableData = null
+    }
+
     override fun onSaveInstanceState(): Parcelable {
         val bundle = Bundle()
         bundle.putParcelable("superState", super.onSaveInstanceState())
         bundle.putInt("height", height)
-        infoLog("HEIGHT = $height")
 
         return bundle
     }
@@ -77,7 +80,6 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     override fun onRestoreInstanceState(state: Parcelable?) {
         if (state is Bundle) {
             height = state.getInt("height")
-            infoLog("HEIGHT = $height")
             super.onRestoreInstanceState(state.getParcelable("superState"))
         } else {
             super.onRestoreInstanceState(state)
