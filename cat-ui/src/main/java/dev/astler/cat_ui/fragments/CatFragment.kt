@@ -51,7 +51,17 @@ abstract class CatFragment<VB : ViewBinding>(pLayoutId: Int = 0) : Fragment(pLay
         coreListener?.setCurrentFragment(this)
     }
 
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (addMenuProvider) {
+            activity?.removeMenuProvider(this)
+        }
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menu.clear()
+    }
 
     override fun onMenuItemSelected(menuItem: MenuItem) = false
 
