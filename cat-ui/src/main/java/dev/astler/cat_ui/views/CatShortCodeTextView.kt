@@ -84,7 +84,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
             lang = state.getString("lastLang") ?: ""
 
             if (!isInEditMode)
-                if (lang != gPreferencesTool.appLanguage) return
+                if (lang != gPreferencesTool.appLanguage) return super.onRestoreInstanceState(state)
 
             super.onRestoreInstanceState(state.getParcelable("superState"))
         } else {

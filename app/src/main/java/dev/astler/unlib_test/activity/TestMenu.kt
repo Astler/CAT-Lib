@@ -3,6 +3,7 @@ package dev.astler.unlib_test.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.zeugmasolutions.localehelper.Locales
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.adapters.CatOneTypeAdapter
 import dev.astler.cat_ui.utils.* // ktlint-disable no-wildcard-imports
@@ -16,6 +17,7 @@ import dev.astler.unlib_test.activity.signin.SignInTestActivity
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.databinding.ItemTextBinding
 import dev.astler.unlib_test.items.ClickableItem
+import java.util.*
 
 class TestMenu : CatActivity() {
 
@@ -44,6 +46,18 @@ class TestMenu : CatActivity() {
 
         mAdapter.setData(
             listOf(
+                ClickableItem("Theme Utils") {
+                    dialog(
+                        "Theme Utils",
+                        "isSystemDarkTheme = ${isSystemDarkMode}\nisAppDarkTheme = ${isAppDarkTheme()}\npreferencesSetting = ${gPreferencesTool.appTheme}"
+                    )
+                },
+                ClickableItem("RU") {
+                    updateLocale(Locales.Russian)
+                },
+                ClickableItem("EN") {
+                    updateLocale(Locale.ENGLISH)
+                },
                 ClickableItem("Theme Utils") {
                     dialog(
                         "Theme Utils",

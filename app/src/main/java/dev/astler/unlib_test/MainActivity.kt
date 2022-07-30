@@ -2,8 +2,10 @@ package dev.astler.unlib_test
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.os.ConfigurationCompat
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
+import com.zeugmasolutions.localehelper.Locales
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.unlib.utils.toast
 import dev.astler.unlib_test.activity.TestMenu
@@ -37,15 +39,7 @@ class MainActivity : CatActivity() {
             .setDuration(SCALE_ANIMATION_DURATION)
             .start()
 
-        val nText = """ Папка: [ft text=ASTLER = Vlad params=~tf_b/]
-            😶‍🌫️, 🧔🏻‍♀️, 🧑🏿‍❤️‍🧑🏾
-            Okay. Let's try that! [img src=file/]
-            New I will add few similar files [img src=file tint=#FF0000/][img src=file tint=#00FF00/][img src=file tint=#0000FF/]
-            And now - error flag = [img src=faile/] and error flag with color [img src=faile tint=#00FFFF/]
-
-        """.trimIndent()
-
-        mViewBinding.test.text = nText
+        mViewBinding.test.text = getString(R.string.strange_string)
 
         // mViewBinding.test.setCompoundDrawables(null, getDrawable(R.drawable.btn_clear), null, null)
 
@@ -54,7 +48,12 @@ class MainActivity : CatActivity() {
         }
 
         mViewBinding.test.setOnLongClickListener {
-            startActivity(Intent(this, AdsTestMenu::class.java))
+            if (ConfigurationCompat.getLocales(resources.configuration)[0]?.language?.contains("ru") == true) {
+                updateLocale(Locales.English)
+            } else {
+                updateLocale(Locales.Russian)
+            }
+//            startActivity(Intent(this, AdsTestMenu::class.java))
             true
         }
 
