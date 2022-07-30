@@ -36,7 +36,6 @@ open class CatShortCodeTextView @JvmOverloads constructor(
 
     private var emptyDrawable: Drawable? = null
 
-    private var lang: String? = ""
     private var _spannableData: Spannable? = null
     protected val spannableData: Spannable get() = _spannableData!!
 
@@ -51,10 +50,6 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         }
 
         initText(attrs)
-
-        if (lang.isNullOrEmpty() && !isInEditMode) {
-            lang = gPreferencesTool.appLanguage
-        }
 
         freezesText = true
 
@@ -73,7 +68,6 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         val bundle = Bundle()
         bundle.putParcelable("superState", super.onSaveInstanceState())
         bundle.putInt("height", height)
-        bundle.putString("lastLang", lang)
 
         return bundle
     }
@@ -81,10 +75,6 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     override fun onRestoreInstanceState(state: Parcelable?) {
         if (state is Bundle) {
             height = state.getInt("height")
-            lang = state.getString("lastLang") ?: ""
-
-            if (!isInEditMode)
-                if (lang != gPreferencesTool.appLanguage) return super.onRestoreInstanceState(state)
 
             super.onRestoreInstanceState(state.getParcelable("superState"))
         } else {
