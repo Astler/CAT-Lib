@@ -49,7 +49,7 @@ abstract class CatActivity :
 
         super.onCreate(savedInstanceState)
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
         delegate.applyDayNight()
 
         mRemoteConfig = RemoteConfig.getInstance()
