@@ -7,13 +7,14 @@ import coil.transform.BlurTransformation
 import coil.transform.CircleCropTransformation
 import coil.transform.GrayscaleTransformation
 import coil.transform.RoundedCornersTransformation
+import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.unlib.utils.getBitmapFromAsset
 import dev.astler.cat_ui.utils.toNoFilterDrawable
 import dev.astler.cat_ui.utils.views.loadWithBackground
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityImagesBinding
 
-class ImageLoadersActivity : AppCompatActivity() {
+class ImageLoadersActivity : CatActivity() {
 
     private lateinit var mImagesBinding: ActivityImagesBinding
 

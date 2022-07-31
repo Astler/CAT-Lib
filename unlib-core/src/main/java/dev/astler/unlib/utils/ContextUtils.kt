@@ -18,30 +18,6 @@ import java.util.* // ktlint-disable no-wildcard-imports
 
 class ContextUtils(base: Context?) : ContextWrapper(base)
 
-@Suppress("DEPRECATION")
-fun updateLocale(pContext: Context, localeToSwitchTo: Locale?): ContextWrapper {
-    var context = pContext
-    val resources: Resources = context.resources
-    val configuration: Configuration = resources.configuration // 1
-
-    infoLog("this locale is = ${localeToSwitchTo?.language}")
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        val localeList = LocaleList(localeToSwitchTo) // 2
-        LocaleList.setDefault(localeList) // 3
-        configuration.setLocales(localeList) // 4
-    } else {
-        configuration.locale = localeToSwitchTo // 5
-    }
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-        context = context.createConfigurationContext(configuration) // 6
-    } else {
-        resources.updateConfiguration(configuration, resources.displayMetrics) // 7
-    }
-    return ContextUtils(context)
-}
-
 fun Context.copyToBuffer(pData: CharSequence) {
     if (pData.isNotEmpty()) {
         val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

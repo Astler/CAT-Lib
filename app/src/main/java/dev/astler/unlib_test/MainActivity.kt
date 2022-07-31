@@ -2,11 +2,15 @@ package dev.astler.unlib_test
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.ConfigurationCompat
+import com.google.android.material.internal.EdgeToEdgeUtils
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import com.zeugmasolutions.localehelper.Locales
 import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.unlib.gPreferencesTool
+import dev.astler.unlib.getDefaultNightMode
 import dev.astler.unlib.utils.toast
 import dev.astler.unlib_test.activity.TestMenu
 import dev.astler.unlib_test.activity.ads.AdsTestMenu
@@ -28,6 +32,8 @@ class MainActivity : CatActivity() {
         mViewBinding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(mViewBinding.root)
+        AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
+        delegate.applyDayNight()
 
         mViewBinding.splashView.animateLogo()
 
@@ -47,15 +53,28 @@ class MainActivity : CatActivity() {
             startActivity(Intent(this, TestMenu::class.java))
         }
 
+//        gPreferencesTool.appTheme = "dark"
+//        gPreferencesTool.appTheme = "light"
+//        gPreferencesTool.appTheme = "system"
+//        gPreferencesTool.appTheme = "auto"
+
         mViewBinding.test.setOnLongClickListener {
-            if (ConfigurationCompat.getLocales(resources.configuration)[0]?.language?.contains("ru") == true) {
-                updateLocale(Locales.English)
+            if (gPreferencesTool.appTheme == "light") {
+                gPreferencesTool.appTheme = "dark"
             } else {
-                updateLocale(Locales.Russian)
+                gPreferencesTool.appTheme = "light"
             }
-//            startActivity(Intent(this, AdsTestMenu::class.java))
             true
         }
+//        mViewBinding.test.setOnLongClickListener {
+//            if (ConfigurationCompat.getLocales(resources.configuration)[0]?.language?.contains("ru") == true) {
+//                updateLocale(Locales.English)
+//            } else {
+//                updateLocale(Locales.Russian)
+//            }
+////            startActivity(Intent(this, AdsTestMenu::class.java))
+//            true
+//        }
 
 //        mViewBinding.test.setOnLongClickListener {
 //            startActivity(Intent(this, AdsTestMenu::class.java))

@@ -3,8 +3,10 @@ package dev.astler.unlib
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.material.color.DynamicColors
 import com.zeugmasolutions.localehelper.LocaleAwareApplication
 import dev.astler.unlib.config.AppConfig
 import dev.astler.unlib.core.R
@@ -37,7 +39,7 @@ fun getDefaultNightMode() = when (UnliApp.prefs.appTheme) {
     }
 }
 
-open class UnliApp : LocaleAwareApplication() {
+open class UnliApp : LocaleAwareApplication(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     companion object {
         lateinit var prefs: PreferencesTool
@@ -53,9 +55,14 @@ open class UnliApp : LocaleAwareApplication() {
 
     override fun onCreate() {
         super.onCreate()
+
         prefs = PreferencesTool(this)
 
         AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+        DynamicColors.applyToActivitiesIfAvailable(this)
+
+        prefs.addListener(this)
 
         applicationInstance = this
 
@@ -72,7 +79,11 @@ open class UnliApp : LocaleAwareApplication() {
 
     open fun createNotificationChannels() {}
 
-    fun createNotificationChannel(pName: String = packageName, pDescription: String = "", pChannelId: String = "unli_default") {
+    fun createNotificationChannel(
+        pName: String = packageName,
+        pDescription: String = "",
+        pChannelId: String = "unli_default"
+    ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(pChannelId, pName, importance).apply {
@@ -84,4 +95,11 @@ open class UnliApp : LocaleAwareApplication() {
             notificationManager.createNotificationChannel(channel)
         }
     }
+
+    override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
+        if (key == PreferencesTool.appThemeKey) {
+            AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
+        }
+    }
+
 }

@@ -24,4 +24,76 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
+    <style name="Theme.Catalog" parent="Theme.Material3.DayNight.NoActionBar">
+<!--        <item name="catalogToolbarStyle">@style/Widget.Catalog.Toolbar</item>-->
+<!--        <item name="catalogToolbarWithCloseButtonStyle">@style/Widget.Catalog.Toolbar.WithCloseButton</item>-->
+<!--        <item name="textInputSignInStyle">@style/Widget.Material3.TextInputLayout.OutlinedBox</item>-->
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+
+    <style name="ThemeOverlay.Shrine" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/shrine_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/shrine_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/shrine_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/shrine_theme_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/shrine_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/shrine_theme_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/shrine_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/shrine_theme_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/shrine_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/shrine_theme_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/shrine_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/shrine_theme_light_onTertiaryContainer</item>
+        <item name="colorError">@color/shrine_theme_light_error</item>
+        <item name="colorErrorContainer">@color/shrine_theme_light_errorContainer</item>
+        <item name="colorOnError">@color/shrine_theme_light_onError</item>
+        <item name="colorOnErrorContainer">@color/shrine_theme_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/shrine_theme_light_background</item>
+        <item name="colorOnBackground">@color/shrine_theme_light_onBackground</item>
+        <item name="colorSurface">@color/shrine_theme_light_surface</item>
+        <item name="colorOnSurface">@color/shrine_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/shrine_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/shrine_theme_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/shrine_theme_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/shrine_theme_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/shrine_theme_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/shrine_theme_light_inversePrimary</item>
+
+<!--        <item name="shapeCornerFamily">cut</item>-->
+
+        <item name="bottomSheetDialogTheme">@style/Theme.Shrine.BottomSheetDialog</item>
+        <item name="chipStyle">@style/Widget.Shrine.Chip</item>
+        <item name="textInputStyle">@style/Widget.Shrine.TextInputLayout</item>
+    </style>
+
+
+    <style name="Theme.Shrine.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Shrine.BottomSheet.Modal</item>
+    </style>
+
+    <style name="Widget.Shrine.BottomSheet.Modal" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="android:background">?android:attr/colorBackground</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Shrine.BottomSheet</item>
+        <item name="backgroundTint">?attr/colorPrimary</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Shrine.BottomSheet" parent="">
+        <item name="cornerSize">0dp</item>
+        <item name="cornerFamilyTopRight">cut</item>
+        <item name="cornerSizeTopRight">24dp</item>
+    </style>
+
+    <style name="Widget.Shrine.Chip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipCornerRadius">@null</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Shrine.Chip</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Shrine.Chip" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+
+    <style name="Widget.Shrine.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox"/>
+
 </resources>

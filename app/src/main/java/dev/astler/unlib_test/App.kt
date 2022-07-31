@@ -16,16 +16,6 @@ class App : AdsUnLibApp() {
         const val NEWS_CHANNEL_NAME = "News" // getString(R.string.notifications_channel_news)
     }
 
-    override fun onCreate() {
-//        if (BuildConfig.DEBUG) {
-//            //      enableStrictMode()
-//        }
-
-        super.onCreate()
-
-//        enqueueWorkers()
-    }
-
     override fun createNotificationChannels() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
 
@@ -63,20 +53,4 @@ class App : AdsUnLibApp() {
                 .build()
         )
     }
-
-//    private fun enqueueWorkers() {
-//        val workManager = WorkManager.getInstance(this)
-//
-//        val periodicRequests = listOf(
-//            "BIN_CLEAN" to PeriodicWorkRequestBuilder<PeriodicTestWorker>(15, TimeUnit.MINUTES)
-//                .build(),
-//            "SYNC" to PeriodicWorkRequestBuilder<PeriodicTest2Worker>(35, TimeUnit.MINUTES)
-//                .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
-//                .build(),
-//        )
-//
-//        periodicRequests.forEach { (name, request) ->
-//            workManager.enqueueUniquePeriodicWork(name, ExistingPeriodicWorkPolicy.KEEP, request)
-//        }
-//    }
 }

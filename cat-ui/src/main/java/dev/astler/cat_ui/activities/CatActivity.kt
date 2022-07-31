@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.internal.EdgeToEdgeUtils
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -44,11 +45,14 @@ abstract class CatActivity :
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        EdgeToEdgeUtils.applyEdgeToEdge(window, true)
+
         super.onCreate(savedInstanceState)
 
-        mRemoteConfig = RemoteConfig.getInstance()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        delegate.applyDayNight()
 
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+        mRemoteConfig = RemoteConfig.getInstance()
 
         gPreferencesTool.loadDefaultPreferences(this)
 
@@ -80,28 +84,11 @@ abstract class CatActivity :
         gPreferencesTool.appReviewTime = GregorianCalendar().timeInMillis
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-
-        val preferencesTool = PreferencesTool(this)
-
-        if (preferencesTool.mIsSystemTheme) {
-            when (newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-                Configuration.UI_MODE_NIGHT_NO -> {
-                    recreate()
-                }
-                Configuration.UI_MODE_NIGHT_YES -> {
-                    recreate()
-                }
-            }
-        }
-    }
-
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-
         if (key == PreferencesTool.appThemeKey) {
             AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
-            recreate()
+            delegate.applyDayNight()
+            return
         }
 
         if (key == PreferencesTool.appLocaleKey) {
