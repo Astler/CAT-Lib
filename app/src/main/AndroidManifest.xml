@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         tools:ignore="AllowBackup"
-        android:theme="@style/Theme.Catalog">
+        android:theme="@style/CatLibTheme">
 
         <activity
             android:name="dev.astler.cat_ui.activities.CatSplashActivity"
