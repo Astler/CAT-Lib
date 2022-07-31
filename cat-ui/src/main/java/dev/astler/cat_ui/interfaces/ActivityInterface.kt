@@ -8,4 +8,6 @@ interface ActivityInterface : CoreFragmentInterface {
     fun setToolbarElevationEnabled(pElevationEnabled: Boolean) {}
     fun toggleToolbar(pIsToolbarVisible: Boolean) {}
     fun callBackPressed()
+    fun getTopPadding(): Int
+    fun getBottomPadding(): Int
 }
