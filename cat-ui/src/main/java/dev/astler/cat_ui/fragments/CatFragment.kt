@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
 import dev.astler.cat_ui.interfaces.ActivityInterface
 import dev.astler.cat_ui.interfaces.CoreFragmentInterface
@@ -40,7 +41,7 @@ abstract class CatFragment<VB : ViewBinding>(pLayoutId: Int = 0) : Fragment(pLay
         _binding = bindingInflater.invoke(inflater, container, false)
 
         if (addMenuProvider) {
-            activity?.addMenuProvider(this)
+            activity?.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         }
 
         return binding.root
@@ -54,14 +55,12 @@ abstract class CatFragment<VB : ViewBinding>(pLayoutId: Int = 0) : Fragment(pLay
     override fun onDestroy() {
         super.onDestroy()
 
-        if (addMenuProvider) {
-            activity?.removeMenuProvider(this)
-        }
+//        if (addMenuProvider) {
+//            activity?.removeMenuProvider(this)
+//        }
     }
 
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menu.clear()
-    }
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}
 
     override fun onMenuItemSelected(menuItem: MenuItem) = false
 
