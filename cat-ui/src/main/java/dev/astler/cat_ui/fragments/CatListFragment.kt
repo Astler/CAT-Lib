@@ -10,6 +10,8 @@ import dev.astler.cat_ui.R
 import dev.astler.cat_ui.databinding.RecyclerViewFragmentBinding
 import dev.astler.cat_ui.views.CatStateLayout
 import dev.astler.cat_ui.interfaces.RecyclerAdapterSizeListener
+import dev.astler.cat_ui.utils.getColorFromAttr
+import dev.astler.cat_ui.utils.getResourceFromAttr
 import dev.astler.cat_ui.utils.views.*
 import dev.astler.unlib.utils.canShowAds
 
@@ -73,8 +75,8 @@ abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(R.layo
                 val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds())
 
                 if (nAddBottomPadding)
-                    mRecyclerView.setStatusAndNavigationPaddingForView(pAdditionalTopPadding = resources.getDimensionPixelSize(R.dimen.toolbar_height))
-                else mRecyclerView.setStatusPaddingForView(pAdditionalTopPadding = resources.getDimensionPixelSize(R.dimen.toolbar_height))
+                    mRecyclerView.setStatusAndNavigationPaddingForView(pAdditionalTopPadding = safeContext.getResourceFromAttr(R.attr.actionBarSize))
+                else mRecyclerView.setStatusPaddingForView(pAdditionalTopPadding = safeContext.getResourceFromAttr(R.attr.actionBarSize))
             }
             ListInsetsType.SYSTEM -> {
                 val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds())
@@ -93,7 +95,7 @@ abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(R.layo
                 mRecyclerView.setStatusPaddingForView()
             }
             ListInsetsType.TOP_WITH_ACTION_BAR -> {
-                mRecyclerView.setStatusPaddingForView(pAdditionalTopPadding = resources.getDimensionPixelSize(R.dimen.toolbar_height))
+                mRecyclerView.setStatusPaddingForView(pAdditionalTopPadding = safeContext.getResourceFromAttr(R.attr.actionBarSize))
             }
             else -> {}
         }

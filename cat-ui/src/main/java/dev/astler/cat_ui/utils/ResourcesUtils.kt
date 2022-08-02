@@ -96,6 +96,15 @@ fun Context.getColorFromAttr(
     return typedValue.data
 }
 
+fun Context.getResourceFromAttr(
+    @AttrRes attrColor: Int,
+    typedValue: TypedValue = TypedValue(),
+    resolveRefs: Boolean = true
+): Int {
+    theme.resolveAttribute(attrColor, typedValue, resolveRefs)
+    return typedValue.data
+}
+
 fun Context.getDrawableByName(pDrawableName: String): Drawable? {
     val nDrawableId = resources.getIdentifier(pDrawableName, "drawable", packageName)
 

@@ -1,9 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="M3AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <!--        <item name="catalogToolbarStyle">@style/Widget.Catalog.Toolbar</item>-->
-        <!--        <item name="catalogToolbarWithCloseButtonStyle">@style/Widget.Catalog.Toolbar.WithCloseButton</item>-->
-        <!--        <item name="textInputSignInStyle">@style/Widget.Material3.TextInputLayout.OutlinedBox</item>-->
         <item name="windowActionModeOverlay">true</item>
     </style>
 
@@ -12,43 +9,23 @@
         <item name="colorPrimaryDark">@color/orange_dark</item>
         <item name="colorAccent">@color/orange_dark</item>
 
-        <item name="android:textColor">@color/prefs_text_default_color</item>
-        <item name="android:textColorPrimary">@color/prefs_text_default_color</item>
-        <item name="android:colorControlNormal">@color/prefs_text_default_color</item>
-        <item name="android:windowBackground">@color/default_background</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
 
-        <item name="backgroundColorByTheme">@color/default_background</item>
-        <item name="contrastColorByTheme">@color/prefs_text_default_color</item>
-        <item name="colorByTheme">@color/black</item>
+        <item name="android:navigationBarColor" >@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
 
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">
-            @android:color/transparent
-        </item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent
-        </item>
-        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
-        <item name="android:windowAllowEnterTransitionOverlap" tools:targetApi="lollipop">true
-        </item>
-        <item name="android:windowAllowReturnTransitionOverlap" tools:targetApi="lollipop">true
-        </item>
-        <item name="android:windowSharedElementEnterTransition" tools:targetApi="lollipop">
-            @transition/enter_anim
-        </item>
-        <item name="android:windowSharedElementExitTransition" tools:targetApi="lollipop">
-            @transition/exit_anim
-        </item>
+        <item name="android:windowAllowEnterTransitionOverlap" >true</item>
+        <item name="android:windowAllowReturnTransitionOverlap" >true</item>
+        <item name="android:windowSharedElementEnterTransition" >@transition/enter_anim</item>
+        <item name="android:windowSharedElementExitTransition" >@transition/exit_anim</item>
         <item name="android:fitsSystemWindows">false</item>
 
-        <item name="materialButtonStyle">@style/MaterialButtonUnlib</item>
         <item name="linearProgressIndicatorStyle">@style/Widget.App.CircularProgressIndicator</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
-    
-    <style name="MaterialButtonUnlib" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/orange_dark</item>
-    </style>
 
-    <style name="Widget.App.CircularProgressIndicator" parent="Widget.MaterialComponents.CircularProgressIndicator">
+    <style name="Widget.App.CircularProgressIndicator" parent="Widget.Material3.CircularProgressIndicator">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.CircularProgressIndicator</item>
     </style>
 

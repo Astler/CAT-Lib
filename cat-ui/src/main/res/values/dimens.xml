@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="icon_size">50dp</dimen>
-
     <dimen name="iconEmptySize">100dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-
     <dimen name="unlib_base_view_margin">16dp</dimen>
-
-    <dimen name="toolbar_height">56dp</dimen>
 </resources>

@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="contrastColorByTheme" format="reference|color"/>
-    <attr name="colorByTheme" format="reference|color"/>
-    <attr name="titleColorByTheme" format="reference|color"/>
-    <attr name="backgroundColorByTheme" format="reference|color"/>
-
-    <attr name="isLightStatusBar" format="boolean"/>
-
     <declare-styleable name="CatTextView">
         <attr name="textSizeModifier" format="integer">0</attr>
         <attr name="themeTextColor" format="boolean">true</attr>

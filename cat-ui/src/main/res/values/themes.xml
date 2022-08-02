@@ -24,7 +24,6 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
-
     <style name="ThemeOverlay.Shrine" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/shrine_theme_light_primary</item>
         <item name="colorOnPrimary">@color/shrine_theme_light_onPrimary</item>
