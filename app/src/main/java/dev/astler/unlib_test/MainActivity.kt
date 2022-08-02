@@ -9,6 +9,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import com.zeugmasolutions.localehelper.Locales
 import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.cat_ui.utils.getDimensionFromAttr
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.getDefaultNightMode
 import dev.astler.unlib.utils.toast
@@ -45,7 +46,9 @@ class MainActivity : CatActivity() {
             .setDuration(SCALE_ANIMATION_DURATION)
             .start()
 
-        mViewBinding.test.text = getString(R.string.strange_string)
+        mViewBinding.test.text =
+            getString(R.string.strange_string) + getDimensionFromAttr(androidx.appcompat.R.attr.actionBarSize) + "\n" + mViewBinding.toolbar.height
+
 
         // mViewBinding.test.setCompoundDrawables(null, getDrawable(R.drawable.btn_clear), null, null)
 

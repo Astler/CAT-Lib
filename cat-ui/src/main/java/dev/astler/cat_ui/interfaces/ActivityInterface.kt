@@ -10,4 +10,5 @@ interface ActivityInterface : CoreFragmentInterface {
     fun callBackPressed()
     fun getTopPadding(): Int
     fun getBottomPadding(): Int
+    fun getToolbarHeight(): Int
 }

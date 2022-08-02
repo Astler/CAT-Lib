@@ -24,6 +24,7 @@ import dev.astler.cat_ui.appResumeTime
 import dev.astler.cat_ui.cStartTime
 import dev.astler.cat_ui.fragments.IInternetDependentFragment
 import dev.astler.cat_ui.interfaces.ActivityInterface
+import dev.astler.cat_ui.utils.getDimensionFromAttr
 import dev.astler.unlib.PreferencesTool
 import dev.astler.unlib.data.RemoteConfig
 import dev.astler.unlib.gPreferencesTool
@@ -81,17 +82,21 @@ abstract class CatActivity :
 
     private var topInsets = 0
     private var bottomInsets = 0
+    private var toolbarHeight = 0
 
     override fun getTopPadding() = topInsets
     override fun getBottomPadding() = bottomInsets
+    override fun getToolbarHeight() = toolbarHeight
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        EdgeToEdgeUtils.applyEdgeToEdge(window, true)
 
         super.onCreate(savedInstanceState)
 
+        EdgeToEdgeUtils.applyEdgeToEdge(window, true)
         AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
         delegate.applyDayNight()
+
+        toolbarHeight = getDimensionFromAttr(androidx.appcompat.R.attr.actionBarSize)
 
         mRemoteConfig = RemoteConfig.getInstance()
 

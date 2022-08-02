@@ -3,10 +3,12 @@ package dev.astler.cat_ui.utils
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.content.res.TypedArray
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.util.DisplayMetrics
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
@@ -14,7 +16,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import dev.astler.unlib.core.R
-import java.util.* // ktlint-disable no-wildcard-imports
+import java.util.*
 
 fun dpToPixels(dips: Float): Float = dips * Resources.getSystem().displayMetrics.density + 0.5f
 
@@ -96,13 +98,19 @@ fun Context.getColorFromAttr(
     return typedValue.data
 }
 
-fun Context.getResourceFromAttr(
-    @AttrRes attrColor: Int,
-    typedValue: TypedValue = TypedValue(),
-    resolveRefs: Boolean = true
-): Int {
-    theme.resolveAttribute(attrColor, typedValue, resolveRefs)
-    return typedValue.data
+fun Context.getDimensionFromAttr(resId: Int): Int {
+    val value = TypedValue()
+
+    if (!theme.resolveAttribute(resId, value, true)) return 0
+    return if (value.type == TypedValue.TYPE_DIMENSION) {
+        val indexOfAttrTextSize = 0
+        val a: TypedArray = obtainStyledAttributes(value.data, intArrayOf(resId))
+        val textSize = a.getDimensionPixelSize(indexOfAttrTextSize, -1)
+        a.recycle()
+        textSize
+    } else {
+        0
+    }
 }
 
 fun Context.getDrawableByName(pDrawableName: String): Drawable? {
