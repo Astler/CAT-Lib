@@ -17,11 +17,11 @@
 
     <string name="dark_theme">Темна</string>
     <string name="light_theme">Світла</string>
-    <string name="very_small">Дуже маленький</string>
-    <string name="small">Маленький</string>
-    <string name="medium">Нормальний</string>
-    <string name="big">Великий</string>
-    <string name="very_big">Дуже великий</string>
+    <string name="very_small_font">Дуже маленький</string>
+    <string name="small_font">Маленький</string>
+    <string name="medium_font">Нормальний</string>
+    <string name="big_font">Великий</string>
+    <string name="very_big_font">Дуже великий</string>
 
 
     <string name="font_size">Розмір шрифту</string>
@@ -35,7 +35,6 @@
     <string name="rate_app">Оцінити додаток</string>
     <string name="more_apps">Ще додатки</string>
     <string name="other">Різне</string>
-    <string name="ok">OK</string>
 
     <string name="just_a_minute">Хвилинку</string>
     <string name="ad_is_loading">Реклама завантажується…</string>

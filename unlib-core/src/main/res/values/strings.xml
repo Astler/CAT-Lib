@@ -26,18 +26,18 @@
     </string-array>
 
     <string-array name="font_size_names">
-        <item>@string/very_small</item>
-        <item>@string/small</item>
-        <item>@string/medium</item>
-        <item>@string/big</item>
-        <item>@string/very_big</item>
+        <item>@string/very_small_font</item>
+        <item>@string/small_font</item>
+        <item>@string/medium_font</item>
+        <item>@string/big_font</item>
+        <item>@string/very_big_font</item>
     </string-array>
 
-    <string name="very_small">Very small</string>
-    <string name="small">Small</string>
-    <string name="medium">Normal</string>
-    <string name="big">Large</string>
-    <string name="very_big">Very Large</string>
+    <string name="very_small_font">Very small</string>
+    <string name="small_font">Small</string>
+    <string name="medium_font">Normal</string>
+    <string name="big_font">Large</string>
+    <string name="very_big_font">Very Large</string>
 
     <string name="main_prefs">Main settings</string>
     <string name="language_settings">Language Settings</string>

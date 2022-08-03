@@ -11,9 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@null"
         app:backgroundTint="@color/fab_color"
-        app:tint="@color/white"
-        app:srcCompat="@drawable/ic_add_white_24dp" />
+        app:srcCompat="@drawable/ic_add_white_24dp"
+        app:tint="@color/white" />
 
     <dev.astler.cat_ui.views.CatStateLayout
         android:id="@+id/stateLayout"
@@ -24,8 +25,8 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
             android:clipToPadding="false"
+            android:scrollbars="vertical"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
     </dev.astler.cat_ui.views.CatStateLayout>

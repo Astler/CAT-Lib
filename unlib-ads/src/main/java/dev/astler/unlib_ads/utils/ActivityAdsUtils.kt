@@ -1,5 +1,6 @@
 package dev.astler.unlib_ads.utils
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.* // ktlint-disable no-wildcard-imports
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -36,8 +37,6 @@ import kotlin.random.Random
  *   to click listener and navigationView.addNoAdsItem() to menu init
  */
 
-val cNoAdsMenuItemId = dev.astler.cat_ui.R.id.adItem
-
 private var mRewardedInterstitialAd: RewardedInterstitialAd? = null
 private var mInterstitialAd: InterstitialAd? = null
 
@@ -51,7 +50,8 @@ var mInterstitialAdId = gAppConfig.mInterstitialAdId
 var mRewardedAdId = gAppConfig.mRewardedAdId
 var mProPackageName = gAppConfig.mProPackageName
 
-fun getTestDevicesList(): ArrayList<String> {
+@SuppressLint("VisibleForTests")
+private fun getTestDevicesList(): ArrayList<String> {
     val nTestDevices = arrayListOf(
         AdRequest.DEVICE_ID_EMULATOR
     )
@@ -61,12 +61,8 @@ fun getTestDevicesList(): ArrayList<String> {
 }
 
 fun AppCompatActivity.initAds() {
-    val testDevices = ArrayList<String>()
-    testDevices.add(AdRequest.DEVICE_ID_EMULATOR)
-    testDevices.addAll(getTestDevicesList())
-
     val requestConfiguration = RequestConfiguration.Builder()
-        .setTestDeviceIds(testDevices)
+        .setTestDeviceIds(getTestDevicesList())
 
     if (setTagForChildDirectedTreatment) {
         requestConfiguration.setTagForChildDirectedTreatment(

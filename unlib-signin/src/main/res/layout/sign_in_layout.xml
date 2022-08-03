@@ -98,8 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="60dp"
-                android:text="@string/register"
-                android:textColor="?attr/contrastColorByTheme" />
+                android:text="@string/register" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/create_account"
@@ -108,8 +107,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="60dp"
                 android:paddingTop="16dp"
-                android:text="@string/create_account"
-                android:textColor="?attr/contrastColorByTheme" />
+                android:text="@string/create_account" />
 
             <dev.astler.cat_ui.views.CatTextView
                 android:id="@+id/or"

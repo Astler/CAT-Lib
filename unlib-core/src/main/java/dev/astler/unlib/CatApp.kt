@@ -15,21 +15,16 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 val gPreferencesTool: PreferencesTool by lazy {
-    UnliApp.prefs
+    CatApp.prefs
 }
 
 val gAppConfig: AppConfig by lazy {
-    UnliApp.cAppConfig
+    CatApp.cAppConfig
 }
 
 val mJson = Json { allowStructuredMapKeys = true }
 
-/**
- * config version: 1
- * Astler; 19/03/2021
- */
-
-fun getDefaultNightMode() = when (UnliApp.prefs.appTheme) {
+fun getDefaultNightMode() = when (CatApp.prefs.appTheme) {
     "light" -> AppCompatDelegate.MODE_NIGHT_NO
     "dark" -> AppCompatDelegate.MODE_NIGHT_YES
     else -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -39,18 +34,16 @@ fun getDefaultNightMode() = when (UnliApp.prefs.appTheme) {
     }
 }
 
-open class UnliApp : LocaleAwareApplication(), SharedPreferences.OnSharedPreferenceChangeListener {
+open class CatApp : LocaleAwareApplication(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     companion object {
         lateinit var prefs: PreferencesTool
         lateinit var cAppConfig: AppConfig
 
-        private lateinit var applicationInstance: UnliApp
+        private lateinit var applicationInstance: CatApp
 
         @Synchronized
-        fun getInstance(): UnliApp {
-            return applicationInstance
-        }
+        fun getInstance() = applicationInstance
     }
 
     override fun onCreate() {
@@ -101,5 +94,4 @@ open class UnliApp : LocaleAwareApplication(), SharedPreferences.OnSharedPrefere
             AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
         }
     }
-
 }
