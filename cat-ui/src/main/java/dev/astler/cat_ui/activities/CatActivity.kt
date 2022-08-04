@@ -11,15 +11,18 @@ import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.ConfigurationCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 import com.google.android.material.internal.EdgeToEdgeUtils
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
 import com.zeugmasolutions.localehelper.Locales
+import dev.astler.cat_ui.R
 import dev.astler.cat_ui.appResumeTime
 import dev.astler.cat_ui.cStartTime
 import dev.astler.cat_ui.fragments.IInternetDependentFragment
@@ -89,9 +92,9 @@ abstract class CatActivity :
     override fun getToolbarHeight() = toolbarHeight
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
+        WindowCompat.setDecorFitsSystemWindows(window, true)
         EdgeToEdgeUtils.applyEdgeToEdge(window, true)
         AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
         delegate.applyDayNight()
