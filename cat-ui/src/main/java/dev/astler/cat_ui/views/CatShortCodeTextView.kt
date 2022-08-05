@@ -47,9 +47,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     open val emptyIconId: Int = R.drawable.ic_splash_logo
 
     init {
-        if (scope == null) {
-            scope = CoroutineScope(Job() + Dispatchers.Main)
-        }
+        createScope()
 
         initText(attrs)
 
@@ -85,9 +83,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     }
 
     override fun setText(pText: CharSequence, type: BufferType) {
-        if (scope == null) {
-            scope = CoroutineScope(Job() + Dispatchers.Main)
-        }
+        createScope()
 
         if (pText.isEmpty() && _spannableData.isNullOrEmpty()) {
             super.setText(pText, BufferType.NORMAL)
@@ -112,6 +108,12 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         scope?.cancel()
+        scope = null
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        createScope()
     }
 
     protected fun showSpannableText() {
@@ -362,5 +364,11 @@ open class CatShortCodeTextView @JvmOverloads constructor(
             end,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
+    }
+
+    private fun createScope() {
+        if (scope == null) {
+            scope = CoroutineScope(Job() + Dispatchers.Main)
+        }
     }
 }
