@@ -37,6 +37,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     private var textProcessTask: Job? = null
     private var emptyDrawable: Drawable? = null
 
+    private var _sourceText: CharSequence = ""
     private var _spannableData: Spannable? = null
     protected val spannableData: Spannable get() = _spannableData!!
 
@@ -126,9 +127,15 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     protected fun getSpannable() = _spannableData
 
     open suspend fun processShortCodes(context: Context, pSpannable: Spannable): Spannable {
-        if (!getSpannable().isNullOrEmpty()) {
+        if (!getSpannable().isNullOrEmpty() && _sourceText.contentEquals(
+                pSpannable.toString(),
+                true
+            )
+        ) {
             return spannableData
         }
+
+        _sourceText = pSpannable.toString()
 
         updateSpannable(pSpannable)
 
