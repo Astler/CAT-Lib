@@ -34,6 +34,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         private val spannableFactory = Spannable.Factory.getInstance()
     }
 
+    private var textProcessTask: Job? = null
     private var emptyDrawable: Drawable? = null
 
     private var _spannableData: Spannable? = null
@@ -87,18 +88,22 @@ open class CatShortCodeTextView @JvmOverloads constructor(
             scope = CoroutineScope(Job() + Dispatchers.Main)
         }
 
+        textProcessTask?.cancel()
+
         if (pText.isEmpty() && _spannableData.isNullOrEmpty()) {
             super.setText(pText, BufferType.NORMAL)
             return
         }
 
         if (pText.contains("[") || pText.contains("]")) {
-            scope?.launch(Dispatchers.IO) {
+            textProcessTask = scope?.launch(Dispatchers.IO) {
                 val nText = processShortCodes(context, spannableFactory.newSpannable(pText))
 
                 withContext(Dispatchers.Main) {
                     super.setText(nText, BufferType.SPANNABLE)
                 }
+
+                textProcessTask = null
             }
         } else {
             super.setText(pText, BufferType.NORMAL)
