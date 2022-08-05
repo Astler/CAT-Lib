@@ -89,15 +89,13 @@ open class CatShortCodeTextView @JvmOverloads constructor(
             scope = CoroutineScope(Job() + Dispatchers.Main)
         }
 
-        textProcessTask?.cancel()
-
         if (pText.isEmpty() && _spannableData.isNullOrEmpty()) {
             super.setText(pText, BufferType.NORMAL)
             return
         }
 
         if (pText.contains("[") || pText.contains("]")) {
-            textProcessTask = scope?.launch(Dispatchers.IO) {
+            scope?.launch(Dispatchers.IO) {
                 val nText = processShortCodes(context, spannableFactory.newSpannable(pText))
 
                 withContext(Dispatchers.Main) {
