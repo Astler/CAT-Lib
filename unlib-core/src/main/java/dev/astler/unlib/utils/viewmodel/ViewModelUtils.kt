@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 fun <T> MutableLiveData<T>.loadDataWithCoroutine(
     pScope: CoroutineScope,
     pReloadEveryRequest: Boolean = false,
-    pLoadData: () -> T
+    pLoadData: suspend () -> T
 ): LiveData<T> {
     if (this.value == null || pReloadEveryRequest) {
         pScope.launch(Dispatchers.IO) {

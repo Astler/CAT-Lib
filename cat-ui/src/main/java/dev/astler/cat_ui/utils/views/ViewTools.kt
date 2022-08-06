@@ -19,6 +19,10 @@ fun View.inflateById(@LayoutRes pId: Int, pParent: ViewGroup? = null, pAttachToR
     return this.context.inflateById(pId, pParent, pAttachToRoot)
 }
 
+fun ViewGroup.inflateById(@LayoutRes pId: Int, pAttachToRoot: Boolean = false): View {
+    return this.context.inflateById(pId, this, pAttachToRoot)
+}
+
 fun View.getContextColor(@ColorRes pColorId: Int): Int {
     return context.getContextColor(pColorId)
 }
