@@ -8,7 +8,7 @@ import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.infoLog
 
 interface IQueryPurchases {
-    fun query(client: BillingClient, purchaseId: String)
+    fun query(client: BillingClient, productId: String, purchase: Purchase)
 }
 
 class CatBillingAssistant(
@@ -84,7 +84,7 @@ class CatBillingAssistant(
                 }
             }
 
-            activityQueries?.query(billingClient, it)
+            activityQueries?.query(billingClient, it, purchase)
         }
     }
 
