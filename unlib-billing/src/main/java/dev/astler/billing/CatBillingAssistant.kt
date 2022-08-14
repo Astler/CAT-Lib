@@ -7,10 +7,16 @@ import dev.astler.unlib.cNoAdsName
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.infoLog
 
-abstract class CatBillingAssistant(
-    private val activity: Activity,
+interface IQueryPurchases {
+    fun query(client: BillingClient, purchaseId: String)
+}
+
+class CatBillingAssistant(
+    private val queryActivity: Activity,
     private val billingViewModel: BillingViewModel
 ) : PerformBillingListener {
+
+    private var activityQueries: IQueryPurchases? = null
 
     private val purchasesUpdatedListener =
         PurchasesUpdatedListener { billingResult, pPurchases ->
@@ -22,46 +28,51 @@ abstract class CatBillingAssistant(
         }
 
     val billingClient: BillingClient by lazy {
-        BillingClient.newBuilder(activity)
+        BillingClient.newBuilder(queryActivity)
             .setListener(purchasesUpdatedListener)
             .enablePendingPurchases()
             .build()
     }
 
     init {
+        if (queryActivity is IQueryPurchases) {
+            activityQueries = queryActivity
+        }
+
         startConnection()
     }
 
     private fun startConnection() {
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
-                if (billingResult.responseCode ==  BillingClient.BillingResponseCode.OK) {
+                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     billingViewModel.queryItemsDetails(billingClient)
                 }
             }
+
             override fun onBillingServiceDisconnected() {
                 startConnection()
             }
         })
     }
 
-    open fun queryPurchases(pPurchase: Purchase) {
-        infoLog(pPurchase.orderId)
-        infoLog(pPurchase.originalJson)
+    private fun queryPurchases(purchase: Purchase) {
+        infoLog(purchase.orderId)
+        infoLog(purchase.originalJson)
 
-        pPurchase.products.forEach {
+        purchase.products.forEach {
             if (it == cBillingNoAdsName) {
                 gPreferencesTool.edit(
                     cNoAdsName,
-                    pPurchase.purchaseState == Purchase.PurchaseState.PURCHASED
+                    purchase.purchaseState == Purchase.PurchaseState.PURCHASED
                 )
 
-                if (!pPurchase.isAcknowledged) {
+                if (!purchase.isAcknowledged) {
                     infoLog("BILLING: Acknowledge pur")
 
                     val acknowledgePurchaseParams =
                         AcknowledgePurchaseParams.newBuilder()
-                            .setPurchaseToken(pPurchase.purchaseToken).build()
+                            .setPurchaseToken(purchase.purchaseToken).build()
 
                     billingClient.acknowledgePurchase(acknowledgePurchaseParams) { billingResult ->
                         val billingResponseCode = billingResult.responseCode
@@ -72,9 +83,11 @@ abstract class CatBillingAssistant(
                     }
                 }
             }
+
+            activityQueries?.query(billingClient, it)
         }
     }
 
     override fun buyItem(pItemName: String) =
-        billingViewModel.buySomething(billingClient, activity, pItemName)
+        billingViewModel.buySomething(billingClient, queryActivity, pItemName)
 }
