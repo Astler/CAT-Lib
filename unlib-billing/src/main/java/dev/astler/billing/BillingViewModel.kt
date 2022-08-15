@@ -8,7 +8,9 @@ import com.android.billingclient.api.* // ktlint-disable no-wildcard-imports
 import com.android.billingclient.api.QueryProductDetailsParams.Product
 import com.google.common.collect.ImmutableList
 import dev.astler.unlib.cBillingNoAdsName
+import dev.astler.unlib.cNoAdsName
 import dev.astler.unlib.gAppConfig
+import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.infoLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -18,7 +20,10 @@ class BillingViewModel(pApp: Application) : AndroidViewModel(pApp) {
 
     private val mItemsList = ArrayList<ProductDetails>()
 
-    fun queryItemsDetails(billingClient: BillingClient) {
+    fun queryItemsDetails(
+        billingClient: BillingClient,
+        onQueryPurchase: (BillingResult, Purchase) -> Unit
+    ) {
         val productList = ArrayList<Product>()
 
         gAppConfig.mBillingItems.forEach {
@@ -28,7 +33,6 @@ class BillingViewModel(pApp: Application) : AndroidViewModel(pApp) {
             )
         }
 
-        //TODO Move to config
         productList.add(
             Product.newBuilder().setProductId(cBillingNoAdsName)
                 .setProductType(BillingClient.ProductType.INAPP).build()
@@ -42,6 +46,24 @@ class BillingViewModel(pApp: Application) : AndroidViewModel(pApp) {
                 productDetailsList.forEach {
                     infoLog("loaded = ${it.productId}")
                     mItemsList.add(it)
+                }
+            }
+
+            billingClient.queryPurchasesAsync(
+                QueryPurchasesParams.newBuilder()
+                    .setProductType(BillingClient.ProductType.INAPP)
+                    .build()
+            ) { billingResult, purchaseList ->
+                purchaseList.forEach {
+                    if (it.products.contains(cBillingNoAdsName)) {
+                        gPreferencesTool.edit(
+                            cNoAdsName,
+                            it.purchaseState == Purchase.PurchaseState.PURCHASED
+                        )
+                    } else {
+                        onQueryPurchase(billingResult, it)
+                    }
+
                 }
             }
         }

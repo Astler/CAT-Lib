@@ -9,6 +9,9 @@ import dev.astler.unlib.utils.infoLog
 
 interface IQueryPurchases {
     fun query(client: BillingClient, productId: String, purchase: Purchase)
+    fun restorePurchases(billingResult: BillingResult, purchase: Purchase) {
+
+    }
 }
 
 class CatBillingAssistant(
@@ -46,7 +49,9 @@ class CatBillingAssistant(
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    billingViewModel.queryItemsDetails(billingClient)
+                    billingViewModel.queryItemsDetails(billingClient) { billingResult, purchase ->  
+                        activityQueries?.restorePurchases(billingResult, purchase)
+                    }
                 }
             }
 
