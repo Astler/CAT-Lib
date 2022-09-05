@@ -1,7 +1,6 @@
 package dev.astler.cat_ui.views
 
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
@@ -15,6 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.text.toSpannable
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import dev.astler.cat_ui.R
 import dev.astler.cat_ui.utils.getDrawableByName
 import dev.astler.cat_ui.views.custom.VerticalImageSpan
@@ -34,21 +35,27 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         private val spannableFactory = Spannable.Factory.getInstance()
     }
 
-    private var textProcessTask: Job? = null
-    private var emptyDrawable: Drawable? = null
+    private val _placeholderDrawable: Drawable by lazy {
+        ContextCompat.getDrawable(context, emptyIconId)!!
+    }
+
+    private var _scope: CoroutineScope? = null
 
     private var _sourceText: CharSequence = ""
     private var _spannableData: Spannable? = null
-    protected val spannableData: Spannable get() = _spannableData!!
 
     protected var iconSize = 18f
-    protected var scope: CoroutineScope? = null
+    protected val spannableData: Spannable get() = _spannableData!!
+    protected val scope: CoroutineScope
+        get() {
+            if (_scope == null) _scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+
+            return _scope!!
+        }
 
     open val emptyIconId: Int = R.drawable.ic_splash_logo
 
     init {
-        createScope()
-
         initText(attrs)
 
         freezesText = true
@@ -60,8 +67,6 @@ open class CatShortCodeTextView @JvmOverloads constructor(
             typedArray.getInteger(R.styleable.CatTextView_textSizeModifier, 0)
 
         iconSize = if (!isInEditMode) gPreferencesTool.mTextSize else 18f + textSizeModifier
-
-        emptyDrawable = ContextCompat.getDrawable(context, emptyIconId)
     }
 
     override fun onSaveInstanceState(): Parcelable {
@@ -83,22 +88,29 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     }
 
     override fun setText(pText: CharSequence, type: BufferType) {
-        createScope()
-
         if (pText.isEmpty() && _spannableData.isNullOrEmpty()) {
             super.setText(pText, BufferType.NORMAL)
             return
         }
 
         if (pText.contains("[") || pText.contains("]")) {
-            scope?.launch(Dispatchers.IO) {
+            scope.launch(Dispatchers.IO) {
                 val nText = processShortCodes(context, spannableFactory.newSpannable(pText))
 
                 withContext(Dispatchers.Main) {
-                    super.setText(nText, BufferType.SPANNABLE)
-                }
+                    try {
+                        super.setText(nText, BufferType.SPANNABLE)
+                    } catch (e: Exception) {
 
-                textProcessTask = null
+                        super.setText(pText)
+                        Firebase.crashlytics.recordException(e)
+                        Firebase.crashlytics.log(
+                            """
+                            $e with text $pText
+                        """.trimIndent()
+                        )
+                    }
+                }
             }
         } else {
             super.setText(pText, BufferType.NORMAL)
@@ -107,13 +119,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        scope?.cancel()
-        scope = null
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        createScope()
+        dropScope()
     }
 
     protected fun showSpannableText() {
@@ -266,7 +272,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     }
 
     protected open fun addImages(context: Context) {
-        scope?.launch(Dispatchers.IO) {
+        scope.launch(Dispatchers.IO) {
             val nMatcher = Pattern
                 .compile("\\Q[img src=\\E([a-zA-Z\\d._]+?)(?:(?: tint=([a-zA-Z\\d#._]+?)\\Q/]\\E)|(?:\\Q/]\\E))")
                 .matcher(spannableData)
@@ -304,7 +310,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
                     val nSize = (iconSize * context.resources.displayMetrics.density).toInt()
 
                     setImageSpanInPosition(
-                        emptyDrawable,
+                        _placeholderDrawable,
                         nTintColor,
                         nSize,
                         nMatcher.start(),
@@ -358,17 +364,21 @@ open class CatShortCodeTextView @JvmOverloads constructor(
 //            spannableData.removeSpan(it)
 //        }
 
-        spannableData.setSpan(
-            imageSpan,
-            start,
-            end,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        try {
+            spannableData.setSpan(
+                imageSpan,
+                start,
+                end,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        } catch (e: Exception) {
+            Firebase.crashlytics.log("setImageSpanInPosition: $e with extra data $spannableData, where was start $start and end $end")
+            Firebase.crashlytics.recordException(e)
+        }
     }
 
-    private fun createScope() {
-        if (scope == null) {
-            scope = CoroutineScope(Job() + Dispatchers.Main)
-        }
+    protected fun dropScope() {
+        scope.cancel()
+        _scope = null
     }
 }
