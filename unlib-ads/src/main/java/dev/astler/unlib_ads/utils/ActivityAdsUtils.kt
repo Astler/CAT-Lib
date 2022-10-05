@@ -248,15 +248,15 @@ fun CatActivity.interstitialAdsShowTry() {
         return
     }
 
-    val nShowAds = mRemoteConfig.getBoolean("show_interstitial_ad_$mConfigAppPackage")
+    val nShowAds = mRemoteConfig.getBoolean("show_interstitial_ad_$configName")
 
     if (!nShowAds) {
         adsLog("Ads disabled in remote config!")
         return
     }
 
-    val nAdsPause = mRemoteConfig.getLong("ad_pause_$mConfigAppPackage").toInt()
-    val nAdsChance = mRemoteConfig.getLong("ad_chance_$mConfigAppPackage").toInt()
+    val nAdsPause = mRemoteConfig.getLong("ad_pause_$configName").toInt()
+    val nAdsChance = mRemoteConfig.getLong("ad_chance_$configName").toInt()
 
     adsLog("Loaded ads remote config = $nAdsPause, $nAdsChance")
 

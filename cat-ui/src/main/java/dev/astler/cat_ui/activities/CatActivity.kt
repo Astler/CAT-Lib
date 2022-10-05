@@ -30,9 +30,10 @@ import dev.astler.unlib.PreferencesTool
 import dev.astler.unlib.data.RemoteConfig
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.getDefaultNightMode
-import dev.astler.unlib.utils.infoLog
+import dev.astler.unlib.utils.errorLog
 import dev.astler.unlib.utils.isOnline
-import java.util.*
+import java.util.GregorianCalendar
+import java.util.Locale
 
 abstract class CatActivity :
     LocaleAwareCompatActivity(),
@@ -40,6 +41,9 @@ abstract class CatActivity :
     ActivityInterface {
 
     private var currentWindowInsets: WindowInsetsCompat = WindowInsetsCompat.Builder().build()
+    private var topInsets = 0
+    private var bottomInsets = 0
+    private var toolbarHeight = 0
 
     lateinit var mRemoteConfig: RemoteConfig
     protected var mActiveFragment: Fragment? = null
@@ -56,6 +60,7 @@ abstract class CatActivity :
     private val networkCallback by lazy {
         object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
+                onInternetConnected(network)
                 if (mActiveFragment is IInternetDependentFragment) {
                     lifecycleScope.launchWhenResumed {
                         (mActiveFragment as IInternetDependentFragment).onInternetAvailable()
@@ -64,6 +69,7 @@ abstract class CatActivity :
             }
 
             override fun onLost(network: Network) {
+                onInternetLost(network)
                 if (mActiveFragment is IInternetDependentFragment) {
                     lifecycleScope.launchWhenResumed {
                         (mActiveFragment as IInternetDependentFragment).onInternetLost()
@@ -73,7 +79,7 @@ abstract class CatActivity :
         }
     }
 
-    open val mConfigAppPackage: String by lazy {
+    open val configName: String by lazy {
         packageName.replace(".", "_")
     }
 
@@ -81,13 +87,6 @@ abstract class CatActivity :
         onBackPressedDispatcher.onBackPressed()
     }
 
-    private var topInsets = 0
-    private var bottomInsets = 0
-    private var toolbarHeight = 0
-
-    override fun getTopPadding() = topInsets
-    override fun getBottomPadding() = bottomInsets
-    override fun getToolbarHeight() = toolbarHeight
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,10 +107,25 @@ abstract class CatActivity :
         mReviewManager.requestReviewFlow().addOnCompleteListener { request ->
             if (request.isSuccessful) {
                 mReviewInfo = request.result
-                infoLog(mReviewInfo.toString())
             } else {
-                request.exception?.message?.let { infoLog(it) }
+                errorLog(request.exception, "error during requestReviewFlow")
             }
+        }
+
+        if (gPreferencesTool.isFirstStart) {
+            onFirstAppStart()
+            gPreferencesTool.isFirstStart = false
+        }
+
+        if (gPreferencesTool.isFirstStartForVersion(appVersionCode())) {
+            gPreferencesTool.edit(
+                PreferencesTool.appFirstStartTime,
+                GregorianCalendar().timeInMillis
+            )
+
+            onFirstStartCurrentVersion()
+
+            gPreferencesTool.setFirstStartForVersion(appVersionCode())
         }
 
         connectivityManager.registerNetworkCallback(
@@ -119,6 +133,34 @@ abstract class CatActivity :
             networkCallback
         )
     }
+
+    /**
+     * UI methods
+     */
+
+    override fun getTopPadding() = topInsets
+
+    override fun getBottomPadding() = bottomInsets
+
+    override fun getToolbarHeight() = toolbarHeight
+
+    /**
+     * My personal use methods
+     */
+
+    protected open fun appVersionCode() = 0
+
+    protected open fun onInternetConnected(network: Network) {}
+
+    protected open fun onInternetLost(network: Network) {}
+
+    protected open fun onFirstAppStart() {}
+
+    protected open fun onFirstStartCurrentVersion() {}
+
+    /**
+     * System callbacks
+     */
 
     override fun onStart() {
         super.onStart()

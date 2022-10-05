@@ -21,6 +21,8 @@ open class PreferencesTool(context: Context) {
 
         const val firstStartKey = "firstStart"
         const val dayWithoutAdsKey = "dayWithoutAds"
+
+        const val appFirstStartTime = "appFirstStartTime"
     }
 
     private var mPreferences = PreferenceManager.getDefaultSharedPreferences(context)
