@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dev.astler.cat_ui.R
@@ -17,8 +18,8 @@ enum class ListInsetsType {
     SYSTEM_WITH_ACTION_BAR, SYSTEM, TOP, TOP_WITH_ACTION_BAR, BOTTOM, DISMISS
 }
 
-abstract class CatListFragment :
-    CatFragment<RecyclerViewFragmentBinding>(R.layout.recycler_view_fragment),
+abstract class CatListFragment(@LayoutRes layoutId: Int = R.layout.recycler_view_fragment) :
+    CatFragment<RecyclerViewFragmentBinding>(layoutId),
     RecyclerAdapterSizeListener {
 
     private lateinit var mRecyclerViewFragmentBinding: RecyclerViewFragmentBinding
