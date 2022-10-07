@@ -13,6 +13,8 @@ open class PreferencesTool(context: Context) {
         const val appThemeKey = "appTheme"
         const val vibrationKey = "keyVibration"
 
+        const val cNoAdsName = "noAdsPref"
+
         const val appLocaleKey = "appLocale"
         const val appLocaleDefault = "system"
 
@@ -27,7 +29,10 @@ open class PreferencesTool(context: Context) {
 
     private var mPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    open fun loadDefaultPreferences(context: Context, pNewPreferencesArray: IntArray = intArrayOf()) {
+    open fun loadDefaultPreferences(
+        context: Context,
+        pNewPreferencesArray: IntArray = intArrayOf()
+    ) {
         PreferenceManager.setDefaultValues(context, R.xml.prefs, false)
 
         pNewPreferencesArray.forEach {
@@ -64,6 +69,12 @@ open class PreferencesTool(context: Context) {
                 edit(vibrationKey, "system")
         }
 
+    var adsDisabled: Boolean
+        get() = getPreferences().getBoolean(cNoAdsName, false)
+        set(value) {
+            edit(cNoAdsName, value)
+        }
+
     var isSystemLanguage: Boolean
         get() = appLanguage == "system"
         set(value) {
@@ -89,7 +100,7 @@ open class PreferencesTool(context: Context) {
             edit(firstStartKey, value)
         }
 
-    var dayWithoutAds: Int
+    var noAdsDay: Int
         get() = getPreferences().getInt(dayWithoutAdsKey, -1)
         set(value) {
             edit(dayWithoutAdsKey, value)
@@ -125,7 +136,8 @@ open class PreferencesTool(context: Context) {
     open fun preferencesToDefault() {
         mIsSystemTheme = true
         mTextSize = 18f
-        userLanguage = ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0).toString()
+        userLanguage =
+            ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0).toString()
     }
 
     fun edit(name: String, type: Any) {
@@ -142,8 +154,13 @@ open class PreferencesTool(context: Context) {
         editor.apply()
     }
 
-    fun getBoolean(pKey: String, pDefValue: Boolean = true): Boolean = getPreferences().getBoolean(pKey, pDefValue)
-    fun getString(pKey: String, pDefValue: String = ""): String = getPreferences().getString(pKey, pDefValue) ?: pDefValue
+    fun getBoolean(pKey: String, pDefValue: Boolean = true): Boolean =
+        getPreferences().getBoolean(pKey, pDefValue)
+
+    fun getString(pKey: String, pDefValue: String = ""): String =
+        getPreferences().getString(pKey, pDefValue) ?: pDefValue
+
     fun getInt(pKey: String, pDefValue: Int = 0): Int = getPreferences().getInt(pKey, pDefValue)
-    fun getLong(pKey: String, pDefValue: Long = 0L): Long = getPreferences().getLong(pKey, pDefValue)
+    fun getLong(pKey: String, pDefValue: Long = 0L): Long =
+        getPreferences().getLong(pKey, pDefValue)
 }

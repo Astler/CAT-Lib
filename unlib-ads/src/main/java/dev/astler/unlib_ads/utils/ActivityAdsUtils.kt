@@ -93,7 +93,7 @@ fun AppCompatActivity.initAds() {
 
 val mNoAdsRewardListener: OnUserEarnedRewardListener
     get() = OnUserEarnedRewardListener {
-        gPreferencesTool.dayWithoutAds = GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
+        gPreferencesTool.noAdsDay = GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
         gPreferencesTool.unsetRewardAdIsActive()
     }
 

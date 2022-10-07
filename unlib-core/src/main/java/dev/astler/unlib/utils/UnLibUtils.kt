@@ -4,9 +4,10 @@ import android.content.Context
 import android.content.res.Resources
 import androidx.core.os.ConfigurationCompat
 import dev.astler.unlib.gPreferencesTool
+import dev.astler.unlib.paidPackagePostfix
 
 fun Context.isPaidVersion(): Boolean {
-    return applicationContext.packageName.endsWith("paid")
+    return applicationContext.packageName.endsWith(paidPackagePostfix)
 }
 
 fun Context.getSupportedLanguageCode(): String {

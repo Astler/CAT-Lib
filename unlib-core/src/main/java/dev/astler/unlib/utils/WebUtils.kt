@@ -7,12 +7,9 @@ import java.net.MalformedURLException
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-/**
- * To get json from website
- */
-
 fun String.getJsonContent(): String {
     var nConnection: HttpsURLConnection? = null
+
     try {
         val nURL = URL(this)
         nConnection = nURL.openConnection() as HttpsURLConnection
@@ -36,8 +33,10 @@ fun String.getJsonContent(): String {
         return nStringBuilder.toString()
     } catch (ex: MalformedURLException) {
         ex.printStackTrace()
+        errorLog(ex)
     } catch (ex: IOException) {
         ex.printStackTrace()
+        errorLog(ex)
     } finally {
         if (nConnection != null) {
             trySimple {
