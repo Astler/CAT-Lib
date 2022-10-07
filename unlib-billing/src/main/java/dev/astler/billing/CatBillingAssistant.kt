@@ -3,7 +3,6 @@ package dev.astler.billing
 import android.app.Activity
 import com.android.billingclient.api.*
 import dev.astler.unlib.cBillingNoAdsName
-import dev.astler.unlib.cNoAdsName
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.infoLog
 
@@ -67,10 +66,7 @@ class CatBillingAssistant(
 
         purchase.products.forEach {
             if (it == cBillingNoAdsName) {
-                gPreferencesTool.edit(
-                    cNoAdsName,
-                    purchase.purchaseState == Purchase.PurchaseState.PURCHASED
-                )
+                gPreferencesTool.adsDisabled = purchase.purchaseState == Purchase.PurchaseState.PURCHASED
 
                 if (!purchase.isAcknowledged) {
                     infoLog("BILLING: Acknowledge pur")
