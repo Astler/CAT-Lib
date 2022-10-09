@@ -8,7 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.util.DisplayMetrics
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
@@ -82,20 +81,26 @@ fun Context.tintDrawableByAttr(
     val drawable = ContextCompat.getDrawable(this, icon)
 
     drawable?.let {
-        val color = getColorFromAttr(attrId)
+        val color = getAttributeColor(attrId)
         DrawableCompat.setTint(it, color)
     }
 
     return drawable
 }
 
-fun Context.getColorFromAttr(
+fun Context.getAttributeColor(
     @AttrRes attrColor: Int,
+    alpha: Float = -1f,
     typedValue: TypedValue = TypedValue(),
     resolveRefs: Boolean = true
 ): Int {
     theme.resolveAttribute(attrColor, typedValue, resolveRefs)
-    return typedValue.data
+
+    if (alpha == -1f) {
+        return typedValue.data
+    }
+
+    return typedValue.data.setAlpha(alpha)
 }
 
 fun Context.getDimensionFromAttr(resId: Int): Int {

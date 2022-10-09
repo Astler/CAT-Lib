@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
-import dev.astler.cat_ui.fragments.CatFragment
 import dev.astler.cat_ui.fragments.CatFragmentLegacy
 import dev.astler.cat_ui.interfaces.ActivityInterface
 import dev.astler.cat_ui.interfaces.CoreFragmentInterface
-import dev.astler.unlib.utils.isAppDarkTheme
+import dev.astler.cat_ui.utils.isAppDarkTheme
 import dev.astler.unlib_compose.theme.UnlibComposeTheme
 
 abstract class UnLibComposeCoreFragment : CatFragmentLegacy(), CoreFragmentInterface {

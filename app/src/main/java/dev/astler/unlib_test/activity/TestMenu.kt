@@ -2,15 +2,12 @@ package dev.astler.unlib_test.activity
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.NightMode
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zeugmasolutions.localehelper.Locales
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.adapters.CatOneTypeAdapter
 import dev.astler.cat_ui.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib.gPreferencesTool
-import dev.astler.unlib.getDefaultNightMode
 import dev.astler.unlib.signin.utils.startMandatorySignIn
 import dev.astler.unlib.signin.utils.startOptionalSignIn
 import dev.astler.unlib.signin.utils.startRegisterSignIn

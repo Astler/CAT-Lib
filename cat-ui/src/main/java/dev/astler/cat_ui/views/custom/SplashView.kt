@@ -11,10 +11,10 @@ import android.view.animation.AccelerateInterpolator
 import androidx.core.graphics.PathParser
 import dev.astler.cat_ui.R
 import dev.astler.cat_ui.utils.dpToPixels
-import dev.astler.cat_ui.utils.getColorFromAttr
+import dev.astler.cat_ui.utils.getAttributeColor
+import dev.astler.cat_ui.utils.isAppDarkTheme
 import dev.astler.cat_ui.utils.special.VectorDrawableParser
 import dev.astler.cat_ui.utils.views.getContextColor
-import dev.astler.unlib.utils.*
 
 class SplashView @JvmOverloads constructor(
     context: Context,
@@ -22,7 +22,7 @@ class SplashView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private val backgroundColor = context.getColorFromAttr(R.attr.backgroundColorByTheme)
+    private val backgroundColor = context.getAttributeColor(R.attr.backgroundColorByTheme)
 
     private val iconPaint: Paint = Paint().apply {
         isAntiAlias = true
