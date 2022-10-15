@@ -9,6 +9,7 @@
 
     <dev.astler.cat_ui.views.CatShortCodeTextView
         android:id="@+id/test"
+        app:asyncModeActive="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

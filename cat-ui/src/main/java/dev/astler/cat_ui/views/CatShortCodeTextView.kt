@@ -55,7 +55,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
             return _scope!!
         }
 
-    open val emptyIconId: Int = R.drawable.ic_splash_logo
+    open val emptyIconId: Int = R.drawable.ic_baseline_attachment_24
 
     init {
         initText(attrs)
@@ -288,7 +288,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     }
 
     protected open fun addImages(context: Context) {
-        scope.launch(Dispatchers.IO) {
+        scope.launch(if (_asyncModeActive) Dispatchers.IO else Dispatchers.Main) {
             val nMatcher = Pattern
                 .compile("\\Q[img src=\\E([a-zA-Z\\d._]+?)(?:(?: tint=([a-zA-Z\\d#._]+?)\\Q/]\\E)|(?:\\Q/]\\E))")
                 .matcher(spannableData)
