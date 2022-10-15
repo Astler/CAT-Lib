@@ -17,6 +17,6 @@
     </declare-styleable>
 
     <declare-styleable name="CatShortCodeTextView">
-        <attr name="asyncModeActive" format="boolean">true</attr>
+        <attr name="asyncModeActive" format="boolean">false</attr>
     </declare-styleable>
 </resources>

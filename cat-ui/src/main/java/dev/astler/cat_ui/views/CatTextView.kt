@@ -35,11 +35,7 @@ open class CatTextView @JvmOverloads constructor(
                 setRegTypeface()
             }
         }
-
-        onTextInit(typedArray)
     }
-
-    open fun onTextInit(typedArray: TypedArray) {}
 
     fun setBoldTypeface() {
         typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)

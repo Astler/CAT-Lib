@@ -63,7 +63,10 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         freezesText = true
 
         val typedArray =
-            context.theme.obtainStyledAttributes(attrs, R.styleable.CatTextView, 0, 0)
+            context.theme.obtainStyledAttributes(attrs, R.styleable.CatShortCodeTextView, 0, 0)
+
+        _asyncModeActive =
+            typedArray.getBoolean(R.styleable.CatShortCodeTextView_asyncModeActive, false)
 
         val textSizeModifier =
             typedArray.getInteger(R.styleable.CatTextView_textSizeModifier, 0)
@@ -71,10 +74,6 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         iconSize = if (!isInEditMode) gPreferencesTool.mTextSize else 18f + textSizeModifier
     }
 
-    override fun onTextInit(typedArray: TypedArray) {
-        _asyncModeActive =
-            typedArray.getBoolean(R.styleable.CatShortCodeTextView_asyncModeActive, false)
-    }
 
     override fun onSaveInstanceState(): Parcelable {
         val bundle = Bundle()
