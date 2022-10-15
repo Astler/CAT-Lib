@@ -1,6 +1,7 @@
 package dev.astler.cat_ui.views
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
@@ -35,6 +36,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         private val spannableFactory = Spannable.Factory.getInstance()
     }
 
+    private var _asyncModeActive = false
     private val _placeholderDrawable: Drawable by lazy {
         ContextCompat.getDrawable(context, emptyIconId)!!
     }
@@ -69,6 +71,11 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         iconSize = if (!isInEditMode) gPreferencesTool.mTextSize else 18f + textSizeModifier
     }
 
+    override fun onTextInit(typedArray: TypedArray) {
+        _asyncModeActive =
+            typedArray.getBoolean(R.styleable.CatShortCodeTextView_asyncModeActive, false)
+    }
+
     override fun onSaveInstanceState(): Parcelable {
         val bundle = Bundle()
         bundle.putParcelable("superState", super.onSaveInstanceState())
@@ -93,24 +100,30 @@ open class CatShortCodeTextView @JvmOverloads constructor(
             return
         }
 
-        if (pText.contains("[") || pText.contains("]")) {
-            scope.launch(Dispatchers.IO) {
-                val nText = processShortCodes(context, spannableFactory.newSpannable(pText))
+        if ((pText.contains("[") || pText.contains("]"))) {
 
-                withContext(Dispatchers.Main) {
-                    try {
-                        super.setText(nText, BufferType.SPANNABLE)
-                    } catch (e: Exception) {
+            if (_asyncModeActive) {
+                scope.launch(Dispatchers.IO) {
+                    val nText = processShortCodes(context, spannableFactory.newSpannable(pText))
 
-                        super.setText(pText)
-                        Firebase.crashlytics.recordException(e)
-                        Firebase.crashlytics.log(
-                            """
+                    withContext(Dispatchers.Main) {
+                        try {
+                            super.setText(nText, BufferType.SPANNABLE)
+                        } catch (e: Exception) {
+
+                            super.setText(pText)
+                            Firebase.crashlytics.recordException(e)
+                            Firebase.crashlytics.log(
+                                """
                             $e with text $pText
                         """.trimIndent()
-                        )
+                            )
+                        }
                     }
                 }
+            } else {
+                val nText = processShortCodes(context, spannableFactory.newSpannable(pText))
+                super.setText(nText, BufferType.SPANNABLE)
             }
         } else {
             super.setText(pText, BufferType.NORMAL)
@@ -132,7 +145,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
 
     protected fun getSpannable() = _spannableData
 
-    open suspend fun processShortCodes(context: Context, pSpannable: Spannable): Spannable {
+    open fun processShortCodes(context: Context, pSpannable: Spannable): Spannable {
         if (!getSpannable().isNullOrEmpty() && _sourceText.contentEquals(
                 pSpannable.toString(),
                 true
@@ -162,7 +175,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         }
     }
 
-    protected open suspend fun addFancyText() {
+    protected open fun addFancyText() {
         val nPattern = Pattern
             .compile("\\Q[ft text=\\E([a-zA-Z\\dА-Яа-яё{}/.,=:@_ ]+?)(?:(?: color=([a-zA-Z\\d#._]+?))|(?:))(?:(?: params=([~a-zA-Z\\d#._]+?))|(?:))/]\\Q\\E")
 
@@ -206,9 +219,11 @@ open class CatShortCodeTextView @JvmOverloads constructor(
                     nSecond.startsWith("#") -> {
                         nSecond
                     }
+
                     nThird.startsWith("#") -> {
                         nThird
                     }
+
                     else -> {
                         ""
                     }
@@ -220,9 +235,11 @@ open class CatShortCodeTextView @JvmOverloads constructor(
                     nSecond.startsWith("~") -> {
                         nSecond
                     }
+
                     nThird.startsWith("~") -> {
                         nThird
                     }
+
                     else -> {
                         ""
                     }

@@ -15,4 +15,8 @@
         <attr name="unli_loading_view" format="reference" />
         <attr name="unli_error_view" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="CatShortCodeTextView">
+        <attr name="asyncModeActive" format="boolean">true</attr>
+    </declare-styleable>
 </resources>
