@@ -1,7 +1,6 @@
 package dev.astler.cat_ui.views
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
@@ -288,51 +287,70 @@ open class CatShortCodeTextView @JvmOverloads constructor(
     }
 
     protected open fun addImages(context: Context) {
-        scope.launch(if (_asyncModeActive) Dispatchers.IO else Dispatchers.Main) {
-            val nMatcher = Pattern
-                .compile("\\Q[img src=\\E([a-zA-Z\\d._]+?)(?:(?: tint=([a-zA-Z\\d#._]+?)\\Q/]\\E)|(?:\\Q/]\\E))")
-                .matcher(spannableData)
+        val nMatcher = Pattern
+            .compile("\\Q[img src=\\E([a-zA-Z\\d._]+?)(?:(?: tint=([a-zA-Z\\d#._]+?)\\Q/]\\E)|(?:\\Q/]\\E))")
+            .matcher(spannableData)
 
-            while (nMatcher.find()) {
-                var set = true
-                for (
-                span in spannableData.getSpans(
-                    nMatcher.start(),
-                    nMatcher.end(),
-                    ImageSpan::class.java
-                )
+        while (nMatcher.find()) {
+            var set = true
+            for (
+            span in spannableData.getSpans(
+                nMatcher.start(),
+                nMatcher.end(),
+                ImageSpan::class.java
+            )
+            ) {
+                if (spannableData.getSpanStart(span) >= nMatcher.start() && spannableData.getSpanEnd(
+                        span
+                    ) <= nMatcher.end()
                 ) {
-                    if (spannableData.getSpanStart(span) >= nMatcher.start() && spannableData.getSpanEnd(
-                            span
-                        ) <= nMatcher.end()
-                    ) {
-                        spannableData.removeSpan(span)
-                    } else {
-                        set = false
-                        break
-                    }
+                    spannableData.removeSpan(span)
+                } else {
+                    set = false
+                    break
                 }
+            }
 
-                val nImageResourceName =
-                    spannableData.subSequence(nMatcher.start(1), nMatcher.end(1)).toString()
-                        .trim { it <= ' ' }
+            val nImageResourceName =
+                spannableData.subSequence(nMatcher.start(1), nMatcher.end(1)).toString()
+                    .trim { it <= ' ' }
 
-                val nTintColor = if (nMatcher.group(2) != null) {
-                    spannableData.subSequence(nMatcher.start(2), nMatcher.end(2)).toString()
-                        .trim { it <= ' ' }
-                } else ""
+            val nTintColor = if (nMatcher.group(2) != null) {
+                spannableData.subSequence(nMatcher.start(2), nMatcher.end(2)).toString()
+                    .trim { it <= ' ' }
+            } else ""
 
-                if (set) {
-                    val nSize = (iconSize * context.resources.displayMetrics.density).toInt()
+            if (set) {
+                val nSize = (iconSize * context.resources.displayMetrics.density).toInt()
+
+                if (_asyncModeActive) {
+                    val startPosition = nMatcher.start()
+                    val endPosition = nMatcher.end()
 
                     setImageSpanInPosition(
                         _placeholderDrawable,
                         nTintColor,
                         nSize,
-                        nMatcher.start(),
-                        nMatcher.end()
+                        startPosition,
+                        endPosition
                     )
 
+                    scope.launch(Dispatchers.IO) {
+                        getShortCodeDrawableAsync(nImageResourceName) {
+                            setImageSpanInPosition(
+                                it,
+                                nTintColor,
+                                nSize,
+                                startPosition,
+                                endPosition
+                            )
+                        }
+
+                        withContext(Dispatchers.Main) {
+                            showSpannableText()
+                        }
+                    }
+                } else {
                     getShortCodeDrawable(nImageResourceName) {
                         setImageSpanInPosition(
                             it,
@@ -344,14 +362,21 @@ open class CatShortCodeTextView @JvmOverloads constructor(
                     }
                 }
             }
+        }
 
-            withContext(Dispatchers.Main) {
-                showSpannableText()
-            }
+        showSpannableText()
+    }
+
+    protected open suspend fun getShortCodeDrawableAsync(
+        pName: String,
+        onComplete: (Drawable?) -> Unit
+    ) {
+        context.getDrawableByName(pName)?.let {
+            onComplete(it)
         }
     }
 
-    protected open suspend fun getShortCodeDrawable(
+    protected open fun getShortCodeDrawable(
         pName: String,
         onComplete: (Drawable?) -> Unit
     ) {
