@@ -12,7 +12,7 @@ import dev.astler.unlib.signin.databinding.SignInLayoutBinding
 import dev.astler.unlib.signin.utils.authWithEmailAndPassword
 import dev.astler.unlib.signin.utils.signInWithGoogle
 
-class SignInFragment : CatFragment<SignInLayoutBinding>() {
+open class SignInFragment : CatFragment<SignInLayoutBinding>() {
 
     private val mFragmentBinding by viewBinding<SignInLayoutBinding>()
 
