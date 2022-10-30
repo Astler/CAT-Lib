@@ -9,7 +9,11 @@ import dev.astler.cat_ui.adapters.diffutils.UniversalDiffUtil
 import dev.astler.cat_ui.adapters.viewholders.CatOneTypeViewHolder
 import dev.astler.cat_ui.interfaces.RecyclerAdapterSizeListener
 
-open class CatOneTypeAdapter<T>(@LayoutRes val pLayoutResource: Int, private val mItemLoadListener: LoadItem<T>? = null, private val mAdapterSizeListener: RecyclerAdapterSizeListener? = null) : RecyclerView.Adapter<CatOneTypeViewHolder>() {
+open class CatOneTypeAdapter<T>(
+    @LayoutRes val pLayoutResource: Int,
+    private val mItemLoadListener: LoadItem<T>? = null,
+    private val mAdapterSizeListener: RecyclerAdapterSizeListener? = null
+) : RecyclerView.Adapter<CatOneTypeViewHolder>() {
 
     var data: ArrayList<T> = arrayListOf()
 
@@ -32,14 +36,15 @@ open class CatOneTypeAdapter<T>(@LayoutRes val pLayoutResource: Int, private val
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatOneTypeViewHolder {
-        val nHolderItem = LayoutInflater.from(parent.context).inflate(pLayoutResource, parent, false)
+        val nHolderItem =
+            LayoutInflater.from(parent.context).inflate(pLayoutResource, parent, false)
         return CatOneTypeViewHolder(nHolderItem)
     }
 
     override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: CatOneTypeViewHolder, position: Int) {
-        mItemLoadListener?.loadData(data[position], holder)
+        mItemLoadListener?.loadData(data[holder.absoluteAdapterPosition], holder)
     }
 
     fun interface LoadItem<T> {
