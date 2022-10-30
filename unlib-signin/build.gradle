@@ -52,5 +52,5 @@ dependencies {
 
     api platform('com.google.firebase:firebase-bom:30.1.0')
     api 'com.google.firebase:firebase-auth-ktx'
-    api 'com.google.android.gms:play-services-auth:20.2.0'
+    api 'com.google.android.gms:play-services-auth:20.3.0'
 }

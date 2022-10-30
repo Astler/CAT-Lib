@@ -49,7 +49,7 @@ dependencies {
     implementation project(':unlib-core')
 
     api 'com.zeugmasolutions.localehelper:locale-helper-android:1.5.1'
-    api 'androidx.core:core-splashscreen:1.0.0-rc01'
+    api 'androidx.core:core-splashscreen:1.0.0'
     api 'com.facebook.shimmer:shimmer:0.5.0'
     api 'com.github.kirich1409:viewbindingpropertydelegate:1.5.6'
 }
