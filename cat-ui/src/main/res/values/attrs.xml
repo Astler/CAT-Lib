@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="sign_in_app_icon" format="reference" />
+
     <declare-styleable name="CatTextView">
         <attr name="textSizeModifier" format="integer">0</attr>
         <attr name="themeTextColor" format="boolean">true</attr>
