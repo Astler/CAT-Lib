@@ -106,8 +106,7 @@ open class SignInActivity : CatActivity(), SignInActivityListener {
                     goneViews(
                         register,
                         signInButton,
-                        googleSignIn,
-                        or
+                        googleSignIn
                     )
                 }
                 else -> {}
@@ -118,7 +117,6 @@ open class SignInActivity : CatActivity(), SignInActivityListener {
                     signInWithGoogle()
                 }
             } else {
-                or.goneView()
                 googleSignIn.goneView()
             }
         }

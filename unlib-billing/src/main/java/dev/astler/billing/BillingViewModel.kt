@@ -41,7 +41,7 @@ class BillingViewModel(pApp: Application) : AndroidViewModel(pApp) {
             QueryProductDetailsParams.newBuilder().setProductList(productList).build()
 
         viewModelScope.launch(Dispatchers.IO) {
-            billingClient.queryProductDetailsAsync(queryProductDetailsParams) { billingResult, productDetailsList ->
+            billingClient.queryProductDetailsAsync(queryProductDetailsParams) { _, productDetailsList ->
                 productDetailsList.forEach {
                     infoLog("loaded = ${it.productId}")
                     mItemsList.add(it)
@@ -87,5 +87,7 @@ class BillingViewModel(pApp: Application) : AndroidViewModel(pApp) {
             .build()
 
         val billingResult = billingClient.launchBillingFlow(activity, billingFlowParams)
+
+        infoLog("billingResult = ${billingResult.responseCode}")
     }
 }

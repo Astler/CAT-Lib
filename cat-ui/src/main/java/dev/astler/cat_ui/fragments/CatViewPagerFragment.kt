@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import dev.astler.cat_ui.R
 import dev.astler.cat_ui.databinding.FragmentViewPager2Binding
-import dev.astler.unlib.gPreferencesTool
 import dev.astler.cat_ui.utils.views.setStatusPaddingForView
+import dev.astler.unlib.gPreferencesTool
 
 abstract class CatViewPagerFragment : CatFragment<FragmentViewPager2Binding>() {
 
@@ -46,12 +46,17 @@ abstract class CatViewPagerFragment : CatFragment<FragmentViewPager2Binding>() {
             })
 
             TabLayoutMediator(tabView, viewPager) { tab, position ->
+                setLayoutMediator(tab, position)
             }.attach()
 
             viewPager.offscreenPageLimit = 1
 
             root.setStatusPaddingForView()
         }
+    }
+
+    open fun setLayoutMediator(tab: TabLayout.Tab, position: Int) {
+
     }
 
     fun setPageTransformer(mPageTransformer: ViewPager2.PageTransformer? = null) {
