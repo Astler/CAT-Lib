@@ -18,9 +18,7 @@ enum class ListInsetsType {
     SYSTEM_WITH_ACTION_BAR, SYSTEM, TOP, TOP_WITH_ACTION_BAR, BOTTOM, DISMISS
 }
 
-abstract class CatListFragment(@LayoutRes layoutId: Int = R.layout.recycler_view_fragment) :
-    CatFragment<RecyclerViewFragmentBinding>(layoutId),
-    RecyclerAdapterSizeListener {
+abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(), RecyclerAdapterSizeListener {
 
     private lateinit var mRecyclerViewFragmentBinding: RecyclerViewFragmentBinding
     lateinit var mStateLayout: CatStateLayout
