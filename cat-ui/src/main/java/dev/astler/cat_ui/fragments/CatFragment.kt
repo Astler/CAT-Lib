@@ -11,7 +11,7 @@ import dev.astler.cat_ui.interfaces.ActivityInterface
 import dev.astler.cat_ui.interfaces.CoreFragmentInterface
 import dev.astler.cat_ui.utils.getStringResource
 
-abstract class CatFragment<VB : ViewBinding>(pLayoutId: Int = 0) : Fragment(pLayoutId),
+abstract class CatFragment<VB : ViewBinding> : Fragment(),
     CoreFragmentInterface,
     MenuProvider {
 
