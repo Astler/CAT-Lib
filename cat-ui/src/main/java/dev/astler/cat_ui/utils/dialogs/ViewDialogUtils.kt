@@ -16,6 +16,6 @@ fun View.clickDialog(
     okAction: (DialogInterface) -> Unit = {}
 ) {
     setOnClickListener {
-        context.okDialog(title, message, okAction)
+        context.okDialog(title, message, okAction).show()
     }
 }
