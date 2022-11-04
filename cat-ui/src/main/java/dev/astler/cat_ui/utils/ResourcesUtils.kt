@@ -17,6 +17,24 @@ import androidx.core.graphics.drawable.DrawableCompat
 import dev.astler.unlib.core.R
 import java.util.*
 
+fun Context.tryToGetTextFrom(value: Any?): String? {
+    if (value != null) {
+        val isNumber = value is Number
+
+        if (isNumber) {
+            return getString(value as Int)
+        } else {
+            val stringValue = value.toString()
+
+            if (stringValue.isNotEmpty()) {
+                return stringValue
+            }
+        }
+    }
+
+    return null
+}
+
 fun dpToPixels(dips: Float): Float = dips * Resources.getSystem().displayMetrics.density + 0.5f
 
 fun Context.getStringResourceId(string: String): Int {

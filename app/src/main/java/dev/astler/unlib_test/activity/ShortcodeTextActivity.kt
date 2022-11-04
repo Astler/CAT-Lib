@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import dev.astler.cat_ui.activities.CatActivity
-import dev.astler.cat_ui.views.custom.SplashView
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.activity.ads.AdsOpenItemListActivity
 import dev.astler.unlib_test.databinding.ActivityMainBinding
@@ -25,9 +24,6 @@ class ShortcodeTextActivity : CatActivity() {
         mViewBinding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(mViewBinding.root)
-
-        findViewById<SplashView>(R.id.splash_view)
-            .animateLogo()
 
         findViewById<View>(R.id.test)
             .animate()

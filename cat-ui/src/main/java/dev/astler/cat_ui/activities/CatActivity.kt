@@ -22,9 +22,9 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
 import com.zeugmasolutions.localehelper.Locales
 import dev.astler.cat_ui.appResumeTime
-import dev.astler.cat_ui.cStartTime
+import dev.astler.cat_ui.StartTimeKey
 import dev.astler.cat_ui.fragments.IInternetDependentFragment
-import dev.astler.cat_ui.interfaces.ActivityInterface
+import dev.astler.cat_ui.interfaces.ICatActivity
 import dev.astler.cat_ui.utils.getDimensionFromAttr
 import dev.astler.unlib.PreferencesTool
 import dev.astler.unlib.data.RemoteConfig
@@ -38,26 +38,26 @@ import java.util.Locale
 abstract class CatActivity :
     LocaleAwareCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener,
-    ActivityInterface {
+    ICatActivity {
 
-    private var currentWindowInsets: WindowInsetsCompat = WindowInsetsCompat.Builder().build()
-    private var topInsets = 0
-    private var bottomInsets = 0
-    private var toolbarHeight = 0
+    private var _currentWindowInsets: WindowInsetsCompat = WindowInsetsCompat.Builder().build()
+    private var _topInsets = 0
+    private var _bottomInsets = 0
+    private var _toolbarHeight = 0
 
     lateinit var mRemoteConfig: RemoteConfig
     protected var mActiveFragment: Fragment? = null
 
-    protected var mReviewInfo: ReviewInfo? = null
-    protected val mReviewManager: ReviewManager by lazy {
+    protected var reviewInfo: ReviewInfo? = null
+    protected val reviewManager: ReviewManager by lazy {
         ReviewManagerFactory.create(this)
     }
 
-    private val connectivityManager: ConnectivityManager by lazy {
+    private val _connectivityManager: ConnectivityManager by lazy {
         getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 
-    private val networkCallback by lazy {
+    private val _networkCallback by lazy {
         object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 onInternetConnected(network)
@@ -87,7 +87,6 @@ abstract class CatActivity :
         onBackPressedDispatcher.onBackPressed()
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -96,17 +95,17 @@ abstract class CatActivity :
         AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
         delegate.applyDayNight()
 
-        toolbarHeight = getDimensionFromAttr(androidx.appcompat.R.attr.actionBarSize)
+        _toolbarHeight = getDimensionFromAttr(androidx.appcompat.R.attr.actionBarSize)
 
         mRemoteConfig = RemoteConfig.getInstance()
 
         gPreferencesTool.loadDefaultPreferences(this)
 
-        gPreferencesTool.edit(cStartTime, GregorianCalendar().timeInMillis)
+        gPreferencesTool.edit(StartTimeKey, GregorianCalendar().timeInMillis)
 
-        mReviewManager.requestReviewFlow().addOnCompleteListener { request ->
+        reviewManager.requestReviewFlow().addOnCompleteListener { request ->
             if (request.isSuccessful) {
-                mReviewInfo = request.result
+                reviewInfo = request.result
             } else {
                 errorLog(request.exception, "error during requestReviewFlow")
             }
@@ -128,9 +127,9 @@ abstract class CatActivity :
             gPreferencesTool.setFirstStartForVersion(appVersionCode())
         }
 
-        connectivityManager.registerNetworkCallback(
+        _connectivityManager.registerNetworkCallback(
             NetworkRequest.Builder().build(),
-            networkCallback
+            _networkCallback
         )
     }
 
@@ -138,11 +137,11 @@ abstract class CatActivity :
      * UI methods
      */
 
-    override fun getTopPadding() = topInsets
+    override fun getTopPadding() = _topInsets
 
-    override fun getBottomPadding() = bottomInsets
+    override fun getBottomPadding() = _bottomInsets
 
-    override fun getToolbarHeight() = toolbarHeight
+    override fun getToolbarHeight() = _toolbarHeight
 
     /**
      * My personal use methods
@@ -180,7 +179,7 @@ abstract class CatActivity :
 
     override fun onDestroy() {
         super.onDestroy()
-        connectivityManager.unregisterNetworkCallback(networkCallback)
+        _connectivityManager.unregisterNetworkCallback(_networkCallback)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
@@ -211,8 +210,8 @@ abstract class CatActivity :
 
         if (nAppReviewTime >= 200000) {
 
-            mReviewInfo?.let { it1 ->
-                mReviewManager.launchReviewFlow(this, it1)
+            reviewInfo?.let { it1 ->
+                reviewManager.launchReviewFlow(this, it1)
                 gPreferencesTool.appResumeTime = GregorianCalendar().timeInMillis
             }
         }
@@ -230,7 +229,7 @@ abstract class CatActivity :
 
     protected fun loadInsets(view: View) {
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->
-            currentWindowInsets = windowInsets
+            _currentWindowInsets = windowInsets
             applyInsets()
         }
     }
@@ -242,14 +241,10 @@ abstract class CatActivity :
         ).fold(0) { accumulator, type ->
             accumulator or type
         }
-        val insets = currentWindowInsets.getInsets(currentInsetTypeMask)
+        val insets = _currentWindowInsets.getInsets(currentInsetTypeMask)
 
-        topInsets = insets.top
-        bottomInsets = insets.bottom
-
-//        binding.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-//            updateMargins(insets.left, insets.top, insets.right, insets.bottom)
-//        }
+        _topInsets = insets.top
+        _bottomInsets = insets.bottom
 
         return WindowInsetsCompat.Builder()
             .setInsets(currentInsetTypeMask, insets)

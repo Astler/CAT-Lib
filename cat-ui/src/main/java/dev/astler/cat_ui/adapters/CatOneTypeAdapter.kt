@@ -9,9 +9,14 @@ import dev.astler.cat_ui.adapters.diffutils.UniversalDiffUtil
 import dev.astler.cat_ui.adapters.viewholders.CatOneTypeViewHolder
 import dev.astler.cat_ui.interfaces.RecyclerAdapterSizeListener
 
+
+fun interface ILoadItem<T> {
+    fun loadData(data: T, holder: CatOneTypeViewHolder)
+}
+
 open class CatOneTypeAdapter<T>(
-    @LayoutRes val pLayoutResource: Int,
-    private val mItemLoadListener: LoadItem<T>? = null,
+    @LayoutRes val itemLayout: Int,
+    private val mItemLoadListener: ILoadItem<T>? = null,
     private val mAdapterSizeListener: RecyclerAdapterSizeListener? = null
 ) : RecyclerView.Adapter<CatOneTypeViewHolder>() {
 
@@ -37,7 +42,7 @@ open class CatOneTypeAdapter<T>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatOneTypeViewHolder {
         val nHolderItem =
-            LayoutInflater.from(parent.context).inflate(pLayoutResource, parent, false)
+            LayoutInflater.from(parent.context).inflate(itemLayout, parent, false)
         return CatOneTypeViewHolder(nHolderItem)
     }
 
@@ -45,9 +50,5 @@ open class CatOneTypeAdapter<T>(
 
     override fun onBindViewHolder(holder: CatOneTypeViewHolder, position: Int) {
         mItemLoadListener?.loadData(data[holder.absoluteAdapterPosition], holder)
-    }
-
-    fun interface LoadItem<T> {
-        fun loadData(pData: T, pHolder: CatOneTypeViewHolder)
     }
 }

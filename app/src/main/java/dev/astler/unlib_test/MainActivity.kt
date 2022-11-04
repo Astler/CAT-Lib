@@ -36,8 +36,6 @@ class MainActivity : CatActivity() {
         AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
         delegate.applyDayNight()
 
-        mViewBinding.splashView.animateLogo()
-
         mViewBinding.test
             .animate()
             .scaleX(TARGET_SCAlE)

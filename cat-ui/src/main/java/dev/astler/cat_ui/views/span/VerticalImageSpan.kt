@@ -1,4 +1,4 @@
-package dev.astler.cat_ui.views.custom
+package dev.astler.cat_ui.views.span
 
 import android.graphics.Canvas
 import android.graphics.Paint

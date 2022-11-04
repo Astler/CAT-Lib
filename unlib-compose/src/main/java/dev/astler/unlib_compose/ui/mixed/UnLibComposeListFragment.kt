@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.unlib_compose.R
 
 @AndroidEntryPoint
-abstract class UnLibComposeListFragment<T> : UnLibComposeCoreFragment() {
+abstract class UnLibComposeListFragment<T> : CatComposeFragment() {
     @Composable
     open fun ItemsList(modifier: Modifier = Modifier, contentPadding: PaddingValues = PaddingValues(0.dp), pData: Array<T>?) {
 

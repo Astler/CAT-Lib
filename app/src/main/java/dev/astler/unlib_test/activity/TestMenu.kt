@@ -7,6 +7,10 @@ import com.zeugmasolutions.localehelper.Locales
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.adapters.CatOneTypeAdapter
 import dev.astler.cat_ui.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.cat_ui.utils.dialogs.confirmDialog
+import dev.astler.cat_ui.utils.dialogs.exitDialog
+import dev.astler.cat_ui.utils.dialogs.okDialog
+import dev.astler.cat_ui.utils.dialogs.yesNoDialog
 import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.signin.utils.startMandatorySignIn
 import dev.astler.unlib.signin.utils.startOptionalSignIn
@@ -46,12 +50,58 @@ class TestMenu : CatActivity() {
 
         mAdapter.setData(
             listOf(
+                ClickableItem("Yes no empty dialog") {
+                    yesNoDialog() {
+                        toast("Hello!")
+                    }.show()
+                },
+                ClickableItem("Yes no string/id dialog") {
+                    yesNoDialog("Test Title", R.string.UPDATE) {
+                        toast("Hello!")
+                    }.show()
+                },
+                ClickableItem("Confirm dialog") {
+                    confirmDialog(
+                        R.string.app_name,
+                        R.string.rate_app,
+                        R.string.about,
+                        R.string.already_leave,
+                        {
+                            toast("Bye!")
+                        },
+                        {
+                            toast("Hello!")
+                        }).show()
+                },
+                ClickableItem("Exit dialog") {
+                    exitDialog().show()
+                },
                 ClickableItem("Theme Utils") {
-                    dialog(
+                    okDialog(
                         "Theme Utils",
                         "isSystemDarkTheme = ${isSystemDarkMode}\nisAppDarkTheme = ${isAppDarkTheme()}\npreferencesSetting = ${gPreferencesTool.appTheme}"
-                    )
+                    ).show()
                 },
+                ClickableItem("Confirm Dialog") {
+                    confirmDialog(
+                        "Title", "Message",
+                        positive = "Yes",
+                        negative = "No",
+                        positiveAction = {
+                            toast("Action Yes!")
+                        },
+                        negativeAction = {
+                            toast("Action No!")
+                        }
+                    ).show()
+                },
+                ClickableItem("Ads Utils") {
+                    okDialog("Ads Utils", "canShowAds = ${canShowAds()}").show()
+                },
+                ClickableItem("Services Is?") {
+                    okDialog("Services?", "google = ${getMobileServiceSource()}").show()
+                },
+                ClickableItem("---------------") { },
                 ClickableItem("RU") {
                     updateLocale(Locales.Russian)
                 },
@@ -59,7 +109,7 @@ class TestMenu : CatActivity() {
                     updateLocale(Locale.ENGLISH)
                 },
                 ClickableItem("Theme Utils") {
-                    dialog(
+                    okDialog(
                         "Theme Utils",
                         "isSystemDarkTheme = ${isSystemDarkMode}\nisAppDarkTheme = ${isAppDarkTheme()}\npreferencesSetting = ${gPreferencesTool.appTheme}"
                     )
@@ -100,47 +150,10 @@ class TestMenu : CatActivity() {
                 ClickableItem("Shake It") {
                     it.shake()
                 },
-                ClickableItem("Dialog") {
-                    dialog("Title", "Message")
-                },
-                ClickableItem("Msg Dialog") {
-                    dialog(pMsg = "Message")
-                },
-                ClickableItem("Ok Dialog") {
-                    okDialog(
-                        "Title", "Message",
-                        {
-                            toast("Action!")
-                        }
-                    )
-                },
-                ClickableItem("Confirm Dialog") {
-                    confirmDialog(
-                        "Title", "Message",
-                        "Yes",
-                        "No",
-                        pPositiveAction = {
-                            toast("Action Yes!")
-                        },
-                        pNegativeAction = {
-                            toast("Action No!")
-                        }
-                    )
-                },
-                ClickableItem("Exit Dialog") {
-                    exitDialog()
-                },
 
-                ClickableItem("Ads Utils") {
-                    dialog("Ads Utils", "canShowAds = ${canShowAds()}")
-                },
-                ClickableItem("Services Is?") {
-                    dialog("Services?", "google = ${getMobileServiceSource()}")
-                },
                 ClickableItem("StatusColor") {
                     startActivity(Intent(this, WindowTestActivity::class.java))
-                },
-                // TODO Search List Dialogs
+                }
             )
         )
 

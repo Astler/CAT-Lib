@@ -18,7 +18,7 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import dev.astler.cat_ui.R
 import dev.astler.cat_ui.utils.getDrawableByName
-import dev.astler.cat_ui.views.custom.VerticalImageSpan
+import dev.astler.cat_ui.views.span.VerticalImageSpan
 import dev.astler.cat_ui.views.span.CustomFancyTextSpan
 import dev.astler.unlib.gPreferencesTool
 import kotlinx.coroutines.*

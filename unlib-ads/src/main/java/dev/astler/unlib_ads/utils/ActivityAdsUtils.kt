@@ -11,9 +11,9 @@ import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
 import com.google.android.material.navigation.NavigationView
 import dev.astler.cat_ui.activities.CatActivity
-import dev.astler.cat_ui.cResumeTime
-import dev.astler.cat_ui.cStartTime
-import dev.astler.cat_ui.utils.confirmDialog
+import dev.astler.cat_ui.ResumeTimeKey
+import dev.astler.cat_ui.StartTimeKey
+import dev.astler.cat_ui.utils.dialogs.confirmDialog
 import dev.astler.cat_ui.utils.views.goneView
 import dev.astler.cat_ui.utils.views.showView
 import dev.astler.unlib.* // ktlint-disable no-wildcard-imports
@@ -75,10 +75,10 @@ fun AppCompatActivity.initAds() {
             getString(R.string.ads_dialog_title),
             getString(R.string.ads_dialog_msg),
             getString(R.string.yes), getString(R.string.no),
-            pPositiveAction = {
+            positiveAction = {
                 gPreferencesTool.edit("child_ads", false)
             },
-            pNegativeAction = {
+            negativeAction = {
                 gPreferencesTool.edit("child_ads", true)
             }
         )
@@ -207,28 +207,7 @@ private fun AppCompatActivity.loadAd() {
         )
 }
 
-fun AppCompatActivity.showNoAdsDialog() {
-    if (mProPackageName.isNotEmpty()) {
-        confirmDialog(
-            getString(R.string.disable_ads),
-            getString(R.string.disable_ads_msg),
-            getString(R.string.buy_pro), getString(R.string.watch_ads),
-            pPositiveAction = {
-                openAppInPlayStore(mProPackageName)
-            },
-            pNegativeAction = { showRewardAd() }
-        )
-    } else {
-        confirmDialog(
-            getString(R.string.disable_ads),
-            getString(R.string.disable_ads_msg),
-            getString(R.string.watch_ads),
-            pPositiveAction = {
-                showRewardAd()
-            }
-        )
-    }
-}
+
 
 fun AppCompatActivity.adPreferencesListener(pKey: String?) {
     if (pKey == PreferencesTool.dayWithoutAdsKey) {
@@ -260,14 +239,14 @@ fun CatActivity.interstitialAdsShowTry() {
 
     adsLog("Loaded ads remote config = $nAdsPause, $nAdsChance")
 
-    val nIsTimeFromStartPassed = cStartTime.hasPrefsTimePassed(10000)
+    val nIsTimeFromStartPassed = StartTimeKey.hasPrefsTimePassed(10000)
 
     if (!nIsTimeFromStartPassed) {
         adsLog("nIsTimeFromStartPassed not passed! = $nIsTimeFromStartPassed")
         return
     }
 
-    val nIsTimeFromResumePassed = cResumeTime.hasPrefsTimePassed(5000)
+    val nIsTimeFromResumePassed = ResumeTimeKey.hasPrefsTimePassed(5000)
 
     if (!nIsTimeFromResumePassed) {
         adsLog("nIsTimeFromResumePassed not passed! = $nIsTimeFromResumePassed")

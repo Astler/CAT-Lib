@@ -27,21 +27,14 @@ open class CatTextView @JvmOverloads constructor(
             0
         )
 
-        when (typedArray.getInteger(R.styleable.CatTextView_textStyle, 10)) {
+        typeface = when (typedArray.getInteger(R.styleable.CatTextView_textStyle, 10)) {
             11 -> {
-                setBoldTypeface()
+                ResourcesCompat.getFont(context, R.font.google_sans_bold)
             }
+
             else -> {
-                setRegTypeface()
+                ResourcesCompat.getFont(context, R.font.google_sans_reg)
             }
         }
-    }
-
-    fun setBoldTypeface() {
-        typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
-    }
-
-    fun setRegTypeface() {
-        typeface = ResourcesCompat.getFont(context, R.font.google_sans_reg)
     }
 }

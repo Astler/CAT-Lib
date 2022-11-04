@@ -2,11 +2,9 @@ package dev.astler.cat_ui.interfaces
 
 import androidx.fragment.app.Fragment
 
-interface ActivityInterface : CoreFragmentInterface {
+interface ICatActivity : CoreFragmentInterface {
     fun setCurrentFragment(fragment: Fragment)
     fun setToolbarTitle(title: String)
-    fun setToolbarElevationEnabled(pElevationEnabled: Boolean) {}
-    fun toggleToolbar(pIsToolbarVisible: Boolean) {}
     fun callBackPressed()
     fun getTopPadding(): Int
     fun getBottomPadding(): Int
