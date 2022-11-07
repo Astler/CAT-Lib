@@ -17,11 +17,15 @@ import dev.astler.cat_ui.items.DialogSimpleTextItem
 import dev.astler.cat_ui.utils.tryToGetTextFrom
 import dev.astler.unlib.utils.vibrateOnClick
 
+/**
+ * Predefined yes/no options dialog
+ */
+
 fun Context.yesNoDialog(
     showAfterCreation: Boolean = true,
     title: Any? = null,
     message: Any? = null,
-    positiveAction: ((DialogInterface) -> Unit)? = null
+    positiveAction: ((DialogInterface) -> Unit)? = {}
 ): AlertDialog {
     return catDialog(
         showAfterCreation,
@@ -32,6 +36,23 @@ fun Context.yesNoDialog(
         positive = R.string.yes
     ) { positiveAction?.invoke(it) }
 }
+
+fun Context.yesNoDialog(
+    title: Any? = null,
+    message: Any? = null,
+    positiveAction: ((DialogInterface) -> Unit)? = { }
+): AlertDialog {
+    return yesNoDialog(
+        showAfterCreation = true,
+        title = title,
+        message = message,
+    ) { positiveAction?.invoke(it) }
+}
+
+
+/**
+ * Predefined ok dialog
+ */
 
 fun Context.okDialog(
     showAfterCreation: Boolean = true,
@@ -48,6 +69,23 @@ fun Context.okDialog(
     )
 }
 
+fun Context.okDialog(
+    title: Any? = null,
+    message: Any? = null,
+    okAction: ((DialogInterface) -> Unit) = {}
+): AlertDialog {
+    return okDialog(
+        showAfterCreation = true,
+        title = title,
+        message = message,
+        okAction = okAction
+    )
+}
+
+/**
+ * Predefined confirm dialog. Just public variant for catDialog
+ */
+
 fun Context.confirmDialog(
     showAfterCreation: Boolean = true,
     title: Any? = null,
@@ -61,6 +99,25 @@ fun Context.confirmDialog(
         showAfterCreation,
         title,
         message,
+        negative = negative,
+        negativeAction = negativeAction,
+        positive = positive,
+        positiveAction = positiveAction
+    )
+}
+
+fun Context.confirmDialog(
+    title: Any? = null,
+    message: Any? = null,
+    negative: Any? = null,
+    positive: Any? = null,
+    negativeAction: ((DialogInterface) -> Unit)? = null,
+    positiveAction: ((DialogInterface) -> Unit)? = null
+): AlertDialog {
+    return confirmDialog(
+        showAfterCreation = true,
+        title = title,
+        message = message,
         negative = negative,
         negativeAction = negativeAction,
         positive = positive,

@@ -53,38 +53,39 @@ class TestMenu : CatActivity() {
                 ClickableItem("Yes no empty dialog") {
                     yesNoDialog() {
                         toast("Hello!")
-                    }.show()
+                    }
                 },
                 ClickableItem("Yes no string/id dialog") {
-                    yesNoDialog("Test Title", R.string.UPDATE) {
+                    yesNoDialog(title = "Test Title", message = R.string.UPDATE) {
                         toast("Hello!")
-                    }.show()
+                    }
                 },
                 ClickableItem("Confirm dialog") {
                     confirmDialog(
-                        R.string.app_name,
-                        R.string.rate_app,
-                        R.string.about,
-                        R.string.already_leave,
-                        {
+                        title = R.string.app_name,
+                        message = R.string.rate_app,
+                        positive = R.string.about,
+                        negative = R.string.already_leave,
+                        negativeAction = {
                             toast("Bye!")
                         },
-                        {
+                        positiveAction = {
                             toast("Hello!")
-                        }).show()
+                        })
                 },
                 ClickableItem("Exit dialog") {
-                    exitDialog().show()
+                    exitDialog()
                 },
                 ClickableItem("Theme Utils") {
                     okDialog(
-                        "Theme Utils",
-                        "isSystemDarkTheme = ${isSystemDarkMode}\nisAppDarkTheme = ${isAppDarkTheme()}\npreferencesSetting = ${gPreferencesTool.appTheme}"
-                    ).show()
+                        title = "Theme Utils",
+                        message = "isSystemDarkTheme = ${isSystemDarkMode}\nisAppDarkTheme = ${isAppDarkTheme()}\npreferencesSetting = ${gPreferencesTool.appTheme}"
+                    )
                 },
                 ClickableItem("Confirm Dialog") {
                     confirmDialog(
-                        "Title", "Message",
+                        title = "Title", 
+                        message = "Message",
                         positive = "Yes",
                         negative = "No",
                         positiveAction = {
@@ -93,13 +94,13 @@ class TestMenu : CatActivity() {
                         negativeAction = {
                             toast("Action No!")
                         }
-                    ).show()
+                    )
                 },
                 ClickableItem("Ads Utils") {
-                    okDialog("Ads Utils", "canShowAds = ${canShowAds()}").show()
+                    okDialog(title = "Ads Utils", message = "canShowAds = ${canShowAds()}")
                 },
                 ClickableItem("Services Is?") {
-                    okDialog("Services?", "google = ${getMobileServiceSource()}").show()
+                    okDialog(title = "Services?", message = "google = ${getMobileServiceSource()}")
                 },
                 ClickableItem("---------------") { },
                 ClickableItem("RU") {
@@ -110,8 +111,8 @@ class TestMenu : CatActivity() {
                 },
                 ClickableItem("Theme Utils") {
                     okDialog(
-                        "Theme Utils",
-                        "isSystemDarkTheme = ${isSystemDarkMode}\nisAppDarkTheme = ${isAppDarkTheme()}\npreferencesSetting = ${gPreferencesTool.appTheme}"
+                        title = "Theme Utils",
+                        message = "isSystemDarkTheme = ${isSystemDarkMode}\nisAppDarkTheme = ${isAppDarkTheme()}\npreferencesSetting = ${gPreferencesTool.appTheme}"
                     )
                 },
                 ClickableItem("Set Dark Theme") {

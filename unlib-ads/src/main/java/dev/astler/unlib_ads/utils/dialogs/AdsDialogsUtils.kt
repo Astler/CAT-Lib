@@ -1,7 +1,9 @@
 package dev.astler.unlib_ads.utils.dialogs
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import dev.astler.cat_ui.utils.dialogs.confirmDialog
+import dev.astler.unlib.gPreferencesTool
 import dev.astler.unlib.utils.openAppInPlayStore
 import dev.astler.unlib_ads.R
 import dev.astler.unlib_ads.utils.mProPackageName
@@ -29,4 +31,19 @@ fun AppCompatActivity.showNoAdsDialog() {
             }
         )
     }
+}
+
+fun Context.adsAgeDialog() {
+    confirmDialog(
+        R.string.ads_dialog_title,
+        R.string.ads_dialog_msg,
+        R.string.yes,
+        R.string.no,
+        positiveAction = {
+            gPreferencesTool.edit("child_ads", false)
+        },
+        negativeAction = {
+            gPreferencesTool.edit("child_ads", true)
+        }
+    )
 }

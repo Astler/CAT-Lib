@@ -21,6 +21,7 @@ import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib_ads.R
 import dev.astler.unlib_ads.databinding.ItemAdBinding
 import dev.astler.unlib_ads.interfaces.HideAdListener
+import dev.astler.unlib_ads.utils.dialogs.adsAgeDialog
 import java.util.* // ktlint-disable no-wildcard-imports
 import kotlin.random.Random
 
@@ -71,18 +72,7 @@ fun AppCompatActivity.initAds() {
     }
 
     if (!gPreferencesTool.getBoolean("age_confirmed", false) && mNeedAgeCheck) {
-        confirmDialog(
-            getString(R.string.ads_dialog_title),
-            getString(R.string.ads_dialog_msg),
-            getString(R.string.yes), getString(R.string.no),
-            positiveAction = {
-                gPreferencesTool.edit("child_ads", false)
-            },
-            negativeAction = {
-                gPreferencesTool.edit("child_ads", true)
-            }
-        )
-
+        adsAgeDialog()
         gPreferencesTool.edit("age_confirmed", true)
     }
 

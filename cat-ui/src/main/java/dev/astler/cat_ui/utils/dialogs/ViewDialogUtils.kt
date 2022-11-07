@@ -8,7 +8,7 @@ fun View.okDialog(
     title: Any? = null,
     message: Any? = null,
     okAction: (DialogInterface) -> Unit = {}
-): AlertDialog = context.okDialog(title, message, okAction)
+): AlertDialog = context.okDialog(title = title, message = message, okAction = okAction)
 
 fun View.clickDialog(
     title: Any? = null,
@@ -16,6 +16,6 @@ fun View.clickDialog(
     okAction: (DialogInterface) -> Unit = {}
 ) {
     setOnClickListener {
-        context.okDialog(title, message, okAction).show()
+        context.okDialog(title = title, message = message, okAction = okAction)
     }
 }
