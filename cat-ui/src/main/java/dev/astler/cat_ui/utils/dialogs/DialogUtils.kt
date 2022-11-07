@@ -18,22 +18,38 @@ import dev.astler.cat_ui.utils.tryToGetTextFrom
 import dev.astler.unlib.utils.vibrateOnClick
 
 fun Context.yesNoDialog(
-    title: Any? = null, message: Any? = null, positiveAction: ((DialogInterface) -> Unit)? = null
+    showAfterCreation: Boolean = true,
+    title: Any? = null,
+    message: Any? = null,
+    positiveAction: ((DialogInterface) -> Unit)? = null
 ): AlertDialog {
     return catDialog(
-        title, message, R.string.no, { it.dismiss() }, R.string.yes
+        showAfterCreation,
+        title = title,
+        message = message,
+        negative = R.string.no,
+        negativeAction = { it.dismiss() },
+        positive = R.string.yes
     ) { positiveAction?.invoke(it) }
 }
 
 fun Context.okDialog(
-    title: Any? = null, message: Any? = null, okAction: ((DialogInterface) -> Unit)? = null
+    showAfterCreation: Boolean = true,
+    title: Any? = null,
+    message: Any? = null,
+    okAction: ((DialogInterface) -> Unit) = {}
 ): AlertDialog {
     return catDialog(
-        title, message, positive = R.string.ok, positiveAction = okAction
+        showAfterCreation,
+        title = title,
+        message = message,
+        positive = R.string.ok,
+        positiveAction = okAction
     )
 }
 
 fun Context.confirmDialog(
+    showAfterCreation: Boolean = true,
     title: Any? = null,
     message: Any? = null,
     negative: Any? = null,
@@ -42,6 +58,7 @@ fun Context.confirmDialog(
     positiveAction: ((DialogInterface) -> Unit)? = null
 ): AlertDialog {
     return catDialog(
+        showAfterCreation,
         title,
         message,
         negative = negative,
@@ -52,18 +69,19 @@ fun Context.confirmDialog(
 }
 
 fun Activity.exitDialog(): AlertDialog {
-    return catDialog(R.string.exiting_app,
-        R.string.already_leave,
-        R.string.no,
-        { it.dismiss() },
-        R.string.yes,
-        {
+    return catDialog(title = R.string.exiting_app,
+        message = R.string.already_leave,
+        negative = R.string.no,
+        negativeAction = { it.dismiss() },
+        positive = R.string.yes,
+        positiveAction = {
             this.vibrateOnClick()
             this.finish()
         })
 }
 
 fun <T> Context.searchListDialog(
+    showAfterCreation: Boolean = true,
     title: Any?,
     listItems: List<T>,
     adapter: CatOneTypeAdapter<T>,
@@ -89,33 +107,44 @@ fun <T> Context.searchListDialog(
     dialogView.itemsList.layoutManager = LinearLayoutManager(this)
     dialogView.itemsList.adapter = adapter
 
+    if (showAfterCreation) customChooseDialog.show()
+
     return customChooseDialog
 }
 
 fun <T> Context.listDialog(
-    pTitle: Int, pItems: List<T>, pItemsAdapter: CatOneTypeAdapter<T>
+    showAfterCreation: Boolean = true,
+    pTitle: Int,
+    pItems: List<T>,
+    pItemsAdapter: CatOneTypeAdapter<T>
 ): AlertDialog {
     val dialogView = DialogChooseItemBinding.inflate(LayoutInflater.from(this))
 
-    val listDialog = MaterialAlertDialogBuilder(this).setView(dialogView.root).setTitle(pTitle).create()
+    val listDialog =
+        MaterialAlertDialogBuilder(this).setView(dialogView.root).setTitle(pTitle).create()
 
     pItemsAdapter.setData(pItems)
 
     dialogView.itemsList.layoutManager = LinearLayoutManager(this)
     dialogView.itemsList.adapter = pItemsAdapter
 
+    if (showAfterCreation) listDialog.show()
+
     return listDialog
 }
 
 fun Context.simpleListDialog(
-    title: Int, items: List<DialogSimpleTextItem>, itemClicked: (String) -> Unit
+    showAfterCreation: Boolean = true,
+    title: Int,
+    items: List<DialogSimpleTextItem>,
+    itemClicked: (String) -> Unit
 ): AlertDialog {
-    val nDialogView = DialogChooseItemBinding.inflate(LayoutInflater.from(this))
+    val dialogView = DialogChooseItemBinding.inflate(LayoutInflater.from(this))
 
     val nChooseItemDialog =
-        MaterialAlertDialogBuilder(this).setView(nDialogView.root).setTitle(title).create()
+        MaterialAlertDialogBuilder(this).setView(dialogView.root).setTitle(title).create()
 
-    val nItemsAdapter =
+    val itemsAdapter =
         CatOneTypeAdapter<DialogSimpleTextItem>(R.layout.item_prefs_text, { pData, pHolder ->
             val nMenuItemBind = ItemPrefsTextBinding.bind(pHolder.itemView)
             nMenuItemBind.text.text = pData.itemTitle
@@ -126,15 +155,18 @@ fun Context.simpleListDialog(
             }
         })
 
-    nItemsAdapter.setData(items)
+    itemsAdapter.setData(items)
 
-    nDialogView.itemsList.layoutManager = LinearLayoutManager(this)
-    nDialogView.itemsList.adapter = nItemsAdapter
+    dialogView.itemsList.layoutManager = LinearLayoutManager(this)
+    dialogView.itemsList.adapter = itemsAdapter
+
+    if (showAfterCreation) nChooseItemDialog.show()
 
     return nChooseItemDialog
 }
 
 private fun Context.catDialog(
+    showAfterCreation: Boolean = true,
     title: Any? = null,
     message: Any? = null,
     negative: Any? = null,
@@ -169,5 +201,10 @@ private fun Context.catDialog(
         negativeAction(dialog)
     }
 
-    return materialDialog.create()
+    val dialog = materialDialog.create()
+
+    if (showAfterCreation)
+        dialog.show()
+
+    return dialog
 }
