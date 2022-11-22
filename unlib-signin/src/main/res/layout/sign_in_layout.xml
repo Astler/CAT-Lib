@@ -10,7 +10,7 @@
         android:clipToPadding="false"
         android:fillViewport="true">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -21,19 +21,21 @@
                 android:id="@+id/signInIcon"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
+                android:layout_marginTop="36dp"
                 android:contentDescription="@string/app_name"
                 android:paddingBottom="@dimen/unlib_base_view_margin"
-                android:scaleType="centerCrop"
-                android:background="@drawable/sign_in_app_icon_background"
-                app:srcCompat="?attr/sign_in_app_icon" />
+                android:scaleType="fitCenter"
+                app:srcCompat="@mipmap/ic_launcher" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:orientation="vertical"
                 android:paddingBottom="12dp">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -47,8 +49,10 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/password"
@@ -61,8 +65,10 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/secondPassword"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/password_again"
@@ -78,58 +84,60 @@
                 android:id="@+id/sign_in_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:minHeight="60dp"
                 android:text="@string/sign_in_email" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/register"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            <TextView
+                android:id="@+id/or_continue_with"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="60dp"
-                android:text="@string/register" />
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="@string/or_continue_with" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/create_account"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            <ImageView
+                android:id="@+id/googleSignIn"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="12dp"
+                app:srcCompat="@drawable/_google" />
+
+            <LinearLayout
+                android:id="@+id/register_hint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="60dp"
-                android:paddingTop="16dp"
-                android:text="@string/create_account" />
+                android:gravity="center_horizontal">
 
-            <CheckBox
-                android:id="@+id/doNotAskAgain"
+                <TextView
+                    android:id="@+id/do_not_have_an_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/do_not_have_an_account" />
+
+                <TextView
+                    android:id="@+id/create_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:text="@string/create_now" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/not_now"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/do_not_ask_again" />
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@string/not_now" />
 
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/googleSignIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/unlib_base_view_margin" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
     </ScrollView>
-
-    <FrameLayout
-        android:id="@+id/close"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size"
-        android:layout_gravity="top|end"
-        android:layout_margin="@dimen/unlib_base_view_margin"
-        android:clickable="true"
-        android:focusable="true">
-
-        <ImageView
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/close"
-            android:rotation="45"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_add_white_24dp" />
-    </FrameLayout>
 
 </FrameLayout>

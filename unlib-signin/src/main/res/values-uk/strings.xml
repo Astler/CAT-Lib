@@ -4,12 +4,15 @@
     <string name="registration_error">Помилка реєстрації!</string>
     <string name="password">Пароль</string>
     <string name="email">Email</string>
-    <string name="or">АБО</string>
     <string name="sign_in_email">Вхід</string>
     <string name="register">Реєстрація</string>
     <string name="create_account">Створити обліковий запис</string>
-    <string name="do_not_ask_again">Не питати знову</string>
     <string name="passwords_dont_match">Паролi не спiвпадають!</string>
     <string name="password_again">Ще раз пароль</string>
     <string name="not_all_fields">Не всі поля заповнені!</string>
+
+    <string name="or_continue_with">Чи використати</string>
+    <string name="do_not_have_an_account">Нема акаунта?</string>
+    <string name="create_now"><u>Створити</u></string>
+    <string name="not_now"><u>Не зараз</u></string>
 </resources>

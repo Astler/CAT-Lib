@@ -4,14 +4,17 @@ import android.os.Bundle
 import com.google.firebase.auth.FirebaseUser
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.setInsetsViaOrientation
-import dev.astler.cat_ui.utils.views.goneView
-import dev.astler.cat_ui.utils.views.goneViews
-import dev.astler.cat_ui.utils.views.showView
+import dev.astler.cat_ui.utils.views.showViewWithCondition
 import dev.astler.unlib.signin.R
 import dev.astler.unlib.signin.databinding.SignInLayoutBinding
 import dev.astler.unlib.signin.interfaces.SignInActivityListener
 import dev.astler.unlib.signin.ui.activity.CatSignInMode.Companion.fromString
-import dev.astler.unlib.signin.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.unlib.signin.utils.authWithEmailAndPassword
+import dev.astler.unlib.signin.utils.createUserWithEmailAndPassword
+import dev.astler.unlib.signin.utils.signInInitializer
+import dev.astler.unlib.signin.utils.signInOnResume
+import dev.astler.unlib.signin.utils.signInWithGoogle
+import dev.astler.unlib.signin.utils.startRegisterSignIn
 import dev.astler.unlib.utils.MobileServicesSource
 import dev.astler.unlib.utils.getMobileServiceSource
 import dev.astler.unlib.utils.infoLog
@@ -32,96 +35,77 @@ enum class CatSignInMode {
 
 open class SignInActivity : CatActivity(), SignInActivityListener {
 
-    lateinit var mViewBinding: SignInLayoutBinding
+    lateinit var binding: SignInLayoutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mViewBinding = SignInLayoutBinding.inflate(layoutInflater)
+        binding = SignInLayoutBinding.inflate(layoutInflater)
 
-        setContentView(mViewBinding.root)
+        setContentView(binding.root)
 
         signInInitializer()
 
-        with(mViewBinding) {
+        with(binding) {
+            val signInMode = intent.getStringExtra(cSignInModeExtra)?.fromString()
+            val registerMode = signInMode == CatSignInMode.REGISTER
+            val hasGoogleServices = getMobileServiceSource() == MobileServicesSource.GOOGLE
 
-            doNotAskAgain.goneView()
+            val canBeClosed =
+                signInMode == CatSignInMode.OPTIONAL || signInMode == CatSignInMode.REGISTER
 
-            register.setOnClickListener {
+            secondPassword.showViewWithCondition(registerMode)
+            orContinueWith.showViewWithCondition(!registerMode)
+            registerHint.showViewWithCondition(!registerMode)
+            googleSignIn.showViewWithCondition(!registerMode)
+
+            notNow.showViewWithCondition(canBeClosed)
+
+            notNow.setOnClickListener {
+                this@SignInActivity.finish()
+            }
+
+            if (hasGoogleServices) {
+                googleSignIn.setOnClickListener {
+                    signInWithGoogle()
+                }
+            }
+
+            createNew.setOnClickListener {
                 this@SignInActivity.startRegisterSignIn()
                 this@SignInActivity.finish()
             }
 
-            createAccount.setOnClickListener {
-                val nEmailText = email.text.toString()
-                val nPasswordText = password.text.toString()
-                val nPasswordAgainText = passwordAgain.text.toString()
-
-                if (nEmailText.isEmpty() || nPasswordText.isEmpty() || nPasswordAgainText.isEmpty()) {
-                    it.toast(R.string.not_all_fields)
-                } else {
-                    if (nPasswordText != nPasswordAgainText) {
-                        it.toast(R.string.passwords_dont_match)
-                    } else createUserWithEmailAndPassword(nEmailText, nPasswordText)
-                }
-            }
+            signInButton.text =
+                getString(if (registerMode) R.string.create_account else R.string.sign_in_email)
 
             signInButton.setOnClickListener {
-                val nEmailText = email.text.toString()
-                val nPasswordText = password.text.toString()
+                if (signInMode == CatSignInMode.REGISTER) {
+                    val nEmailText = email.text.toString()
+                    val nPasswordText = password.text.toString()
+                    val nPasswordAgainText = passwordAgain.text.toString()
 
-                if (nEmailText.isEmpty() || nPasswordText.isEmpty()) {
-                    it.toast(R.string.not_all_fields)
+                    if (nEmailText.isEmpty() || nPasswordText.isEmpty() || nPasswordAgainText.isEmpty()) {
+                        it.toast(R.string.not_all_fields)
+                    } else {
+                        if (nPasswordText != nPasswordAgainText) {
+                            it.toast(R.string.passwords_dont_match)
+                        } else createUserWithEmailAndPassword(nEmailText, nPasswordText)
+                    }
                 } else {
-                    authWithEmailAndPassword(nEmailText, nPasswordText)
-                }
-            }
+                    val nEmailText = email.text.toString()
+                    val nPasswordText = password.text.toString()
 
-            val signInMode = intent.getStringExtra(cSignInModeExtra)?.fromString()
-
-            when (signInMode) {
-                CatSignInMode.OPTIONAL -> {
-                    close.showView()
-                    secondPassword.goneView()
-                    createAccount.goneView()
-
-                    close.setOnClickListener {
-                        this@SignInActivity.finish()
+                    if (nEmailText.isEmpty() || nPasswordText.isEmpty()) {
+                        it.toast(R.string.not_all_fields)
+                    } else {
+                        authWithEmailAndPassword(nEmailText, nPasswordText)
                     }
                 }
-                CatSignInMode.MANDATORY -> {
-                    close.goneView()
-                    secondPassword.goneView()
-                    createAccount.goneView()
-                }
-                CatSignInMode.REGISTER -> {
-                    close.showView()
-                    createAccount.showView()
-                    register.goneView()
-
-                    close.setOnClickListener {
-                        this@SignInActivity.finish()
-                    }
-
-                    goneViews(
-                        register,
-                        signInButton,
-                        googleSignIn
-                    )
-                }
-                else -> {}
-            }
-
-            if (getMobileServiceSource() == MobileServicesSource.GOOGLE && signInMode != CatSignInMode.REGISTER) {
-                googleSignIn.setOnClickListener {
-                    signInWithGoogle()
-                }
-            } else {
-                googleSignIn.goneView()
             }
         }
 
-        setInsetsViaOrientation(mViewBinding.root)
+        setInsetsViaOrientation(binding.root)
     }
 
     override fun onResume() {

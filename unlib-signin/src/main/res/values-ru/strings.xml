@@ -4,12 +4,15 @@
     <string name="registration_error">Ошибка регистрации!</string>
     <string name="password">Пароль</string>
     <string name="email">Email</string>
-    <string name="or">ИЛИ</string>
     <string name="sign_in_email">Войти</string>
     <string name="register">Регистрация</string>
     <string name="create_account">Создать аккаунт</string>
-    <string name="do_not_ask_again">Не спрашивать снова</string>
     <string name="passwords_dont_match">Пароли не совпадают!</string>
     <string name="password_again">Ещё раз пароль</string>
     <string name="not_all_fields">Не все поля заполнены!</string>
+
+    <string name="or_continue_with">Или продолжить с</string>
+    <string name="do_not_have_an_account">Нет аккаунта?</string>
+    <string name="create_now"><u>Создать</u></string>
+    <string name="not_now"><u>Не сейчас</u></string>
 </resources>

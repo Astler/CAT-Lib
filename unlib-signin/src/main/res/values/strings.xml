@@ -4,14 +4,18 @@
 
     <string name="sign_in_error">Sign In Error!</string>
     <string name="registration_error">Registration Error!</string>
-    <string name="password">Password</string>
-    <string name="email">Email</string>
-    <string name="or">OR</string>
     <string name="sign_in_email">Sign In</string>
     <string name="register">Register</string>
     <string name="create_account">Create Account</string>
-    <string name="do_not_ask_again">Don\'t ask again</string>
     <string name="password_again">Password Again</string>
     <string name="passwords_dont_match">Passwords Don\'t Match!</string>
     <string name="not_all_fields">Not all fields are filled in!</string>
+
+    <string name="or_continue_with">Or continue with</string>
+    <string name="do_not_have_an_account">Don’t have account?</string>
+    <string name="create_now"><u>Create now</u></string>
+    <string name="not_now"><u>Not now</u></string>
+
+    <string name="password">Password</string>
+    <string name="email">Email</string>
 </resources>
