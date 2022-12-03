@@ -11,11 +11,11 @@ import dev.astler.cat_ui.utils.dialogs.confirmDialog
 import dev.astler.cat_ui.utils.dialogs.exitDialog
 import dev.astler.cat_ui.utils.dialogs.okDialog
 import dev.astler.cat_ui.utils.dialogs.yesNoDialog
-import dev.astler.unlib.gPreferencesTool
-import dev.astler.unlib.signin.utils.startMandatorySignIn
-import dev.astler.unlib.signin.utils.startOptionalSignIn
-import dev.astler.unlib.signin.utils.startRegisterSignIn
-import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.signin.utils.startMandatorySignIn
+import dev.astler.catlib.signin.utils.startOptionalSignIn
+import dev.astler.catlib.signin.utils.startRegisterSignIn
+import dev.astler.catlib.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.activity.signin.SignInTestActivity
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding

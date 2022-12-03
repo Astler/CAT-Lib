@@ -3,8 +3,8 @@ package dev.astler.unlib_ads.utils.dialogs
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import dev.astler.cat_ui.utils.dialogs.confirmDialog
-import dev.astler.unlib.gPreferencesTool
-import dev.astler.unlib.utils.openAppInPlayStore
+import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.utils.openAppInPlayStore
 import dev.astler.unlib_ads.R
 import dev.astler.unlib_ads.utils.mProPackageName
 import dev.astler.unlib_ads.utils.showRewardAd

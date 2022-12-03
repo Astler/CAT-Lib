@@ -14,7 +14,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import dev.astler.unlib.core.R
+import dev.astler.catlib.core.R
 import java.util.*
 
 fun Context.tryToGetTextFrom(value: Any?): String? {

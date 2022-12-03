@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import dev.astler.cat_ui.utils.getContextColor
-import dev.astler.unlib.utils.tryWithNullDefault
+import dev.astler.catlib.utils.tryWithNullDefault
 
 fun Context.inflateById(@LayoutRes pId: Int, pParent: ViewGroup? = null, pAttachToRoot: Boolean = false): View {
     return LayoutInflater.from(this).inflate(pId, pParent, pAttachToRoot)

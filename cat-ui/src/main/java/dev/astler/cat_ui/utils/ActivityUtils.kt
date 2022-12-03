@@ -25,7 +25,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import dev.astler.cat_ui.utils.views.setStatusAndNavigationPaddingForView
-import dev.astler.unlib.utils.infoLog
+import dev.astler.catlib.utils.infoLog
 
 fun Activity.setStatusBarColor(@ColorRes color: Int) {
 

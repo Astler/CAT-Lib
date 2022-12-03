@@ -2,9 +2,9 @@ package dev.astler.billing
 
 import android.app.Activity
 import com.android.billingclient.api.*
-import dev.astler.unlib.cBillingNoAdsName
-import dev.astler.unlib.gPreferencesTool
-import dev.astler.unlib.utils.infoLog
+import dev.astler.catlib.cBillingNoAdsName
+import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.utils.infoLog
 
 interface IQueryPurchases {
     fun query(client: BillingClient, productId: String, purchase: Purchase)

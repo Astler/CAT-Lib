@@ -1,6 +1,6 @@
 package dev.astler.unlib_ads.utils
 
-import dev.astler.unlib.PreferencesTool
+import dev.astler.catlib.PreferencesTool
 
 fun PreferencesTool.isRewardAdIsActive(): Boolean = getBoolean("rewardAdActiveKey", false)
 fun PreferencesTool.setRewardAdIsActive() = edit("rewardAdActiveKey", true)

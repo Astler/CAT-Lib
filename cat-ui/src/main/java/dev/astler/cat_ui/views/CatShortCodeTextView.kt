@@ -20,7 +20,7 @@ import dev.astler.cat_ui.R
 import dev.astler.cat_ui.utils.getDrawableByName
 import dev.astler.cat_ui.views.span.VerticalImageSpan
 import dev.astler.cat_ui.views.span.CustomFancyTextSpan
-import dev.astler.unlib.gPreferencesTool
+import dev.astler.catlib.gPreferencesTool
 import kotlinx.coroutines.*
 import java.util.regex.Pattern
 

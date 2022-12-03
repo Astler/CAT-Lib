@@ -1,14 +1,13 @@
 package dev.astler.unlib_test.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import coil.transform.BlurTransformation
 import coil.transform.CircleCropTransformation
 import coil.transform.GrayscaleTransformation
 import coil.transform.RoundedCornersTransformation
 import dev.astler.cat_ui.activities.CatActivity
-import dev.astler.unlib.utils.getBitmapFromAsset
+import dev.astler.catlib.utils.getBitmapFromAsset
 import dev.astler.cat_ui.utils.toNoFilterDrawable
 import dev.astler.cat_ui.utils.views.loadWithBackground
 import dev.astler.unlib_test.R

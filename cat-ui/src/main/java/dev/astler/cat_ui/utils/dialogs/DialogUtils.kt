@@ -15,7 +15,7 @@ import dev.astler.cat_ui.databinding.DialogChooseItemWithSearchBinding
 import dev.astler.cat_ui.databinding.ItemPrefsTextBinding
 import dev.astler.cat_ui.items.DialogSimpleTextItem
 import dev.astler.cat_ui.utils.tryToGetTextFrom
-import dev.astler.unlib.utils.vibrateOnClick
+import dev.astler.catlib.utils.vibrateOnClick
 
 /**
  * Predefined yes/no options dialog

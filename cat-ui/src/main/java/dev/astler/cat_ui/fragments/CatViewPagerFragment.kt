@@ -11,7 +11,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dev.astler.cat_ui.databinding.FragmentViewPager2Binding
 import dev.astler.cat_ui.utils.views.setStatusPaddingForView
-import dev.astler.unlib.gPreferencesTool
+import dev.astler.catlib.gPreferencesTool
 
 abstract class CatViewPagerFragment : CatFragment<FragmentViewPager2Binding>() {
 

@@ -6,13 +6,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.* // ktlint-disable no-wildcard-imports
 import com.android.billingclient.api.QueryProductDetailsParams.Product
-import com.google.common.collect.ImmutableList
-import dev.astler.unlib.cBillingNoAdsName
-import dev.astler.unlib.gAppConfig
-import dev.astler.unlib.gPreferencesTool
-import dev.astler.unlib.utils.infoLog
+import dev.astler.catlib.cBillingNoAdsName
+import dev.astler.catlib.gAppConfig
+import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.utils.infoLog
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class BillingViewModel(pApp: Application) : AndroidViewModel(pApp) {

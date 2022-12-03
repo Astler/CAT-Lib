@@ -1,6 +1,6 @@
 package dev.astler.cat_ui
 
-import dev.astler.unlib.PreferencesTool
+import dev.astler.catlib.PreferencesTool
 
 var PreferencesTool.appResumeTime: Long
     get() = getLong(ResumeTimeKey, 0L)

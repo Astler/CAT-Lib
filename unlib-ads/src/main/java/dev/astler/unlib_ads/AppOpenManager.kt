@@ -13,10 +13,10 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.appopen.AppOpenAd.AppOpenAdLoadCallback
-import dev.astler.unlib.gAppConfig
-import dev.astler.unlib.gPreferencesTool
-import dev.astler.unlib.utils.adsLog
-import dev.astler.unlib.utils.canShowAds
+import dev.astler.catlib.gAppConfig
+import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.utils.adsLog
+import dev.astler.catlib.utils.canShowAds
 import dev.astler.unlib_ads.utils.isRewardAdIsActive
 import java.util.* // ktlint-disable no-wildcard-imports
 

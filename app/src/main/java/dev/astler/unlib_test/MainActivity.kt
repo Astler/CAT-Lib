@@ -3,20 +3,18 @@ package dev.astler.unlib_test
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.ConfigurationCompat
-import com.google.android.material.internal.EdgeToEdgeUtils
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
-import com.zeugmasolutions.localehelper.Locales
+import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.getDimensionFromAttr
-import dev.astler.unlib.gPreferencesTool
-import dev.astler.unlib.getDefaultNightMode
-import dev.astler.unlib.utils.toast
+import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.getDefaultNightMode
+import dev.astler.catlib.utils.toast
 import dev.astler.unlib_test.activity.TestMenu
-import dev.astler.unlib_test.activity.ads.AdsTestMenu
 import dev.astler.unlib_test.databinding.ActivityMainBinding
 
+@AndroidEntryPoint
 class MainActivity : CatActivity() {
 
     companion object {

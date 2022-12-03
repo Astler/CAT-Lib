@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
-import dev.astler.unlib.utils.infoLog
+import dev.astler.catlib.utils.infoLog
 import dev.astler.cat_ui.utils.views.goneView
 import dev.astler.cat_ui.utils.views.showView
 import dev.astler.unlib_ads.databinding.ItemAdBinding

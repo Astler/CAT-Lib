@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import dev.astler.unlib.utils.openAppInPlayStore
+import dev.astler.catlib.utils.openAppInPlayStore
 import dev.astler.unlib_compose.R
 
 data class AppItem(

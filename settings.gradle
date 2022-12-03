@@ -1,6 +1,6 @@
 include ':app'
-rootProject.name = "UnLi"
-include ':unlib-core'
+rootProject.name = "CatLib"
+include ':catlib-core'
 include ':unlib-ads'
 include ':unlib-billing'
 include ':unlib-signin'

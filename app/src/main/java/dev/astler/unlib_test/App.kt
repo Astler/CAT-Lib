@@ -5,8 +5,10 @@ import android.app.NotificationManager
 import android.os.Build
 import android.os.StrictMode
 import androidx.core.content.ContextCompat
+import dagger.hilt.android.HiltAndroidApp
 import dev.astler.unlib_ads.AdsUnLibApp
 
+@HiltAndroidApp
 class App : AdsUnLibApp() {
 
     companion object {

@@ -15,7 +15,7 @@ import coil.request.Disposable
 import coil.request.ImageRequest
 import dev.astler.cat_ui.utils.tintDrawable
 import dev.astler.cat_ui.utils.tintDrawableByAttr
-import dev.astler.unlib.utils.tryWithDefault
+import dev.astler.catlib.utils.tryWithDefault
 import okhttp3.HttpUrl
 import java.io.File
 

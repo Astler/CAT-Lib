@@ -26,31 +26,40 @@ import dev.astler.cat_ui.StartTimeKey
 import dev.astler.cat_ui.fragments.IInternetDependentFragment
 import dev.astler.cat_ui.interfaces.ICatActivity
 import dev.astler.cat_ui.utils.getDimensionFromAttr
-import dev.astler.unlib.PreferencesTool
-import dev.astler.unlib.data.RemoteConfig
-import dev.astler.unlib.gPreferencesTool
-import dev.astler.unlib.getDefaultNightMode
-import dev.astler.unlib.utils.errorLog
-import dev.astler.unlib.utils.isOnline
+import dev.astler.catlib.PreferencesTool
+import dev.astler.catlib.remote_config.RemoteConfigProvider
+import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.getDefaultNightMode
+import dev.astler.catlib.interfaces.IRemoteConfigListener
+import dev.astler.catlib.utils.errorLog
+import dev.astler.catlib.utils.isOnline
 import java.util.GregorianCalendar
 import java.util.Locale
+import javax.inject.Inject
 
 abstract class CatActivity :
     LocaleAwareCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener,
-    ICatActivity {
+    ICatActivity, IRemoteConfigListener {
 
     private var _currentWindowInsets: WindowInsetsCompat = WindowInsetsCompat.Builder().build()
     private var _topInsets = 0
     private var _bottomInsets = 0
     private var _toolbarHeight = 0
 
-    lateinit var mRemoteConfig: RemoteConfig
+    @Inject lateinit var _remoteConfig: RemoteConfigProvider
+
     protected var mActiveFragment: Fragment? = null
 
     protected var reviewInfo: ReviewInfo? = null
     protected val reviewManager: ReviewManager by lazy {
         ReviewManagerFactory.create(this)
+    }
+
+    public fun getRemoteConfig(): RemoteConfigProvider = _remoteConfig
+
+    override fun onFetchCompleted() {
+
     }
 
     private val _connectivityManager: ConnectivityManager by lazy {
@@ -95,9 +104,9 @@ abstract class CatActivity :
         AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
         delegate.applyDayNight()
 
-        _toolbarHeight = getDimensionFromAttr(androidx.appcompat.R.attr.actionBarSize)
+        _remoteConfig.getBoolean("bool_test")
 
-        mRemoteConfig = RemoteConfig.getInstance()
+        _toolbarHeight = getDimensionFromAttr(androidx.appcompat.R.attr.actionBarSize)
 
         gPreferencesTool.loadDefaultPreferences(this)
 

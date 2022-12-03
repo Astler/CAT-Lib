@@ -1,7 +1,7 @@
 package dev.astler.unlib_compose.data.settings
 
-import dev.astler.unlib.PreferencesTool
-import dev.astler.unlib.gPreferencesTool
+import dev.astler.catlib.PreferencesTool
+import dev.astler.catlib.gPreferencesTool
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 import kotlin.properties.ReadWriteProperty

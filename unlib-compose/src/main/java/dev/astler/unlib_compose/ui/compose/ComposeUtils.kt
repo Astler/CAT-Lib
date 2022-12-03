@@ -5,7 +5,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
-import dev.astler.unlib.gPreferencesTool
+import dev.astler.catlib.gPreferencesTool
 import dev.astler.unlib_compose.theme.getPrefsTextStyle
 
 @Composable

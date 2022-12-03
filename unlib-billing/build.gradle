@@ -38,10 +38,10 @@ android {
 }
 
 dependencies {
-    implementation project(':unlib-core')
+    implementation project(':catlib-core')
     implementation project(':cat-ui')
     implementation project(':unlib-ads')
 
-    def billing_version = "5.0.0"
+    def billing_version = "5.1.0"
     api "com.android.billingclient:billing-ktx:$billing_version"
 }

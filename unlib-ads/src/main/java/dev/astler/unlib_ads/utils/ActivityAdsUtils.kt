@@ -13,11 +13,10 @@ import com.google.android.material.navigation.NavigationView
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.ResumeTimeKey
 import dev.astler.cat_ui.StartTimeKey
-import dev.astler.cat_ui.utils.dialogs.confirmDialog
 import dev.astler.cat_ui.utils.views.goneView
 import dev.astler.cat_ui.utils.views.showView
-import dev.astler.unlib.* // ktlint-disable no-wildcard-imports
-import dev.astler.unlib.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.catlib.* // ktlint-disable no-wildcard-imports
+import dev.astler.catlib.utils.* // ktlint-disable no-wildcard-imports
 import dev.astler.unlib_ads.R
 import dev.astler.unlib_ads.databinding.ItemAdBinding
 import dev.astler.unlib_ads.interfaces.HideAdListener
@@ -217,15 +216,15 @@ fun CatActivity.interstitialAdsShowTry() {
         return
     }
 
-    val nShowAds = mRemoteConfig.getBoolean("show_interstitial_ad_$configName")
+    val nShowAds = getRemoteConfig().getBoolean("show_interstitial_ad_$configName")
 
     if (!nShowAds) {
         adsLog("Ads disabled in remote config!")
         return
     }
 
-    val nAdsPause = mRemoteConfig.getLong("ad_pause_$configName").toInt()
-    val nAdsChance = mRemoteConfig.getLong("ad_chance_$configName").toInt()
+    val nAdsPause = getRemoteConfig().getLong("ad_pause_$configName").toInt()
+    val nAdsChance = getRemoteConfig().getLong("ad_chance_$configName").toInt()
 
     adsLog("Loaded ads remote config = $nAdsPause, $nAdsChance")
 

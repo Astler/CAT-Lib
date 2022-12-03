@@ -6,7 +6,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dev.astler.cat_ui.R
 import dev.astler.cat_ui.interfaces.ICatActivity
-import dev.astler.unlib.utils.canShowAds
+import dev.astler.catlib.utils.canShowAds
 
 open class CatDefaultSettingsFragment : PreferenceFragmentCompat() {
 

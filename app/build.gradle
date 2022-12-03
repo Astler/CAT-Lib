@@ -5,6 +5,8 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'com.google.dagger.hilt.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -34,14 +36,32 @@ android {
             minifyEnabled false
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kapt {
+        correctErrorTypes true
+    }
+
     namespace 'dev.astler.unlib_test'
 }
 
 dependencies {
+    implementation project(':catlib-core')
+    implementation project(':cat-ui')
+
     implementation project(':unlib-ads')
     implementation project(':unlib-billing')
     implementation project(':unlib-compose')
-    implementation project(':unlib-core')
     implementation project(':unlib-signin')
-    implementation project(':cat-ui')
+
+    api "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 }

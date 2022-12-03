@@ -7,7 +7,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
-import dev.astler.unlib.gAppConfig
+import dev.astler.catlib.gAppConfig
 
 class NativeAdsLoader private constructor() {
     var adLoader: AdLoader? = null

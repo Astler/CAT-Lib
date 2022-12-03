@@ -1,12 +1,11 @@
 package dev.astler.cat_ui.views
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
 import dev.astler.cat_ui.R
-import dev.astler.unlib.gPreferencesTool
+import dev.astler.catlib.gPreferencesTool
 
 open class CatTextView @JvmOverloads constructor(
     context: Context,

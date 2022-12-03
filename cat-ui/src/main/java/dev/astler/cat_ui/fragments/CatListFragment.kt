@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import dev.astler.cat_ui.R
 import dev.astler.cat_ui.databinding.RecyclerViewFragmentBinding
 import dev.astler.cat_ui.views.CatStateLayout
 import dev.astler.cat_ui.interfaces.RecyclerAdapterSizeListener
 import dev.astler.cat_ui.utils.views.*
-import dev.astler.unlib.utils.canShowAds
+import dev.astler.catlib.utils.canShowAds
 
 enum class ListInsetsType {
     SYSTEM_WITH_ACTION_BAR, SYSTEM, TOP, TOP_WITH_ACTION_BAR, BOTTOM, DISMISS

@@ -5,7 +5,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatDelegate.* // ktlint-disable no-wildcard-imports
-import dev.astler.unlib.gPreferencesTool
+import dev.astler.catlib.gPreferencesTool
 import kotlin.math.roundToInt
 
 fun Int.toHexColor(): String {
