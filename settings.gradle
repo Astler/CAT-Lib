@@ -1,7 +1,7 @@
 include ':app'
 rootProject.name = "CatLib"
 include ':catlib-core'
-include ':unlib-ads'
+include ':catlib-ads'
 include ':unlib-billing'
 include ':unlib-signin'
 include ':unlib-signin'

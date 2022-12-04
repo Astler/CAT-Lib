@@ -1,6 +1,6 @@
 package dev.astler.unlib_compose
 
-import org.junit.Assert.* // ktlint-disable no-wildcard-imports
+import org.junit.Assert.* 
 import org.junit.Test
 
 /**

@@ -15,7 +15,7 @@ import com.google.firebase.ktx.Firebase
 import dev.astler.catlib.signin.R
 import dev.astler.catlib.signin.interfaces.SignInActivityListener
 import dev.astler.catlib.signin.ui.activity.contracts.SignInActivityContract
-import dev.astler.catlib.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.catlib.utils.* 
 
 private var mFirebaseAuth: FirebaseAuth? = null
 var mSignInGoogleLauncher: ActivityResultLauncher<String>? = null

@@ -4,7 +4,7 @@ import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.billingclient.api.* // ktlint-disable no-wildcard-imports
+import com.android.billingclient.api.* 
 import com.android.billingclient.api.QueryProductDetailsParams.Product
 import dev.astler.catlib.cBillingNoAdsName
 import dev.astler.catlib.gAppConfig

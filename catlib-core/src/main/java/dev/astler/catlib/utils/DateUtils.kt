@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.text.format.DateUtils
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.* // ktlint-disable no-wildcard-imports
+import java.util.* 
 
 @SuppressLint("SimpleDateFormat")
 fun Long.toTimeAgo(): String {

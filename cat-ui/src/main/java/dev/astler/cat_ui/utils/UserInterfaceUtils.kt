@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatDelegate.* // ktlint-disable no-wildcard-imports
+import androidx.appcompat.app.AppCompatDelegate.* 
 import dev.astler.catlib.gPreferencesTool
 import kotlin.math.roundToInt
 

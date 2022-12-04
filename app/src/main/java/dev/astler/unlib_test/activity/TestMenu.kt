@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.zeugmasolutions.localehelper.Locales
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.adapters.CatOneTypeAdapter
-import dev.astler.cat_ui.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.cat_ui.utils.* 
 import dev.astler.cat_ui.utils.dialogs.confirmDialog
 import dev.astler.cat_ui.utils.dialogs.exitDialog
 import dev.astler.cat_ui.utils.dialogs.okDialog
@@ -15,7 +15,7 @@ import dev.astler.catlib.gPreferencesTool
 import dev.astler.catlib.signin.utils.startMandatorySignIn
 import dev.astler.catlib.signin.utils.startOptionalSignIn
 import dev.astler.catlib.signin.utils.startRegisterSignIn
-import dev.astler.catlib.utils.* // ktlint-disable no-wildcard-imports
+import dev.astler.catlib.utils.* 
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.activity.signin.SignInTestActivity
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding

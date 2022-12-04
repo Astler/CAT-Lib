@@ -51,9 +51,9 @@ android {
 
 dependencies {
     implementation project(':catlib-core')
+    implementation project(':catlib-ads')
     implementation project(':cat-ui')
 
-    implementation project(':unlib-ads')
     implementation project(':unlib-billing')
     implementation project(':unlib-compose')
     implementation project(':unlib-signin')

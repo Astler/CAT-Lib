@@ -26,7 +26,7 @@ import dev.astler.cat_ui.StartTimeKey
 import dev.astler.cat_ui.fragments.IInternetDependentFragment
 import dev.astler.cat_ui.interfaces.ICatActivity
 import dev.astler.cat_ui.utils.getDimensionFromAttr
-import dev.astler.catlib.PreferencesTool
+import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.RemoteConfigProvider
 import dev.astler.catlib.gPreferencesTool
 import dev.astler.catlib.getDefaultNightMode

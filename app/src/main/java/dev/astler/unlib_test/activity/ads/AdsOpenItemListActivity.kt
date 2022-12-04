@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.catlib.utils.canShowAds
-import dev.astler.unlib_ads.adapters.OIAdsAdapterConfig
-import dev.astler.unlib_ads.adapters.OneItemAdsAdapter
-import dev.astler.unlib_ads.utils.NativeAdsLoader
-import dev.astler.unlib_ads.utils.getAdRequest
-import dev.astler.unlib_ads.utils.initAds
+import dev.astler.ads.adapters.OIAdsAdapterConfig
+import dev.astler.ads.adapters.OneItemAdsAdapter
+import dev.astler.ads.utils.NativeAdsLoader
+import dev.astler.ads.utils.getAdRequest
+import dev.astler.ads.utils.initAds
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.items.TextItem

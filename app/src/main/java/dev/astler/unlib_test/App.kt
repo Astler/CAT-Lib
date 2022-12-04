@@ -6,11 +6,10 @@ import android.os.Build
 import android.os.StrictMode
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.HiltAndroidApp
-import dev.astler.unlib_ads.AdsUnLibApp
+import dev.astler.catlib.CatApp
 
 @HiltAndroidApp
-class App : AdsUnLibApp() {
-
+class App: CatApp() {
     companion object {
         const val MAIN_CHANNEL_ID = "MAIN_CHANNEL"
         const val NEWS_CHANNEL_ID = "NEWS_CHANNEL"

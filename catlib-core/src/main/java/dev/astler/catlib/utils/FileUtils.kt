@@ -5,7 +5,7 @@ import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import java.io.* // ktlint-disable no-wildcard-imports
+import java.io.* 
 import java.nio.channels.FileChannel
 import java.nio.charset.Charset
 
