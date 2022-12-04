@@ -3,11 +3,13 @@ package dev.astler.unlib_test.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.activity.ads.AdsOpenItemListActivity
 import dev.astler.unlib_test.databinding.ActivityMainBinding
 
+@AndroidEntryPoint
 class ShortcodeTextActivity : CatActivity() {
 
     companion object {

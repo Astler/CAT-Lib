@@ -2,6 +2,7 @@ package dev.astler.catlib.signin.ui.activity
 
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseUser
+import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.setInsetsViaOrientation
 import dev.astler.cat_ui.utils.views.showViewWithCondition
@@ -33,6 +34,7 @@ enum class CatSignInMode {
     }
 }
 
+@AndroidEntryPoint
 open class SignInActivity : CatActivity(), SignInActivityListener {
 
     lateinit var binding: SignInLayoutBinding

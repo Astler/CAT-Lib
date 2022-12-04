@@ -7,6 +7,7 @@ import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import dev.astler.catlib.core.BuildConfig
 import dev.astler.catlib.core.R
+import dev.astler.catlib.utils.infoLog
 import dev.astler.catlib.utils.toast
 import javax.inject.Inject
 
@@ -31,9 +32,9 @@ class RemoteConfigProvider @Inject constructor(context: Context) {
             _remoteConfig.fetchAndActivate().addOnCompleteListener(context) { task ->
                 if (task.isSuccessful) {
                     val updated = task.result
-                    context.toast("Fetch and activate succeeded")
+                    infoLog("Fetch and activate succeeded")
                 } else {
-                    context.toast("Fetch failed")
+                    infoLog("Fetch failed")
                 }
             }
         }

@@ -3,6 +3,7 @@ package dev.astler.unlib_test.activity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
+import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.adapters.CatOneTypeAdapter
 import dev.astler.unlib_test.R
@@ -10,6 +11,7 @@ import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.databinding.ItemImageBinding
 import dev.astler.unlib_test.items.ImageItem
 
+@AndroidEntryPoint
 class AsyncListActivity : CatActivity() {
 
     private lateinit var mAdapter: CatOneTypeAdapter<ImageItem>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zeugmasolutions.localehelper.Locales
+import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.adapters.CatOneTypeAdapter
 import dev.astler.cat_ui.utils.* 
@@ -23,6 +24,7 @@ import dev.astler.unlib_test.databinding.ItemTextBinding
 import dev.astler.unlib_test.items.ClickableItem
 import java.util.*
 
+@AndroidEntryPoint
 class TestMenu : CatActivity() {
 
     private lateinit var mAdapter: CatOneTypeAdapter<ClickableItem>

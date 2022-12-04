@@ -13,18 +13,16 @@ import dev.astler.catlib.ads.databinding.ItemAdBinding
 
 class AdItemViewHolder(view: View) :
     ViewHolder(view) {
-    val mItemAdBinding = ItemAdBinding.bind(view)
-    val adView: NativeAdView
-    private val mView: View
+    private val itemBinding = ItemAdBinding.bind(view)
+    private val adView: NativeAdView = itemBinding.nativeAd
+    private val _view: View
 
     init {
-        val unifiedNativeAdView = mItemAdBinding.nativeAd
-        adView = unifiedNativeAdView
-        mView = view
-        adView.callToActionView = mItemAdBinding.install
-        adView.headlineView = mItemAdBinding.adHeadline
-        adView.bodyView = mItemAdBinding.adBody
-        adView.iconView = mItemAdBinding.adAppIcon
+        _view = view
+        adView.callToActionView = itemBinding.install
+        adView.headlineView = itemBinding.adHeadline
+        adView.bodyView = itemBinding.adBody
+        adView.iconView = itemBinding.adAppIcon
     }
 
     fun initNativeBanner(pNativeAd: NativeAd?, pCanShowAds: Boolean) {
@@ -34,23 +32,23 @@ class AdItemViewHolder(view: View) :
 
         if (pNativeAd == null || !pCanShowAds) {
             infoLog("HIDE AD >.<", "Ads")
-            mItemAdBinding.adHeadline.goneView()
-            mItemAdBinding.nativeAd.goneView()
+            itemBinding.adHeadline.goneView()
+            itemBinding.nativeAd.goneView()
         } else {
             infoLog("SHOW AD >.<", "Ads")
-            mItemAdBinding.adHeadline.showView()
-            mItemAdBinding.nativeAd.showView()
+            itemBinding.adHeadline.showView()
+            itemBinding.nativeAd.showView()
 
             (adView.headlineView as TextView).text = pNativeAd.headline
             (adView.bodyView as TextView).text = pNativeAd.body
 
             if (pNativeAd.icon == null) {
                 adView.iconView?.goneView()
-                mItemAdBinding.adAppIconCard.goneView()
+                itemBinding.adAppIconCard.goneView()
             } else {
                 (adView.iconView as ImageView).setImageDrawable(pNativeAd.icon?.drawable)
                 adView.iconView?.showView()
-                mItemAdBinding.adAppIconCard.showView()
+                itemBinding.adAppIconCard.showView()
             }
 
             if (pNativeAd.callToAction != null) {

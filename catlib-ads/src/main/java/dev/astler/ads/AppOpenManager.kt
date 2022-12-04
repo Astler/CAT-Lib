@@ -18,7 +18,7 @@ import dev.astler.catlib.gAppConfig
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.utils.adsLog
 import dev.astler.catlib.utils.canShowAds
-import dev.astler.ads.utils.isRewardAdIsActive
+import dev.astler.ads.utils.rewardAdActive
 import java.util.*
 import javax.inject.Inject
 
@@ -125,7 +125,7 @@ class AppOpenManager @Inject constructor(
                     !_preferences.isFirstStart &&
                     Date().time - mLastShowTime > 1800000 &&
                     Date().time - _preferences.getLong("last_ad_show") > 25000 &&
-                    !_preferences.isRewardAdIsActive() &&
+                    !_preferences.rewardAdActive &&
                     currentActivity?.canShowAds() == true
         }
 

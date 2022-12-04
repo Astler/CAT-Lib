@@ -88,10 +88,6 @@ abstract class CatActivity :
         }
     }
 
-    open val configName: String by lazy {
-        packageName.replace(".", "_")
-    }
-
     override fun callBackPressed() {
         onBackPressedDispatcher.onBackPressed()
     }

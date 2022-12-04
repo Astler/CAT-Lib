@@ -2,48 +2,55 @@ package dev.astler.ads.dialogs
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
+import dev.astler.ads.interfaces.IAdListener
 import dev.astler.cat_ui.utils.dialogs.confirmDialog
 import dev.astler.catlib.ads.R
-import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.gAppConfig
 import dev.astler.catlib.utils.openAppInPlayStore
-import dev.astler.ads.utils.mProPackageName
-import dev.astler.ads.utils.showRewardAd
 
 fun AppCompatActivity.showNoAdsDialog() {
-    if (mProPackageName.isNotEmpty()) {
+    val proPackageName = gAppConfig.mProPackageName
+
+    if (proPackageName.isNotEmpty()) {
         confirmDialog(
             R.string.disable_ads,
             R.string.disable_ads_msg,
-            R.string.buy_pro,
-            R.string.watch_ads,
+            positive = R.string.buy_pro,
+            negative = R.string.watch_ads,
             positiveAction = {
-                openAppInPlayStore(mProPackageName)
+                openAppInPlayStore(proPackageName)
             },
-            negativeAction = { showRewardAd() }
+            negativeAction = {
+                if (this is IAdListener)
+                    showRewardAd()
+            }
         )
     } else {
         confirmDialog(
             R.string.disable_ads,
             R.string.disable_ads_msg,
-            R.string.watch_ads,
+            negative = android.R.string.cancel,
+            positive = R.string.watch_ads,
             positiveAction = {
-                showRewardAd()
-            }
+                if (this is IAdListener)
+                    showRewardAd()
+            },
+            negativeAction = {}
         )
     }
 }
 
-fun Context.adsAgeDialog() {
+fun Context.adsAgeConfirmDialog(result: (Boolean) -> Unit) {
     confirmDialog(
         R.string.ads_dialog_title,
         R.string.ads_dialog_msg,
-        R.string.yes,
-        R.string.no,
+        positive = R.string.yes,
+        negative = R.string.no,
         positiveAction = {
-            gPreferencesTool.edit("child_ads", false)
+            result.invoke(false)
         },
         negativeAction = {
-            gPreferencesTool.edit("child_ads", true)
+            result.invoke(true)
         }
     )
 }

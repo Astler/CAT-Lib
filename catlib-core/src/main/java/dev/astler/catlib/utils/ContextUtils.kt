@@ -15,6 +15,8 @@ import java.util.*
 
 class ContextUtils(base: Context?) : ContextWrapper(base)
 
+fun Context.formattedPackageName(): String = packageName.replace(".", "_")
+
 fun Context.copyToBuffer(pData: CharSequence) {
     if (pData.isNotEmpty()) {
         val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

@@ -2,18 +2,22 @@ package dev.astler.unlib_test.activity.ads
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.catlib.utils.canShowAds
 import dev.astler.ads.adapters.OIAdsAdapterConfig
 import dev.astler.ads.adapters.OneItemAdsAdapter
+import dev.astler.ads.initialization.AdsTool
 import dev.astler.ads.utils.NativeAdsLoader
-import dev.astler.ads.utils.getAdRequest
-import dev.astler.ads.utils.initAds
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.items.TextItem
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AdsOpenItemListActivity : CatActivity() {
+
+    @Inject lateinit var adsTool: AdsTool
 
     private lateinit var mAdapter: OneItemAdsAdapter<TextItem>
 
@@ -26,9 +30,7 @@ class AdsOpenItemListActivity : CatActivity() {
 
         setContentView(mViewBinding.root)
 
-        initAds()
-
-        NativeAdsLoader.instance?.loadAds(this, getAdRequest())
+        adsTool.startNativeAdsLoader()
 
         mAdapter = OneItemAdsAdapter(
             R.layout.item_text,
