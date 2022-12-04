@@ -20,6 +20,15 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
+import dev.astler.ads.data.RemoteConfigData
+import dev.astler.ads.data.adChanceKey
+import dev.astler.ads.data.bannerAdEnabledKey
+import dev.astler.ads.data.interstitialAdEnabledKey
+import dev.astler.ads.data.lastAdDelayKey
+import dev.astler.ads.data.openAdEnabledKey
+import dev.astler.ads.data.resumeAdDelayKey
+import dev.astler.ads.data.rewardAdEnabledKey
+import dev.astler.ads.data.startAdDelayKey
 import dev.astler.ads.dialogs.adsAgeConfirmDialog
 import dev.astler.ads.interfaces.IAdListener
 import dev.astler.ads.utils.NativeAdsLoader
@@ -28,6 +37,7 @@ import dev.astler.ads.utils.childAdsMode
 import dev.astler.ads.utils.lastAdsTime
 import dev.astler.ads.utils.rewardAdActive
 import dev.astler.cat_ui.ResumeTimeKey
+import dev.astler.cat_ui.StartTimeKey
 import dev.astler.cat_ui.utils.views.goneView
 import dev.astler.cat_ui.utils.views.showView
 import dev.astler.catlib.ads.databinding.ItemAdBinding
@@ -50,6 +60,7 @@ class AdsTool @Inject constructor(
 ) :
     SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private var _remoteAdsConfig: RemoteConfigData? = null
     private var _configPackageName: String = context.formattedPackageName()
     private var _needAgeCheck: Boolean = gAppConfig.mNeedAgeCheck
 
@@ -66,6 +77,8 @@ class AdsTool @Inject constructor(
             }
 
             gPreferencesTool.addListener(this)
+
+            fetchRemoteConfigForAds()
         }
     }
 
@@ -80,6 +93,23 @@ class AdsTool @Inject constructor(
             if (context is IAdListener) {
                 context.hideAd()
             }
+        }
+    }
+
+    private fun fetchRemoteConfigForAds() {
+        remoteConfig.loadRemoteData {
+            _remoteAdsConfig = RemoteConfigData(
+                remoteConfig.getLong(startAdDelayKey + context.formattedPackageName()),
+                remoteConfig.getLong(resumeAdDelayKey + context.formattedPackageName()),
+                remoteConfig.getLong(lastAdDelayKey + context.formattedPackageName()),
+                remoteConfig.getLong(adChanceKey + context.formattedPackageName()),
+                remoteConfig.getBoolean(interstitialAdEnabledKey + context.formattedPackageName()),
+                remoteConfig.getBoolean(openAdEnabledKey + context.formattedPackageName()),
+                remoteConfig.getBoolean(bannerAdEnabledKey + context.formattedPackageName()),
+                remoteConfig.getBoolean(rewardAdEnabledKey + context.formattedPackageName()),
+            )
+
+            adsLog("loaded ads config $_remoteAdsConfig")
         }
     }
 
@@ -113,32 +143,52 @@ class AdsTool @Inject constructor(
             return
         }
 
-        val canShowAdsByConfig =
-            remoteConfig.getBoolean("interstitial_ads_enabled_$_configPackageName")
+        if (_remoteAdsConfig == null) {
+            fetchRemoteConfigForAds()
+            return
+        }
 
-        if (!canShowAdsByConfig) {
+        val config = _remoteAdsConfig!!
+
+        adsLog("Loaded ads remote config = $config")
+
+        val adsAllowedByConfig = config.interstitialAdEnabled
+
+        if (!adsAllowedByConfig) {
             adsLog("Ads disabled in remote config!")
             return
         }
 
-        val nAdsStartPause = remoteConfig.getLong("start_ad_delay_$_configPackageName").toInt()
-        val nAdsFromLastPause = remoteConfig.getLong("last_ad_delay_$_configPackageName").toInt()
-        val nAdsChance = remoteConfig.getLong("ad_chance_$_configPackageName").toInt()
+        val startDelay = config.startAdDelay
 
-        adsLog("Loaded ads remote config = $nAdsStartPause, $nAdsFromLastPause, $nAdsChance")
-
-        val nIsTimeFromStartPassed = ResumeTimeKey.hasPrefsTimePassed(nAdsStartPause * 1000L)
-
-        if (!nIsTimeFromStartPassed) {
-            adsLog("nIsTimeFromStartPassed not passed! = $nIsTimeFromStartPassed")
+        if (!StartTimeKey.hasPrefsTimePassed(startDelay * 1000L)) {
+            adsLog("Time from start not passed!")
             return
         }
 
-        val nAdsFromLastPausePassed = "last_ad_show".hasPrefsTimePassed(nAdsFromLastPause * 1000L)
+        val resumeDelay = config.resumeAdDelay
 
-        if (!nAdsFromLastPausePassed) {
-            adsLog("nAdsFromLastPausePassed not passed! = $nAdsFromLastPausePassed")
+        if (!ResumeTimeKey.hasPrefsTimePassed(resumeDelay * 1000L)) {
+            adsLog("Time from resume not passed!")
             return
+        }
+
+        val fromLastDelay = config.lastAdDelay
+
+        if (!gPreferencesTool.lastAdsTime.hasPrefsTimePassed(fromLastDelay * 1000L)) {
+            adsLog("Time from last ads not passed!")
+            return
+        }
+
+        val adChance = config.adChance
+
+        if (adChance > 0) {
+            val random = (0..100).random()
+
+            if (random > adChance) {
+                adsLog("Random chance not passed!")
+                return
+            }
         }
 
         showInterstitialAd()

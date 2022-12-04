@@ -11,7 +11,7 @@ import dev.astler.catlib.utils.infoLog
 import dev.astler.catlib.utils.toast
 import javax.inject.Inject
 
-class RemoteConfigProvider @Inject constructor(context: Context) {
+class RemoteConfigProvider @Inject constructor(var context: Context) {
 
     private val _remoteConfig by lazy { Firebase.remoteConfig }
 
@@ -28,15 +28,20 @@ class RemoteConfigProvider @Inject constructor(context: Context) {
         _remoteConfig.setConfigSettingsAsync(configSettings)
         _remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
 
+        loadRemoteData()
+    }
+
+    fun loadRemoteData(callback: (() -> Unit)? = null) {
         if (context is AppCompatActivity) {
-            _remoteConfig.fetchAndActivate().addOnCompleteListener(context) { task ->
-                if (task.isSuccessful) {
-                    val updated = task.result
-                    infoLog("Fetch and activate succeeded")
-                } else {
-                    infoLog("Fetch failed")
+            _remoteConfig.fetchAndActivate()
+                .addOnCompleteListener(context as AppCompatActivity) { task ->
+                    if (task.isSuccessful) {
+                        infoLog("Fetch and activate succeeded")
+                        callback?.invoke()
+                    } else {
+                        infoLog("Fetch failed")
+                    }
                 }
-            }
         }
     }
 }
