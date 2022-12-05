@@ -15,7 +15,7 @@ import dev.astler.cat_ui.utils.views.showViewWithCondition
 import dev.astler.cat_ui.views.CatStateLayout
 
 @AndroidEntryPoint
-abstract class CatBannersCoreListFragment : CatFragment<FragmentListToolbarBinding>(),
+abstract class CatToolbarListFragment : CatFragment<FragmentListToolbarBinding>(),
     RecyclerAdapterSizeListener {
 
     protected var bannerTag: String = this::class.java.name
