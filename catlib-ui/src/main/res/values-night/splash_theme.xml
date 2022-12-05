@@ -4,7 +4,6 @@
     <style name="Theme.AppSplash" parent="Theme.SplashScreen">
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
 
-        <item name="windowSplashScreenBackground">@color/dark</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/rounded_layout</item>
         <item name="windowSplashScreenAnimationDuration">300</item>
 
