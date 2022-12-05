@@ -4,4 +4,8 @@
     <dimen name="iconEmptySize">100dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="unlib_base_view_margin">16dp</dimen>
+
+    <dimen name="user_photo_circle">40dp</dimen>
+    <dimen name="user_photo">35dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
 </resources>

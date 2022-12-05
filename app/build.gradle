@@ -52,7 +52,7 @@ android {
 dependencies {
     implementation project(':catlib-core')
     implementation project(':catlib-ads')
-    implementation project(':cat-ui')
+    implementation project(':catlib-ui')
 
     implementation project(':unlib-billing')
     implementation project(':unlib-compose')

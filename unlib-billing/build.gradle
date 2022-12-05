@@ -39,7 +39,7 @@ android {
 
 dependencies {
     implementation project(':catlib-core')
-    implementation project(':cat-ui')
+    implementation project(':catlib-ui')
     implementation project(':catlib-ads')
 
     def billing_version = "5.1.0"

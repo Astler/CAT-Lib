@@ -41,7 +41,7 @@ android {
 
 dependencies {
     implementation project(':catlib-core')
-    implementation project(':cat-ui')
+    implementation project(':catlib-ui')
 
     api 'com.google.android.gms:play-services-ads:21.3.0'
 

@@ -1,5 +1,6 @@
 package dev.astler.cat_ui.interfaces
 
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 
 interface ICatActivity : CoreFragmentInterface {
@@ -9,4 +10,5 @@ interface ICatActivity : CoreFragmentInterface {
     fun getTopPadding(): Int
     fun getBottomPadding(): Int
     fun getToolbarHeight(): Int
+    fun setupToolbar(toolbar: Toolbar) {}
 }
