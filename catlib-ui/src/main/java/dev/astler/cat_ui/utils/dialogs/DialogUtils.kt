@@ -12,6 +12,7 @@ import dev.astler.cat_ui.R
 import dev.astler.cat_ui.adapters.CatOneTypeAdapter
 import dev.astler.cat_ui.databinding.DialogChooseItemBinding
 import dev.astler.cat_ui.databinding.DialogChooseItemWithSearchBinding
+import dev.astler.cat_ui.databinding.DialogEditTextBinding
 import dev.astler.cat_ui.databinding.ItemPrefsTextBinding
 import dev.astler.cat_ui.items.DialogSimpleTextItem
 import dev.astler.cat_ui.utils.tryToGetTextFrom
@@ -20,6 +21,38 @@ import dev.astler.catlib.utils.vibrateOnClick
 /**
  * Predefined yes/no options dialog
  */
+
+fun Context.editTextDialog(
+    showAfterCreation: Boolean = true,
+    title: Any? = null,
+    message: Any? = null,
+    initText: String = "",
+    positive: Any? = R.string.ok,
+    okClicked: (DialogInterface, String) -> Unit = { _, _ -> }
+): AlertDialog {
+    val dialogView = DialogEditTextBinding.inflate(LayoutInflater.from(this))
+
+    val titleText = tryToGetTextFrom(title)
+    val messageText = tryToGetTextFrom(message)
+    val positiveText = tryToGetTextFrom(positive)
+
+    dialogView.editField.setText(initText)
+    dialogView.description.text = messageText
+
+    val dialog = MaterialAlertDialogBuilder(this)
+        .setTitle(titleText)
+        .setView(dialogView.root)
+        .setPositiveButton(positiveText) { dialog, _ ->
+            okClicked.invoke(dialog, dialogView.editField.text.toString())
+        }
+        .setNegativeButton(android.R.string.cancel) { _, _ -> }.create()
+
+    if (showAfterCreation)
+        dialog.show()
+
+    return dialog
+}
+
 
 fun Context.yesNoDialog(
     showAfterCreation: Boolean = true,
