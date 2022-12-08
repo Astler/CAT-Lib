@@ -15,7 +15,7 @@ import dev.astler.cat_ui.utils.views.setStatusPaddingForView
 @AndroidEntryPoint
 abstract class CatViewPagerToolbarFragment : CatFragment<FragmentViewPager2ToolbarBinding>() {
 
-    abstract val pagerAdapter: FragmentStateAdapter
+    abstract fun getPagerAdapter(): FragmentStateAdapter
     abstract val pagesNames: List<String>
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentViewPager2ToolbarBinding
@@ -33,7 +33,7 @@ abstract class CatViewPagerToolbarFragment : CatFragment<FragmentViewPager2Toolb
 
             coreListener?.setupToolbar(toolbarLayout.toolbar)
 
-            pager.adapter = pagerAdapter
+            pager.adapter = getPagerAdapter()
 
             TabLayoutMediator(tabs, pager) { tab, position ->
                 tab.text = pagesNames[position]
