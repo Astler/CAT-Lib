@@ -15,6 +15,8 @@ abstract class CatFragment<VB : ViewBinding> : Fragment(),
     CoreFragmentInterface,
     MenuProvider {
 
+    protected var fragmentTag: String = this::class.java.name
+
     private var _binding: VB? = null
 
     protected var coreListener: ICatActivity? = null

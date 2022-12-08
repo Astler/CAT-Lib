@@ -8,4 +8,7 @@
     <dimen name="user_photo_circle">40dp</dimen>
     <dimen name="user_photo">35dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
+
+    <dimen name="viewpager_next_item_visible">30dp</dimen>
+    <dimen name="viewpager_current_item_horizontal_margin">60dp</dimen>
 </resources>

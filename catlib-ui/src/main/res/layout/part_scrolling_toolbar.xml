@@ -16,44 +16,101 @@
     app:layout_constraintTop_toTopOf="parent"
     app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/baseBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="60dp"
-        app:titleTextColor="?attr/colorOnSurface"
-        android:background="@android:color/transparent" />
+        android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/userLogoCard"
-        android:layout_width="@dimen/user_photo_circle"
-        android:layout_height="@dimen/user_photo_circle"
-        android:layout_gravity="end|center_vertical"
-        android:layout_marginEnd="8dp"
-        app:cardBackgroundColor="?attr/colorPrimary"
-        app:cardCornerRadius="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6"
-        app:layout_constraintVertical_chainStyle="packed">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/userLogoCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="?attr/colorOnSurface" />
 
         <androidx.cardview.widget.CardView
-            android:layout_width="@dimen/user_photo"
-            android:layout_height="@dimen/user_photo"
-            android:layout_gravity="center"
+            android:id="@+id/userLogoCard"
+            android:layout_width="@dimen/user_photo_circle"
+            android:layout_height="@dimen/user_photo_circle"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="8dp"
+            app:cardBackgroundColor="?attr/colorPrimary"
             app:cardCornerRadius="50dp"
-            app:cardElevation="0dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/toolbar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/user_photo"
+                android:layout_height="@dimen/user_photo"
+                android:layout_gravity="center"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:id="@+id/userLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+            </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/back"
+            android:layout_width="@dimen/toolbar_height"
+            android:layout_height="@dimen/toolbar_height">
 
             <ImageView
-                android:id="@+id/userLogo"
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/ic_launcher_round" />
-        </androidx.cardview.widget.CardView>
-    </androidx.cardview.widget.CardView>
+                android:padding="16dp"
+                app:srcCompat="@drawable/ic_arrow_back" />
+        </FrameLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/toolbar_height"
+            android:importantForAutofill="no"
+            android:textColor="?attr/colorOnSurface"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:endIconMode="clear_text"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/searchField"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/search"
+                android:importantForAutofill="no"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="?attr/colorOnSurface" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </FrameLayout>
 
 </FrameLayout>
 
