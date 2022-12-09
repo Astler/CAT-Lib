@@ -26,10 +26,8 @@ abstract class CatListToolbarFragment : CatFragment<FragmentListToolbarBinding>(
     open var allowOverrideTitle: Boolean = false
     open var titleId: Int = -1
 
-    lateinit var mStateLayout: CatStateLayout
-
     override fun setLoadedItems(size: Int) {
-        mStateLayout.activeView =
+        binding.stateLayout.activeView =
             if (size <= 0) CatStateLayout.errorView else CatStateLayout.defaultView
     }
 
@@ -42,14 +40,11 @@ abstract class CatListToolbarFragment : CatFragment<FragmentListToolbarBinding>(
         activity?.setStatusBarColor(android.R.color.transparent)
 
         with(binding) {
-
-            mStateLayout = stateLayout
             _recyclerView = recyclerView
 
-            mStateLayout.activeView = CatStateLayout.loadingView
+            stateLayout.activeView = CatStateLayout.loadingView
 
-            toolbarLayout.customTopBar.showViewWithCondition(showToolbar)
-            if (showToolbar) coreListener?.setupToolbar(toolbarLayout.toolbar)
+            setupToolbar()
 
             fab.visibility = if (showFloatingActionButton) View.VISIBLE else View.GONE
 
@@ -71,8 +66,10 @@ abstract class CatListToolbarFragment : CatFragment<FragmentListToolbarBinding>(
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun setupToolbar() {
+        binding.toolbarLayout.customTopBar.showViewWithCondition(showToolbar)
+
+        if (showToolbar) coreListener?.setupToolbar(binding.toolbarLayout.toolbar)
 
         val title =
             (if (titleId <= 0) findNavController().currentDestination?.label else safeContext.getString(
