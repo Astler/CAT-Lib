@@ -33,6 +33,7 @@ import dev.astler.catlib.getDefaultNightMode
 import dev.astler.catlib.interfaces.IRemoteConfigListener
 import dev.astler.catlib.utils.errorLog
 import dev.astler.catlib.utils.isOnline
+import dev.astler.catlib.utils.isPlayStoreInstalled
 import java.util.GregorianCalendar
 import java.util.Locale
 import javax.inject.Inject
@@ -47,7 +48,8 @@ abstract class CatActivity :
     private var _bottomInsets = 0
     private var _toolbarHeight = 0
 
-    @Inject lateinit var _remoteConfig: RemoteConfigProvider
+    @Inject
+    lateinit var _remoteConfig: RemoteConfigProvider
 
     protected var mActiveFragment: Fragment? = null
 
@@ -108,14 +110,6 @@ abstract class CatActivity :
 
         gPreferencesTool.edit(StartTimeKey, GregorianCalendar().timeInMillis)
 
-        reviewManager.requestReviewFlow().addOnCompleteListener { request ->
-            if (request.isSuccessful) {
-                reviewInfo = request.result
-            } else {
-                errorLog(request.exception, "error during requestReviewFlow")
-            }
-        }
-
         if (gPreferencesTool.isFirstStart) {
             onFirstAppStart()
             gPreferencesTool.isFirstStart = false
@@ -136,6 +130,16 @@ abstract class CatActivity :
             NetworkRequest.Builder().build(),
             _networkCallback
         )
+
+        if (isPlayStoreInstalled()) {
+            reviewManager.requestReviewFlow().addOnCompleteListener { request ->
+                if (request.isSuccessful) {
+                    reviewInfo = request.result
+                } else {
+                    errorLog(request.exception, "error during requestReviewFlow")
+                }
+            }
+        }
     }
 
     /**

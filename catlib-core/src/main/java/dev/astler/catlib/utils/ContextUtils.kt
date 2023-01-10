@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -57,6 +58,23 @@ fun Context.isPackageInstalled(packageName: String): Boolean {
     return tryWithDefault(false) {
         packageManager.getPackageInfo(packageName, 0)
         true
+    }
+}
+
+private const val GOOGLE_PLAY_STORE_PACKAGE = "com.android.vending"
+
+public fun Context.isPlayStoreInstalled(): Boolean {
+    return try {
+        val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageManager.getPackageInfo(GOOGLE_PLAY_STORE_PACKAGE, PackageManager.PackageInfoFlags.of(0))
+        } else {
+            packageManager.getPackageInfo(GOOGLE_PLAY_STORE_PACKAGE, 0)
+        }
+
+        packageInfo.applicationInfo.enabled
+    } catch (exc: PackageManager.NameNotFoundException) {
+        errorLog("Play Store not installed")
+        false
     }
 }
 
