@@ -2,9 +2,7 @@ package dev.astler.unlib_test.activity
 
 import android.os.Bundle
 import coil.load
-import coil.transform.BlurTransformation
 import coil.transform.CircleCropTransformation
-import coil.transform.GrayscaleTransformation
 import coil.transform.RoundedCornersTransformation
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
@@ -37,7 +35,7 @@ class ImageLoadersActivity : CatActivity() {
         mImagesBinding.coilBlurImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
             crossfade(true)
             placeholder(R.drawable.ic_launcher_background)
-            transformations(BlurTransformation(this@ImageLoadersActivity))
+//            transformations(BlurTransformation(this@ImageLoadersActivity))
         }
 
         mImagesBinding.roundedImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
@@ -49,7 +47,7 @@ class ImageLoadersActivity : CatActivity() {
         mImagesBinding.grayScaleImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
             crossfade(true)
             placeholder(R.drawable.ic_launcher_background)
-            transformations(GrayscaleTransformation())
+//            transformations(GrayscaleTransformation())
         }
 
         mImagesBinding.assetsImage.setImageBitmap(getBitmapFromAsset("frozen.png"))
@@ -64,7 +62,7 @@ class ImageLoadersActivity : CatActivity() {
 
         mImagesBinding.backgroundImage.loadWithBackground(
             "https://static.wikia.nocookie.net/minecraft_ru_gamepedia/images/4/46/Изумруд.png",
-            R.color.fab_color
+            dev.astler.catlib.core.R.color.fab_color
         )
     }
 }

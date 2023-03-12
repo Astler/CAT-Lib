@@ -5,10 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
-import dev.astler.catlib.core.BuildConfig
-import dev.astler.catlib.core.R
 import dev.astler.catlib.utils.infoLog
-import dev.astler.catlib.utils.toast
+import dev.astler.catlib.utils.isDebuggable
+import dev.astler.catlib.core.R
 import javax.inject.Inject
 
 class RemoteConfigProvider @Inject constructor(var context: Context) {
@@ -22,7 +21,7 @@ class RemoteConfigProvider @Inject constructor(var context: Context) {
     init {
         val configSettings = remoteConfigSettings {
             minimumFetchIntervalInSeconds =
-                if (BuildConfig.DEBUG) 5 else 60 * 30.toLong()
+                if (context.isDebuggable()) 5 else 60 * 30.toLong()
         }
 
         _remoteConfig.setConfigSettingsAsync(configSettings)

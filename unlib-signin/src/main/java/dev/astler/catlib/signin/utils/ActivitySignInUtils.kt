@@ -12,10 +12,10 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import dev.astler.catlib.signin.R
 import dev.astler.catlib.signin.interfaces.SignInActivityListener
 import dev.astler.catlib.signin.ui.activity.contracts.SignInActivityContract
-import dev.astler.catlib.utils.* 
+import dev.astler.catlib.utils.*
+import dev.astler.catlib.signin.R
 
 private var mFirebaseAuth: FirebaseAuth? = null
 var mSignInGoogleLauncher: ActivityResultLauncher<String>? = null
@@ -121,6 +121,7 @@ fun AppCompatActivity.authWithEmailAndPassword(pEmail: String? = null, pPassword
                 infoLog("signInWithCredential:success")
                 getFirebaseAuth().currentUser
             } else {
+                toast(R.string.sign_in_error)
                 infoLog("signInWithCredential:failure ${task.exception}")
                 null
             }

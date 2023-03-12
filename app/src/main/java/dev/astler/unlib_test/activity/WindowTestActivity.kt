@@ -1,12 +1,10 @@
 package dev.astler.unlib_test.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.setStatusBarColor
 import dev.astler.cat_ui.utils.setSystemBarTransparent
-import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityImagesBinding
 
 @AndroidEntryPoint
@@ -29,9 +27,9 @@ class WindowTestActivity : CatActivity() {
             if (mBarTransparent)
                 setSystemBarTransparent()
             else
-                setStatusBarColor(R.color.transparent)
+                setStatusBarColor(dev.astler.catlib.ui.R.color.transparent)
         }
 
-        setStatusBarColor(R.color.orange_dark)
+        setStatusBarColor(dev.astler.catlib.ui.R.color.orange_dark)
     }
 }

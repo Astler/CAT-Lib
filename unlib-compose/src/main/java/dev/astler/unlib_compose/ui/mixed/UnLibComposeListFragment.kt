@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.unlib_compose.R
 
 @AndroidEntryPoint
 abstract class UnLibComposeListFragment<T> : CatComposeFragment() {
@@ -62,7 +61,7 @@ abstract class UnLibComposeListFragment<T> : CatComposeFragment() {
                 modifier = Modifier.align(Alignment.Center),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = stringResource(id = R.string.nothing_to_show))
+                Text(text = stringResource(id = dev.astler.catlib.core.R.string.nothing_to_show))
             }
         }
     }

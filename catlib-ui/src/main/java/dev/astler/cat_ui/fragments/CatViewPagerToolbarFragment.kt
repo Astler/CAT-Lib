@@ -8,9 +8,9 @@ import androidx.core.view.ViewCompat
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.databinding.FragmentViewPager2ToolbarBinding
 import dev.astler.cat_ui.utils.setStatusBarColor
 import dev.astler.cat_ui.utils.views.setStatusPaddingForView
+import dev.astler.catlib.ui.databinding.FragmentViewPager2ToolbarBinding
 
 @AndroidEntryPoint
 abstract class CatViewPagerToolbarFragment : CatFragment<FragmentViewPager2ToolbarBinding>() {

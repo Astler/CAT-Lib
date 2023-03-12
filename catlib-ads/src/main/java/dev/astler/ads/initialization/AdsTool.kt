@@ -40,7 +40,6 @@ import dev.astler.cat_ui.ResumeTimeKey
 import dev.astler.cat_ui.StartTimeKey
 import dev.astler.cat_ui.utils.views.goneView
 import dev.astler.cat_ui.utils.views.showView
-import dev.astler.catlib.ads.databinding.ItemAdBinding
 import dev.astler.catlib.gAppConfig
 import dev.astler.catlib.gPreferencesTool
 import dev.astler.catlib.preferences.PreferencesTool
@@ -50,6 +49,7 @@ import dev.astler.catlib.utils.canShowAds
 import dev.astler.catlib.utils.formattedPackageName
 import dev.astler.catlib.utils.hasPrefsTimePassed
 import dev.astler.catlib.utils.infoLog
+import dev.astler.catlib.ads.databinding.ItemAdBinding
 import java.util.GregorianCalendar
 import javax.inject.Inject
 

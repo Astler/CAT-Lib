@@ -58,16 +58,16 @@ class TestMenu : CatActivity() {
                     }
                 },
                 ClickableItem("Yes no string/id dialog") {
-                    yesNoDialog(title = "Test Title", message = R.string.UPDATE) {
+                    yesNoDialog(title = "Test Title", message = "Update") {
                         toast("Hello!")
                     }
                 },
                 ClickableItem("Confirm dialog") {
                     confirmDialog(
                         title = R.string.app_name,
-                        message = R.string.rate_app,
-                        positive = R.string.about,
-                        negative = R.string.already_leave,
+                        message = dev.astler.catlib.core.R.string.rate_app,
+                        positive = dev.astler.catlib.core.R.string.about,
+                        negative = dev.astler.catlib.core.R.string.already_leave,
                         negativeAction = {
                             toast("Bye!")
                         },

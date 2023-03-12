@@ -1,4 +1,4 @@
-package dev.astler.catlib.interfaces
+package dev.astler.catlib.remote_config
 
 interface IRemoteConfigListener {
     fun onFetchCompleted()

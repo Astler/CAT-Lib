@@ -9,11 +9,11 @@ import com.google.android.gms.ads.nativead.NativeAd
 import dev.astler.cat_ui.adapters.viewholders.CatOneTypeViewHolder
 import dev.astler.cat_ui.interfaces.RecyclerAdapterSizeListener
 import dev.astler.cat_ui.utils.views.inflateById
-import dev.astler.catlib.ads.R
 import dev.astler.ads.adapters.diffutils.OneItemDiffUtil
 import dev.astler.ads.adapters.viewholders.AdItemViewHolder
 import dev.astler.ads.adapters.viewholders.MediaAdItemViewHolder
 import dev.astler.ads.utils.NativeAdsLoader
+import dev.astler.catlib.ads.R
 import kotlin.random.Random
 
 data class OIAdsAdapterConfig(

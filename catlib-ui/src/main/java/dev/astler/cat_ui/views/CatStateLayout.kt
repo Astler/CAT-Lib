@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
-import dev.astler.cat_ui.R
+import dev.astler.catlib.ui.R
 
 // based on https://github.com/wangshouquan/StateLayout
 

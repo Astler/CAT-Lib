@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dev.astler.cat_ui.fragments.CatFragment
-import dev.astler.catlib.signin.databinding.SignInLayoutBinding
 import dev.astler.catlib.signin.utils.authWithEmailAndPassword
 import dev.astler.catlib.signin.utils.signInWithGoogle
+import dev.astler.catlib.signin.databinding.SignInLayoutBinding
 
 open class SignInFragment : CatFragment<SignInLayoutBinding>() {
 

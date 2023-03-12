@@ -9,9 +9,9 @@ import androidx.viewpager2.widget.ViewPager2
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import dev.astler.cat_ui.databinding.FragmentViewPager2Binding
 import dev.astler.cat_ui.utils.views.setStatusPaddingForView
 import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.ui.databinding.FragmentViewPager2Binding
 
 abstract class CatViewPagerFragment : CatFragment<FragmentViewPager2Binding>() {
 

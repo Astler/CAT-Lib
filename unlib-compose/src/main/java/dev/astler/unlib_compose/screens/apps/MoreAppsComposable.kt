@@ -2,7 +2,7 @@ package dev.astler.unlib_compose.screens.apps
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.* 
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.astler.catlib.utils.openAppInPlayStore
-import dev.astler.unlib_compose.R
+import dev.astler.catlib.compose.R
 
 data class AppItem(
     val pAppId: String,
@@ -24,9 +24,24 @@ data class AppItem(
 )
 
 val nAppsData = arrayOf(
-    AppItem("be", R.string.app_name, R.string.app_name, R.drawable.banner),
-    AppItem("gtb", R.string.app_name, R.string.app_name, R.drawable.gtb),
-    AppItem("kb", R.string.app_name, R.string.app_name, R.drawable.kb),
+    AppItem(
+        "be",
+        dev.astler.catlib.core.R.string.app_name,
+        dev.astler.catlib.core.R.string.app_name,
+        R.drawable.banner
+    ),
+    AppItem(
+        "gtb",
+        dev.astler.catlib.core.R.string.app_name,
+        dev.astler.catlib.core.R.string.app_name,
+        R.drawable.gtb
+    ),
+    AppItem(
+        "kb",
+        dev.astler.catlib.core.R.string.app_name,
+        dev.astler.catlib.core.R.string.app_name,
+        R.drawable.kb
+    ),
 )
 
 @Composable
@@ -40,7 +55,9 @@ fun AppItem(pAppData: AppItem) {
             }
     ) {
         Image(
-            modifier = Modifier.size(60.dp).clip(RoundedCornerShape(8)),
+            modifier = Modifier
+                .size(60.dp)
+                .clip(RoundedCornerShape(8)),
             painter = painterResource(pAppData.pAppIconRes),
             contentDescription = stringResource(pAppData.pAppNameRes),
         )

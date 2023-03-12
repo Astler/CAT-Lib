@@ -2,7 +2,7 @@ package dev.astler.cat_ui.views.transformers
 
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
-import dev.astler.cat_ui.R
+import dev.astler.catlib.ui.R
 import kotlin.math.abs
 
 class CatPageTransformer : ViewPager2.PageTransformer {

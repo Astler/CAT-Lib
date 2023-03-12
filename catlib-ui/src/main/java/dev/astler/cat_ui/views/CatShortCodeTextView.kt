@@ -16,11 +16,11 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.text.toSpannable
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
-import dev.astler.cat_ui.R
 import dev.astler.cat_ui.utils.getDrawableByName
 import dev.astler.cat_ui.views.span.VerticalImageSpan
 import dev.astler.cat_ui.views.span.CustomFancyTextSpan
 import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.ui.R
 import kotlinx.coroutines.*
 import java.util.regex.Pattern
 
@@ -165,9 +165,10 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         return spannableData
     }
 
+    //TODO move fonts and some xmls to ui part, cuz it's not core
     open fun getTypefaceByParams(pKey: String): Typeface? {
         return when (pKey) {
-            "b" -> ResourcesCompat.getFont(context, R.font.google_sans_bold)
+            "b" -> ResourcesCompat.getFont(context, dev.astler.catlib.core.R.font.google_sans_bold)
             // "m" -> ResourcesCompat.getFont(context, R.font.minecraft)
             else -> null
         }

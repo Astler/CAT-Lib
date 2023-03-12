@@ -10,6 +10,8 @@ import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.getDimensionFromAttr
 import dev.astler.catlib.gPreferencesTool
 import dev.astler.catlib.getDefaultNightMode
+import dev.astler.catlib.utils.infoLog
+import dev.astler.catlib.utils.isDebuggable
 import dev.astler.catlib.utils.toast
 import dev.astler.unlib_test.activity.TestMenu
 import dev.astler.unlib_test.databinding.ActivityMainBinding
@@ -28,6 +30,8 @@ class MainActivity : CatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        infoLog("is debuggable: ${applicationContext.isDebuggable()}")
+
         mViewBinding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(mViewBinding.root)
@@ -45,40 +49,9 @@ class MainActivity : CatActivity() {
         mViewBinding.test.text =
             getString(R.string.strange_string) + getDimensionFromAttr(androidx.appcompat.R.attr.actionBarSize) + "\n" + mViewBinding.toolbar.height
 
-
-        // mViewBinding.test.setCompoundDrawables(null, getDrawable(R.drawable.btn_clear), null, null)
-
         mViewBinding.test.setOnClickListener {
             startActivity(Intent(this, TestMenu::class.java))
         }
-
-//        gPreferencesTool.appTheme = "dark"
-//        gPreferencesTool.appTheme = "light"
-//        gPreferencesTool.appTheme = "system"
-//        gPreferencesTool.appTheme = "auto"
-
-        mViewBinding.test.setOnLongClickListener {
-            if (gPreferencesTool.appTheme == "light") {
-                gPreferencesTool.appTheme = "dark"
-            } else {
-                gPreferencesTool.appTheme = "light"
-            }
-            true
-        }
-//        mViewBinding.test.setOnLongClickListener {
-//            if (ConfigurationCompat.getLocales(resources.configuration)[0]?.language?.contains("ru") == true) {
-//                updateLocale(Locales.English)
-//            } else {
-//                updateLocale(Locales.Russian)
-//            }
-////            startActivity(Intent(this, AdsTestMenu::class.java))
-//            true
-//        }
-
-//        mViewBinding.test.setOnLongClickListener {
-//            startActivity(Intent(this, AdsTestMenu::class.java))
-//            true
-//        }
 
         Firebase.messaging.subscribeToTopic("weather")
             .addOnCompleteListener { task ->

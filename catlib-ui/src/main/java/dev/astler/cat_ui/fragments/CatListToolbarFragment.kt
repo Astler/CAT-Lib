@@ -8,11 +8,11 @@ import androidx.core.view.ViewCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.databinding.FragmentListToolbarBinding
 import dev.astler.cat_ui.interfaces.RecyclerAdapterSizeListener
 import dev.astler.cat_ui.utils.setStatusBarColor
 import dev.astler.cat_ui.utils.views.showViewWithCondition
 import dev.astler.cat_ui.views.CatStateLayout
+import dev.astler.catlib.ui.databinding.FragmentListToolbarBinding
 
 @AndroidEntryPoint
 abstract class CatListToolbarFragment : CatFragment<FragmentListToolbarBinding>(),

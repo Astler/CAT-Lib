@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import dev.astler.cat_ui.databinding.RecyclerViewFragmentBinding
 import dev.astler.cat_ui.views.CatStateLayout
 import dev.astler.cat_ui.interfaces.RecyclerAdapterSizeListener
 import dev.astler.cat_ui.utils.views.*
 import dev.astler.catlib.utils.canShowAds
+import dev.astler.catlib.ui.databinding.RecyclerViewFragmentBinding
 
 enum class ListInsetsType {
     SYSTEM_WITH_ACTION_BAR, SYSTEM, TOP, TOP_WITH_ACTION_BAR, BOTTOM, DISMISS

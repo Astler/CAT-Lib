@@ -8,15 +8,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import dev.astler.cat_ui.R
 import dev.astler.cat_ui.adapters.CatOneTypeAdapter
-import dev.astler.cat_ui.databinding.DialogChooseItemBinding
-import dev.astler.cat_ui.databinding.DialogChooseItemWithSearchBinding
-import dev.astler.cat_ui.databinding.DialogEditTextBinding
-import dev.astler.cat_ui.databinding.ItemPrefsTextBinding
 import dev.astler.cat_ui.items.DialogSimpleTextItem
 import dev.astler.cat_ui.utils.tryToGetTextFrom
 import dev.astler.catlib.utils.vibrateOnClick
+import dev.astler.catlib.ui.R
+import dev.astler.catlib.ui.databinding.DialogChooseItemBinding
+import dev.astler.catlib.ui.databinding.DialogChooseItemWithSearchBinding
+import dev.astler.catlib.ui.databinding.DialogEditTextBinding
+import dev.astler.catlib.ui.databinding.ItemPrefsTextBinding
 
 /**
  * Predefined yes/no options dialog
@@ -27,7 +27,7 @@ fun Context.editTextDialog(
     title: Any? = null,
     message: Any? = null,
     initText: String = "",
-    positive: Any? = R.string.ok,
+    positive: Any? = dev.astler.catlib.core.R.string.ok,
     okClicked: (DialogInterface, String) -> Unit = { _, _ -> }
 ): AlertDialog {
     val dialogView = DialogEditTextBinding.inflate(LayoutInflater.from(this))
@@ -97,7 +97,7 @@ fun Context.okDialog(
         showAfterCreation,
         title = title,
         message = message,
-        positive = R.string.ok,
+        positive = dev.astler.catlib.core.R.string.ok,
         positiveAction = okAction
     )
 }

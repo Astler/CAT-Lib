@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.color.DynamicColors
 import com.zeugmasolutions.localehelper.LocaleAwareApplication
 import dev.astler.catlib.config.AppConfig
-import dev.astler.catlib.core.R
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.utils.readFileFromRaw
+import dev.astler.catlib.core.R
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 

@@ -30,7 +30,7 @@ import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.RemoteConfigProvider
 import dev.astler.catlib.gPreferencesTool
 import dev.astler.catlib.getDefaultNightMode
-import dev.astler.catlib.interfaces.IRemoteConfigListener
+import dev.astler.catlib.remote_config.IRemoteConfigListener
 import dev.astler.catlib.utils.errorLog
 import dev.astler.catlib.utils.isOnline
 import dev.astler.catlib.utils.isPlayStoreInstalled

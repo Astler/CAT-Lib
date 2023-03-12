@@ -6,8 +6,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.setInsetsViaOrientation
 import dev.astler.cat_ui.utils.views.showViewWithCondition
-import dev.astler.catlib.signin.R
-import dev.astler.catlib.signin.databinding.SignInLayoutBinding
 import dev.astler.catlib.signin.interfaces.SignInActivityListener
 import dev.astler.catlib.signin.ui.activity.CatSignInMode.Companion.fromString
 import dev.astler.catlib.signin.utils.authWithEmailAndPassword
@@ -20,6 +18,8 @@ import dev.astler.catlib.utils.MobileServicesSource
 import dev.astler.catlib.utils.getMobileServiceSource
 import dev.astler.catlib.utils.infoLog
 import dev.astler.catlib.utils.toast
+import dev.astler.catlib.signin.R
+import dev.astler.catlib.signin.databinding.SignInLayoutBinding
 
 const val cSignInModeExtra = "signInMode"
 
