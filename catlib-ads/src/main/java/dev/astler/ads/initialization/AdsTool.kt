@@ -41,7 +41,6 @@ import dev.astler.cat_ui.StartTimeKey
 import dev.astler.cat_ui.utils.views.goneView
 import dev.astler.cat_ui.utils.views.showView
 import dev.astler.catlib.gAppConfig
-import dev.astler.catlib.gPreferencesTool
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.RemoteConfigProvider
 import dev.astler.catlib.utils.adsLog
@@ -55,10 +54,12 @@ import javax.inject.Inject
 
 class AdsTool @Inject constructor(
     val context: Context,
-    preferences: PreferencesTool,
-    val remoteConfig: RemoteConfigProvider
+    val preferences: PreferencesTool,
+    private val remoteConfig: RemoteConfigProvider
 ) :
     SharedPreferences.OnSharedPreferenceChangeListener {
+
+    val adsConfig get() = _remoteAdsConfig ?: RemoteConfigData()
 
     private var _remoteAdsConfig: RemoteConfigData? = null
     private var _configPackageName: String = context.formattedPackageName()
@@ -67,8 +68,8 @@ class AdsTool @Inject constructor(
     private var _interstitialAdId = gAppConfig.mInterstitialAdId
     private var _rewardedAdId = gAppConfig.mRewardedAdId
 
-    private var _rewardedInterstitialAd: RewardedInterstitialAd? = null
-    private var _interstitialAd: InterstitialAd? = null
+    private var _loadedRewardedInterstitial: RewardedInterstitialAd? = null
+    private var _loadedInterstitial: InterstitialAd? = null
 
     init {
         if (context is AppCompatActivity) {
@@ -76,7 +77,7 @@ class AdsTool @Inject constructor(
                 initializeAds()
             }
 
-            gPreferencesTool.addListener(this)
+            preferences.addListener(this)
 
             fetchRemoteConfigForAds()
         }
@@ -84,8 +85,8 @@ class AdsTool @Inject constructor(
 
     private val _noAdsRewardListener: OnUserEarnedRewardListener
         get() = OnUserEarnedRewardListener {
-            gPreferencesTool.noAdsDay = GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
-            gPreferencesTool.rewardAdActive = false
+            preferences.noAdsDay = GregorianCalendar.getInstance().get(GregorianCalendar.DATE)
+            preferences.rewardAdActive = false
         }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
@@ -96,53 +97,29 @@ class AdsTool @Inject constructor(
         }
     }
 
-    private fun fetchRemoteConfigForAds() {
-        remoteConfig.loadRemoteData {
-            _remoteAdsConfig = RemoteConfigData(
-                remoteConfig.getLong(startAdDelayKey + context.formattedPackageName()),
-                remoteConfig.getLong(resumeAdDelayKey + context.formattedPackageName()),
-                remoteConfig.getLong(lastAdDelayKey + context.formattedPackageName()),
-                remoteConfig.getLong(adChanceKey + context.formattedPackageName()),
-                remoteConfig.getBoolean(interstitialAdEnabledKey + context.formattedPackageName()),
-                remoteConfig.getBoolean(openAdEnabledKey + context.formattedPackageName()),
-                remoteConfig.getBoolean(bannerAdEnabledKey + context.formattedPackageName()),
-                remoteConfig.getBoolean(rewardAdEnabledKey + context.formattedPackageName()),
-            )
-
-            adsLog("loaded ads config $_remoteAdsConfig")
-        }
+    fun startNativeAdsLoader() {
+        NativeAdsLoader.instance?.loadAds(context, AdRequest.Builder().build())
     }
-
     fun showRewardAd() {
-        if (context is AppCompatActivity) {
-            if (_rewardedInterstitialAd != null) {
-                _rewardedInterstitialAd?.show(context, _noAdsRewardListener)
-                gPreferencesTool.rewardAdActive = true
-            } else {
-                requestNewRewardedInterstitial();
-            }
-        }
-    }
-
-    fun showInterstitialAd() {
-        if (context is AppCompatActivity) {
-            if (_interstitialAd != null) {
-                _interstitialAd?.show(context)
-                gPreferencesTool.lastAdsTime = GregorianCalendar().timeInMillis
-            } else {
-                requestNewInterstitial()
-            }
-        } else {
+        if (context !is AppCompatActivity) {
             adsLog("Cant show ads, context is not AppCompatActivity")
+            return
+        }
+
+        if (_loadedRewardedInterstitial != null) {
+            _loadedRewardedInterstitial?.show(context, _noAdsRewardListener)
+            preferences.rewardAdActive = true
+        } else {
+            requestNewRewardedInterstitial()
         }
     }
 
-    fun interstitialAdsShowTry() {
+    fun tryToShowInterstitial() {
         if (!context.canShowAds()) {
             adsLog("Can't show ads!")
             return
         }
-
+        
         if (_remoteAdsConfig == null) {
             fetchRemoteConfigForAds()
             return
@@ -175,7 +152,7 @@ class AdsTool @Inject constructor(
 
         val fromLastDelay = config.lastAdDelay
 
-        if (!gPreferencesTool.lastAdsTime.hasPrefsTimePassed(fromLastDelay * 1000L)) {
+        if (!preferences.lastAdsTime.hasPrefsTimePassed(fromLastDelay * 1000L)) {
             adsLog("Time from last ads not passed!")
             return
         }
@@ -230,7 +207,7 @@ class AdsTool @Inject constructor(
             val requestConfiguration = RequestConfiguration.Builder()
                 .setTestDeviceIds(getTestDevicesList())
 
-            if (gPreferencesTool.childAdsMode) {
+            if (preferences.childAdsMode) {
                 requestConfiguration.setTagForChildDirectedTreatment(
                     RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
                 )
@@ -241,58 +218,90 @@ class AdsTool @Inject constructor(
             loadAd()
         }
 
-        if (!gPreferencesTool.ageConfirmed && _needAgeCheck) {
+        if (!preferences.ageConfirmed && _needAgeCheck) {
             context.adsAgeConfirmDialog {
-                gPreferencesTool.childAdsMode = false
+                preferences.childAdsMode = false
                 setupMobileAds()
             }
 
-            gPreferencesTool.ageConfirmed = true
+            preferences.ageConfirmed = true
         } else {
             setupMobileAds()
+        }
+    }
+
+    private fun fetchRemoteConfigForAds() {
+        remoteConfig.loadRemoteData {
+            _remoteAdsConfig = RemoteConfigData(
+                remoteConfig.getLong(startAdDelayKey + _configPackageName),
+                remoteConfig.getLong(resumeAdDelayKey + _configPackageName),
+                remoteConfig.getLong(lastAdDelayKey + _configPackageName),
+                remoteConfig.getLong(adChanceKey + _configPackageName),
+                remoteConfig.getBoolean(interstitialAdEnabledKey + _configPackageName),
+                remoteConfig.getBoolean(openAdEnabledKey + _configPackageName),
+                remoteConfig.getBoolean(bannerAdEnabledKey + _configPackageName),
+                remoteConfig.getBoolean(rewardAdEnabledKey + _configPackageName),
+            )
+
+            adsLog("loaded ads config $_remoteAdsConfig")
+        }
+    }
+
+    private fun showInterstitialAd() {
+        if (context !is AppCompatActivity) {
+            adsLog("Cant show ads, context is not AppCompatActivity")
+            return
+        }
+
+        if (_loadedInterstitial != null) {
+            _loadedInterstitial?.show(context)
+            preferences.lastAdsTime = GregorianCalendar().timeInMillis
+        } else {
+            requestNewInterstitial()
         }
     }
 
     private fun loadAd() {
         val adRequest = AdRequest.Builder().build()
 
-        if (context.canShowAds() && _rewardedAdId.isNotEmpty() && _rewardedInterstitialAd == null) {
+        if (context.canShowAds() && _rewardedAdId.isNotEmpty() && _loadedRewardedInterstitial == null) {
             RewardedInterstitialAd.load(
                 context,
                 _rewardedAdId,
                 adRequest,
                 object : RewardedInterstitialAdLoadCallback() {
                     override fun onAdLoaded(ad: RewardedInterstitialAd) {
-                        _rewardedInterstitialAd = ad
+                        _loadedRewardedInterstitial = ad
+
                         infoLog("mRewardedInterstitialAd onAdLoaded", "ForAstler: ADS")
-                        _rewardedInterstitialAd?.fullScreenContentCallback =
+                        _loadedRewardedInterstitial?.fullScreenContentCallback =
                             object : FullScreenContentCallback() {
                                 override fun onAdDismissedFullScreenContent() {
                                     super.onAdDismissedFullScreenContent()
-                                    _rewardedInterstitialAd = null
-                                    gPreferencesTool.rewardAdActive = false
+                                    _loadedRewardedInterstitial = null
+                                    preferences.rewardAdActive = false
                                     requestNewInterstitial()
                                 }
 
                                 override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                                     super.onAdFailedToShowFullScreenContent(adError)
-                                    _rewardedInterstitialAd = null
-                                    gPreferencesTool.rewardAdActive = false
+                                    _loadedRewardedInterstitial = null
+                                    preferences.rewardAdActive = false
                                     requestNewRewardedInterstitial()
                                 }
 
                                 override fun onAdShowedFullScreenContent() {
                                     super.onAdShowedFullScreenContent()
-                                    _rewardedInterstitialAd = null
-                                    gPreferencesTool.rewardAdActive = true
+                                    _loadedRewardedInterstitial = null
+                                    preferences.rewardAdActive = true
                                     requestNewRewardedInterstitial()
                                 }
                             }
                     }
 
                     override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                        _rewardedInterstitialAd = null
-                        gPreferencesTool.rewardAdActive = false
+                        _loadedRewardedInterstitial = null
+                        preferences.rewardAdActive = false
                         infoLog(
                             "mRewardedInterstitialAd onAdFailedToLoad: ${loadAdError.message}",
                             "ForAstler: ADS"
@@ -302,37 +311,37 @@ class AdsTool @Inject constructor(
             )
         }
 
-        if (_interstitialAd == null)
+        if (_loadedInterstitial == null)
             InterstitialAd.load(
                 context,
                 _interstitialAdId,
                 adRequest,
                 object : InterstitialAdLoadCallback() {
                     override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                        _interstitialAd = interstitialAd
-                        _interstitialAd?.fullScreenContentCallback =
+                        _loadedInterstitial = interstitialAd
+                        _loadedInterstitial?.fullScreenContentCallback =
                             object : FullScreenContentCallback() {
                                 override fun onAdDismissedFullScreenContent() {
                                     super.onAdDismissedFullScreenContent()
-                                    _interstitialAd = null
+                                    _loadedInterstitial = null
                                     requestNewInterstitial()
                                 }
 
                                 override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                                     super.onAdFailedToShowFullScreenContent(adError)
-                                    _interstitialAd = null
+                                    _loadedInterstitial = null
                                     requestNewInterstitial()
                                 }
 
                                 override fun onAdShowedFullScreenContent() {
                                     super.onAdShowedFullScreenContent()
-                                    _interstitialAd = null
+                                    _loadedInterstitial = null
                                 }
                             }
                     }
 
                     override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                        _interstitialAd = null
+                        _loadedInterstitial = null
                     }
                 }
             )
@@ -370,13 +379,13 @@ class AdsTool @Inject constructor(
     }
 
     private fun requestNewInterstitial() {
-        if (_interstitialAd == null) {
+        if (_loadedInterstitial == null) {
             loadAd()
         }
     }
 
     private fun requestNewRewardedInterstitial() {
-        if (_rewardedInterstitialAd == null) {
+        if (_loadedRewardedInterstitial == null) {
             loadAd()
         }
     }
@@ -389,9 +398,5 @@ class AdsTool @Inject constructor(
         testDevices.addAll(gAppConfig.mTestDevices)
 
         return testDevices
-    }
-
-    fun startNativeAdsLoader() {
-        NativeAdsLoader.instance?.loadAds(context, AdRequest.Builder().build())
     }
 }
