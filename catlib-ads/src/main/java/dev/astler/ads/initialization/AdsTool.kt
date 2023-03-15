@@ -52,6 +52,9 @@ import dev.astler.catlib.ads.databinding.ItemAdBinding
 import java.util.GregorianCalendar
 import javax.inject.Inject
 
+var _adsConfig = RemoteConfigData()
+val adsConfig get() = _adsConfig
+
 class AdsTool @Inject constructor(
     val context: Context,
     val preferences: PreferencesTool,
@@ -59,9 +62,6 @@ class AdsTool @Inject constructor(
 ) :
     SharedPreferences.OnSharedPreferenceChangeListener {
 
-    val adsConfig get() = _remoteAdsConfig ?: RemoteConfigData()
-
-    private var _remoteAdsConfig: RemoteConfigData? = null
     private var _configPackageName: String = context.formattedPackageName()
     private var _needAgeCheck: Boolean = gAppConfig.mNeedAgeCheck
 
@@ -120,12 +120,12 @@ class AdsTool @Inject constructor(
             return
         }
         
-        if (_remoteAdsConfig == null) {
+        if (_adsConfig == null) {
             fetchRemoteConfigForAds()
             return
         }
 
-        val config = _remoteAdsConfig!!
+        val config = _adsConfig!!
 
         adsLog("Loaded ads remote config = $config")
 
@@ -232,7 +232,7 @@ class AdsTool @Inject constructor(
 
     private fun fetchRemoteConfigForAds() {
         remoteConfig.loadRemoteData {
-            _remoteAdsConfig = RemoteConfigData(
+            _adsConfig = RemoteConfigData(
                 remoteConfig.getLong(startAdDelayKey + _configPackageName),
                 remoteConfig.getLong(resumeAdDelayKey + _configPackageName),
                 remoteConfig.getLong(lastAdDelayKey + _configPackageName),
@@ -243,7 +243,7 @@ class AdsTool @Inject constructor(
                 remoteConfig.getBoolean(rewardAdEnabledKey + _configPackageName),
             )
 
-            adsLog("loaded ads config $_remoteAdsConfig")
+            adsLog("loaded ads config $_adsConfig")
         }
     }
 
