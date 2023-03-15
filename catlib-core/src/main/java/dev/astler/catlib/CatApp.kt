@@ -20,10 +20,6 @@ val gPreferencesTool: PreferencesTool by lazy {
     CatApp.prefs
 }
 
-val gAppConfig: AppConfig by lazy {
-    CatApp.cAppConfig
-}
-
 val mJson = Json { allowStructuredMapKeys = true }
 
 fun getDefaultNightMode() = when (CatApp.prefs.appTheme) {
@@ -40,7 +36,6 @@ open class CatApp : LocaleAwareApplication(), SharedPreferences.OnSharedPreferen
 
     companion object {
         lateinit var prefs: PreferencesTool
-        lateinit var cAppConfig: AppConfig
 
         private lateinit var applicationInstance: CatApp
 
@@ -60,14 +55,6 @@ open class CatApp : LocaleAwareApplication(), SharedPreferences.OnSharedPreferen
         prefs.addListener(this)
 
         applicationInstance = this
-
-        val nAppConfig = readFileFromRaw(R.raw.app_config)
-
-        cAppConfig = if (nAppConfig.isNotEmpty()) {
-            mJson.decodeFromString(nAppConfig)
-        } else {
-            AppConfig()
-        }
 
         createNotificationChannels()
     }

@@ -7,17 +7,24 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
-import dev.astler.catlib.gAppConfig
+import dev.astler.catlib.config.AppConfig
+import javax.inject.Inject
 
-class NativeAdsLoader private constructor() {
+class NativeAdsLoader @Inject constructor(
+    val appConfig: AppConfig
+) {
     var adLoader: AdLoader? = null
     private var nativeAds: MutableList<NativeAd> = ArrayList()
 
     var nativeAdsTmp: MutableList<NativeAd> = ArrayList()
 
+    init {
+        instance = this
+    }
+
     fun loadAds(context: Context, adRequest: AdRequest?) {
         val build: AdLoader =
-            AdLoader.Builder(context, gAppConfig.mNativeAdId).forNativeAd { unifiedNativeAd ->
+            AdLoader.Builder(context, appConfig.mNativeAdId).forNativeAd { unifiedNativeAd ->
                 nativeAdsTmp.add(unifiedNativeAd)
                 if (!adLoader!!.isLoading) {
                     nativeAds.clear()
@@ -63,12 +70,6 @@ class NativeAdsLoader private constructor() {
     companion object {
         const val NUMBER_OF_ADS = 5
         var instance: NativeAdsLoader? = null
-            get() {
-                if (field == null) {
-                    field = NativeAdsLoader()
-                }
-                return field
-            }
             private set
     }
 }

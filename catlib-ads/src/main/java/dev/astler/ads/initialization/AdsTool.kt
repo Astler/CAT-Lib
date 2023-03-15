@@ -40,7 +40,6 @@ import dev.astler.cat_ui.ResumeTimeKey
 import dev.astler.cat_ui.StartTimeKey
 import dev.astler.cat_ui.utils.views.goneView
 import dev.astler.cat_ui.utils.views.showView
-import dev.astler.catlib.gAppConfig
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.RemoteConfigProvider
 import dev.astler.catlib.utils.adsLog
@@ -49,24 +48,26 @@ import dev.astler.catlib.utils.formattedPackageName
 import dev.astler.catlib.utils.hasPrefsTimePassed
 import dev.astler.catlib.utils.infoLog
 import dev.astler.catlib.ads.databinding.ItemAdBinding
+import dev.astler.catlib.config.AppConfig
 import java.util.GregorianCalendar
 import javax.inject.Inject
 
-var _adsConfig = RemoteConfigData()
+private var _adsConfig = RemoteConfigData()
 val adsConfig get() = _adsConfig
 
 class AdsTool @Inject constructor(
     val context: Context,
     val preferences: PreferencesTool,
-    private val remoteConfig: RemoteConfigProvider
+    private val remoteConfig: RemoteConfigProvider,
+    val appConfig: AppConfig
 ) :
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     private var _configPackageName: String = context.formattedPackageName()
-    private var _needAgeCheck: Boolean = gAppConfig.mNeedAgeCheck
+    private var _needAgeCheck: Boolean = appConfig.mNeedAgeCheck
 
-    private var _interstitialAdId = gAppConfig.mInterstitialAdId
-    private var _rewardedAdId = gAppConfig.mRewardedAdId
+    private var _interstitialAdId = appConfig.mInterstitialAdId
+    private var _rewardedAdId = appConfig.mRewardedAdId
 
     private var _loadedRewardedInterstitial: RewardedInterstitialAd? = null
     private var _loadedInterstitial: InterstitialAd? = null
@@ -98,8 +99,13 @@ class AdsTool @Inject constructor(
     }
 
     fun startNativeAdsLoader() {
+        if (NativeAdsLoader.instance == null) {
+            NativeAdsLoader(appConfig)
+        }
+
         NativeAdsLoader.instance?.loadAds(context, AdRequest.Builder().build())
     }
+
     fun showRewardAd() {
         if (context !is AppCompatActivity) {
             adsLog("Cant show ads, context is not AppCompatActivity")
@@ -174,7 +180,7 @@ class AdsTool @Inject constructor(
     fun createNativeAdLoader(pAdBindItem: ItemAdBinding): AdLoader {
         var nAdLoader: AdLoader? = null
 
-        nAdLoader = AdLoader.Builder(context, gAppConfig.mNativeAdId)
+        nAdLoader = AdLoader.Builder(context, appConfig.mNativeAdId)
             .forNativeAd { nativeAd: NativeAd ->
                 if (nAdLoader?.isLoading == true) {
                     adsLog("Native Ad Banner is loading")
@@ -395,7 +401,7 @@ class AdsTool @Inject constructor(
         val testDevices = arrayListOf(
             AdRequest.DEVICE_ID_EMULATOR
         )
-        testDevices.addAll(gAppConfig.mTestDevices)
+        testDevices.addAll(appConfig.mTestDevices)
 
         return testDevices
     }

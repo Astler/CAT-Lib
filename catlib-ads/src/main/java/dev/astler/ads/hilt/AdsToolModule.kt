@@ -8,6 +8,7 @@ import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.scopes.ActivityScoped
 import dev.astler.ads.initialization.AdsTool
+import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.RemoteConfigProvider
 
@@ -17,6 +18,7 @@ object AdsToolModule {
 
     @Provides
     @ActivityScoped
-    fun provideAdsTool(@ActivityContext context: Context, preferences: PreferencesTool, remoteConfigProvider: RemoteConfigProvider): AdsTool =
-        AdsTool(context, preferences, remoteConfigProvider)
+    fun provideAdsTool(@ActivityContext context: Context, preferences: PreferencesTool, remoteConfigProvider: RemoteConfigProvider,
+                       appConfig: AppConfig): AdsTool =
+        AdsTool(context, preferences, remoteConfigProvider, appConfig)
 }

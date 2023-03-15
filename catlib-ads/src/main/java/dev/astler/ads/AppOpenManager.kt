@@ -14,17 +14,18 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.appopen.AppOpenAd.AppOpenAdLoadCallback
-import dev.astler.catlib.gAppConfig
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.utils.adsLog
 import dev.astler.catlib.utils.canShowAds
 import dev.astler.ads.utils.rewardAdActive
+import dev.astler.catlib.config.AppConfig
 import java.util.*
 import javax.inject.Inject
 
 class AppOpenManager @Inject constructor(
     applicationContext: Context,
     preferences: PreferencesTool,
+    val appConfig: AppConfig
 ) :
     Application.ActivityLifecycleCallbacks,
     LifecycleObserver {
@@ -103,7 +104,7 @@ class AppOpenManager @Inject constructor(
         }
 
         AppOpenAd.load(
-            _context, gAppConfig.mStartAdId, adRequest,
+            _context, appConfig.mStartAdId, adRequest,
             AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT, loadCallback as AppOpenAdLoadCallback
         )
     }

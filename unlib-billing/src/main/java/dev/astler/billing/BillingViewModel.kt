@@ -2,18 +2,27 @@ package dev.astler.billing
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.* 
 import com.android.billingclient.api.QueryProductDetailsParams.Product
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.astler.catlib.cBillingNoAdsName
-import dev.astler.catlib.gAppConfig
+import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.utils.infoLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BillingViewModel(pApp: Application) : AndroidViewModel(pApp) {
+@HiltViewModel
+class BillingViewModel @Inject constructor(
+    private val context: Context,
+    private val appConfig: AppConfig
+)  : ViewModel() {
 
     private val mItemsList = ArrayList<ProductDetails>()
 
@@ -23,7 +32,7 @@ class BillingViewModel(pApp: Application) : AndroidViewModel(pApp) {
     ) {
         val productList = ArrayList<Product>()
 
-        gAppConfig.mBillingItems.forEach {
+        appConfig.mBillingItems.forEach {
             productList.add(
                 Product.newBuilder().setProductId(it)
                     .setProductType(BillingClient.ProductType.INAPP).build()

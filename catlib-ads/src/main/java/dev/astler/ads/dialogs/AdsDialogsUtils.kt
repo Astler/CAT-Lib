@@ -4,13 +4,10 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import dev.astler.ads.interfaces.IAdListener
 import dev.astler.cat_ui.utils.dialogs.confirmDialog
-import dev.astler.catlib.gAppConfig
 import dev.astler.catlib.utils.openAppInPlayStore
 import dev.astler.catlib.ads.R
 
-fun AppCompatActivity.showNoAdsDialog() {
-    val proPackageName = gAppConfig.mProPackageName
-
+fun AppCompatActivity.showNoAdsDialog(proPackageName: String) {
     if (proPackageName.isNotEmpty()) {
         confirmDialog(
             dev.astler.catlib.core.R.string.disable_ads,

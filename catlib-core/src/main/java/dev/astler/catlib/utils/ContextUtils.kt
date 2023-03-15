@@ -21,7 +21,7 @@ fun Context.isDebuggable(): Boolean {
     return (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
 }
 
-fun Context.formattedPackageName(): String = packageName.replace(".", "_")
+fun Context.formattedPackageName(): String = packageName?.replace(".", "_") ?: "null_package"
 
 fun Context.copyToBuffer(pData: CharSequence) {
     if (pData.isNotEmpty()) {
