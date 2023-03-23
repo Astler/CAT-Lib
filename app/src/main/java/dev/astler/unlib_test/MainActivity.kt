@@ -2,10 +2,12 @@ package dev.astler.unlib_test
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import dagger.hilt.android.AndroidEntryPoint
+import dev.astler.billing.BillingViewModel
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.getDimensionFromAttr
 import dev.astler.catlib.gPreferencesTool
@@ -27,8 +29,12 @@ class MainActivity : CatActivity() {
 
     private lateinit var mViewBinding: ActivityMainBinding
 
+    private val billingViewModel: BillingViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        infoLog("model = ${billingViewModel}")
 
         infoLog("is debuggable: ${applicationContext.isDebuggable()}")
 

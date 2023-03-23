@@ -20,9 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BillingViewModel @Inject constructor(
-    private val context: Context,
+    private val app: Application,
     private val appConfig: AppConfig
-)  : ViewModel() {
+)  : AndroidViewModel(app) {
 
     private val mItemsList = ArrayList<ProductDetails>()
 
