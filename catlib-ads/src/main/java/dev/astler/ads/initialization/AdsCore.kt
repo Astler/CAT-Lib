@@ -6,7 +6,9 @@ import com.google.android.gms.ads.MobileAds
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.ads.AppOpenManager
 import dev.astler.ads.utils.NativeAdsLoader
+import dev.astler.ads.utils.isGoogleTestDevice
 import dev.astler.catlib.config.AppConfig
+import dev.astler.catlib.utils.infoLog
 import javax.inject.Inject
 
 class AdsCore @Inject constructor(context: Context, preferences: PreferencesTool, config: AppConfig) {
@@ -14,13 +16,18 @@ class AdsCore @Inject constructor(context: Context, preferences: PreferencesTool
     private var _nativeAdsLoader: NativeAdsLoader? = null
 
     init {
-        MobileAds.initialize(context)
+        if (context.isGoogleTestDevice()) {
+            infoLog("started on google device")
+        } else {
+            infoLog("started on default device")
+            MobileAds.initialize(context)
 
-        if (context is Application)
-            _appOpenManager = AppOpenManager(context, preferences, config)
+            if (context is Application)
+                _appOpenManager = AppOpenManager(context, preferences, config)
 
-        if (config.mNativeAdId.isNotEmpty()) {
-            _nativeAdsLoader = NativeAdsLoader(config)
+            if (config.mNativeAdId.isNotEmpty()) {
+                _nativeAdsLoader = NativeAdsLoader(config)
+            }
         }
     }
 }

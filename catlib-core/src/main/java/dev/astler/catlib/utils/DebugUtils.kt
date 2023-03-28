@@ -6,7 +6,7 @@ import com.google.firebase.ktx.Firebase
 import java.lang.Exception
 
 fun infoLog(pText: String, pPostCategory: String = "", pCategory: String = "ForAstler") {
-    Log.i(pCategory + pPostCategory, pText)
+    Log.i("$pCategory $pPostCategory", pText)
 }
 
 fun adsLog(pText: String, pPostCategory: String = "", pCategory: String = "ForAds") {

@@ -10,10 +10,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.billing.BillingViewModel
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.getDimensionFromAttr
-import dev.astler.catlib.gPreferencesTool
 import dev.astler.catlib.getDefaultNightMode
 import dev.astler.catlib.utils.infoLog
 import dev.astler.catlib.utils.isDebuggable
+import dev.astler.catlib.utils.isPackageInstalled
+import dev.astler.catlib.utils.isPackageInstalledAlt
 import dev.astler.catlib.utils.toast
 import dev.astler.unlib_test.activity.TestMenu
 import dev.astler.unlib_test.databinding.ActivityMainBinding
@@ -35,6 +36,9 @@ class MainActivity : CatActivity() {
         super.onCreate(savedInstanceState)
 
         infoLog("model = ${billingViewModel}")
+
+        infoLog("is installed ${isPackageInstalled("dev.astler.inveditormc")}")
+        infoLog("is installed alt ${isPackageInstalledAlt("dev.astler.inveditormc")}")
 
         infoLog("is debuggable: ${applicationContext.isDebuggable()}")
 

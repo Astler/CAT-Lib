@@ -4,15 +4,17 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.provider.Settings
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailabilityLight
-import dev.astler.catlib.gPreferencesTool
 import dev.astler.catlib.core.R
+import dev.astler.catlib.gPreferencesTool
 import java.util.*
 
 class ContextUtils(base: Context?) : ContextWrapper(base)
@@ -66,9 +68,14 @@ fun Context.isPackageInstalled(packageName: String): Boolean {
     }
 }
 
+fun Context.isPackageInstalledAlt(packageName: String): Boolean {
+    val intent = packageManager.getLaunchIntentForPackage(packageName)
+    return intent != null
+}
+
 private const val GOOGLE_PLAY_STORE_PACKAGE = "com.android.vending"
 
-public fun Context.isPlayStoreInstalled(): Boolean {
+fun Context.isPlayStoreInstalled(): Boolean {
     return try {
         val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getPackageInfo(
@@ -79,12 +86,27 @@ public fun Context.isPlayStoreInstalled(): Boolean {
             packageManager.getPackageInfo(GOOGLE_PLAY_STORE_PACKAGE, 0)
         }
 
-        packageInfo.applicationInfo.enabled
+        val installerPackageName = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            packageManager.getInstallerPackageName(packageInfo.packageName)
+        } else {
+            packageManager.getInstallSourceInfo(packageInfo.packageName).installingPackageName
+        }
+
+        val isInstalled =
+            packageInfo.applicationInfo.enabled && GOOGLE_PLAY_STORE_PACKAGE == installerPackageName
+
+        infoLog("Play Store is installed: $isInstalled", "Play Store")
+
+        isInstalled
     } catch (exc: PackageManager.NameNotFoundException) {
         errorLog("Play Store not installed")
         false
+    } catch (exc: Exception) {
+        errorLog("Error while checking Play Store installation: ${exc.localizedMessage}")
+        false
     }
 }
+
 
 fun Context.getMobileServiceSource(): MobileServicesSource {
     val googleApi = GoogleApiAvailabilityLight.getInstance()

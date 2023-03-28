@@ -80,7 +80,7 @@ dependencies {
 
     api 'com.google.accompanist:accompanist-systemuicontroller:0.29.2-rc'
     api 'androidx.hilt:hilt-navigation-compose:1.0.0'
-    api "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0"
-    api "androidx.lifecycle:lifecycle-runtime-compose:2.6.0"
+    api "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
+    api "androidx.lifecycle:lifecycle-runtime-compose:2.6.1"
 
 }
