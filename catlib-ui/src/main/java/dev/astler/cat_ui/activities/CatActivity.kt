@@ -7,6 +7,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.ConfigurationCompat
@@ -14,51 +15,71 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.internal.EdgeToEdgeUtils
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
 import com.zeugmasolutions.localehelper.Locales
-import dev.astler.cat_ui.appResumeTime
+import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.StartTimeKey
+import dev.astler.cat_ui.appResumeTime
 import dev.astler.cat_ui.fragments.IInternetDependentFragment
 import dev.astler.cat_ui.interfaces.ICatActivity
+import dev.astler.cat_ui.interfaces.IRootInsets
 import dev.astler.cat_ui.utils.getDimensionFromAttr
-import dev.astler.catlib.preferences.PreferencesTool
-import dev.astler.catlib.remote_config.RemoteConfigProvider
-import dev.astler.catlib.gPreferencesTool
 import dev.astler.catlib.getDefaultNightMode
+import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.IRemoteConfigListener
+import dev.astler.catlib.remote_config.RemoteConfigProvider
 import dev.astler.catlib.utils.errorLog
 import dev.astler.catlib.utils.isOnline
 import dev.astler.catlib.utils.isPlayStoreInstalled
+import kotlinx.coroutines.launch
 import java.util.GregorianCalendar
 import java.util.Locale
 import javax.inject.Inject
 
-abstract class CatActivity :
-    LocaleAwareCompatActivity(),
+@AndroidEntryPoint
+abstract class CatActivity<T : ViewBinding> : LocaleAwareCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener,
-    ICatActivity, IRemoteConfigListener {
+    ICatActivity, IRootInsets, IRemoteConfigListener {
+
+    @Inject
+    protected lateinit var preferencesTool: PreferencesTool
+
+    @Inject
+    protected lateinit var remoteConfig: RemoteConfigProvider
+
+    protected lateinit var binding: T
+        private set
 
     private var _currentWindowInsets: WindowInsetsCompat = WindowInsetsCompat.Builder().build()
+
     private var _topInsets = 0
     private var _bottomInsets = 0
     private var _toolbarHeight = 0
 
-    @Inject
-    lateinit var _remoteConfig: RemoteConfigProvider
+    override val topPadding: Int
+        get() = _topInsets
 
-    protected var mActiveFragment: Fragment? = null
+    override val bottomPadding: Int
+        get() = _bottomInsets
+
+    override val toolbarHeight: Int
+        get() = _toolbarHeight
+
+
+    protected var activeFragment: Fragment? = null
 
     protected var reviewInfo: ReviewInfo? = null
     protected val reviewManager: ReviewManager by lazy {
         ReviewManagerFactory.create(this)
     }
-
-    public fun getRemoteConfig(): RemoteConfigProvider = _remoteConfig
 
     override fun onFetchCompleted() {
 
@@ -72,18 +93,22 @@ abstract class CatActivity :
         object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 onInternetConnected(network)
-                if (mActiveFragment is IInternetDependentFragment) {
-                    lifecycleScope.launchWhenResumed {
-                        (mActiveFragment as IInternetDependentFragment).onInternetAvailable()
+                if (activeFragment is IInternetDependentFragment) {
+                    lifecycleScope.launch {
+                        lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                            (activeFragment as IInternetDependentFragment).onInternetAvailable()
+                        }
                     }
                 }
             }
 
             override fun onLost(network: Network) {
                 onInternetLost(network)
-                if (mActiveFragment is IInternetDependentFragment) {
-                    lifecycleScope.launchWhenResumed {
-                        (mActiveFragment as IInternetDependentFragment).onInternetLost()
+                if (activeFragment is IInternetDependentFragment) {
+                    lifecycleScope.launch {
+                        lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                            (activeFragment as IInternetDependentFragment).onInternetLost()
+                        }
                     }
                 }
             }
@@ -94,42 +119,41 @@ abstract class CatActivity :
         onBackPressedDispatcher.onBackPressed()
     }
 
+    protected abstract fun inflateBinding(layoutInflater: LayoutInflater): T
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        WindowCompat.setDecorFitsSystemWindows(window, true)
+        binding = inflateBinding(layoutInflater)
+        setContentView(binding.root)
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         EdgeToEdgeUtils.applyEdgeToEdge(window, true)
         AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
-        delegate.applyDayNight()
 
-        _remoteConfig.getBoolean("bool_test")
+        delegate.applyDayNight()
 
         _toolbarHeight = getDimensionFromAttr(androidx.appcompat.R.attr.actionBarSize)
 
-        gPreferencesTool.loadDefaultPreferences(this)
+        preferencesTool.loadDefaultPreferences(this)
 
-        gPreferencesTool.edit(StartTimeKey, GregorianCalendar().timeInMillis)
+        preferencesTool.edit(StartTimeKey, GregorianCalendar().timeInMillis)
 
-        if (gPreferencesTool.isFirstStart) {
+        if (preferencesTool.isFirstStart) {
             onFirstAppStart()
-            gPreferencesTool.isFirstStart = false
+            preferencesTool.isFirstStart = false
         }
 
-        if (gPreferencesTool.isFirstStartForVersion(appVersionCode())) {
-            gPreferencesTool.edit(
+        if (preferencesTool.isFirstStartForVersion(appVersionCode())) {
+            preferencesTool.edit(
                 PreferencesTool.appFirstStartTime,
                 GregorianCalendar().timeInMillis
             )
 
             onFirstStartCurrentVersion()
 
-            gPreferencesTool.setFirstStartForVersion(appVersionCode())
+            preferencesTool.setFirstStartForVersion(appVersionCode())
         }
-
-        _connectivityManager.registerNetworkCallback(
-            NetworkRequest.Builder().build(),
-            _networkCallback
-        )
 
         if (isPlayStoreInstalled()) {
             reviewManager.requestReviewFlow().addOnCompleteListener { request ->
@@ -141,16 +165,6 @@ abstract class CatActivity :
             }
         }
     }
-
-    /**
-     * UI methods
-     */
-
-    override fun getTopPadding() = _topInsets
-
-    override fun getBottomPadding() = _bottomInsets
-
-    override fun getToolbarHeight() = _toolbarHeight
 
     /**
      * My personal use methods
@@ -172,22 +186,27 @@ abstract class CatActivity :
 
     override fun onStart() {
         super.onStart()
-        gPreferencesTool.addListener(this)
+        preferencesTool.addListener(this)
     }
 
     override fun onStop() {
         super.onStop()
-        gPreferencesTool.unregisterListener(this)
+        preferencesTool.unregisterListener(this)
     }
 
     override fun onResume() {
         super.onResume()
-        gPreferencesTool.appResumeTime = GregorianCalendar().timeInMillis
-        gPreferencesTool.appReviewTime = GregorianCalendar().timeInMillis
+        preferencesTool.appResumeTime = GregorianCalendar().timeInMillis
+        preferencesTool.appReviewTime = GregorianCalendar().timeInMillis
+
+        _connectivityManager.registerNetworkCallback(
+            NetworkRequest.Builder().build(),
+            _networkCallback
+        )
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
         _connectivityManager.unregisterNetworkCallback(_networkCallback)
     }
 
@@ -200,7 +219,7 @@ abstract class CatActivity :
 
         if (key == PreferencesTool.appLocaleKey) {
             updateLocale(
-                when (gPreferencesTool.appLanguage) {
+                when (preferencesTool.appLanguage) {
                     "ru" -> Locales.Russian
                     "uk" -> Locales.Ukrainian
                     "en" -> Locales.English
@@ -212,16 +231,16 @@ abstract class CatActivity :
     }
 
     override fun setCurrentFragment(fragment: Fragment) {
-        mActiveFragment = fragment
+        activeFragment = fragment
 
         val nAppReviewTime =
-            GregorianCalendar().timeInMillis - gPreferencesTool.appResumeTime
+            GregorianCalendar().timeInMillis - preferencesTool.appResumeTime
 
         if (nAppReviewTime >= 200000) {
 
             reviewInfo?.let { it1 ->
                 reviewManager.launchReviewFlow(this, it1)
-                gPreferencesTool.appResumeTime = GregorianCalendar().timeInMillis
+                preferencesTool.appResumeTime = GregorianCalendar().timeInMillis
             }
         }
 

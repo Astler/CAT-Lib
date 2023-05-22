@@ -2,6 +2,7 @@ package dev.astler.unlib_test.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zeugmasolutions.localehelper.Locales
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,18 +26,16 @@ import dev.astler.unlib_test.items.ClickableItem
 import java.util.*
 
 @AndroidEntryPoint
-class TestMenu : CatActivity() {
+class TestMenu : CatActivity<ActivityRecyclerviewBinding>() {
 
     private lateinit var mAdapter: CatOneTypeAdapter<ClickableItem>
 
-    private lateinit var mViewBinding: ActivityRecyclerviewBinding
+    override fun inflateBinding(layoutInflater: LayoutInflater): ActivityRecyclerviewBinding {
+        return ActivityRecyclerviewBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        mViewBinding = ActivityRecyclerviewBinding.inflate(layoutInflater)
-
-        setContentView(mViewBinding.root)
 
         mAdapter = CatOneTypeAdapter(
             R.layout.item_text,
@@ -129,6 +128,9 @@ class TestMenu : CatActivity() {
                 ClickableItem("Set AUTO Theme") {
                     gPreferencesTool.appTheme = "auto"
                 },
+                ClickableItem("Typewriter Activity") {
+                    startActivity(Intent(this, TypewriterActivity::class.java))
+                },
                 ClickableItem("Coil Images Web") {
                     startActivity(Intent(this, ImageLoadersActivity::class.java))
                 },
@@ -160,7 +162,7 @@ class TestMenu : CatActivity() {
             )
         )
 
-        mViewBinding.list.layoutManager = LinearLayoutManager(this)
-        mViewBinding.list.adapter = mAdapter
+        binding.list.layoutManager = LinearLayoutManager(this)
+        binding.list.adapter = mAdapter
     }
 }

@@ -2,6 +2,7 @@ package dev.astler.unlib_test
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.ktx.Firebase
@@ -20,7 +21,7 @@ import dev.astler.unlib_test.activity.TestMenu
 import dev.astler.unlib_test.databinding.ActivityMainBinding
 
 @AndroidEntryPoint
-class MainActivity : CatActivity() {
+class MainActivity : CatActivity<ActivityMainBinding>() {
 
     companion object {
         private const val TARGET_SCAlE = 1f
@@ -28,9 +29,10 @@ class MainActivity : CatActivity() {
         private const val SCALE_ANIMATION_DURATION = 800L
     }
 
-    private lateinit var mViewBinding: ActivityMainBinding
-
     private val billingViewModel: BillingViewModel by viewModels()
+
+    override fun inflateBinding(layoutInflater: LayoutInflater) =
+        ActivityMainBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,13 +44,11 @@ class MainActivity : CatActivity() {
 
         infoLog("is debuggable: ${applicationContext.isDebuggable()}")
 
-        mViewBinding = ActivityMainBinding.inflate(layoutInflater)
-
-        setContentView(mViewBinding.root)
+        setContentView(binding.root)
         AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
         delegate.applyDayNight()
 
-        mViewBinding.test
+        binding.test
             .animate()
             .scaleX(TARGET_SCAlE)
             .scaleY(TARGET_SCAlE)
@@ -56,10 +56,12 @@ class MainActivity : CatActivity() {
             .setDuration(SCALE_ANIMATION_DURATION)
             .start()
 
-        mViewBinding.test.text =
-            getString(R.string.strange_string) + getDimensionFromAttr(androidx.appcompat.R.attr.actionBarSize) + "\n" + mViewBinding.toolbar.height
+        val testText =
+            getString(R.string.strange_string) + getDimensionFromAttr(androidx.appcompat.R.attr.actionBarSize) + "\n" + binding.toolbar.height
 
-        mViewBinding.test.setOnClickListener {
+        binding.test.text = testText
+
+        binding.test.setOnClickListener {
             startActivity(Intent(this, TestMenu::class.java))
         }
 

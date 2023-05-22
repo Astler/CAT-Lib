@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/catlib-ads" />
             <option value="$PROJECT_DIR$/catlib-core" />
+            <option value="$PROJECT_DIR$/catlib-room" />
             <option value="$PROJECT_DIR$/catlib-ui" />
             <option value="$PROJECT_DIR$/unlib-billing" />
             <option value="$PROJECT_DIR$/unlib-compose" />
