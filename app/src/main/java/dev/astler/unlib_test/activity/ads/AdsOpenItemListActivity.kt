@@ -1,6 +1,7 @@
 package dev.astler.unlib_test.activity.ads
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
@@ -15,20 +16,18 @@ import dev.astler.unlib_test.items.TextItem
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AdsOpenItemListActivity : CatActivity() {
+class AdsOpenItemListActivity : CatActivity<ActivityRecyclerviewBinding>() {
 
     @Inject lateinit var adsTool: AdsTool
 
     private lateinit var mAdapter: OneItemAdsAdapter<TextItem>
 
-    private lateinit var mViewBinding: ActivityRecyclerviewBinding
+    override fun inflateBinding(layoutInflater: LayoutInflater): ActivityRecyclerviewBinding {
+        return ActivityRecyclerviewBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        mViewBinding = ActivityRecyclerviewBinding.inflate(layoutInflater)
-
-        setContentView(mViewBinding.root)
 
         adsTool.startNativeAdsLoader()
 
@@ -65,7 +64,7 @@ class AdsOpenItemListActivity : CatActivity() {
                 TextItem("A 20")
             )
 
-        mViewBinding.list.layoutManager = LinearLayoutManager(this)
-        mViewBinding.list.adapter = mAdapter
+        binding.list.layoutManager = LinearLayoutManager(this)
+        binding.list.adapter = mAdapter
     }
 }

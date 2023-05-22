@@ -44,7 +44,6 @@ import java.util.GregorianCalendar
 import java.util.Locale
 import javax.inject.Inject
 
-@AndroidEntryPoint
 abstract class CatActivity<T : ViewBinding> : LocaleAwareCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener,
     ICatActivity, IRootInsets, IRemoteConfigListener {

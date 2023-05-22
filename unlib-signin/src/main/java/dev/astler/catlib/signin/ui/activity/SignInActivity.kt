@@ -1,6 +1,7 @@
 package dev.astler.catlib.signin.ui.activity
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
@@ -35,16 +36,14 @@ enum class CatSignInMode {
 }
 
 @AndroidEntryPoint
-open class SignInActivity : CatActivity(), SignInActivityListener {
+open class SignInActivity: CatActivity<SignInLayoutBinding>(), SignInActivityListener {
 
-    lateinit var binding: SignInLayoutBinding
+    override fun inflateBinding(layoutInflater: LayoutInflater): SignInLayoutBinding {
+        return SignInLayoutBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = SignInLayoutBinding.inflate(layoutInflater)
-
-        setContentView(binding.root)
 
         signInInitializer()
 

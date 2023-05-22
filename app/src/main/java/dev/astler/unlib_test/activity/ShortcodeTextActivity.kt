@@ -2,6 +2,7 @@ package dev.astler.unlib_test.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
@@ -10,7 +11,7 @@ import dev.astler.unlib_test.activity.ads.AdsOpenItemListActivity
 import dev.astler.unlib_test.databinding.ActivityMainBinding
 
 @AndroidEntryPoint
-class ShortcodeTextActivity : CatActivity() {
+class ShortcodeTextActivity : CatActivity<ActivityMainBinding>() {
 
     companion object {
         private const val TARGET_SCAlE = 1f
@@ -18,14 +19,12 @@ class ShortcodeTextActivity : CatActivity() {
         private const val SCALE_ANIMATION_DURATION = 800L
     }
 
-    private lateinit var mViewBinding: ActivityMainBinding
+    override fun inflateBinding(layoutInflater: LayoutInflater): ActivityMainBinding {
+        return ActivityMainBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        mViewBinding = ActivityMainBinding.inflate(layoutInflater)
-
-        setContentView(mViewBinding.root)
 
         findViewById<View>(R.id.test)
             .animate()
@@ -42,13 +41,13 @@ class ShortcodeTextActivity : CatActivity() {
 
         """.trimIndent()
 
-        mViewBinding.test.text = nText
+        binding.test.text = nText
 
-        mViewBinding.test.setOnClickListener {
+        binding.test.setOnClickListener {
             startActivity(Intent(this, ImageLoadersActivity::class.java))
         }
 
-        mViewBinding.test.setOnLongClickListener {
+        binding.test.setOnLongClickListener {
             startActivity(Intent(this, AdsOpenItemListActivity::class.java))
             true
         }

@@ -2,6 +2,7 @@ package dev.astler.unlib_test.activity.ads
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.ads.initialization.AdsTool
@@ -14,21 +15,18 @@ import dev.astler.unlib_test.items.ClickableItem
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AdsTestMenu : CatActivity() {
+class AdsTestMenu : CatActivity<ActivityRecyclerviewBinding>() {
     @Inject
     lateinit var adsTool: AdsTool
 
     private lateinit var mAdapter: CatOneTypeAdapter<ClickableItem>
 
-    private lateinit var mViewBinding: ActivityRecyclerviewBinding
+    override fun inflateBinding(layoutInflater: LayoutInflater): ActivityRecyclerviewBinding {
+        return ActivityRecyclerviewBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        mViewBinding = ActivityRecyclerviewBinding.inflate(layoutInflater)
-
-        setContentView(mViewBinding.root)
-
         adsTool.startNativeAdsLoader()
 
         mAdapter = CatOneTypeAdapter(
@@ -51,7 +49,7 @@ class AdsTestMenu : CatActivity() {
             )
         )
 
-        mViewBinding.list.layoutManager = LinearLayoutManager(this)
-        mViewBinding.list.adapter = mAdapter
+        binding.list.layoutManager = LinearLayoutManager(this)
+        binding.list.adapter = mAdapter
     }
 }

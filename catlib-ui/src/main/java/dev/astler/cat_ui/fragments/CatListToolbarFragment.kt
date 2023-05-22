@@ -52,14 +52,14 @@ abstract class CatListToolbarFragment : CatFragment<FragmentListToolbarBinding>(
 
             ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout.topContent) { v, insets ->
                 val params = v.layoutParams as ViewGroup.MarginLayoutParams
-                params.topMargin = coreListener?.getTopPadding() ?: 0
+                params.topMargin = rootInsets?.topPadding ?: 0
                 v.layoutParams = params
                 insets
             }
 
             ViewCompat.setOnApplyWindowInsetsListener(fab) { v, insets ->
                 val params = v.layoutParams as ViewGroup.MarginLayoutParams
-                params.topMargin = coreListener?.getBottomPadding() ?: 0
+                params.topMargin = rootInsets?.bottomPadding ?: 0
                 v.layoutParams = params
                 insets
             }

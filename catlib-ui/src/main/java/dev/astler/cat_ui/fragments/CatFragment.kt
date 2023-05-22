@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
 import dev.astler.cat_ui.interfaces.ICatActivity
 import dev.astler.cat_ui.interfaces.CoreFragmentInterface
+import dev.astler.cat_ui.interfaces.IRootInsets
 import dev.astler.cat_ui.utils.getStringResource
 
 abstract class CatFragment<VB : ViewBinding> : Fragment(),
@@ -20,19 +21,23 @@ abstract class CatFragment<VB : ViewBinding> : Fragment(),
     private var _binding: VB? = null
 
     protected var coreListener: ICatActivity? = null
+    protected var rootInsets: IRootInsets? = null
     protected lateinit var safeContext: Context
     protected val binding get() = _binding!!
 
     abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
     open val addMenuProvider: Boolean = true
 
-    override fun onAttach(pContext: Context) {
-        super.onAttach(pContext)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
 
-        safeContext = pContext
+        safeContext = context
 
-        if (pContext is ICatActivity)
-            coreListener = pContext
+        if (context is ICatActivity)
+            coreListener = context
+
+        if (context is IRootInsets)
+            rootInsets = context
     }
 
     override fun onCreateView(

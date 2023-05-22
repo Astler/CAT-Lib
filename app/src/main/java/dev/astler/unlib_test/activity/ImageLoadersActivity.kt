@@ -1,6 +1,7 @@
 package dev.astler.unlib_test.activity
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import coil.load
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
@@ -13,54 +14,52 @@ import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityImagesBinding
 
 @AndroidEntryPoint
-class ImageLoadersActivity : CatActivity() {
+class ImageLoadersActivity : CatActivity<ActivityImagesBinding>() {
 
-    private lateinit var mImagesBinding: ActivityImagesBinding
+    override fun inflateBinding(layoutInflater: LayoutInflater): ActivityImagesBinding {
+        return ActivityImagesBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mImagesBinding = ActivityImagesBinding.inflate(layoutInflater)
+        binding.coilImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg")
 
-        setContentView(mImagesBinding.root)
-
-        mImagesBinding.coilImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg")
-
-        mImagesBinding.coilRoundImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
+        binding.coilRoundImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
             crossfade(true)
             placeholder(R.drawable.ic_launcher_background)
             transformations(CircleCropTransformation())
         }
 
-        mImagesBinding.coilBlurImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
+        binding.coilBlurImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
             crossfade(true)
             placeholder(R.drawable.ic_launcher_background)
 //            transformations(BlurTransformation(this@ImageLoadersActivity))
         }
 
-        mImagesBinding.roundedImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
+        binding.roundedImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
             crossfade(true)
             placeholder(R.drawable.ic_launcher_background)
             transformations(RoundedCornersTransformation(8f, 16f, 24f, 32f))
         }
 
-        mImagesBinding.grayScaleImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
+        binding.grayScaleImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
             crossfade(true)
             placeholder(R.drawable.ic_launcher_background)
 //            transformations(GrayscaleTransformation())
         }
 
-        mImagesBinding.assetsImage.setImageBitmap(getBitmapFromAsset("frozen.png"))
+        binding.assetsImage.setImageBitmap(getBitmapFromAsset("frozen.png"))
 
         getBitmapFromAsset("frozen.png")?.let {
-            mImagesBinding.noFilterBitmapAssetsImage.setImageDrawable(it.toNoFilterDrawable(this))
+            binding.noFilterBitmapAssetsImage.setImageDrawable(it.toNoFilterDrawable(this))
         }
 
         getBitmapFromAsset("frozen.png")?.let {
-            mImagesBinding.coloredNoFilterBitmapAssetsImage.setImageDrawable(it.toNoFilterDrawable(this, R.color.colorPrimary))
+            binding.coloredNoFilterBitmapAssetsImage.setImageDrawable(it.toNoFilterDrawable(this, R.color.colorPrimary))
         }
 
-        mImagesBinding.backgroundImage.loadWithBackground(
+        binding.backgroundImage.loadWithBackground(
             "https://static.wikia.nocookie.net/minecraft_ru_gamepedia/images/4/46/Изумруд.png",
             dev.astler.catlib.core.R.color.fab_color
         )

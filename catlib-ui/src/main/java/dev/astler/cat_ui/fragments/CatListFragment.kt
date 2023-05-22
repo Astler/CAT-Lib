@@ -16,7 +16,8 @@ enum class ListInsetsType {
     SYSTEM_WITH_ACTION_BAR, SYSTEM, TOP, TOP_WITH_ACTION_BAR, BOTTOM, DISMISS
 }
 
-abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(), RecyclerAdapterSizeListener {
+abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(),
+    RecyclerAdapterSizeListener {
 
     private lateinit var mRecyclerViewFragmentBinding: RecyclerViewFragmentBinding
     lateinit var mStateLayout: CatStateLayout
@@ -74,12 +75,13 @@ abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(), Rec
 
                 if (nAddBottomPadding)
                     mRecyclerView.setStatusAndNavigationPaddingForView(
-                        pAdditionalTopPadding = coreListener?.getToolbarHeight() ?: 0
+                        pAdditionalTopPadding = rootInsets?.toolbarHeight ?: 0
                     )
                 else mRecyclerView.setStatusPaddingForView(
-                    pAdditionalTopPadding = coreListener?.getToolbarHeight() ?: 0
+                    pAdditionalTopPadding = rootInsets?.toolbarHeight ?: 0
                 )
             }
+
             ListInsetsType.SYSTEM -> {
                 val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds())
 
@@ -87,20 +89,24 @@ abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(), Rec
                     mRecyclerView.setStatusAndNavigationPaddingForView()
                 else mRecyclerView.setStatusPaddingForView()
             }
+
             ListInsetsType.BOTTOM -> {
                 val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds())
 
                 if (nAddBottomPadding)
                     mRecyclerView.setNavigationPaddingForView()
             }
+
             ListInsetsType.TOP -> {
                 mRecyclerView.setStatusPaddingForView()
             }
+
             ListInsetsType.TOP_WITH_ACTION_BAR -> {
                 mRecyclerView.setStatusPaddingForView(
-                    pAdditionalTopPadding = coreListener?.getToolbarHeight() ?: 0
+                    pAdditionalTopPadding = rootInsets?.toolbarHeight ?: 0
                 )
             }
+
             else -> {}
         }
 

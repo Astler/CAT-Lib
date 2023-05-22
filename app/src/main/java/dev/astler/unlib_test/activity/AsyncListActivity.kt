@@ -1,6 +1,7 @@
 package dev.astler.unlib_test.activity
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import dagger.hilt.android.AndroidEntryPoint
@@ -12,17 +13,15 @@ import dev.astler.unlib_test.databinding.ItemImageBinding
 import dev.astler.unlib_test.items.ImageItem
 
 @AndroidEntryPoint
-class AsyncListActivity : CatActivity() {
+class AsyncListActivity : CatActivity<ActivityRecyclerviewBinding>() {
 
     private lateinit var mAdapter: CatOneTypeAdapter<ImageItem>
-    private lateinit var mViewBinding: ActivityRecyclerviewBinding
+    override fun inflateBinding(layoutInflater: LayoutInflater): ActivityRecyclerviewBinding {
+        return ActivityRecyclerviewBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        mViewBinding = ActivityRecyclerviewBinding.inflate(layoutInflater)
-
-        setContentView(mViewBinding.root)
 
         mAdapter = CatOneTypeAdapter(
             R.layout.item_image,
@@ -43,7 +42,7 @@ class AsyncListActivity : CatActivity() {
             )
         )
 
-        mViewBinding.list.layoutManager = LinearLayoutManager(this)
-        mViewBinding.list.adapter = mAdapter
+        binding.list.layoutManager = LinearLayoutManager(this)
+        binding.list.adapter = mAdapter
     }
 }
