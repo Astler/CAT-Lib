@@ -20,6 +20,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.internal.EdgeToEdgeUtils
+import com.google.android.play.core.review.ReviewException
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -155,12 +156,17 @@ abstract class CatActivity<T : ViewBinding> : LocaleAwareCompatActivity(),
         }
 
         if (isPlayStoreInstalled()) {
-            reviewManager.requestReviewFlow().addOnCompleteListener { request ->
-                if (request.isSuccessful) {
-                    reviewInfo = request.result
-                } else {
-                    errorLog(request.exception, "error during requestReviewFlow")
+            try {
+                reviewManager.requestReviewFlow().addOnCompleteListener { request ->
+                    if (request.isSuccessful) {
+                        reviewInfo = request.result
+                    } else {
+                        errorLog(request.exception, "error during requestReviewFlow")
+                    }
                 }
+
+            } catch (e: ReviewException) {
+                errorLog(e, "error during requestReviewFlow")
             }
         }
     }

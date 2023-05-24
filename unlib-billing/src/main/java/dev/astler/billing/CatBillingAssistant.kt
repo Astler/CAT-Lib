@@ -1,6 +1,8 @@
 package dev.astler.billing
 
 import android.app.Activity
+import android.os.Handler
+import android.os.Looper
 import com.android.billingclient.api.*
 import dev.astler.catlib.cBillingNoAdsName
 import dev.astler.catlib.gPreferencesTool
@@ -36,6 +38,8 @@ class CatBillingAssistant(
             .build()
     }
 
+    private var reconnectAttempts = 0
+
     init {
         if (queryActivity is IQueryPurchases) {
             activityQueries = queryActivity
@@ -44,18 +48,29 @@ class CatBillingAssistant(
         startConnection()
     }
 
+
     private fun startConnection() {
+        if (reconnectAttempts > 3) {
+            // Max attempts reached. Do something to handle this situation
+            return
+        }
+
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    billingViewModel.queryItemsDetails(billingClient) { billingResult, purchase ->  
+                    reconnectAttempts = 0 // reset count on successful connection
+                    billingViewModel.queryItemsDetails(billingClient) { billingResult, purchase ->
                         activityQueries?.restorePurchases(billingResult, purchase)
                     }
                 }
             }
 
             override fun onBillingServiceDisconnected() {
-                startConnection()
+                reconnectAttempts++
+                Handler(Looper.getMainLooper()).postDelayed(
+                    { startConnection() },
+                    3000
+                ) // Wait 3 seconds before attempting to reconnect
             }
         })
     }
@@ -66,7 +81,8 @@ class CatBillingAssistant(
 
         purchase.products.forEach {
             if (it == cBillingNoAdsName) {
-                gPreferencesTool.adsDisabled = purchase.purchaseState == Purchase.PurchaseState.PURCHASED
+                gPreferencesTool.adsDisabled =
+                    purchase.purchaseState == Purchase.PurchaseState.PURCHASED
 
                 if (!purchase.isAcknowledged) {
                     infoLog("BILLING: Acknowledge pur")
