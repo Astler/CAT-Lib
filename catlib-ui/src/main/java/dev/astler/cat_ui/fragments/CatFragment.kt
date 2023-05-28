@@ -7,14 +7,18 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.interfaces.ICatActivity
 import dev.astler.cat_ui.interfaces.CoreFragmentInterface
 import dev.astler.cat_ui.interfaces.IRootInsets
 import dev.astler.cat_ui.utils.getStringResource
+import dev.astler.catlib.preferences.PreferencesTool
+import javax.inject.Inject
 
-abstract class CatFragment<VB : ViewBinding> : Fragment(),
-    CoreFragmentInterface,
-    MenuProvider {
+abstract class CatFragment<VB : ViewBinding> : Fragment(), CoreFragmentInterface, MenuProvider {
+
+    @Inject
+    lateinit var preferences: PreferencesTool
 
     protected var fragmentTag: String = this::class.java.name
 
