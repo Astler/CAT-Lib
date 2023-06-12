@@ -145,36 +145,6 @@ fun Context.getDrawableByName(pDrawableName: String): Drawable? {
     ) else ContextCompat.getDrawable(this, R.drawable.file)
 }
 
-fun Drawable.toBitmap(): Bitmap? {
-    if (this is BitmapDrawable) {
-        if (this.bitmap != null) {
-            return this.bitmap
-        }
-    }
-
-    val bitmap: Bitmap? = if (this.intrinsicWidth <= 0 || this.intrinsicHeight <= 0) {
-        Bitmap.createBitmap(
-            1,
-            1,
-            Bitmap.Config.ARGB_8888
-        )
-    } else {
-        Bitmap.createBitmap(
-            this.intrinsicWidth * 13,
-            this.intrinsicHeight * 13,
-            Bitmap.Config.ARGB_8888
-        )
-    }
-
-    if (bitmap != null) {
-        val canvas = Canvas(bitmap)
-        this.setBounds(0, 0, canvas.width, canvas.height)
-        this.draw(canvas)
-    }
-
-    return bitmap
-}
-
 fun Context.getContextColor(@ColorRes pColorId: Int): Int {
     return ContextCompat.getColor(this, pColorId)
 }

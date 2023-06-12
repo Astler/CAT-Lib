@@ -3,6 +3,7 @@ package dev.astler.cat_ui.views
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Parcelable
@@ -17,10 +18,12 @@ import androidx.core.text.toSpannable
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import dev.astler.cat_ui.utils.getDrawableByName
+import dev.astler.cat_ui.utils.toNoFilterDrawable
 import dev.astler.cat_ui.views.span.VerticalImageSpan
 import dev.astler.cat_ui.views.span.CustomFancyTextSpan
 import dev.astler.catlib.gPreferencesTool
 import dev.astler.catlib.ui.R
+import dev.astler.catlib.utils.getBitmapFromAsset
 import kotlinx.coroutines.*
 import java.util.regex.Pattern
 
@@ -289,7 +292,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
 
     protected open fun addImages(context: Context) {
         val nMatcher = Pattern
-            .compile("\\Q[img src=\\E([a-zA-Z\\d._]+?)(?:(?: tint=([a-zA-Z\\d#._]+?)\\Q/]\\E)|(?:\\Q/]\\E))")
+            .compile("\\Q[img src=\\E([a-zA-Z\\d._:/]+?)(?:(?: tint=([a-zA-Z\\d#._]+?)\\Q/]\\E)|(?:\\Q/]\\E))")
             .matcher(spannableData)
 
         while (nMatcher.find()) {
@@ -372,7 +375,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         pName: String,
         onComplete: (Drawable?) -> Unit
     ) {
-        context.getDrawableByName(pName)?.let {
+        getDrawableFromSources(pName) {
             onComplete(it)
         }
     }
@@ -381,8 +384,26 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         pName: String,
         onComplete: (Drawable?) -> Unit
     ) {
-        context.getDrawableByName(pName)?.let {
+        getDrawableFromSources(pName) {
             onComplete(it)
+        }
+    }
+
+    private fun getDrawableFromSources(
+        pName: String,
+        onComplete: (Drawable?) -> Unit
+    ) {
+        if (pName.startsWith("assets:")) {
+            val path = pName.replace("assets:", "")
+            val bitmap = context.getBitmapFromAsset(path)
+
+            if (bitmap != null) {
+                onComplete(bitmap.toNoFilterDrawable(context))
+            }
+        } else {
+            context.getDrawableByName(pName)?.let {
+                onComplete(it)
+            }
         }
     }
 

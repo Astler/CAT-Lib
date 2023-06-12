@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Кошаче демо</string>
-    <string name="strange_string">Bold fancy text: [ft text=CAT params=~tf_b/]
-        \n\nSome emoji: 😶‍🌫️, 🧔🏻‍♀️, 🧑🏿‍❤️‍🧑🏾
-        \n\nOkay. Simple image shortcode [img src=file/]
-        \n\nTinted image shortcode [img src=file tint=#FF0000/][img src=file tint=#00FF00/]
-        \n\nImage shortcode with missing res [img src=faile/] (also can be tinted => [img src=faile tint=#00FFFF/])</string>
 
 </resources>

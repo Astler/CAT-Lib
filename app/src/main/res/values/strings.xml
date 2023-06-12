@@ -2,7 +2,7 @@
     <string name="app_name">Cat Lib Demo</string>
     <string name="strange_string">Bold fancy text: [ft text=CAT params=~tf_b/]
         \n\nSome emoji: 😶‍🌫️, 🧔🏻‍♀️, 🧑🏿‍❤️‍🧑🏾
-        \n\nOkay. Simple image shortcode [img src=file/]
+        \n\nOkay. Simple image shortcode [img src=file/] gggg [img src=test/test/] [img src=file/] fgflg;f1 \n\n[img src=assets:test/test.png/]
         \n\nTinted image shortcode [img src=file tint=#FF0000/][img src=file tint=#00FF00/]
         \n\nImage shortcode with missing res [img src=faile/] (also can be tinted => [img src=faile tint=#00FFFF/])</string>
 </resources>
