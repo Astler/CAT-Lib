@@ -28,7 +28,9 @@ import dev.astler.ads.data.lastAdDelayKey
 import dev.astler.ads.data.openAdEnabledKey
 import dev.astler.ads.data.resumeAdDelayKey
 import dev.astler.ads.data.rewardAdEnabledKey
+import dev.astler.ads.data.showStartAdKey
 import dev.astler.ads.data.startAdDelayKey
+import dev.astler.ads.data.startAdOtherAdDelayKey
 import dev.astler.ads.dialogs.adsAgeConfirmDialog
 import dev.astler.ads.interfaces.IAdListener
 import dev.astler.ads.utils.NativeAdsLoader
@@ -247,6 +249,8 @@ class AdsTool @Inject constructor(
                 remoteConfig.getBoolean(openAdEnabledKey + _configPackageName),
                 remoteConfig.getBoolean(bannerAdEnabledKey + _configPackageName),
                 remoteConfig.getBoolean(rewardAdEnabledKey + _configPackageName),
+                remoteConfig.getBoolean(showStartAdKey + _configPackageName),
+                remoteConfig.getLong(startAdOtherAdDelayKey + _configPackageName),
             )
 
             adsLog("loaded ads config $_adsConfig")

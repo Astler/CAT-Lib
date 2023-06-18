@@ -6,6 +6,7 @@ private const val ChildAdsKey = "child_ads"
 private const val AgeConfirmedKey = "age_confirmed"
 private const val LastAdsTimeKey = "last_ads_time"
 private const val RewardAdActiveKey = "reward_ad_active_key"
+private const val StartAdTimeKey = "start_ad_timer"
 
 var PreferencesTool.rewardAdActive: Boolean
     get() = getBoolean(RewardAdActiveKey, false)
@@ -31,4 +32,12 @@ var PreferencesTool.lastAdsTime: Long
     get() = getLong(LastAdsTimeKey, 0L)
     set(value) {
         edit(LastAdsTimeKey, value)
+    }
+
+
+
+var PreferencesTool.lastStartAdTime: Long
+    get() = getLong(StartAdTimeKey, 0L)
+    set(value) {
+        edit(StartAdTimeKey, value)
     }

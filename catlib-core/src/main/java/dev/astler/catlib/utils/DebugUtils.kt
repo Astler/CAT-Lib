@@ -9,8 +9,8 @@ fun infoLog(pText: String, pPostCategory: String = "", pCategory: String = "ForA
     Log.i("$pCategory $pPostCategory", pText)
 }
 
-fun adsLog(pText: String, pPostCategory: String = "", pCategory: String = "ForAds") {
-    Log.i(pCategory + pPostCategory, pText)
+fun adsLog(text: String, postCategory: String = "", category: String = "ForAds") {
+    Log.i(category + postCategory, text)
 }
 
 fun errorLog(pText: String, pPostCategory: String = "", pCategory: String = "ForAstler") {

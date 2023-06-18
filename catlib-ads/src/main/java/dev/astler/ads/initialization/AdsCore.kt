@@ -8,10 +8,13 @@ import dev.astler.ads.AppOpenManager
 import dev.astler.ads.utils.NativeAdsLoader
 import dev.astler.ads.utils.isGoogleTestDevice
 import dev.astler.catlib.config.AppConfig
+import dev.astler.catlib.remote_config.RemoteConfigProvider
 import dev.astler.catlib.utils.infoLog
 import javax.inject.Inject
 
-class AdsCore @Inject constructor(context: Context, preferences: PreferencesTool, config: AppConfig) {
+class AdsCore @Inject constructor(
+    context: Context, preferences: PreferencesTool, config: AppConfig
+) {
     private var _appOpenManager: AppOpenManager? = null
     private var _nativeAdsLoader: NativeAdsLoader? = null
 
