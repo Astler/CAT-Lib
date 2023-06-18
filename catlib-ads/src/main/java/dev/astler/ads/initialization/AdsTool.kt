@@ -21,16 +21,6 @@ import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
 import dev.astler.ads.data.RemoteConfigData
-import dev.astler.ads.data.adChanceKey
-import dev.astler.ads.data.bannerAdEnabledKey
-import dev.astler.ads.data.interstitialAdEnabledKey
-import dev.astler.ads.data.lastAdDelayKey
-import dev.astler.ads.data.openAdEnabledKey
-import dev.astler.ads.data.resumeAdDelayKey
-import dev.astler.ads.data.rewardAdEnabledKey
-import dev.astler.ads.data.showStartAdKey
-import dev.astler.ads.data.startAdDelayKey
-import dev.astler.ads.data.startAdOtherAdDelayKey
 import dev.astler.ads.dialogs.adsAgeConfirmDialog
 import dev.astler.ads.interfaces.IAdListener
 import dev.astler.ads.utils.NativeAdsLoader
@@ -128,18 +118,17 @@ class AdsTool @Inject constructor(
             return
         }
         
-        if (_adsConfig == null) {
+        if (_adsConfig.isEmpty) {
+            adsLog("isEmpty need to fetch")
             fetchRemoteConfigForAds()
             return
         }
 
-        val config = _adsConfig!!
+        val config = _adsConfig
 
         adsLog("Loaded ads remote config = $config")
 
-        val adsAllowedByConfig = config.interstitialAdEnabled
-
-        if (!adsAllowedByConfig) {
+        if (!config.interstitialAdEnabled) {
             adsLog("Ads disabled in remote config!")
             return
         }
@@ -151,29 +140,9 @@ class AdsTool @Inject constructor(
             return
         }
 
-        val resumeDelay = config.resumeAdDelay
-
-        if (!ResumeTimeKey.hasPrefsTimePassed(resumeDelay * 1000L)) {
-            adsLog("Time from resume not passed!")
+        if (!ResumeTimeKey.hasPrefsTimePassed(config.startAdOtherAdDelay * 1000L)) {
+            adsLog("Time from last ad not passed!")
             return
-        }
-
-        val fromLastDelay = config.lastAdDelay
-
-        if (!preferences.lastAdsTime.hasPrefsTimePassed(fromLastDelay * 1000L)) {
-            adsLog("Time from last ads not passed!")
-            return
-        }
-
-        val adChance = config.adChance
-
-        if (adChance > 0) {
-            val random = (0..100).random()
-
-            if (random > adChance) {
-                adsLog("Random chance not passed!")
-                return
-            }
         }
 
         showInterstitialAd()
@@ -240,19 +209,7 @@ class AdsTool @Inject constructor(
 
     private fun fetchRemoteConfigForAds() {
         remoteConfig.loadRemoteData {
-            _adsConfig = RemoteConfigData(
-                remoteConfig.getLong(startAdDelayKey + _configPackageName),
-                remoteConfig.getLong(resumeAdDelayKey + _configPackageName),
-                remoteConfig.getLong(lastAdDelayKey + _configPackageName),
-                remoteConfig.getLong(adChanceKey + _configPackageName),
-                remoteConfig.getBoolean(interstitialAdEnabledKey + _configPackageName),
-                remoteConfig.getBoolean(openAdEnabledKey + _configPackageName),
-                remoteConfig.getBoolean(bannerAdEnabledKey + _configPackageName),
-                remoteConfig.getBoolean(rewardAdEnabledKey + _configPackageName),
-                remoteConfig.getBoolean(showStartAdKey + _configPackageName),
-                remoteConfig.getLong(startAdOtherAdDelayKey + _configPackageName),
-            )
-
+            _adsConfig = RemoteConfigData(remoteConfig, _configPackageName)
             adsLog("loaded ads config $_adsConfig")
         }
     }
