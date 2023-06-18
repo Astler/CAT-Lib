@@ -49,6 +49,8 @@ class AppOpenManager @Inject constructor(
         }
 
         _lastShowTime = _preferences.lastStartAdTime
+
+        fetchAd()
     }
 
     private val adRequest: AdRequest
@@ -88,8 +90,11 @@ class AppOpenManager @Inject constructor(
 
     private fun showAdIfAvailable() {
         if (_isShowingAd || !isAdAvailable) {
-            log("fetchAd")
-            fetchAd()
+            if (_appOpenAd == null) {
+                log("fetchAd")
+                fetchAd()
+            }
+
             return
         }
 
@@ -124,11 +129,6 @@ class AppOpenManager @Inject constructor(
     }
 
     private fun fetchAd() {
-        if (isAdAvailable) {
-            log("no need to fetch ad, it available")
-            return
-        }
-
         _loadCallback = object : AppOpenAdLoadCallback() {
             override fun onAdLoaded(pAd: AppOpenAd) {
                 _appOpenAd = pAd
@@ -149,7 +149,7 @@ class AppOpenManager @Inject constructor(
     }
 
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-        if (event === Lifecycle.Event.ON_START) {
+        if (event == Lifecycle.Event.ON_START) {
             showAdIfAvailable()
         }
     }
