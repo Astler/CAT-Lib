@@ -16,7 +16,7 @@ import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.appopen.AppOpenAd.AppOpenAdLoadCallback
 import dev.astler.ads.initialization.adsConfig
 import dev.astler.ads.utils.lastAdsTime
-import dev.astler.ads.utils.lastStartAdTime
+import dev.astler.cat_ui.appResumeTime
 import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.utils.adsLog
@@ -39,7 +39,6 @@ class AppOpenManager @Inject constructor(
     private var _currentActivity: Activity? = null
 
     private var _loadTime: Long = 0
-    private var _lastShowTime: Long = 0
     private var _isShowingAd = false
 
     init {
@@ -47,9 +46,6 @@ class AppOpenManager @Inject constructor(
             _context.registerActivityLifecycleCallbacks(this)
             ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         }
-
-        _lastShowTime = _preferences.lastStartAdTime
-
         fetchAd()
     }
 
@@ -58,7 +54,8 @@ class AppOpenManager @Inject constructor(
 
     private val isAdAvailable: Boolean
         get() {
-            val timePassed = Date().time - _lastShowTime > adsConfig.startAdDelay * 1000
+            val timePassed =
+                Date().time - _preferences.appResumeTime > adsConfig.startAdDelay * 1000
             val otherAdLastTime =
                 _preferences.lastAdsTime.hasPrefsTimePassed(adsConfig.startAdOtherAdDelay * 1000L)
             val canShowAds = _currentActivity?.canShowAds() == true
@@ -115,9 +112,7 @@ class AppOpenManager @Inject constructor(
             override fun onAdShowedFullScreenContent() {
                 log("showed")
                 _isShowingAd = true
-                _lastShowTime = Date().time
-                _preferences.lastStartAdTime = _lastShowTime
-                _preferences.lastAdsTime = _lastShowTime
+                _preferences.lastAdsTime = Date().time
             }
         }
 

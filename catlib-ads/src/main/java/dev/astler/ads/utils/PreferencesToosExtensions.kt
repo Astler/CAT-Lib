@@ -33,11 +33,3 @@ var PreferencesTool.lastAdsTime: Long
     set(value) {
         edit(LastAdsTimeKey, value)
     }
-
-
-
-var PreferencesTool.lastStartAdTime: Long
-    get() = getLong(StartAdTimeKey, 0L)
-    set(value) {
-        edit(StartAdTimeKey, value)
-    }

@@ -30,6 +30,7 @@ import dev.astler.ads.utils.lastAdsTime
 import dev.astler.ads.utils.rewardAdActive
 import dev.astler.cat_ui.ResumeTimeKey
 import dev.astler.cat_ui.StartTimeKey
+import dev.astler.cat_ui.appResumeTime
 import dev.astler.cat_ui.utils.views.goneView
 import dev.astler.cat_ui.utils.views.showView
 import dev.astler.catlib.ads.databinding.ItemAdBinding
@@ -117,7 +118,7 @@ class AdsTool @Inject constructor(
             adsLog("Can't show ads!")
             return
         }
-        
+
         if (_adsConfig.isEmpty) {
             adsLog("isEmpty need to fetch")
             fetchRemoteConfigForAds()
@@ -135,13 +136,13 @@ class AdsTool @Inject constructor(
 
         val startDelay = config.startAdDelay
 
-        if (!StartTimeKey.hasPrefsTimePassed(startDelay * 1000L)) {
-            adsLog("Time from start not passed!")
+        if (!hasPrefsTimePassed(preferences.appResumeTime, startDelay * 1000L)) {
+            adsLog("Time from start not passed ${(preferences.appResumeTime - GregorianCalendar().timeInMillis)/1000}!")
             return
         }
 
-        if (!ResumeTimeKey.hasPrefsTimePassed(config.startAdOtherAdDelay * 1000L)) {
-            adsLog("Time from last ad not passed!")
+        if (!hasPrefsTimePassed(preferences.lastAdsTime, config.startAdOtherAdDelay * 1000L)) {
+            adsLog("Time from last ad not passed ${(preferences.lastAdsTime - GregorianCalendar().timeInMillis)/1000}!")
             return
         }
 

@@ -12,9 +12,18 @@ fun String.hasPrefsTimePassed(
     ) >= millisTimeToCheck
 }
 
-
 fun Long.hasPrefsTimePassed(
     millisTimeToCheck: Long
 ): Boolean {
-    return GregorianCalendar().timeInMillis - this >= millisTimeToCheck
+    return hasPrefsTimePassed(this, millisTimeToCheck)
+}
+
+
+
+fun hasPrefsTimePassed(
+    currentValue: Long,
+    millisTimeToCheck: Long,
+    default: Long = GregorianCalendar().timeInMillis
+): Boolean {
+    return GregorianCalendar().timeInMillis - currentValue >= millisTimeToCheck
 }
