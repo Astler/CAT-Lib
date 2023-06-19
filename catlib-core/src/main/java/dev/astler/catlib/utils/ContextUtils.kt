@@ -25,6 +25,25 @@ fun Context.isDebuggable(): Boolean {
 
 fun Context.formattedPackageName(): String = packageName?.replace(".", "_") ?: "null_package"
 
+fun Context.formattedShortPackageName(): String {
+    val name = packageName ?: "null_package"
+
+    val parts = name.split(".")
+
+    val builder = StringBuilder()
+
+    for (part in parts) {
+        if (parts.last() == part) {
+            builder.append(part.substring(0, 3))
+            break
+        }
+
+        builder.append(part.first())
+    }
+
+    return builder.toString()
+}
+
 fun Context.copyToBuffer(pData: CharSequence) {
     if (pData.isNotEmpty()) {
         val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

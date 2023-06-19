@@ -32,15 +32,15 @@ import dev.astler.cat_ui.ResumeTimeKey
 import dev.astler.cat_ui.StartTimeKey
 import dev.astler.cat_ui.utils.views.goneView
 import dev.astler.cat_ui.utils.views.showView
+import dev.astler.catlib.ads.databinding.ItemAdBinding
+import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.RemoteConfigProvider
 import dev.astler.catlib.utils.adsLog
 import dev.astler.catlib.utils.canShowAds
-import dev.astler.catlib.utils.formattedPackageName
+import dev.astler.catlib.utils.formattedShortPackageName
 import dev.astler.catlib.utils.hasPrefsTimePassed
 import dev.astler.catlib.utils.infoLog
-import dev.astler.catlib.ads.databinding.ItemAdBinding
-import dev.astler.catlib.config.AppConfig
 import java.util.GregorianCalendar
 import javax.inject.Inject
 
@@ -55,7 +55,7 @@ class AdsTool @Inject constructor(
 ) :
     SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private var _configPackageName: String = context.formattedPackageName()
+    private var _configPackageName: String = context.formattedShortPackageName()
     private var _needAgeCheck: Boolean = appConfig.mNeedAgeCheck
 
     private var _interstitialAdId = appConfig.mInterstitialAdId
