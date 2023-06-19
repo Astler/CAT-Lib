@@ -76,7 +76,7 @@ class CatBillingAssistant(
     }
 
     private fun queryPurchases(purchase: Purchase) {
-        infoLog(purchase.orderId)
+        infoLog(purchase.orderId ?: "null")
         infoLog(purchase.originalJson)
 
         purchase.products.forEach {

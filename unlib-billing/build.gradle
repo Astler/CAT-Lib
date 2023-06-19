@@ -58,7 +58,7 @@ dependencies {
     implementation project(':catlib-ui')
     implementation project(':catlib-ads')
 
-    def billing_version = "5.1.0"
+    def billing_version = "6.0.0"
     api "com.android.billingclient:billing-ktx:$billing_version"
 
     api "com.google.dagger:hilt-android:2.45"
