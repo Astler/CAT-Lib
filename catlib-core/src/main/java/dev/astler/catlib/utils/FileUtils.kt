@@ -5,9 +5,20 @@ import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import dev.astler.catlib.analytics.AnalyticsService
 import java.io.* 
 import java.nio.channels.FileChannel
 import java.nio.charset.Charset
+
+fun Context.getBitmapFromAsset(path: String): Bitmap? {
+    return try {
+        BitmapFactory.decodeStream(assets.open(path))
+    } catch (e: Exception) {
+        AnalyticsService().missingAssetsResource(path)
+        errorLog(e)
+        null
+    }
+}
 
 fun Context.writeToFileInFolder(pFileData: String, pFileName: String, pNameFolder: String = "", pFileType: String = ".json") {
     trySimple {
@@ -102,12 +113,6 @@ fun File.readFileFromFiles(): String {
         inputStream.close()
 
         String(byteArray, Charset.defaultCharset())
-    }
-}
-
-fun Context.getBitmapFromAsset(strName: String): Bitmap? {
-    return tryWithDefault(null) {
-        BitmapFactory.decodeStream(assets.open(strName))
     }
 }
 

@@ -391,19 +391,19 @@ open class CatShortCodeTextView @JvmOverloads constructor(
 
     private fun getDrawableFromSources(
         pName: String,
-        onComplete: (Drawable?) -> Unit
+        onComplete: (Drawable) -> Unit
     ) {
-        if (pName.startsWith("assets:")) {
+        val bitmap = if (pName.startsWith("assets:")) {
             val path = pName.replace("assets:", "")
-            val bitmap = context.getBitmapFromAsset(path)
-
-            if (bitmap != null) {
-                onComplete(bitmap.toNoFilterDrawable(context))
-            }
+            context.getBitmapFromAsset(path)?.toNoFilterDrawable(context)
         } else {
-            context.getDrawableByName(pName)?.let {
-                onComplete(it)
-            }
+            context.getDrawableByName(pName)
+        }
+
+        if (bitmap != null) {
+            onComplete(bitmap)
+        } else {
+            onComplete(_placeholderDrawable)
         }
     }
 
