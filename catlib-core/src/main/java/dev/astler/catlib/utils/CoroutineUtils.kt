@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
  * https://github.com/FunkyMuse/KAHelpers
  */
 
-val cMainDispatcher = Dispatchers.Main
-val cDefaultDispatcher = Dispatchers.Default
-val cUnconfinedDispatcher = Dispatchers.Unconfined
-val cIODispatcher = Dispatchers.IO
+val MainDispatcher = Dispatchers.Main
+val DefaultDispatcher = Dispatchers.Default
+val UnconfinedDispatcher = Dispatchers.Unconfined
+val IODispatcher = Dispatchers.IO

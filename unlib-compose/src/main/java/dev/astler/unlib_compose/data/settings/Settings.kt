@@ -25,6 +25,7 @@ enum class AppLanguage {
 
 interface Settings {
     val themeStream: StateFlow<AppTheme>
+    val materialTheme: StateFlow<Boolean>
     val languageStream: StateFlow<AppLanguage>
     var theme: AppTheme
     var language: AppLanguage

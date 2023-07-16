@@ -250,7 +250,7 @@ abstract class CatActivity<T : ViewBinding> : LocaleAwareCompatActivity(),
         }
 
         if (fragment is IInternetDependentFragment) {
-            if (isOnline()) {
+            if (isOnline) {
                 fragment.onInternetAvailable()
             } else {
                 fragment.onInternetLost()

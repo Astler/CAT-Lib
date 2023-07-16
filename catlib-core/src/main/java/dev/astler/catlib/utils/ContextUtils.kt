@@ -7,6 +7,8 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -15,9 +17,49 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailabilityLight
 import dev.astler.catlib.core.R
 import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.paidPackagePostfix
 import java.util.*
 
-class ContextUtils(base: Context?) : ContextWrapper(base)
+val Context.isPaidVersion get() = applicationContext.packageName.endsWith(paidPackagePostfix)
+
+@Suppress("DEPRECATION")
+val Context.isOnline: Boolean
+    get() {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if (isNotM()) {
+            val networkInfo = connectivityManager.activeNetworkInfo
+
+            return networkInfo != null && networkInfo.isConnected && networkInfo.type == ConnectivityManager.TYPE_WIFI || networkInfo?.type == ConnectivityManager.TYPE_MOBILE
+        } else {
+            val network = connectivityManager.activeNetwork
+
+            if (network != null) {
+                val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+
+                if (networkCapabilities != null) {
+                    return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || networkCapabilities.hasTransport(
+                        NetworkCapabilities.TRANSPORT_WIFI
+                    )
+                }
+            }
+        }
+
+        return false
+    }
+
+val Context.activeLanguage: String
+    get() = run {
+        val configuration = resources.configuration
+        val locale: Locale = if (isN()) {
+            configuration.locales[0]
+        } else {
+            @Suppress("DEPRECATION")
+            configuration.locale
+        }
+
+        locale.language
+    }
 
 fun Context.isDebuggable(): Boolean {
     return (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
@@ -34,7 +76,7 @@ fun Context.formattedShortPackageName(): String {
 
     for (part in parts) {
         if (parts.last() == part) {
-            builder.append(part.substring(0, 3))
+            builder.append(part.substring(0, if (part.length < 3) part.length else 3))
             break
         }
 
@@ -81,7 +123,7 @@ fun Context.vibrate(pVibrationTime: Long = 40L) {
 }
 
 fun Context.isPackageInstalled(packageName: String): Boolean {
-    return tryWithDefault(false) {
+    return trackedTry(fallbackValue = false) {
         packageManager.getPackageInfo(packageName, 0)
         true
     }

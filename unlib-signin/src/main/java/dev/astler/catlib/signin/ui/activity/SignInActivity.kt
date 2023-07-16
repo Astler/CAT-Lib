@@ -7,8 +7,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.setInsetsViaOrientation
 import dev.astler.cat_ui.utils.views.showViewWithCondition
+import dev.astler.catlib.signin.R
+import dev.astler.catlib.signin.data.CatSignInMode
+import dev.astler.catlib.signin.databinding.SignInLayoutBinding
 import dev.astler.catlib.signin.interfaces.SignInActivityListener
-import dev.astler.catlib.signin.ui.activity.CatSignInMode.Companion.fromString
+import dev.astler.catlib.signin.data.CatSignInMode.Companion.fromString
 import dev.astler.catlib.signin.utils.authWithEmailAndPassword
 import dev.astler.catlib.signin.utils.createUserWithEmailAndPassword
 import dev.astler.catlib.signin.utils.signInInitializer
@@ -19,21 +22,8 @@ import dev.astler.catlib.utils.MobileServicesSource
 import dev.astler.catlib.utils.getMobileServiceSource
 import dev.astler.catlib.utils.infoLog
 import dev.astler.catlib.utils.toast
-import dev.astler.catlib.signin.R
-import dev.astler.catlib.signin.databinding.SignInLayoutBinding
 
 const val cSignInModeExtra = "signInMode"
-
-enum class CatSignInMode {
-    MANDATORY,
-    OPTIONAL,
-    OPTIONAL_JUMP,
-    REGISTER;
-
-    companion object {
-        fun String.fromString() = valueOf(this)
-    }
-}
 
 @AndroidEntryPoint
 open class SignInActivity: CatActivity<SignInLayoutBinding>(), SignInActivityListener {
@@ -87,10 +77,10 @@ open class SignInActivity: CatActivity<SignInLayoutBinding>(), SignInActivityLis
                     val nPasswordAgainText = passwordAgain.text.toString()
 
                     if (nEmailText.isEmpty() || nPasswordText.isEmpty() || nPasswordAgainText.isEmpty()) {
-                        it.toast(R.string.not_all_fields)
+                        toast(R.string.not_all_fields)
                     } else {
                         if (nPasswordText != nPasswordAgainText) {
-                            it.toast(R.string.passwords_dont_match)
+                            toast(R.string.passwords_dont_match)
                         } else createUserWithEmailAndPassword(nEmailText, nPasswordText)
                     }
                 } else {
@@ -98,7 +88,7 @@ open class SignInActivity: CatActivity<SignInLayoutBinding>(), SignInActivityLis
                     val nPasswordText = password.text.toString()
 
                     if (nEmailText.isEmpty() || nPasswordText.isEmpty()) {
-                        it.toast(R.string.not_all_fields)
+                        toast(R.string.not_all_fields)
                     } else {
                         authWithEmailAndPassword(nEmailText, nPasswordText)
                     }

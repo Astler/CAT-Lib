@@ -15,7 +15,7 @@ import coil.request.Disposable
 import coil.request.ImageRequest
 import dev.astler.cat_ui.utils.tintDrawable
 import dev.astler.cat_ui.utils.tintDrawableByAttr
-import dev.astler.catlib.utils.tryWithDefault
+import dev.astler.catlib.utils.trackedTry
 import okhttp3.HttpUrl
 import java.io.File
 
@@ -28,7 +28,7 @@ fun ImageView.setAttrTintDrawable(@DrawableRes icon: Int, @AttrRes attrId: Int) 
 }
 
 fun ImageView.loadWithBackground(pRequest: String, pBackgroundColor: Int): Disposable? {
-    return tryWithDefault(null) {
+    return trackedTry(fallbackValue = null) {
         val imageLoader = ImageLoader(context)
         val requestBuilder = ImageRequest.Builder(context)
             .data(pRequest)
@@ -57,7 +57,7 @@ fun ImageView.loadWithBackground(pRequest: String, pBackgroundColor: Int): Dispo
  * - [Bitmap]
  */
 fun ImageView.mixDrawables(pRequest: Any?, vararg pAdditionalDrawables: Drawable): Disposable? {
-    return tryWithDefault(null) {
+    return trackedTry(fallbackValue = null) {
         val imageLoader = ImageLoader(context)
 
         val requestBuilder = ImageRequest.Builder(context)

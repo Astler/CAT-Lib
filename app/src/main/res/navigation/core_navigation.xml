@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/core_navigation"
+    app:startDestination="@id/mainMenuFragment">
+
+    <fragment
+        android:id="@+id/shortCodePreviewFragment"
+        android:name="dev.astler.unlib_test.fragments.views.ShortCodePreviewFragment"
+        android:label="ShortCodePreviewFragment" />
+    <fragment
+        android:id="@+id/composeGridMaterial3PreviewFragment"
+        android:name="dev.astler.unlib_test.fragments.compose.DynamicMaterial3ComposeFragment"
+        android:label="ComposeGridMaterial3PreviewFragment" />
+    <fragment
+        android:id="@+id/mainMenuFragment"
+        android:name="dev.astler.unlib_test.fragments.menu.MainMenuFragment"
+        android:label="MainMenuFragment" />
+    <fragment
+        android:id="@+id/composeMenuFragment"
+        android:name="dev.astler.unlib_test.fragments.menu.ComposeMenuFragment"
+        android:label="ComposeMenuFragment" />
+    <action
+        android:id="@+id/action_global_composeMenuFragment"
+        app:destination="@id/composeMenuFragment" />
+    <action
+        android:id="@+id/action_global_composeGridMaterial3PreviewFragment"
+        app:destination="@id/composeGridMaterial3PreviewFragment" />
+    <fragment
+        android:id="@+id/dialogsMenuFragment"
+        android:name="dev.astler.unlib_test.fragments.menu.DialogsMenuFragment"
+        android:label="DialogsMenuFragment" />
+    <fragment
+        android:id="@+id/viewsMenuFragment"
+        android:name="dev.astler.unlib_test.fragments.menu.ViewsMenuFragment"
+        android:label="ViewsMenuFragment" />
+    <action
+        android:id="@+id/action_global_dialogsMenuFragment"
+        app:destination="@id/dialogsMenuFragment" />
+    <action
+        android:id="@+id/action_global_viewsMenuFragment"
+        app:destination="@id/viewsMenuFragment" />
+    <fragment
+        android:id="@+id/techMenuFragment"
+        android:name="dev.astler.unlib_test.fragments.menu.TechMenuFragment"
+        android:label="TechMenuFragment" />
+    <action
+        android:id="@+id/action_global_techMenuFragment"
+        app:destination="@id/techMenuFragment" />
+    <action
+        android:id="@+id/action_global_shortCodePreviewFragment"
+        app:destination="@id/shortCodePreviewFragment" />
+    <fragment
+        android:id="@+id/fragmentsMenuFragment"
+        android:name="dev.astler.unlib_test.fragments.menu.FragmentsMenuFragment"
+        android:label="FragmentsMenuFragment" />
+    <action
+        android:id="@+id/action_global_fragmentsMenuFragment"
+        app:destination="@id/fragmentsMenuFragment" />
+    <fragment
+        android:id="@+id/activitiesMenuFragment"
+        android:name="dev.astler.unlib_test.fragments.menu.ActivitiesMenuFragment"
+        android:label="ActivitiesMenuFragment" />
+    <action
+        android:id="@+id/action_global_activitiesMenuFragment"
+        app:destination="@id/activitiesMenuFragment" />
+    <fragment
+        android:id="@+id/typewriterComposeFragment"
+        android:name="dev.astler.unlib_compose.ui.mixed.TypewriterComposeFragment"
+        android:label="TypewriterComposeFragment" />
+    <action
+        android:id="@+id/action_global_typewriterComposeFragment"
+        app:destination="@id/typewriterComposeFragment" />
+    <fragment
+        android:id="@+id/adsMenuFragment"
+        android:name="dev.astler.unlib_test.fragments.menu.AdsMenuFragment"
+        android:label="AdsMenuFragment" />
+    <action
+        android:id="@+id/action_global_adsMenuFragment"
+        app:destination="@id/adsMenuFragment" />
+    <fragment
+        android:id="@+id/imageLoadVariantsFragment"
+        android:name="dev.astler.unlib_test.fragments.views.ImageLoadVariantsFragment"
+        android:label="ImageLoadVariantsFragment" />
+    <action
+        android:id="@+id/action_global_imageLoadVariantsFragment"
+        app:destination="@id/imageLoadVariantsFragment" />
+    <fragment
+        android:id="@+id/languagePreviewFragment"
+        android:name="dev.astler.unlib_test.fragments.tech.LanguagePreviewFragment"
+        android:label="LanguagePreviewFragment" />
+    <action
+        android:id="@+id/action_global_languagePreviewFragment"
+        app:destination="@id/languagePreviewFragment" />
+    <fragment
+        android:id="@+id/firebaseMenuFragment"
+        android:name="dev.astler.unlib_test.fragments.menu.FirebaseMenuFragment"
+        android:label="FirebaseMenuFragment" />
+    <action
+        android:id="@+id/action_global_firebaseMenuFragment"
+        app:destination="@id/firebaseMenuFragment" />
+    <fragment
+        android:id="@+id/themePreviewFragment"
+        android:name="dev.astler.unlib_test.fragments.tech.ThemePreviewFragment"
+        android:label="ThemePreviewFragment" />
+    <action
+        android:id="@+id/action_global_themePreviewFragment"
+        app:destination="@id/themePreviewFragment" />
+    <fragment
+        android:id="@+id/statusBarActionsFragment"
+        android:name="dev.astler.unlib_test.fragments.activity.StatusBarActionsFragment"
+        android:label="StatusBarActionsFragment" />
+    <action
+        android:id="@+id/action_global_statusBarActionsFragment"
+        app:destination="@id/statusBarActionsFragment" />
+    <fragment
+        android:id="@+id/catMenuFragment"
+        android:name="dev.astler.unlib_test.fragments.menu.CatMenuFragment"
+        android:label="CatMenuFragment" />
+    <action
+        android:id="@+id/action_global_catMenuFragment"
+        app:destination="@id/catMenuFragment" />
+    <fragment
+        android:id="@+id/analyticsFragment"
+        android:name="dev.astler.unlib_test.fragments.firebase.AnalyticsFragment"
+        android:label="AnalyticsFragment" />
+    <fragment
+        android:id="@+id/remoteConfigFragment"
+        android:name="dev.astler.unlib_test.fragments.firebase.RemoteConfigFragment"
+        android:label="RemoteConfigFragment" />
+    <action
+        android:id="@+id/action_global_analyticsFragment"
+        app:destination="@id/analyticsFragment" />
+    <action
+        android:id="@+id/action_global_remoteConfigFragment"
+        app:destination="@id/remoteConfigFragment" />
+    <fragment
+        android:id="@+id/catCodeFragment"
+        android:name="dev.astler.unlib_test.fragments.cat.CatCodeFragment"
+        android:label="CatCodeFragment" />
+    <action
+        android:id="@+id/action_global_catCodeFragment"
+        app:destination="@id/catCodeFragment" />
+</navigation>

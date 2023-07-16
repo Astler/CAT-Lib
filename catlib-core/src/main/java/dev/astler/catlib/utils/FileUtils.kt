@@ -5,7 +5,7 @@ import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import dev.astler.catlib.analytics.AnalyticsService
+import dev.astler.catlib.analytics.CatAnalytics
 import java.io.* 
 import java.nio.channels.FileChannel
 import java.nio.charset.Charset
@@ -14,14 +14,14 @@ fun Context.getBitmapFromAsset(path: String): Bitmap? {
     return try {
         BitmapFactory.decodeStream(assets.open(path))
     } catch (e: Exception) {
-        AnalyticsService().missingAssetsResource(path)
+        CatAnalytics().missingAssetsResource(path)
         errorLog(e, "CatLib Error getBitmapFromAsset:")
         null
     }
 }
 
 fun Context.writeToFileInFolder(pFileData: String, pFileName: String, pNameFolder: String = "", pFileType: String = ".json") {
-    trySimple {
+    trackedTry {
         val nFile = if (pNameFolder.isNotEmpty()) {
             val nDir = File(filesDir.absolutePath + "/$pNameFolder")
             if (!nDir.exists()) nDir.mkdir()
@@ -93,7 +93,7 @@ fun File.copySingleFile(destFile: File) {
 }
 
 fun Context.readFileFromRaw(pFileId: Int, pErrorReturn: String = ""): String {
-    return tryWithDefault(pErrorReturn) {
+    return trackedTry(fallbackValue = pErrorReturn) {
         val inputStream = resources.openRawResource(pFileId)
         val size = inputStream.available()
         val byteArray = ByteArray(size)
@@ -105,7 +105,7 @@ fun Context.readFileFromRaw(pFileId: Int, pErrorReturn: String = ""): String {
 }
 
 fun File.readFileFromFiles(): String {
-    return tryWithDefault("I can\'t read this file! $absolutePath") {
+    return trackedTry(fallbackValue = "I can\'t read this file! $absolutePath") {
         val inputStream = inputStream()
         val size = inputStream.available()
         val byteArray = ByteArray(size)
@@ -117,7 +117,7 @@ fun File.readFileFromFiles(): String {
 }
 
 fun Context.readFileFromAssets(path: String): String {
-    return tryWithDefault("Error $path") {
+    return trackedTry(fallbackValue = "Error $path") {
         val inputStream = assets.open(path)
         val size = inputStream.available()
         val byteArray = ByteArray(size)
@@ -129,7 +129,7 @@ fun Context.readFileFromAssets(path: String): String {
 }
 
 fun Context.readFileFromFiles(pFileWithPath: String, pFallback: String = ""): String {
-    return tryWithDefault(pFallback) {
+    return trackedTry(fallbackValue = pFallback) {
         val inputStream = File(filesDir, pFileWithPath).inputStream()
         val size = inputStream.available()
         val byteArray = ByteArray(size)
@@ -147,7 +147,7 @@ fun Bitmap.saveToInternalStorage(pContext: Context, pName: String = "shareImage.
 
     file = File(file, pName)
 
-    trySimple {
+    trackedTry {
         val stream: OutputStream = FileOutputStream(file)
         this.compress(Bitmap.CompressFormat.PNG, 100, stream)
         stream.flush()
@@ -158,7 +158,7 @@ fun Bitmap.saveToInternalStorage(pContext: Context, pName: String = "shareImage.
 }
 
 fun Bitmap.createLocalImage(context: Context, name: String) {
-    trySimple {
+    trackedTry {
         val file = File(context.filesDir, name)
         val out = FileOutputStream(file)
         this.compress(Bitmap.CompressFormat.JPEG, 80, out)

@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/unlib-signin" />
           </set>
         </option>
+        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

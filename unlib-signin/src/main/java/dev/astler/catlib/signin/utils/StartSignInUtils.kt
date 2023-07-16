@@ -2,6 +2,7 @@ package dev.astler.catlib.signin.utils
 
 import android.content.Context
 import android.content.Intent
+import dev.astler.catlib.signin.data.CatSignInMode
 import dev.astler.catlib.signin.ui.activity.* 
 
 fun Context.startMandatorySignIn() {

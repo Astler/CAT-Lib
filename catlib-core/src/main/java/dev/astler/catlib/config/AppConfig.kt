@@ -15,4 +15,18 @@ data class AppConfig(
     val mNeedAgeCheck: Boolean = false,
     val mTestDevices: List<String> = listOf(),
     val mBillingItems: List<String> = listOf(),
-)
+) {
+    override fun toString(): String {
+        return """
+            Pro Version Package: ${mProPackageName.ifEmpty { "No Pro Version" }}
+            Main Activity Package: ${mMainActivityPackage.ifEmpty { "---" }}
+            Rewarded Id: ${mRewardedAdId.ifEmpty { "---" }}
+            Interstitial Id: ${mInterstitialAdId.ifEmpty { "---" }}
+            Native Id: ${mNativeAdId.ifEmpty { "---" }}
+            Start Id: ${mStartAdId.ifEmpty { "---" }}
+            Age Check Requirement: $mNeedAgeCheck
+            Test Devices: $mTestDevices
+            Billing Item: $mBillingItems
+        """.trimIndent()
+    }
+}

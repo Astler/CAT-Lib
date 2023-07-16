@@ -3,6 +3,7 @@ package dev.astler.unlib_compose.data.settings
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.gPreferencesTool
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -10,6 +11,7 @@ import kotlin.reflect.KProperty
 class SettingsImpl @Inject constructor() : Settings {
 
     override val themeStream: MutableStateFlow<AppTheme>
+    override val materialTheme: StateFlow<Boolean>
     override val languageStream: MutableStateFlow<AppLanguage>
     override var theme: AppTheme by AppThemePreferenceDelegate()
     override var language: AppLanguage by AppLanguagePreferenceDelegate()
@@ -17,6 +19,7 @@ class SettingsImpl @Inject constructor() : Settings {
     init {
         themeStream = MutableStateFlow(theme)
         languageStream = MutableStateFlow(language)
+        materialTheme = MutableStateFlow(true)
     }
 
     inner class AppThemePreferenceDelegate : ReadWriteProperty<Any?, AppTheme> {

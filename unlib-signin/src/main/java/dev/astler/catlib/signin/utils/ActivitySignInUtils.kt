@@ -41,7 +41,7 @@ fun AppCompatActivity.createSingInWithGoogleLauncher() = registerForActivityResu
 
     if (pTask == null) return@registerForActivityResult
 
-    trySimple {
+    trackedTry {
         val account = pTask.getResult(ApiException::class.java)!!
         infoLog("firebaseAuthWithGoogle:" + account.id)
         this.authWithGoogle(account.idToken)

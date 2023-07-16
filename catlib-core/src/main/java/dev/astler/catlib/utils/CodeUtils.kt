@@ -3,6 +3,43 @@ package dev.astler.catlib.utils
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 
+/**
+ * try-catch-finally extensions with ability to use default return value and errors tracking
+ */
+
+fun trackedTry(errorCatchAction: (() -> Unit)? = null, finallyAction: (() -> Unit)? = null, action: (() -> Unit)? = null) {
+    try {
+        action?.invoke()
+    } catch (e: Exception) {
+        errorCatchAction?.invoke()
+        Firebase.crashlytics.recordException(e)
+        errorLog("Exception START! ${e.message}\n\n${e.stackTraceToString()}\n\n${e.cause}\n\nException END!")
+    } finally {
+        finallyAction?.invoke()
+    }
+}
+
+fun <T> trackedTry(
+    errorCatchAction: (() -> T)? = null,
+    finallyAction: (() -> T)? = null,
+    fallbackValue: T,
+    action: (() -> T)? = null
+): T {
+    return try {
+        action?.invoke() ?: fallbackValue
+    } catch (e: Exception) {
+        Firebase.crashlytics.recordException(e)
+        errorLog("Exception START! ${e.message}\n\n${e.stackTraceToString()}\n\n${e.cause}\n\nException END!")
+        errorCatchAction?.invoke() ?: fallbackValue
+    } finally {
+        finallyAction?.invoke() ?: fallbackValue
+    }
+}
+
+
+/**
+ * Own default fallback value for Map as replacement for Map.getOrDefault, cuz it's only available from API 24
+ */
 fun <K, V> Map<K, V>.getValueOrDefault(key: K, default: V): V {
     val nValue = if (containsKey(key)) {
         get(key)
@@ -11,64 +48,4 @@ fun <K, V> Map<K, V>.getValueOrDefault(key: K, default: V): V {
     }
 
     return nValue ?: default
-}
-
-fun trySimple(pAction: () -> Unit) {
-    try {
-        pAction()
-    } catch (e: Exception) {
-        Firebase.crashlytics.recordException(e)
-        errorLog("Exception! ${e.message}")
-    }
-}
-
-fun tryFinally(pAction: () -> Unit, pFinally: () -> Unit) {
-    try {
-        pAction()
-    } catch (e: Exception) {
-        Firebase.crashlytics.recordException(e)
-        errorLog("Exception! ${e.message}")
-    } finally {
-        pFinally()
-    }
-}
-
-fun <B, T : Any> tryWithParameters(
-    pTryParameter: B,
-    pCatchParameter: B,
-    pAction: (B) -> T
-): T? {
-    return try {
-        pAction(pTryParameter)
-    } catch (e: Exception) {
-        Firebase.crashlytics.recordException(e)
-        errorLog("Exception! ${e.message}")
-        pAction(pCatchParameter)
-    }
-}
-
-fun <T> tryWithNullDefault(
-    pFallBack: T? = null,
-    pAction: () -> T
-): T? {
-    return try {
-        pAction()
-    } catch (e: Exception) {
-        Firebase.crashlytics.recordException(e)
-        errorLog("Exception! ${e.message}")
-        pFallBack
-    }
-}
-
-fun <T> tryWithDefault(
-    pFallBack: T,
-    pAction: () -> T
-): T {
-    return try {
-        pAction()
-    } catch (e: Exception) {
-        Firebase.crashlytics.recordException(e)
-        errorLog("Exception! ${e.message}")
-        pFallBack
-    }
 }

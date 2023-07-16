@@ -43,24 +43,10 @@ open class PreferencesTool @Inject constructor(context: Context) {
 
     private fun getPreferences(): SharedPreferences = mPreferences
 
-    var mTextSize: Float
+    var textSize: Float
         get() = (getPreferences().getString(textSizeKey, textSizeDefault))?.toFloat() ?: 18f
         set(value) {
             edit(textSizeKey, value.toString())
-        }
-
-    var mIsDarkTheme: Boolean
-        get() = appTheme == "dark"
-        set(value) {
-            if (value)
-                edit(appThemeKey, "dark")
-        }
-
-    var mIsSystemTheme: Boolean
-        get() = appTheme == "system"
-        set(value) {
-            if (value)
-                edit(appThemeKey, "system")
         }
 
     var vibrateOnClick: Boolean
@@ -135,8 +121,7 @@ open class PreferencesTool @Inject constructor(context: Context) {
     }
 
     open fun preferencesToDefault() {
-        mIsSystemTheme = true
-        mTextSize = 18f
+        textSize = 18f
         userLanguage =
             ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0).toString()
     }

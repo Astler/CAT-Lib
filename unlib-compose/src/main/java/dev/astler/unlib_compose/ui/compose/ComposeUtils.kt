@@ -15,6 +15,6 @@ fun PrefsText(text: String, modifier: Modifier = Modifier, bold: Boolean = false
         text = text,
         style = getPrefsTextStyle(bold),
         color = MaterialTheme.colors.onBackground,
-        fontSize = gPreferencesTool.mTextSize.sp
+        fontSize = gPreferencesTool.textSize.sp
     )
 }

@@ -1,25 +1,18 @@
 package dev.astler.cat_ui.utils
 
+import android.app.UiModeManager
 import android.content.Context
-import android.content.res.Configuration.UI_MODE_NIGHT_MASK
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatDelegate.* 
-import dev.astler.catlib.gPreferencesTool
 import kotlin.math.roundToInt
 
-fun Int.toHexColor(): String {
-    return String.format("#%06X", 0xFFFFFF and this)
+val Context.isSystemDarkMode: Boolean
+    get() = (this.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager).nightMode == UiModeManager.MODE_NIGHT_YES
+
+fun Context.isAppDarkTheme(currentMode: String): Boolean {
+    return ((currentMode == "auto" || currentMode == "system") && isSystemDarkMode) || currentMode == "dark"
 }
 
-val Context.isSystemDarkMode
-    get() = if (getDefaultNightMode() == MODE_NIGHT_FOLLOW_SYSTEM)
-        resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
-    else getDefaultNightMode() == MODE_NIGHT_YES
-
-fun Context.isAppDarkTheme(): Boolean {
-    return gPreferencesTool.mIsDarkTheme || gPreferencesTool.mIsSystemTheme && isSystemDarkMode
-}
+fun Int.toHexColor() = String.format("#%06X", 0xFFFFFF and this)
 
 fun Int.setAlpha(alphaPercent: Float): Int {
     val alpha = (Color.alpha(this) * alphaPercent).roundToInt()

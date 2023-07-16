@@ -3,17 +3,18 @@ package dev.astler.billing
 import android.app.Activity
 import android.os.Handler
 import android.os.Looper
-import com.android.billingclient.api.*
+import com.android.billingclient.api.AcknowledgePurchaseParams
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
+import dev.astler.billing.data.BillingViewModel
+import dev.astler.billing.interfaces.IQueryPurchases
+import dev.astler.billing.interfaces.PerformBillingListener
 import dev.astler.catlib.cBillingNoAdsName
 import dev.astler.catlib.gPreferencesTool
 import dev.astler.catlib.utils.infoLog
-
-interface IQueryPurchases {
-    fun query(client: BillingClient, productId: String, purchase: Purchase)
-    fun restorePurchases(billingResult: BillingResult, purchase: Purchase) {
-
-    }
-}
 
 class CatBillingAssistant(
     private val queryActivity: Activity,

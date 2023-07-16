@@ -71,7 +71,7 @@ abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(),
 
         when (mListInsetsType) {
             ListInsetsType.SYSTEM_WITH_ACTION_BAR -> {
-                val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds())
+                val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds(preferences))
 
                 if (nAddBottomPadding)
                     mRecyclerView.setStatusAndNavigationPaddingForView(
@@ -83,7 +83,7 @@ abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(),
             }
 
             ListInsetsType.SYSTEM -> {
-                val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds())
+                val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds(preferences))
 
                 if (nAddBottomPadding)
                     mRecyclerView.setStatusAndNavigationPaddingForView()
@@ -91,7 +91,7 @@ abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(),
             }
 
             ListInsetsType.BOTTOM -> {
-                val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds())
+                val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds(preferences))
 
                 if (nAddBottomPadding)
                     mRecyclerView.setNavigationPaddingForView()

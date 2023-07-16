@@ -16,10 +16,14 @@ import androidx.lifecycle.Lifecycle
 import dev.astler.cat_ui.interfaces.ICatActivity
 import dev.astler.cat_ui.interfaces.CoreFragmentInterface
 import dev.astler.cat_ui.utils.getStringResource
-import dev.astler.cat_ui.utils.isAppDarkTheme
-import dev.astler.unlib_compose.theme.UnlibComposeTheme
+import dev.astler.catlib.preferences.PreferencesTool
+import dev.astler.unlib_compose.theme.CatComposeTheme
+import javax.inject.Inject
 
 abstract class CatComposeFragment : Fragment(), CoreFragmentInterface, MenuProvider {
+
+    @Inject
+    lateinit var preferences: PreferencesTool
 
     protected var coreListener: ICatActivity? = null
     protected lateinit var safeContext: Context
@@ -48,7 +52,7 @@ abstract class CatComposeFragment : Fragment(), CoreFragmentInterface, MenuProvi
 
         val composeView = ComposeView(requireContext()).apply {
             setContent {
-                UnlibComposeTheme(requireContext().isAppDarkTheme()) {
+                CatComposeTheme(null) {
                     ScreenContent()
                 }
             }
@@ -68,9 +72,9 @@ abstract class CatComposeFragment : Fragment(), CoreFragmentInterface, MenuProvi
     override fun onDestroy() {
         super.onDestroy()
 
-//        if (addMenuProvider) {
-//            activity?.removeMenuProvider(this)
-//        }
+        if (addMenuProvider) {
+            activity?.removeMenuProvider(this)
+        }
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}

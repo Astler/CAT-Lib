@@ -1,12 +1,19 @@
 package dev.astler.unlib_compose.theme
 
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import dev.astler.catlib.utils.infoLog
 import dev.astler.unlib_compose.data.settings.AppTheme
 import dev.astler.unlib_compose.data.settings.Settings
 
@@ -38,34 +45,57 @@ private val LightColorPalette = lightColors(
     error = Red800
 )
 
-@Composable
-fun ThemedUnlib(pSettings: Settings, content: @Composable () -> Unit) {
-    val nTheme = pSettings.themeStream.collectAsState()
+private val LightThemeColors = lightColorScheme()
+private val DarkThemeColors = darkColorScheme()
 
-    val nUseDarkColors = when (nTheme.value) {
-        AppTheme.SYSTEM -> isSystemInDarkTheme()
-        AppTheme.LIGHT -> false
-        AppTheme.DARK -> true
-    }
-
-    UnlibComposeTheme(nUseDarkColors, content)
-}
+fun supportsDynamic(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 @Composable
-fun UnlibComposeTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
+fun CatComposeTheme(pSettings: Settings?, content: @Composable () -> Unit) {
+    val isMaterial = pSettings?.materialTheme?.collectAsState()?.value == true || pSettings == null
+
+    if (pSettings == null || isMaterial) {
+        infoLog("material3 theme")
+
+        val inDarkMode: Boolean = isSystemInDarkTheme()
+
+        val colors = if (supportsDynamic() && isMaterial) {
+            val context = LocalContext.current
+
+            infoLog("material3 dynamic")
+
+            if (inDarkMode) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        } else {
+            infoLog("material3 static")
+
+            if (inDarkMode) DarkThemeColors else LightThemeColors
+        }
+
+        MaterialTheme(
+            colorScheme = colors,
+            content = content
+        )
     } else {
-        LightColorPalette
-    }
+        infoLog("material theme")
+        val theme = pSettings.themeStream.collectAsState()
 
-    MaterialTheme(
-        colors = colors,
-        typography = UnLibTypography,
-        shapes = UnLibShapes,
-        content = content
-    )
+        val nUseDarkColors = when (theme.value) {
+            AppTheme.SYSTEM -> isSystemInDarkTheme()
+            AppTheme.LIGHT -> false
+            AppTheme.DARK -> true
+        }
+
+        val colors = if (nUseDarkColors) {
+            DarkColorPalette
+        } else {
+            LightColorPalette
+        }
+
+        androidx.compose.material.MaterialTheme(
+            colors = colors,
+            typography = UnLibTypography,
+            shapes = UnLibShapes,
+            content = content
+        )
+    }
 }

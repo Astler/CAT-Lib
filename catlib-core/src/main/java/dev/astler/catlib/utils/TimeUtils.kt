@@ -18,8 +18,6 @@ fun Long.hasPrefsTimePassed(
     return hasPrefsTimePassed(this, millisTimeToCheck)
 }
 
-
-
 fun hasPrefsTimePassed(
     currentValue: Long,
     millisTimeToCheck: Long,

@@ -3,7 +3,6 @@ package dev.astler.cat_ui.views
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Parcelable
@@ -73,7 +72,7 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         val textSizeModifier =
             typedArray.getInteger(R.styleable.CatTextView_textSizeModifier, 0)
 
-        iconSize = if (!isInEditMode) gPreferencesTool.mTextSize else 18f + textSizeModifier
+        iconSize = if (!isInEditMode) gPreferencesTool.textSize else 18f + textSizeModifier
     }
 
 

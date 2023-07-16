@@ -50,13 +50,13 @@ fun playStoreIntent(pUrl: String, pPackageName: String): Intent {
 }
 
 fun Context.openWebUrl(pUrl: String) {
-    trySimple {
+    trackedTry {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(pUrl)))
     }
 }
 
 fun Context.shareApp(pAppId: String, pShareText: String) {
-    trySimple {
+    trackedTry {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
@@ -68,7 +68,7 @@ fun Context.shareApp(pAppId: String, pShareText: String) {
 }
 
 fun Context.shareText(pText: CharSequence) {
-    trySimple {
+    trackedTry {
         startActivity(
             Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
@@ -83,7 +83,7 @@ fun Context.shareImageByUri(uri: Uri) {
     val bitmap = BitmapFactory.decodeStream(fis)
     fis.close()
 
-    trySimple {
+    trackedTry {
         val file = File("${this.cacheDir}/shareImage.png")
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(file))
         val contentUri = FileProvider.getUriForFile(this, this.packageName + ".provider", file)

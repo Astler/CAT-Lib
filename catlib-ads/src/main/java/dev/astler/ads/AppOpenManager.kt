@@ -58,7 +58,7 @@ class AppOpenManager @Inject constructor(
                 Date().time - _preferences.appResumeTime > adsConfig.startAdDelay * 1000
             val otherAdLastTime =
                 _preferences.lastAdsTime.hasPrefsTimePassed(adsConfig.startAdOtherAdDelay * 1000L)
-            val canShowAds = _currentActivity?.canShowAds() == true
+            val canShowAds = _currentActivity?.canShowAds(_preferences) == true
 
             log(
                 """

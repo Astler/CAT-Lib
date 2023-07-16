@@ -114,7 +114,7 @@ class AdsTool @Inject constructor(
     }
 
     fun tryToShowInterstitial() {
-        if (!context.canShowAds()) {
+        if (!context.canShowAds(preferences)) {
             adsLog("Can't show ads!")
             return
         }
@@ -232,7 +232,7 @@ class AdsTool @Inject constructor(
     private fun loadAd() {
         val adRequest = AdRequest.Builder().build()
 
-        if (context.canShowAds() && _rewardedAdId.isNotEmpty() && _loadedRewardedInterstitial == null) {
+        if (context.canShowAds(preferences) && _rewardedAdId.isNotEmpty() && _loadedRewardedInterstitial == null) {
             RewardedInterstitialAd.load(
                 context,
                 _rewardedAdId,

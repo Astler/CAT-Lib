@@ -5,4 +5,52 @@
         \n\nOkay. Simple image shortcode [img src=file/] gggg [img src=test/test/] [img src=file/] fgflg;f1 \n\n[img src=assets:test/test.png/][img src=assets:test/ass.png/]
         \n\nTinted image shortcode [img src=file tint=#FF0000/][img src=file tint=#00FF00/]
         \n\nImage shortcode with missing res [img src=faile/] (also can be tinted => [img src=faile tint=#00FFFF/])</string>
+
+    <string name="compose">Compose</string>
+    <string name="dialogs">Dialogs</string>
+    <string name="views">Views</string>
+    <string name="yes_no_dialog">Y/N Content</string>
+    <string name="yes_no_empty_dialog">Y/N Empty</string>
+    <string name="exit">Exit</string>
+    <string name="confirm">Confirm</string>
+    <string name="ok">OK</string>
+    <string name="tech">Tech</string>
+    <string name="themes_info">Themes Info</string>
+    <string name="ads_info">Ads Info</string>
+    <string name="services_info">Services Info</string>
+    <string name="short_code_view">ShortCode Text</string>
+    <string name="mandatory_sign_in">Mandatory Sign In</string>
+    <string name="optional_sign_in">Optional Sign In</string>
+    <string name="register">Register</string>
+    <string name="typewriter">Typewriter</string>
+    <string name="fragments">Fragments</string>
+    <string name="activities">Activities</string>
+    <string name="ads">Ads</string>
+    <string name="image_load">Image Load</string>
+    <string name="messaging_subscribe">Messaging Subscribe</string>
+    <string name="debuggable_info">Debuggable Info</string>
+    <string name="my_apps_tracker">My Apps Tracker</string>
+    <string name="messaging_subscribe_result">Subscribe to %s result: %s</string>
+    <string name="firebase">Firebase</string>
+    <string name="transparent_status_bar">Transparent Bar</string>
+    <string name="colored_status_bar">Colored Bar</string>
+    <string name="status_bar_actions">Status Bar Acitons</string>
+    <string name="app_config_preview">App Config Preview</string>
+    <string name="cat">Cat</string>
+    <string name="track_click">Track click</string>
+    <string name="track_missing_asset">Track missing asset</string>
+    <string name="get_test_string">Get \"test_string\"</string>
+    <string name="analytics">Analytics</string>
+    <string name="remote_config">Remote Config</string>
+    <string name="code">Code</string>
+    <string name="tracked_try_base_good">Try Base Good</string>
+    <string name="tracked_try_base_bad">Try Base Bad</string>
+    <string name="tracked_try_finally_good">Try Finally Good</string>
+    <string name="tracked_try_finally_bad">Try Finally Bad</string>
+    <string name="tracked_full_bad">Try Full Bad</string>
+    <string name="tracked_full_good">Try Full Good</string>
+    <string name="tracked_full_fallback_good">Try Full Fall Good</string>
+    <string name="tracked_full_fallback_bad">Try Full Fall Bad</string>
+    <string name="map_exist_value">Map Exist Value</string>
+    <string name="map_missed_value">Map Missed Value</string>
 </resources>

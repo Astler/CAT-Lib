@@ -1,22 +1,31 @@
 package dev.astler.catlib.utils
 
 import java.io.BufferedReader
-import java.io.IOException
 import java.io.InputStreamReader
-import java.net.MalformedURLException
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
 fun String.getJsonContent(): String {
     var nConnection: HttpsURLConnection? = null
 
-    try {
+    return trackedTry(fallbackValue = "", finallyAction = {
+        if (nConnection != null) {
+            trackedTry {
+                nConnection?.disconnect()
+            }
+        }
+
+        ""
+    }) {
         val nURL = URL(this)
         nConnection = nURL.openConnection() as HttpsURLConnection
-        nConnection.connect()
+
+        if (nConnection == null) return@trackedTry ""
+
+        nConnection!!.connect()
 
         val nBufferReader =
-            BufferedReader(InputStreamReader(nConnection.inputStream))
+            BufferedReader(InputStreamReader(nConnection!!.inputStream))
         val nStringBuilder = StringBuilder()
         var line: String
         while (nBufferReader.readLine().also { line = it ?: "" } != null) {
@@ -30,20 +39,6 @@ fun String.getJsonContent(): String {
 
         nBufferReader.close()
 
-        return nStringBuilder.toString()
-    } catch (ex: MalformedURLException) {
-        ex.printStackTrace()
-        errorLog(ex)
-    } catch (ex: IOException) {
-        ex.printStackTrace()
-        errorLog(ex)
-    } finally {
-        if (nConnection != null) {
-            trySimple {
-                nConnection.disconnect()
-            }
-        }
+        nStringBuilder.toString()
     }
-
-    return ""
 }

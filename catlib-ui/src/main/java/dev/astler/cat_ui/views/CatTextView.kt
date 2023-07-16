@@ -21,7 +21,7 @@ open class CatTextView @JvmOverloads constructor(
         val typedArray =
             context.theme.obtainStyledAttributes(attrs, R.styleable.CatTextView, 0, 0)
 
-        textSize = (if (!isInEditMode) gPreferencesTool.mTextSize else 18f) + typedArray.getInteger(
+        textSize = (if (!isInEditMode) gPreferencesTool.textSize else 18f) + typedArray.getInteger(
             R.styleable.CatTextView_textSizeModifier,
             0
         )

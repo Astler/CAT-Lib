@@ -26,30 +26,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".activity.TestMenu"
-            android:configChanges="uiMode"/>
-
-        <activity android:name=".activity.ShortcodeTextActivity" />
-
-        <activity android:name=".activity.ImageLoadersActivity"
-            android:theme="@style/ThemeOverlay.Shrine" />
-        <activity android:name=".activity.ads.AdsOpenItemListActivity"
-            android:theme="@style/ThemeOverlay.Shrine" />
-        <activity android:name=".activity.signin.SignInTestActivity"
-            android:theme="@style/ThemeOverlay.Shrine" />
-        <activity
-            android:name=".activity.ads.AdsTestMenu"
-            android:theme="@style/ThemeOverlay.Shrine" />
-        <activity
-            android:name=".activity.AsyncListActivity"
-            android:theme="@style/ThemeOverlay.Shrine" />
-        <activity
-            android:name=".activity.WindowTestActivity"
-            android:theme="@style/ThemeOverlay.Shrine" />
-
-        <activity
-            android:name=".activity.TypewriterActivity"
+        <activity android:name=".activity.AdsOpenItemListActivity"
             android:theme="@style/ThemeOverlay.Shrine" />
 
         <meta-data
