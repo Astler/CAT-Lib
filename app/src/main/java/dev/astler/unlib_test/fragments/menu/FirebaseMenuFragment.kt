@@ -5,6 +5,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.catlib.utils.toast
+import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.data.TestBaseItem
 import dev.astler.unlib_test.fragments.menu.TestsMenuFragment
@@ -19,9 +20,9 @@ class FirebaseMenuFragment : TestsMenuFragment() {
 
 
     override val menuItems = listOf(
-        TestBaseItem(R.string.messaging_subscribe, R.drawable.ic_launcher_foreground, 3, uid = messagingSubscribeKey),
-        TestBaseItem(R.string.analytics, R.drawable.ic_launcher_foreground, 3, uid = analyticsKey),
-        TestBaseItem(R.string.remote_config, R.drawable.ic_launcher_foreground, 4, uid = remoteConfigKey),
+        BaseCard(TestBaseItem(R.string.messaging_subscribe, R.drawable.ic_launcher_foreground, 3, uid = messagingSubscribeKey)),
+        BaseCard(TestBaseItem(R.string.analytics, R.drawable.ic_launcher_foreground, 3, uid = analyticsKey)),
+        BaseCard(TestBaseItem(R.string.remote_config, R.drawable.ic_launcher_foreground, 4, uid = remoteConfigKey)),
     )
 
     override fun menuItemClicked(uid: String) {

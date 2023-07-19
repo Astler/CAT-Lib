@@ -13,6 +13,7 @@ import dev.astler.catlib.utils.isDebuggable
 import dev.astler.catlib.utils.isOnline
 import dev.astler.catlib.utils.isPackageInstalled
 import dev.astler.catlib.utils.isPackageInstalledAlt
+import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.data.TestBaseItem
 import dev.astler.unlib_test.items.ClickableItem
@@ -27,11 +28,11 @@ class TechMenuFragment : TestsMenuFragment() {
     private val themePreviewKey = "ThemePreview"
 
     override val menuItems = listOf(
-        TestBaseItem(dev.astler.catlib.ui.R.string.app_theme, R.drawable.ic_launcher_foreground, 3, uid = themePreviewKey),
-        TestBaseItem(dev.astler.catlib.ui.R.string.language, R.drawable.ic_launcher_foreground, 3, uid = languagesPreviewKey),
-        TestBaseItem(R.string.debuggable_info, R.drawable.ic_launcher_foreground, 3, uid = debuggableInfoKey),
-        TestBaseItem(R.string.my_apps_tracker, R.drawable.ic_launcher_foreground, 3, uid = myAppsTrackerInfoKey),
-        TestBaseItem(R.string.services_info, R.drawable.ic_launcher_foreground, 3, uid = servicesInfoKey),
+        BaseCard(TestBaseItem(dev.astler.catlib.ui.R.string.app_theme, R.drawable.ic_launcher_foreground, 3, uid = themePreviewKey)),
+        BaseCard(TestBaseItem(dev.astler.catlib.ui.R.string.language, R.drawable.ic_launcher_foreground, 3, uid = languagesPreviewKey)),
+        BaseCard(TestBaseItem(R.string.debuggable_info, R.drawable.ic_launcher_foreground, 3, uid = debuggableInfoKey)),
+        BaseCard(TestBaseItem(R.string.my_apps_tracker, R.drawable.ic_launcher_foreground, 3, uid = myAppsTrackerInfoKey)),
+        BaseCard(TestBaseItem(R.string.services_info, R.drawable.ic_launcher_foreground, 3, uid = servicesInfoKey)),
     )
 
     override fun menuItemClicked(uid: String) {

@@ -2,6 +2,7 @@ package dev.astler.unlib_test.fragments.menu
 
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.data.TestBaseItem
 
@@ -10,10 +11,12 @@ class ComposeMenuFragment : TestsMenuFragment() {
 
     private val dynamicComposeKey = "DynamicCompose"
     private val typewriterKey = "Typewriter"
+    private val collapsingToolbarKey = "CollapsingToolbar"
 
     override val menuItems = listOf(
-        TestBaseItem(R.string.app_name, R.drawable.ic_launcher_foreground, 2, uid = dynamicComposeKey),
-        TestBaseItem(R.string.typewriter, R.drawable.ic_launcher_foreground, 2, uid = typewriterKey),
+        BaseCard(TestBaseItem(R.string.app_name, R.drawable.ic_launcher_foreground, 2, uid = dynamicComposeKey)),
+        BaseCard(TestBaseItem(R.string.typewriter, R.drawable.ic_launcher_foreground, 2, uid = typewriterKey)),
+        BaseCard(TestBaseItem(R.string.typewriter, R.drawable.ic_launcher_foreground, 6, uid = collapsingToolbarKey)),
     )
 
     override fun menuItemClicked(uid: String) {
@@ -24,6 +27,10 @@ class ComposeMenuFragment : TestsMenuFragment() {
 
             typewriterKey -> {
                 findNavController().navigate(R.id.action_global_typewriterComposeFragment)
+            }
+
+            collapsingToolbarKey -> {
+                findNavController().navigate(R.id.action_global_collapsingToolbarFragment)
             }
         }
     }

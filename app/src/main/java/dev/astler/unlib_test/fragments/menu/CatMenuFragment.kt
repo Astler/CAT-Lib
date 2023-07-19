@@ -4,6 +4,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.utils.dialogs.okDialog
 import dev.astler.catlib.config.AppConfig
+import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.data.TestBaseItem
 import javax.inject.Inject
@@ -18,8 +19,8 @@ class CatMenuFragment: TestsMenuFragment() {
     private val catCodeKey = "CatCode"
 
     override val menuItems = listOf(
-        TestBaseItem(R.string.app_config_preview, R.drawable.ic_launcher_foreground, 2, uid = appConfigPreviewKey),
-        TestBaseItem(R.string.code, R.drawable.ic_launcher_foreground, 2, uid = catCodeKey),
+        BaseCard(TestBaseItem(R.string.app_config_preview, R.drawable.ic_launcher_foreground, 2, uid = appConfigPreviewKey)),
+        BaseCard(TestBaseItem(R.string.code, R.drawable.ic_launcher_foreground, 2, uid = catCodeKey)),
     )
 
     override fun menuItemClicked(uid: String) {

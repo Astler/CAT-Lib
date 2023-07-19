@@ -141,4 +141,11 @@
     <action
         android:id="@+id/action_global_catCodeFragment"
         app:destination="@id/catCodeFragment" />
+    <fragment
+        android:id="@+id/collapsingToolbarFragment"
+        android:name="dev.astler.unlib_test.fragments.compose.CollapsingToolbarFragment"
+        android:label="CollapsingToolbarFragment" />
+    <action
+        android:id="@+id/action_global_collapsingToolbarFragment"
+        app:destination="@id/collapsingToolbarFragment" />
 </navigation>

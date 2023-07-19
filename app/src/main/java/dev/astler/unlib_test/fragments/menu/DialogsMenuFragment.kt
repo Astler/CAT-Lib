@@ -6,6 +6,7 @@ import dev.astler.cat_ui.utils.dialogs.exitDialog
 import dev.astler.cat_ui.utils.dialogs.okDialog
 import dev.astler.cat_ui.utils.dialogs.yesNoDialog
 import dev.astler.catlib.utils.toast
+import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.data.TestBaseItem
 
@@ -19,11 +20,11 @@ class DialogsMenuFragment : TestsMenuFragment() {
     private val okDialogKey = "OkDialog"
 
     override val menuItems = listOf(
-        TestBaseItem(R.string.yes_no_empty_dialog, R.drawable.ic_launcher_foreground, 2, uid = yesNoEmptyDialogKey),
-        TestBaseItem(R.string.yes_no_dialog, R.drawable.ic_launcher_foreground, 2, uid = yesNoDialogKey),
-        TestBaseItem(R.string.exit, R.drawable.ic_launcher_foreground, 2, uid = exitDialogKey),
-        TestBaseItem(R.string.confirm, R.drawable.ic_launcher_foreground, 2, uid = confirmDialogKey),
-        TestBaseItem(R.string.ok, R.drawable.ic_launcher_foreground, 2, uid = okDialogKey),
+        BaseCard(TestBaseItem(R.string.yes_no_empty_dialog, R.drawable.ic_launcher_foreground, 2, uid = yesNoEmptyDialogKey)),
+        BaseCard(TestBaseItem(R.string.yes_no_dialog, R.drawable.ic_launcher_foreground, 2, uid = yesNoDialogKey)),
+        BaseCard(TestBaseItem(R.string.exit, R.drawable.ic_launcher_foreground, 2, uid = exitDialogKey)),
+        BaseCard(TestBaseItem(R.string.confirm, R.drawable.ic_launcher_foreground, 2, uid = confirmDialogKey)),
+        BaseCard(TestBaseItem(R.string.ok, R.drawable.ic_launcher_foreground, 2, uid = okDialogKey)),
     )
 
     override fun menuItemClicked(uid: String) {

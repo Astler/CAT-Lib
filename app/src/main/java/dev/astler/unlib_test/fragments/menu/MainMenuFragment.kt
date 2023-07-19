@@ -2,6 +2,9 @@ package dev.astler.unlib_test.fragments.menu
 
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.astler.unlib_compose.ui.compose.items.BaseCard
+import dev.astler.unlib_compose.ui.compose.items.ElevatedBaseCard
+import dev.astler.unlib_compose.ui.compose.items.FilledBaseCard
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.data.TestBaseItem
 
@@ -19,15 +22,15 @@ class MainMenuFragment : TestsMenuFragment() {
     private val catKey = "Cat"
 
     override val menuItems = listOf(
-        TestBaseItem(R.string.activities, R.drawable.ic_launcher_foreground, 3, uid = activitiesKey),
-        TestBaseItem(R.string.fragments, R.drawable.ic_launcher_foreground, 3, uid = fragmentsKey),
-        TestBaseItem(R.string.compose, R.drawable.ic_launcher_foreground, 3, uid = composeKey),
-        TestBaseItem(R.string.dialogs, R.drawable.ic_launcher_foreground, 3, uid = baseDialogsKey),
-        TestBaseItem(R.string.views, R.drawable.ic_launcher_foreground, 2, uid = viewsKey),
-        TestBaseItem(R.string.ads, R.drawable.ic_launcher_foreground, 2, uid = adsKey),
-        TestBaseItem(R.string.tech, R.drawable.ic_launcher_foreground, 2, uid = techKey),
-        TestBaseItem(R.string.firebase, R.drawable.ic_launcher_foreground, 3, uid = firebaseKey),
-        TestBaseItem(R.string.cat, R.drawable.ic_launcher_foreground, 3, uid = catKey),
+        BaseCard(TestBaseItem(R.string.activities, R.drawable.ic_launcher_foreground, 3, uid = activitiesKey)),
+        FilledBaseCard(TestBaseItem(R.string.fragments, R.drawable.ic_launcher_foreground, 3, uid = fragmentsKey)),
+        ElevatedBaseCard(TestBaseItem(R.string.compose, R.drawable.ic_launcher_foreground, 3, uid = composeKey)),
+        FilledBaseCard(TestBaseItem(R.string.dialogs, R.drawable.ic_launcher_foreground, 3, uid = baseDialogsKey)),
+        BaseCard(TestBaseItem(R.string.views, R.drawable.ic_launcher_foreground, 2, uid = viewsKey)),
+        FilledBaseCard(TestBaseItem(R.string.ads, R.drawable.ic_launcher_foreground, 2, uid = adsKey)),
+        ElevatedBaseCard(TestBaseItem(R.string.tech, R.drawable.ic_launcher_foreground, 2, uid = techKey)),
+        FilledBaseCard(TestBaseItem(R.string.firebase, R.drawable.ic_launcher_foreground, 3, uid = firebaseKey)),
+        BaseCard(TestBaseItem(R.string.cat, R.drawable.ic_launcher_foreground, 3, uid = catKey)),
     )
 
     override fun menuItemClicked(uid: String) {

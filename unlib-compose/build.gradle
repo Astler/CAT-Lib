@@ -62,13 +62,16 @@ dependencies {
     implementation project(':catlib-core')
     implementation project(':catlib-ui')
 
+    api "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
+
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
-    api "androidx.compose.material3:material3:1.1.0"
-    api "androidx.compose.material3:material3-window-size-class:1.1.0"
+    api "androidx.compose.material3:material3:1.1.1"
+    api "androidx.compose.material3:material3-window-size-class:1.1.1"
 
     api "androidx.compose.ui:ui-tooling:$compose_version"
+    api "androidx.compose.ui:ui-util:$compose_version"
     api "androidx.compose.ui:ui-tooling-preview:$compose_version"
     api "androidx.compose.ui:ui:$compose_version"
     api "androidx.compose.material:material:$compose_version"
@@ -76,9 +79,8 @@ dependencies {
     api "androidx.navigation:navigation-compose:2.7.0-beta01"
     api "androidx.compose.material:material-icons-extended:$compose_version"
     api "androidx.compose.runtime:runtime-livedata:$compose_version"
-    api "androidx.compose.compiler:compiler:1.4.7"
+    api "androidx.compose.compiler:compiler:1.4.8"
 
-    api 'com.google.accompanist:accompanist-systemuicontroller:0.29.2-rc'
     api 'androidx.hilt:hilt-navigation-compose:1.0.0'
     api "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
     api "androidx.lifecycle:lifecycle-runtime-compose:2.6.1"
