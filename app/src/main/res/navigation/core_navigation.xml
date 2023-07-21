@@ -148,4 +148,18 @@
     <action
         android:id="@+id/action_global_collapsingToolbarFragment"
         app:destination="@id/collapsingToolbarFragment" />
+    <fragment
+        android:id="@+id/catDefaultSettingsFragment"
+        android:name="dev.astler.cat_ui.fragments.CatDefaultSettingsFragment"
+        android:label="CatDefaultSettingsFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="dev.astler.unlib_test.fragments.SettingsFragment"
+        android:label="SettingsFragment" />
+    <action
+        android:id="@+id/action_global_settingsFragment"
+        app:destination="@id/settingsFragment" />
+    <action
+        android:id="@+id/action_global_catDefaultSettingsFragment"
+        app:destination="@id/catDefaultSettingsFragment" />
 </navigation>

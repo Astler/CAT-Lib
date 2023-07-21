@@ -10,16 +10,22 @@ import dev.astler.unlib_test.fragments.menu.TestsMenuFragment
 @AndroidEntryPoint
 class FragmentsMenuFragment: TestsMenuFragment() {
 
-    private val shortCodePreviewKey = ""
+    private val settingsLocal = "settingsFragment"
+    private val settingsCat = "settingsFragmentCat"
 
     override val menuItems = listOf(
-        BaseCard(TestBaseItem(R.string.short_code_view, R.drawable.ic_launcher_foreground, 2, uid = shortCodePreviewKey)),
+        BaseCard(TestBaseItem(R.string.short_code_view, R.drawable.ic_launcher_foreground, 2, uid = settingsLocal)),
+        BaseCard(TestBaseItem(R.string.short_code_view, R.drawable.ic_launcher_foreground, 2, uid = settingsCat)),
     )
 
     override fun menuItemClicked(uid: String) {
         when (uid) {
-            shortCodePreviewKey -> {
-                findNavController().navigate(R.id.action_global_shortCodePreviewFragment)
+            settingsLocal -> {
+                findNavController().navigate(R.id.action_global_settingsFragment)
+            }
+
+            settingsCat -> {
+                findNavController().navigate(R.id.action_global_catDefaultSettingsFragment)
             }
         }
     }
