@@ -11,6 +11,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -35,11 +37,18 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.astler.unlib_compose.data.IFlexibleItem
 import dev.astler.unlib_compose.interfaces.IComposeItem
 import kotlinx.coroutines.delay
@@ -49,7 +58,7 @@ import kotlinx.coroutines.launch
 class ElevatedBaseCard(override val item: IFlexibleItem) : IComposeItem<IFlexibleItem, String> {
 
     @Composable
-    override fun Content(onClick: ((String) -> Unit)?) {
+    override fun Content(modifier: Modifier, onClick: ((String) -> Unit)?) {
         val colors = MaterialTheme.colorScheme
 
         ElevatedCard(
@@ -82,17 +91,38 @@ class ElevatedBaseCard(override val item: IFlexibleItem) : IComposeItem<IFlexibl
                     }
 
                     item.titleId?.let { titleId ->
-                        Text(
-                            text = stringResource(titleId),
+                        val fullText = stringResource(titleId)
+
+                        Box(
                             modifier = Modifier
-                                .fillMaxSize()
-                                .absolutePadding(left = 8.dp, right = 8.dp, bottom = 8.dp, top = 2.dp),
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold,
-                            color = colors.onSurface,
-                            maxLines = 2,
-                            style = androidx.compose.material.MaterialTheme.typography.h6
-                        )
+                                .fillMaxSize().height(IntrinsicSize.Min)
+                                .absolutePadding(left = 8.dp, right = 8.dp, bottom = 8.dp, top = 2.dp)
+                        ) {
+                            Text(
+                                text = "\n\n",
+                                color = Color.Transparent,
+                                maxLines = 2,
+                                style = androidx.compose.material.MaterialTheme.typography.h6
+                            )
+
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    text = fullText,
+                                    textAlign = TextAlign.Center,
+                                    fontWeight = FontWeight.Bold,
+                                    color = colors.onSurface,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis,
+                                    style = androidx.compose.material.MaterialTheme.typography.h6
+                                )
+                            }
+                        }
                     }
                 }
             }

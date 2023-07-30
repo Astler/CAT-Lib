@@ -53,4 +53,5 @@
     <string name="tracked_full_fallback_bad">Try Full Fall Bad</string>
     <string name="map_exist_value">Map Exist Value</string>
     <string name="map_missed_value">Map Missed Value</string>
+    <string name="static_grid">Static Grid</string>
 </resources>

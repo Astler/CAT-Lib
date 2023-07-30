@@ -30,7 +30,7 @@ fun <T: IFlexibleItem, B> FlexibleGrid(
     ) {
         items.forEach { card ->
             item(span = { GridItemSpan(card.item.size) }) {
-                card.Content(onClick = onItemClick)
+                card.Content(Modifier, onClick = onItemClick)
             }
         }
     }

@@ -162,4 +162,11 @@
     <action
         android:id="@+id/action_global_catDefaultSettingsFragment"
         app:destination="@id/catDefaultSettingsFragment" />
+    <fragment
+        android:id="@+id/staticGridComposeFragment"
+        android:name="dev.astler.unlib_test.fragments.compose.StaticGridComposeFragment"
+        android:label="StaticGridComposeFragment" />
+    <action
+        android:id="@+id/action_global_staticGridComposeFragment"
+        app:destination="@id/staticGridComposeFragment" />
 </navigation>
