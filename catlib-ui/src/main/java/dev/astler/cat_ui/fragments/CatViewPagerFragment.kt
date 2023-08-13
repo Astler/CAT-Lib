@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dev.astler.cat_ui.utils.views.setStatusPaddingForView
-import dev.astler.catlib.gPreferencesTool
 import dev.astler.catlib.ui.databinding.FragmentViewPager2Binding
 
 abstract class CatViewPagerFragment : CatFragment<FragmentViewPager2Binding>() {
@@ -20,19 +18,17 @@ abstract class CatViewPagerFragment : CatFragment<FragmentViewPager2Binding>() {
 
     abstract fun getAdapter(): FragmentStateAdapter
 
-    private val mFragmentWorldEditBinding by viewBinding<FragmentViewPager2Binding>()
-
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentViewPager2Binding
         get() = FragmentViewPager2Binding::inflate
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(mFragmentWorldEditBinding) {
+        with(binding) {
             viewPager.adapter = getAdapter()
 
             val nLastChosenItem =
-                gPreferencesTool.getInt(mSelectedPageSaveName, mSelectedDefaultValue)
+                preferences.getInt(mSelectedPageSaveName, mSelectedDefaultValue)
 
             viewPager.setCurrentItem(nLastChosenItem, false)
 
@@ -41,7 +37,7 @@ abstract class CatViewPagerFragment : CatFragment<FragmentViewPager2Binding>() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
 
-                    gPreferencesTool.edit(mSelectedPageSaveName, position)
+                    preferences.edit(mSelectedPageSaveName, position)
                 }
             })
 
@@ -60,11 +56,11 @@ abstract class CatViewPagerFragment : CatFragment<FragmentViewPager2Binding>() {
     }
 
     fun setPageTransformer(mPageTransformer: ViewPager2.PageTransformer? = null) {
-        mFragmentWorldEditBinding.viewPager.setPageTransformer(mPageTransformer)
+        binding.viewPager.setPageTransformer(mPageTransformer)
     }
 
     fun openPage(pPage: Int, pSmooth: Boolean = true) {
-        mFragmentWorldEditBinding.viewPager.setCurrentItem(pPage, pSmooth)
+        binding.viewPager.setCurrentItem(pPage, pSmooth)
     }
 
     fun firstPage(pSmooth: Boolean = true) {

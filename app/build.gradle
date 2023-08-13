@@ -11,7 +11,6 @@ plugins {
 }
 
 android {
-    compileSdk 33
 
     buildFeatures {
         viewBinding true
@@ -20,7 +19,8 @@ android {
     defaultConfig {
         applicationId "dev.astler.unlib_test"
         minSdkVersion 21
-        targetSdkVersion 33
+        compileSdk 34
+        targetSdkVersion 34
         versionCode 2
         versionName "1.0"
 
@@ -56,7 +56,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
 
     namespace 'dev.astler.unlib_test'
@@ -72,8 +72,8 @@ dependencies {
     implementation project(':unlib-compose')
     implementation project(':unlib-signin')
 
-    api "com.google.dagger:hilt-android:2.45"
-    kapt "com.google.dagger:hilt-compiler:2.45"
+    api "com.google.dagger:hilt-android:2.47"
+    kapt "com.google.dagger:hilt-compiler:2.47"
 
 
     testImplementation 'junit:junit:4.13.2'
