@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AppConfig(
-    val proPackageName: String = "",
+    val mProPackageName: String = "",
     val mMainActivityPackage: String = "",
 
     val mRewardedAdId: String = "",
@@ -18,7 +18,7 @@ data class AppConfig(
 ) {
     override fun toString(): String {
         return """
-            Pro Version Package: ${proPackageName.ifEmpty { "No Pro Version" }}
+            Pro Version Package: ${mProPackageName.ifEmpty { "No Pro Version" }}
             Main Activity Package: ${mMainActivityPackage.ifEmpty { "---" }}
             Rewarded Id: ${mRewardedAdId.ifEmpty { "---" }}
             Interstitial Id: ${mInterstitialAdId.ifEmpty { "---" }}

@@ -16,15 +16,11 @@ import dev.astler.unlib_test.items.TextItem
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AdsOpenItemListActivity : CatActivity<ActivityRecyclerviewBinding>() {
+class AdsOpenItemListActivity : CatActivity<ActivityRecyclerviewBinding>(ActivityRecyclerviewBinding::inflate) {
 
     @Inject lateinit var adsTool: AdsTool
 
     private lateinit var mAdapter: OneItemAdsAdapter<TextItem>
-
-    override fun inflateBinding(layoutInflater: LayoutInflater): ActivityRecyclerviewBinding {
-        return ActivityRecyclerviewBinding.inflate(layoutInflater)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

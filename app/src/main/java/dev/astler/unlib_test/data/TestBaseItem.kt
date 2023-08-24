@@ -8,7 +8,7 @@ import java.util.UUID
 data class TestBaseItem(
     @StringRes val title: Int,
     @DrawableRes val icon: Int,
-    override val size: Int = 2,
+    override var size: Int = 2,
     val hasNewContent: Boolean = false,
     override val uid: String = UUID.randomUUID().toString()
 ) : IFlexibleItem {

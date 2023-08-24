@@ -26,11 +26,7 @@ import dev.astler.catlib.utils.toast
 const val cSignInModeExtra = "signInMode"
 
 @AndroidEntryPoint
-open class SignInActivity: CatActivity<SignInLayoutBinding>(), SignInActivityListener {
-
-    override fun inflateBinding(layoutInflater: LayoutInflater): SignInLayoutBinding {
-        return SignInLayoutBinding.inflate(layoutInflater)
-    }
+open class SignInActivity: CatActivity<SignInLayoutBinding>(SignInLayoutBinding::inflate), SignInActivityListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
