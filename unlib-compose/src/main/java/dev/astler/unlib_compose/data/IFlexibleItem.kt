@@ -11,5 +11,5 @@ interface IFlexibleItem {
     val titleId: Int?
 
     val uid: String
-    val size: Int
+    var size: Int
 }

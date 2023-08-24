@@ -50,7 +50,7 @@ abstract class CatComposeFragment : Fragment(), CoreFragmentInterface, MenuProvi
             activity?.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         }
 
-        val composeView = ComposeView(requireContext()).apply {
+        val composeView = ComposeView(safeContext).apply {
             setContent {
                 CatComposeTheme(null) {
                     ScreenContent()

@@ -11,12 +11,12 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import javax.inject.Singleton
 
-//@Module
-//@InstallIn(SingletonComponent::class)
-//abstract class SettingsModule {
-//    @Binds
-//    @Singleton
-//    abstract fun bindUserSettings(
-//        userSettingsImpl: SettingsImpl
-//    ): Settings
-//}
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class SettingsModule {
+    @Binds
+    @Singleton
+    abstract fun bindUserSettings(
+        userSettingsImpl: SettingsImpl
+    ): Settings
+}
