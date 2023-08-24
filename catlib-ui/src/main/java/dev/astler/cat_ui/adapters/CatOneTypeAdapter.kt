@@ -9,7 +9,6 @@ import dev.astler.cat_ui.adapters.diffutils.UniversalDiffUtil
 import dev.astler.cat_ui.adapters.viewholders.CatOneTypeViewHolder
 import dev.astler.cat_ui.interfaces.RecyclerAdapterSizeListener
 
-
 fun interface ILoadItem<T> {
     fun loadData(data: T, holder: CatOneTypeViewHolder)
 }

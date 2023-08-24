@@ -3,14 +3,17 @@ package dev.astler.cat_ui.activities
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.ConfigurationCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -26,7 +29,6 @@ import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
 import com.zeugmasolutions.localehelper.Locales
-import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.StartTimeKey
 import dev.astler.cat_ui.appResumeTime
 import dev.astler.cat_ui.fragments.IInternetDependentFragment
@@ -45,7 +47,7 @@ import java.util.GregorianCalendar
 import java.util.Locale
 import javax.inject.Inject
 
-abstract class CatActivity<T : ViewBinding> : LocaleAwareCompatActivity(),
+abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (LayoutInflater) -> T) : LocaleAwareCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener,
     ICatActivity, IRootInsets, IRemoteConfigListener {
 
@@ -81,9 +83,7 @@ abstract class CatActivity<T : ViewBinding> : LocaleAwareCompatActivity(),
         ReviewManagerFactory.create(this)
     }
 
-    override fun onFetchCompleted() {
-
-    }
+    override fun onFetchCompleted() {}
 
     private val _connectivityManager: ConnectivityManager by lazy {
         getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -119,15 +119,24 @@ abstract class CatActivity<T : ViewBinding> : LocaleAwareCompatActivity(),
         onBackPressedDispatcher.onBackPressed()
     }
 
-    protected abstract fun inflateBinding(layoutInflater: LayoutInflater): T
+    protected inline fun <reified T : ViewBinding> inflateBinding(): T {
+        return T::class.java.getMethod("inflate", LayoutInflater::class.java)
+            .invoke(null, layoutInflater) as T
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
+
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+        )
+
         super.onCreate(savedInstanceState)
 
-        binding = inflateBinding(layoutInflater)
+        binding = bindingInflater(layoutInflater)
         setContentView(binding.root)
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         EdgeToEdgeUtils.applyEdgeToEdge(window, true)
         AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
 
@@ -145,10 +154,7 @@ abstract class CatActivity<T : ViewBinding> : LocaleAwareCompatActivity(),
         }
 
         if (preferencesTool.isFirstStartForVersion(appVersionCode())) {
-            preferencesTool.edit(
-                PreferencesTool.appFirstStartTime,
-                GregorianCalendar().timeInMillis
-            )
+            preferencesTool.appFirstStartTime = GregorianCalendar().timeInMillis
 
             onFirstStartCurrentVersion()
 
@@ -169,6 +175,9 @@ abstract class CatActivity<T : ViewBinding> : LocaleAwareCompatActivity(),
                 errorLog(e, "error during requestReviewFlow")
             }
         }
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = Color.TRANSPARENT
     }
 
     /**

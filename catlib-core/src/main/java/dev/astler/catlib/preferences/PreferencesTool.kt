@@ -25,7 +25,7 @@ open class PreferencesTool @Inject constructor(context: Context) {
         const val firstStartKey = "firstStart"
         const val dayWithoutAdsKey = "dayWithoutAds"
 
-        const val appFirstStartTime = "appFirstStartTime"
+        const val appFirstStartTimeKey = "appFirstStartTime"
     }
 
     private var mPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -42,6 +42,12 @@ open class PreferencesTool @Inject constructor(context: Context) {
     }
 
     private fun getPreferences(): SharedPreferences = mPreferences
+
+    var appFirstStartTime: Long
+        get() = getLong(appFirstStartTimeKey, 0L)
+        set(value) {
+            edit(appFirstStartTimeKey, value)
+        }
 
     var textSize: Float
         get() = (getPreferences().getString(textSizeKey, textSizeDefault))?.toFloat() ?: 18f
