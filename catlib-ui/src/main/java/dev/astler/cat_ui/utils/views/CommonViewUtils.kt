@@ -2,30 +2,30 @@ package dev.astler.cat_ui.utils.views
 
 import android.view.View
 
-fun View.showView() {
+fun View.visible() {
     visibility = View.VISIBLE
 }
 
-fun View.goneView() {
+fun View.gone() {
     visibility = View.GONE
 }
 
-fun showViews(vararg viewsToShow: View) {
+fun visible(vararg viewsToShow: View) {
     viewsToShow.forEach {
-        it.showView()
+        it.visible()
     }
 }
 
-fun goneViews(vararg viewsToHide: View) {
+fun gone(vararg viewsToHide: View) {
     viewsToHide.forEach {
-        it.goneView()
+        it.gone()
     }
 }
 
-fun View.showViewWithCondition(pCondition: Boolean) {
-    if (pCondition) {
-        showView()
+fun View.showViewWithCondition(condition: Boolean) {
+    if (condition) {
+        visible()
     } else {
-        goneView()
+        gone()
     }
 }

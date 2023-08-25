@@ -4,8 +4,14 @@ import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.billingclient.api.* 
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.ProductDetails
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryProductDetailsParams.Product
+import com.android.billingclient.api.QueryPurchasesParams
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.astler.catlib.cBillingNoAdsName
 import dev.astler.catlib.config.AppConfig
@@ -79,11 +85,9 @@ class BillingViewModel @Inject constructor(
 
         if (productDetails == null) return
 
-        val nonNullDetails = productDetails as ProductDetails
-
         val productDetailsParamsList = listOf(
             BillingFlowParams.ProductDetailsParams.newBuilder()
-                .setProductDetails(nonNullDetails)
+                .setProductDetails(productDetails!!)
                 .build()
         )
 

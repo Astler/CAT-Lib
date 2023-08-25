@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import dev.astler.catlib.utils.infoLog
-import dev.astler.cat_ui.utils.views.goneView
-import dev.astler.cat_ui.utils.views.showView
+import dev.astler.cat_ui.utils.views.gone
+import dev.astler.cat_ui.utils.views.visible
 import dev.astler.catlib.ads.databinding.ItemAdBinding
 
 class AdItemViewHolder(view: View) :
@@ -32,30 +32,30 @@ class AdItemViewHolder(view: View) :
 
         if (pNativeAd == null || !pCanShowAds) {
             infoLog("HIDE AD >.<", "Ads")
-            itemBinding.adHeadline.goneView()
-            itemBinding.nativeAd.goneView()
+            itemBinding.adHeadline.gone()
+            itemBinding.nativeAd.gone()
         } else {
             infoLog("SHOW AD >.<", "Ads")
-            itemBinding.adHeadline.showView()
-            itemBinding.nativeAd.showView()
+            itemBinding.adHeadline.visible()
+            itemBinding.nativeAd.visible()
 
             (adView.headlineView as TextView).text = pNativeAd.headline
             (adView.bodyView as TextView).text = pNativeAd.body
 
             if (pNativeAd.icon == null) {
-                adView.iconView?.goneView()
-                itemBinding.adAppIconCard.goneView()
+                adView.iconView?.gone()
+                itemBinding.adAppIconCard.gone()
             } else {
                 (adView.iconView as ImageView).setImageDrawable(pNativeAd.icon?.drawable)
-                adView.iconView?.showView()
-                itemBinding.adAppIconCard.showView()
+                adView.iconView?.visible()
+                itemBinding.adAppIconCard.visible()
             }
 
             if (pNativeAd.callToAction != null) {
-                adView.callToActionView?.showView()
+                adView.callToActionView?.visible()
                 (adView.callToActionView as TextView).text = pNativeAd.callToAction
             } else {
-                adView.callToActionView?.goneView()
+                adView.callToActionView?.gone()
             }
 
             adView.setNativeAd(pNativeAd)

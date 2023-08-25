@@ -2,20 +2,28 @@ package dev.astler.cat_ui.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
-import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.interfaces.ICatActivity
 import dev.astler.cat_ui.interfaces.CoreFragmentInterface
+import dev.astler.cat_ui.interfaces.ICatActivity
 import dev.astler.cat_ui.interfaces.IRootInsets
 import dev.astler.cat_ui.utils.getStringResource
+import dev.astler.cat_ui.utils.views.setNavigationPaddingForView
+import dev.astler.cat_ui.utils.views.setStatusAndNavigationPaddingForView
+import dev.astler.cat_ui.utils.views.setStatusPaddingForView
 import dev.astler.catlib.preferences.PreferencesTool
 import javax.inject.Inject
 
-abstract class CatFragment<VB : ViewBinding> : Fragment(), CoreFragmentInterface, MenuProvider {
+abstract class CatFragment<VB : ViewBinding>(private val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB) :
+    Fragment(), CoreFragmentInterface, MenuProvider {
 
     @Inject
     lateinit var preferences: PreferencesTool
@@ -29,7 +37,6 @@ abstract class CatFragment<VB : ViewBinding> : Fragment(), CoreFragmentInterface
     protected lateinit var safeContext: Context
     protected val binding get() = _binding!!
 
-    abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
     open val addMenuProvider: Boolean = true
 
     override fun onAttach(context: Context) {
@@ -81,5 +88,35 @@ abstract class CatFragment<VB : ViewBinding> : Fragment(), CoreFragmentInterface
 
     fun getStringByName(pName: String, pReturnDef: String = ""): String {
         return safeContext.getStringResource(pName, returnDef = pReturnDef)
+    }
+
+    fun applyPaddingPattern(pattern: InsetsPattern, viewToImplement: View) {
+        when (pattern) {
+            InsetsPattern.SYSTEM_WITH_ACTION_BAR -> {
+                viewToImplement.setStatusAndNavigationPaddingForView(
+                    pAdditionalTopPadding = rootInsets?.toolbarHeight ?: 0
+                )
+            }
+
+            InsetsPattern.SYSTEM -> {
+                viewToImplement.setStatusAndNavigationPaddingForView()
+            }
+
+            InsetsPattern.BOTTOM -> {
+                viewToImplement.setNavigationPaddingForView()
+            }
+
+            InsetsPattern.TOP -> {
+                viewToImplement.setStatusPaddingForView()
+            }
+
+            InsetsPattern.TOP_WITH_ACTION_BAR -> {
+                viewToImplement.setStatusPaddingForView(
+                    pAdditionalTopPadding = rootInsets?.toolbarHeight ?: 0
+                )
+            }
+
+            else -> {}
+        }
     }
 }

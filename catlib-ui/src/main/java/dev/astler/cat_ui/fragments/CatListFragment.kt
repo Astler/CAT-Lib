@@ -1,115 +1,45 @@
 package dev.astler.cat_ui.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import dev.astler.cat_ui.views.CatStateLayout
 import dev.astler.cat_ui.interfaces.RecyclerAdapterSizeListener
 import dev.astler.cat_ui.utils.views.*
-import dev.astler.catlib.utils.canShowAds
+import dev.astler.cat_ui.views.CatStateLayout
 import dev.astler.catlib.ui.databinding.RecyclerViewFragmentBinding
 
-enum class ListInsetsType {
+enum class InsetsPattern {
     SYSTEM_WITH_ACTION_BAR, SYSTEM, TOP, TOP_WITH_ACTION_BAR, BOTTOM, DISMISS
 }
 
-abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(),
+abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(RecyclerViewFragmentBinding::inflate),
     RecyclerAdapterSizeListener {
 
-    private lateinit var mRecyclerViewFragmentBinding: RecyclerViewFragmentBinding
-    lateinit var mStateLayout: CatStateLayout
-    lateinit var mRecyclerView: RecyclerView
-    lateinit var mFABView: FloatingActionButton
-    protected open var mFABVisible = false
-    protected open var mWithBottomAds = false
-    protected open var mListInsetsType = ListInsetsType.BOTTOM
+    protected open var showFloatingActionButton = false
+    protected open var insetsPattern = InsetsPattern.BOTTOM
 
     override fun setLoadedItems(size: Int) {
-        if (size <= 0) {
-            mStateLayout.activeView = CatStateLayout.errorView
+        binding.stateLayout.activeView = if (size <= 0) {
+            CatStateLayout.errorView
         } else {
-            mStateLayout.activeView = CatStateLayout.defaultView
+            CatStateLayout.defaultView
         }
     }
 
     open fun onFABClick() {}
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> RecyclerViewFragmentBinding
-        get() = RecyclerViewFragmentBinding::inflate
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val nView = super.onCreateView(inflater, container, savedInstanceState)
+        with(binding) {
+            stateLayout.activeView = CatStateLayout.loadingView
 
-        mRecyclerViewFragmentBinding =
-            if (nView == null) RecyclerViewFragmentBinding.inflate(inflater, container, false)
-            else RecyclerViewFragmentBinding.bind(nView)
+            fab.showViewWithCondition(showFloatingActionButton)
+            fab.setOnClickListener { onFABClick() }
+            fab.setBottomMarginInsets()
 
-        mStateLayout = mRecyclerViewFragmentBinding.stateLayout
-        mRecyclerView = mRecyclerViewFragmentBinding.recyclerView
-        mFABView = mRecyclerViewFragmentBinding.fab
+            recyclerView.hideFABOnScroll(fab)
 
-        mStateLayout.activeView = CatStateLayout.loadingView
-
-        if (mFABVisible) {
-            mFABView.visibility = View.VISIBLE
-
-            mFABView.setOnClickListener { onFABClick() }
-
-            mRecyclerView.hideFABOnScroll(mFABView)
-        } else {
-            mFABView.visibility = View.GONE
+            applyPaddingPattern(insetsPattern, recyclerView)
         }
-
-        mFABView.setBottomMarginInsets()
-
-        when (mListInsetsType) {
-            ListInsetsType.SYSTEM_WITH_ACTION_BAR -> {
-                val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds(preferences))
-
-                if (nAddBottomPadding)
-                    mRecyclerView.setStatusAndNavigationPaddingForView(
-                        pAdditionalTopPadding = rootInsets?.toolbarHeight ?: 0
-                    )
-                else mRecyclerView.setStatusPaddingForView(
-                    pAdditionalTopPadding = rootInsets?.toolbarHeight ?: 0
-                )
-            }
-
-            ListInsetsType.SYSTEM -> {
-                val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds(preferences))
-
-                if (nAddBottomPadding)
-                    mRecyclerView.setStatusAndNavigationPaddingForView()
-                else mRecyclerView.setStatusPaddingForView()
-            }
-
-            ListInsetsType.BOTTOM -> {
-                val nAddBottomPadding = !(mWithBottomAds && requireContext().canShowAds(preferences))
-
-                if (nAddBottomPadding)
-                    mRecyclerView.setNavigationPaddingForView()
-            }
-
-            ListInsetsType.TOP -> {
-                mRecyclerView.setStatusPaddingForView()
-            }
-
-            ListInsetsType.TOP_WITH_ACTION_BAR -> {
-                mRecyclerView.setStatusPaddingForView(
-                    pAdditionalTopPadding = rootInsets?.toolbarHeight ?: 0
-                )
-            }
-
-            else -> {}
-        }
-
-        return mRecyclerViewFragmentBinding.root
     }
 }

@@ -14,10 +14,7 @@ import dev.astler.catlib.utils.getBitmapFromAsset
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityImagesBinding
 
-class ImageLoadVariantsFragment: CatFragment<ActivityImagesBinding>() {
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> ActivityImagesBinding
-        get() = ActivityImagesBinding::inflate
-
+class ImageLoadVariantsFragment: CatFragment<ActivityImagesBinding>(ActivityImagesBinding::inflate) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

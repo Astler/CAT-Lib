@@ -13,13 +13,10 @@ import dev.astler.cat_ui.utils.views.setStatusPaddingForView
 import dev.astler.catlib.ui.databinding.FragmentViewPager2ToolbarBinding
 
 @AndroidEntryPoint
-abstract class CatViewPagerToolbarFragment : CatFragment<FragmentViewPager2ToolbarBinding>() {
+abstract class CatViewPagerToolbarFragment : CatFragment<FragmentViewPager2ToolbarBinding>(FragmentViewPager2ToolbarBinding::inflate) {
 
     abstract fun getPagerAdapter(): FragmentStateAdapter
     abstract val pagesNames: List<String>
-
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentViewPager2ToolbarBinding
-        get() = FragmentViewPager2ToolbarBinding::inflate
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

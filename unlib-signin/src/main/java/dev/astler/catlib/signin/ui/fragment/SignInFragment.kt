@@ -10,10 +10,7 @@ import dev.astler.catlib.signin.utils.authWithEmailAndPassword
 import dev.astler.catlib.signin.utils.signInWithGoogle
 import dev.astler.catlib.signin.databinding.SignInLayoutBinding
 
-open class SignInFragment : CatFragment<SignInLayoutBinding>() {
-
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> SignInLayoutBinding
-        get() = SignInLayoutBinding::inflate
+open class SignInFragment : CatFragment<SignInLayoutBinding>(SignInLayoutBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

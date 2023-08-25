@@ -5,8 +5,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
-import dev.astler.cat_ui.utils.views.goneView
-import dev.astler.cat_ui.utils.views.showView
+import dev.astler.cat_ui.utils.views.gone
+import dev.astler.cat_ui.utils.views.visible
 import dev.astler.cat_ui.utils.views.showViewWithCondition
 import dev.astler.catlib.utils.adsLog
 import dev.astler.catlib.ads.databinding.ItemMediaAdBinding
@@ -47,10 +47,10 @@ class MediaAdItemViewHolder(view: View) : ViewHolder(view) {
             (_adView.bodyView as TextView).text = pNativeAd.body
 
             if (pNativeAd.callToAction != null) {
-                _adView.callToActionView?.showView()
+                _adView.callToActionView?.visible()
                 (_adView.callToActionView as TextView).text = pNativeAd.callToAction
             } else {
-                _adView.callToActionView?.goneView()
+                _adView.callToActionView?.gone()
             }
 
             _adView.setNativeAd(pNativeAd)

@@ -15,7 +15,7 @@ import dev.astler.cat_ui.views.CatStateLayout
 import dev.astler.catlib.ui.databinding.FragmentListToolbarBinding
 
 @AndroidEntryPoint
-abstract class CatListToolbarFragment : CatFragment<FragmentListToolbarBinding>(),
+abstract class CatListToolbarFragment : CatFragment<FragmentListToolbarBinding>(FragmentListToolbarBinding::inflate),
     RecyclerAdapterSizeListener {
 
     private var _recyclerView: RecyclerView? = null
@@ -30,9 +30,6 @@ abstract class CatListToolbarFragment : CatFragment<FragmentListToolbarBinding>(
         binding.stateLayout.activeView =
             if (size <= 0) CatStateLayout.errorView else CatStateLayout.defaultView
     }
-
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentListToolbarBinding
-        get() = FragmentListToolbarBinding::inflate
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

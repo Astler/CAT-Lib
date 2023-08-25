@@ -6,25 +6,25 @@ import androidx.annotation.StringRes
 fun TextView.safeSetText(@StringRes pResId: Int, pHideIfEmpty: Boolean = true) {
     if (pResId == -1) {
         if (pHideIfEmpty)
-            goneView()
+            gone()
         else
             text = ""
         return
     } else {
         setText(pResId)
-        showView()
+        visible()
     }
 }
 
 fun TextView.safeSetText(pText: String?, pHideIfEmpty: Boolean = true) {
     if (pText.isNullOrEmpty()) {
         if (pHideIfEmpty)
-            goneView()
+            gone()
         else
             text = ""
         return
     } else {
         text = pText
-        showView()
+        visible()
     }
 }

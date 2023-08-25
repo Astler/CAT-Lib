@@ -1,9 +1,7 @@
 package dev.astler.cat_ui.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -11,15 +9,12 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dev.astler.cat_ui.utils.views.setStatusPaddingForView
 import dev.astler.catlib.ui.databinding.FragmentViewPager2Binding
 
-abstract class CatViewPagerFragment : CatFragment<FragmentViewPager2Binding>() {
+abstract class CatViewPagerFragment : CatFragment<FragmentViewPager2Binding>(FragmentViewPager2Binding::inflate) {
 
     open val mSelectedPageSaveName: String = "selected_page"
     open val mSelectedDefaultValue: Int = 0
 
     abstract fun getAdapter(): FragmentStateAdapter
-
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentViewPager2Binding
-        get() = FragmentViewPager2Binding::inflate
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -28,11 +28,9 @@ import dev.astler.ads.utils.ageConfirmed
 import dev.astler.ads.utils.childAdsMode
 import dev.astler.ads.utils.lastAdsTime
 import dev.astler.ads.utils.rewardAdActive
-import dev.astler.cat_ui.ResumeTimeKey
-import dev.astler.cat_ui.StartTimeKey
 import dev.astler.cat_ui.appResumeTime
-import dev.astler.cat_ui.utils.views.goneView
-import dev.astler.cat_ui.utils.views.showView
+import dev.astler.cat_ui.utils.views.gone
+import dev.astler.cat_ui.utils.views.visible
 import dev.astler.catlib.ads.databinding.ItemAdBinding
 import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.preferences.PreferencesTool
@@ -320,22 +318,22 @@ class AdsTool @Inject constructor(
         pAdBindItem.adBody.text = body
 
         if (callToAction != null) {
-            pAdBindItem.install.showView()
+            pAdBindItem.install.visible()
             pAdBindItem.install.text = callToAction
         } else {
-            pAdBindItem.install.goneView()
+            pAdBindItem.install.gone()
         }
 
         if (icon == null) {
-            pAdBindItem.adAppIcon.goneView()
-            pAdBindItem.adAppIconCard.goneView()
+            pAdBindItem.adAppIcon.gone()
+            pAdBindItem.adAppIconCard.gone()
         } else {
             val nDrawable = icon?.drawable
 
             nDrawable?.let {
                 pAdBindItem.adAppIcon.setImageDrawable(it)
-                pAdBindItem.adAppIcon.showView()
-                pAdBindItem.adAppIconCard.showView()
+                pAdBindItem.adAppIcon.visible()
+                pAdBindItem.adAppIconCard.visible()
             }
         }
 
