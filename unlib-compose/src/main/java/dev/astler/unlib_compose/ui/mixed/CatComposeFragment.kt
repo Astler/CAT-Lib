@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import dev.astler.cat_ui.interfaces.ICatActivity
 import dev.astler.cat_ui.interfaces.CoreFragmentInterface
+import dev.astler.cat_ui.interfaces.IRootInsets
 import dev.astler.cat_ui.utils.getStringResource
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.unlib_compose.theme.CatComposeTheme
@@ -25,19 +26,24 @@ abstract class CatComposeFragment : Fragment(), CoreFragmentInterface, MenuProvi
     @Inject
     lateinit var preferences: PreferencesTool
 
+    @Suppress("MemberVisibilityCanBePrivate")
+    protected var rootInsets: IRootInsets? = null
+    @Suppress("MemberVisibilityCanBePrivate")
     protected var coreListener: ICatActivity? = null
     protected lateinit var safeContext: Context
 
-    open var fragmentTag = this::class.java.name
     open val addMenuProvider: Boolean = true
 
-    override fun onAttach(pContext: Context) {
-        super.onAttach(pContext)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
 
-        safeContext = pContext
+        safeContext = context
 
-        if (pContext is ICatActivity)
-            coreListener = pContext
+        if (context is ICatActivity)
+            coreListener = context
+
+        if (context is IRootInsets)
+            rootInsets = context
     }
 
     override fun onCreateView(

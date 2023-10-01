@@ -67,8 +67,8 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
-    api "androidx.compose.material3:material3:1.1.1"
-    api "androidx.compose.material3:material3-window-size-class:1.1.1"
+    api "androidx.compose.material3:material3:1.1.2"
+    api "androidx.compose.material3:material3-window-size-class:1.1.2"
 
     api "androidx.compose.ui:ui-tooling:$compose_version"
     api "androidx.compose.ui:ui-util:$compose_version"
