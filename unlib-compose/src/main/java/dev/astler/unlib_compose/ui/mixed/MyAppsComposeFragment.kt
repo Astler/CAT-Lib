@@ -6,7 +6,7 @@ import dev.astler.unlib_compose.screens.apps.AppItem
 import dev.astler.unlib_compose.screens.apps.nAppsData
 
 @AndroidEntryPoint
-class MyAppsComposeFragment : ListComposeFragment<AppItem>() {
+open class MyAppsComposeFragment : ListComposeFragment<AppItem>() {
 
     @Composable
     override fun ScreenContent() {
