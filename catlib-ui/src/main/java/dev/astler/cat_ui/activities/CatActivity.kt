@@ -11,8 +11,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.ConfigurationCompat
+import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -47,7 +49,7 @@ import java.util.GregorianCalendar
 import java.util.Locale
 import javax.inject.Inject
 
-abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (LayoutInflater) -> T) : LocaleAwareCompatActivity(),
+abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (LayoutInflater) -> T) : AppCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener,
     ICatActivity, IRootInsets, IRemoteConfigListener {
 
@@ -232,15 +234,8 @@ abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (Layout
         }
 
         if (key == PreferencesTool.appLocaleKey) {
-            updateLocale(
-                when (preferencesTool.appLanguage) {
-                    "ru" -> Locales.Russian
-                    "uk" -> Locales.Ukrainian
-                    "en" -> Locales.English
-                    else -> ConfigurationCompat.getLocales(Resources.getSystem().configuration)
-                        .get(0) ?: Locale.ENGLISH
-                }
-            )
+            val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(sharedPreferences?.getString(key, "en"))
+            AppCompatDelegate.setApplicationLocales(appLocale)
         }
     }
 

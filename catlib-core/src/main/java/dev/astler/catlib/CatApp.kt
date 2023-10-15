@@ -1,5 +1,6 @@
 package dev.astler.catlib
 
+import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -32,7 +33,7 @@ fun getDefaultNightMode() = when (CatApp.prefs.appTheme) {
     }
 }
 
-open class CatApp : LocaleAwareApplication(), SharedPreferences.OnSharedPreferenceChangeListener {
+open class CatApp : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     companion object {
         lateinit var prefs: PreferencesTool

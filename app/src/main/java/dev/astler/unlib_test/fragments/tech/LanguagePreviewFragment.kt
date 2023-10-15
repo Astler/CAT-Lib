@@ -1,5 +1,6 @@
 package dev.astler.unlib_test.fragments.tech
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -23,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.os.LocaleListCompat
 import com.zeugmasolutions.localehelper.Locales
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.catlib.utils.activeLanguage
@@ -101,7 +103,8 @@ class LanguagePreviewFragment : CatComposeFragment() {
             border = BorderStroke(if (isSelected) 4.dp else 1.dp, if (isSelected) colors.primary else colors.onSurface),
             onClick = {
                 if (activity is CatActivity<*>) {
-                    (activity as CatActivity<*>).updateLocale(item)
+                    val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(item.language)
+                    AppCompatDelegate.setApplicationLocales(appLocale)
                 }
             },
         ) {
