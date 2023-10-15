@@ -2,7 +2,6 @@ package dev.astler.cat_ui.activities
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Resources
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.Network
@@ -13,7 +12,6 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.ConfigurationCompat
 import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
@@ -29,8 +27,6 @@ import com.google.android.play.core.review.ReviewException
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
-import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
-import com.zeugmasolutions.localehelper.Locales
 import dev.astler.cat_ui.StartTimeKey
 import dev.astler.cat_ui.appResumeTime
 import dev.astler.cat_ui.fragments.IInternetDependentFragment
@@ -46,7 +42,6 @@ import dev.astler.catlib.utils.isOnline
 import dev.astler.catlib.utils.isPlayStoreInstalled
 import kotlinx.coroutines.launch
 import java.util.GregorianCalendar
-import java.util.Locale
 import javax.inject.Inject
 
 abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (LayoutInflater) -> T) : AppCompatActivity(),

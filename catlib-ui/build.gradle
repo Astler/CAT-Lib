@@ -54,7 +54,6 @@ android {
 
 dependencies {
     implementation project(':catlib-core')
-    api 'com.zeugmasolutions.localehelper:locale-helper-android:1.5.1'
     api 'androidx.core:core-splashscreen:1.0.1'
     api 'com.facebook.shimmer:shimmer:0.5.0'
 

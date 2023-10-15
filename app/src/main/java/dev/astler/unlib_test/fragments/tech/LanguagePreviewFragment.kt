@@ -25,7 +25,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.os.LocaleListCompat
-import com.zeugmasolutions.localehelper.Locales
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.catlib.utils.activeLanguage
 import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
@@ -35,9 +34,9 @@ import java.util.Locale
 class LanguagePreviewFragment : CatComposeFragment() {
 
     private val menuItems = listOf(
-        Locales.English,
-        Locales.Russian,
-        Locales.Ukrainian
+        Locale.ENGLISH,
+        Locale("ru"),
+        Locale("ua"),
     )
 
     @Composable
@@ -62,6 +61,16 @@ class LanguagePreviewFragment : CatComposeFragment() {
 
             Text(
                 text = stringResource(id = R.string.app_name),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold,
+                color = colors.secondary,
+            )
+
+            Text(
+                text = activity?.applicationContext?.getString(R.string.app_name) ?: "TUPO NULL",
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),
