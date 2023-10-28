@@ -8,7 +8,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
-import dev.astler.catlib.utils.infoLog
+import dev.astler.catlib.helpers.infoLog
 import dev.astler.catlib.signin.R
 
 class SignInActivityContract : ActivityResultContract<String, Task<GoogleSignInAccount>?>() {

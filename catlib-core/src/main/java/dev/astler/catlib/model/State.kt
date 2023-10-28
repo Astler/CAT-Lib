@@ -1,6 +1,6 @@
 package dev.astler.catlib.model
 
-import dev.astler.catlib.utils.infoLog
+import dev.astler.catlib.helpers.infoLog
 
 
 sealed class State<T> {

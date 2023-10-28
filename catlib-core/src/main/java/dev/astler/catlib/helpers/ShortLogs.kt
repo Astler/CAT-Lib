@@ -1,4 +1,4 @@
-package dev.astler.catlib.utils
+package dev.astler.catlib.helpers
 
 import android.util.Log
 import com.google.firebase.crashlytics.ktx.crashlytics

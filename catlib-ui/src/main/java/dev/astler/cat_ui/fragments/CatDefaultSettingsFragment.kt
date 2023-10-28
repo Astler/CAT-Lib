@@ -7,7 +7,6 @@ import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.interfaces.ICatActivity
 import dev.astler.catlib.preferences.PreferencesTool
-import dev.astler.catlib.utils.canShowAds
 import dev.astler.catlib.ui.R
 import javax.inject.Inject
 
@@ -37,7 +36,7 @@ open class CatDefaultSettingsFragment : PreferenceFragmentCompat() {
 //            true
 //        }
 
-        noAdsItem?.isVisible = requireContext().canShowAds(preferences)
+//        noAdsItem?.isVisible = requireContext().canShowAds(preferences)
     }
 
     override fun onResume() {

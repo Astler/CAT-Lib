@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import dev.astler.catlib.compose.R
-import dev.astler.catlib.utils.infoLog
+import dev.astler.catlib.helpers.infoLog
 import kotlin.math.roundToInt
 
 private val ContentPadding = 8.dp

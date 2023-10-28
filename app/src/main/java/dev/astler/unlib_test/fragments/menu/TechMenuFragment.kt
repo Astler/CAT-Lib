@@ -3,20 +3,14 @@ package dev.astler.unlib_test.fragments.menu
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.utils.dialogs.okDialog
-import dev.astler.cat_ui.utils.isAppDarkTheme
-import dev.astler.cat_ui.utils.isSystemDarkMode
-import dev.astler.catlib.gPreferencesTool
-import dev.astler.catlib.utils.canShowAds
+import dev.astler.catlib.extensions.isDebuggable
+import dev.astler.catlib.extensions.isOnline
+import dev.astler.catlib.extensions.isPackageInstalled
+import dev.astler.catlib.extensions.isPackageInstalledAlt
 import dev.astler.catlib.utils.getMobileServiceSource
-import dev.astler.catlib.utils.infoLog
-import dev.astler.catlib.utils.isDebuggable
-import dev.astler.catlib.utils.isOnline
-import dev.astler.catlib.utils.isPackageInstalled
-import dev.astler.catlib.utils.isPackageInstalledAlt
 import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.data.TestBaseItem
-import dev.astler.unlib_test.items.ClickableItem
 
 @AndroidEntryPoint
 class TechMenuFragment : TestsMenuFragment() {

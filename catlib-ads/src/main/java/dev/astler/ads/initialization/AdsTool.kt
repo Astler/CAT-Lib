@@ -25,6 +25,7 @@ import dev.astler.ads.dialogs.adsAgeConfirmDialog
 import dev.astler.ads.interfaces.IAdListener
 import dev.astler.ads.utils.NativeAdsLoader
 import dev.astler.ads.utils.ageConfirmed
+import dev.astler.ads.utils.canShowAds
 import dev.astler.ads.utils.childAdsMode
 import dev.astler.ads.utils.lastAdsTime
 import dev.astler.ads.utils.rewardAdActive
@@ -33,13 +34,12 @@ import dev.astler.cat_ui.utils.views.gone
 import dev.astler.cat_ui.utils.views.visible
 import dev.astler.catlib.ads.databinding.ItemAdBinding
 import dev.astler.catlib.config.AppConfig
+import dev.astler.catlib.extensions.shortPackageId
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.RemoteConfigProvider
-import dev.astler.catlib.utils.adsLog
-import dev.astler.catlib.utils.canShowAds
-import dev.astler.catlib.utils.formattedShortPackageName
+import dev.astler.catlib.helpers.adsLog
 import dev.astler.catlib.utils.hasPrefsTimePassed
-import dev.astler.catlib.utils.infoLog
+import dev.astler.catlib.helpers.infoLog
 import java.util.GregorianCalendar
 import javax.inject.Inject
 
@@ -54,7 +54,7 @@ class AdsTool @Inject constructor(
 ) :
     SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private var _configPackageName: String = context.formattedShortPackageName()
+    private var _configPackageName: String = context.shortPackageId()
     private var _needAgeCheck: Boolean = appConfig.mNeedAgeCheck
 
     private var _interstitialAdId = appConfig.mInterstitialAdId

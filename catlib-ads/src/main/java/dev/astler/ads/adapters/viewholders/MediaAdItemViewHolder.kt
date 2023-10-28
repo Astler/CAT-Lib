@@ -8,7 +8,7 @@ import com.google.android.gms.ads.nativead.NativeAdView
 import dev.astler.cat_ui.utils.views.gone
 import dev.astler.cat_ui.utils.views.visible
 import dev.astler.cat_ui.utils.views.showViewWithCondition
-import dev.astler.catlib.utils.adsLog
+import dev.astler.catlib.helpers.adsLog
 import dev.astler.catlib.ads.databinding.ItemMediaAdBinding
 
 class MediaAdItemViewHolder(view: View) : ViewHolder(view) {

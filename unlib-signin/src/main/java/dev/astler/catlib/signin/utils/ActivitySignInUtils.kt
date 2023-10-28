@@ -12,6 +12,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dev.astler.catlib.extensions.toast
+import dev.astler.catlib.helpers.infoLog
+import dev.astler.catlib.helpers.trackedTry
 import dev.astler.catlib.signin.interfaces.SignInActivityListener
 import dev.astler.catlib.signin.ui.activity.contracts.SignInActivityContract
 import dev.astler.catlib.utils.*

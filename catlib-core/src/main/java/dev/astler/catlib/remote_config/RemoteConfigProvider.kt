@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
-import dev.astler.catlib.utils.infoLog
-import dev.astler.catlib.utils.isDebuggable
+import dev.astler.catlib.helpers.infoLog
 import dev.astler.catlib.core.R
+import dev.astler.catlib.extensions.isDebuggable
 import javax.inject.Inject
 
 class RemoteConfigProvider @Inject constructor(var context: Context) {

@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.structuralEqualityPolicy
-import dev.astler.catlib.utils.infoLog
 import dev.astler.unlib_compose.ui.compose.collapse_toolbar.management.states.toolbar.ScrollFlagState
 
 class EnterAlwaysCollapsedState(

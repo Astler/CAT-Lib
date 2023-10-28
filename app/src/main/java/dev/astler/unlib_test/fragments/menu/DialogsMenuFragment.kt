@@ -5,14 +5,13 @@ import dev.astler.cat_ui.utils.dialogs.confirmDialog
 import dev.astler.cat_ui.utils.dialogs.exitDialog
 import dev.astler.cat_ui.utils.dialogs.okDialog
 import dev.astler.cat_ui.utils.dialogs.yesNoDialog
-import dev.astler.catlib.utils.toast
+import dev.astler.catlib.extensions.toast
 import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.data.TestBaseItem
 
 @AndroidEntryPoint
 class DialogsMenuFragment : TestsMenuFragment() {
-
     private val yesNoEmptyDialogKey = "YesNoEmptyDialog"
     private val yesNoDialogKey = "YesNoDialog"
     private val exitDialogKey = "ExitDialog"
@@ -42,7 +41,7 @@ class DialogsMenuFragment : TestsMenuFragment() {
             }
 
             exitDialogKey -> {
-                activity?.exitDialog()
+                activity?.exitDialog(preferences)
             }
 
             confirmDialogKey -> {

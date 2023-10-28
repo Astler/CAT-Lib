@@ -1,15 +1,13 @@
 package dev.astler.unlib_test.activity
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
-import dev.astler.catlib.utils.canShowAds
 import dev.astler.ads.adapters.OIAdsAdapterConfig
 import dev.astler.ads.adapters.OneItemAdsAdapter
 import dev.astler.ads.initialization.AdsTool
-import dev.astler.ads.utils.NativeAdsLoader
+import dev.astler.ads.utils.canShowAds
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding
 import dev.astler.unlib_test.items.TextItem
@@ -33,7 +31,7 @@ class AdsOpenItemListActivity : CatActivity<ActivityRecyclerviewBinding>(Activit
                 val nBind = dev.astler.unlib_test.databinding.ItemTextBinding.bind(pHolder.mItemView)
                 nBind.text.text = pData.text
             },
-            mConfig = OIAdsAdapterConfig(canShowAds(preferencesTool))
+            mConfig = OIAdsAdapterConfig(canShowAds(preferences))
         )
 
         mAdapter.data =

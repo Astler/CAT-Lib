@@ -12,12 +12,12 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import dev.astler.billing.data.BillingViewModel
 import dev.astler.billing.interfaces.IQueryPurchases
 import dev.astler.billing.interfaces.PerformBillingListener
-import dev.astler.catlib.cBillingNoAdsName
-import dev.astler.catlib.gPreferencesTool
-import dev.astler.catlib.utils.infoLog
+import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.catlib.constants.cBillingNoAdsName
+import dev.astler.catlib.helpers.infoLog
 
 class CatBillingAssistant(
-    private val queryActivity: Activity,
+    private val queryActivity: CatActivity<*>,
     private val billingViewModel: BillingViewModel
 ) : PerformBillingListener {
 
@@ -82,8 +82,7 @@ class CatBillingAssistant(
 
         purchase.products.forEach {
             if (it == cBillingNoAdsName) {
-                gPreferencesTool.adsDisabled =
-                    purchase.purchaseState == Purchase.PurchaseState.PURCHASED
+                queryActivity.preferences.adsDisabled = purchase.purchaseState == Purchase.PurchaseState.PURCHASED
 
                 if (!purchase.isAcknowledged) {
                     infoLog("BILLING: Acknowledge pur")

@@ -1,7 +1,5 @@
 package dev.astler.unlib_compose.ui.compose.collapse_toolbar.management.states.toolbar
 
-import dev.astler.catlib.utils.infoLog
-
 abstract class ScrollFlagState(heightRange: IntRange) : ToolbarState {
 
     init {

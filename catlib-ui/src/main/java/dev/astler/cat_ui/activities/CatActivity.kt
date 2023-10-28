@@ -33,13 +33,13 @@ import dev.astler.cat_ui.fragments.IInternetDependentFragment
 import dev.astler.cat_ui.interfaces.ICatActivity
 import dev.astler.cat_ui.interfaces.IRootInsets
 import dev.astler.cat_ui.utils.getDimensionFromAttr
-import dev.astler.catlib.getDefaultNightMode
+import dev.astler.catlib.extensions.defaultNightMode
+import dev.astler.catlib.extensions.isOnline
+import dev.astler.catlib.extensions.isPlayStoreInstalled
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.IRemoteConfigListener
 import dev.astler.catlib.remote_config.RemoteConfigProvider
-import dev.astler.catlib.utils.errorLog
-import dev.astler.catlib.utils.isOnline
-import dev.astler.catlib.utils.isPlayStoreInstalled
+import dev.astler.catlib.helpers.errorLog
 import kotlinx.coroutines.launch
 import java.util.GregorianCalendar
 import javax.inject.Inject
@@ -49,7 +49,7 @@ abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (Layout
     ICatActivity, IRootInsets, IRemoteConfigListener {
 
     @Inject
-    protected lateinit var preferencesTool: PreferencesTool
+    lateinit var preferences: PreferencesTool
 
     @Inject
     protected lateinit var remoteConfig: RemoteConfigProvider
@@ -75,7 +75,9 @@ abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (Layout
 
     protected var activeFragment: Fragment? = null
 
+    @Suppress("MemberVisibilityCanBePrivate")
     protected var reviewInfo: ReviewInfo? = null
+    @Suppress("MemberVisibilityCanBePrivate")
     protected val reviewManager: ReviewManager by lazy {
         ReviewManagerFactory.create(this)
     }
@@ -135,27 +137,27 @@ abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (Layout
         setContentView(binding.root)
 
         EdgeToEdgeUtils.applyEdgeToEdge(window, true)
-        AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
+        AppCompatDelegate.setDefaultNightMode(preferences.defaultNightMode)
 
         delegate.applyDayNight()
 
         _toolbarHeight = getDimensionFromAttr(androidx.appcompat.R.attr.actionBarSize)
 
-        preferencesTool.loadDefaultPreferences(this)
+        preferences.loadDefaultPreferences(this)
 
-        preferencesTool.edit(StartTimeKey, GregorianCalendar().timeInMillis)
+        preferences.edit(StartTimeKey, GregorianCalendar().timeInMillis)
 
-        if (preferencesTool.isFirstStart) {
+        if (preferences.isFirstStart) {
             onFirstAppStart()
-            preferencesTool.isFirstStart = false
+            preferences.isFirstStart = false
         }
 
-        if (preferencesTool.isFirstStartForVersion(appVersionCode())) {
-            preferencesTool.appFirstStartTime = GregorianCalendar().timeInMillis
+        if (preferences.isFirstStartForVersion(appVersionCode())) {
+            preferences.appFirstStartTime = GregorianCalendar().timeInMillis
 
             onFirstStartCurrentVersion()
 
-            preferencesTool.setFirstStartForVersion(appVersionCode())
+            preferences.setFirstStartForVersion(appVersionCode())
         }
 
         if (isPlayStoreInstalled()) {
@@ -197,18 +199,18 @@ abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (Layout
 
     override fun onStart() {
         super.onStart()
-        preferencesTool.addListener(this)
+        preferences.addListener(this)
     }
 
     override fun onStop() {
         super.onStop()
-        preferencesTool.unregisterListener(this)
+        preferences.unregisterListener(this)
     }
 
     override fun onResume() {
         super.onResume()
-        preferencesTool.appResumeTime = GregorianCalendar().timeInMillis
-        preferencesTool.appReviewTime = GregorianCalendar().timeInMillis
+        preferences.appResumeTime = GregorianCalendar().timeInMillis
+        preferences.appReviewTime = GregorianCalendar().timeInMillis
 
         _connectivityManager.registerNetworkCallback(
             NetworkRequest.Builder().build(),
@@ -223,7 +225,7 @@ abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (Layout
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == PreferencesTool.appThemeKey) {
-            AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
+            AppCompatDelegate.setDefaultNightMode(preferences.defaultNightMode)
             delegate.applyDayNight()
             return
         }
@@ -238,13 +240,13 @@ abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (Layout
         activeFragment = fragment
 
         val nAppReviewTime =
-            GregorianCalendar().timeInMillis - preferencesTool.appResumeTime
+            GregorianCalendar().timeInMillis - preferences.appResumeTime
 
         if (nAppReviewTime >= 200000) {
 
             reviewInfo?.let { it1 ->
                 reviewManager.launchReviewFlow(this, it1)
-                preferencesTool.appResumeTime = GregorianCalendar().timeInMillis
+                preferences.appResumeTime = GregorianCalendar().timeInMillis
             }
         }
 

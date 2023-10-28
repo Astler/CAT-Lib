@@ -11,7 +11,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dev.astler.cat_ui.adapters.CatOneTypeAdapter
 import dev.astler.cat_ui.items.DialogSimpleTextItem
 import dev.astler.cat_ui.utils.tryToGetTextFrom
-import dev.astler.catlib.utils.vibrateOnClick
+import dev.astler.catlib.extensions.tryToVibrate
+import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.ui.R
 import dev.astler.catlib.ui.databinding.DialogChooseItemBinding
 import dev.astler.catlib.ui.databinding.DialogChooseItemWithSearchBinding
@@ -158,14 +159,14 @@ fun Context.confirmDialog(
     )
 }
 
-fun Activity.exitDialog(): AlertDialog {
+fun Activity.exitDialog(preferencesTool: PreferencesTool): AlertDialog {
     return catDialog(title = R.string.exiting_app,
         message = R.string.already_leave,
         negative = R.string.no,
         negativeAction = { it.dismiss() },
         positive = R.string.yes,
         positiveAction = {
-            this.vibrateOnClick()
+            this.tryToVibrate(preferencesTool)
             this.finish()
         })
 }

@@ -13,10 +13,10 @@ import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryProductDetailsParams.Product
 import com.android.billingclient.api.QueryPurchasesParams
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.astler.catlib.cBillingNoAdsName
+import dev.astler.catlib.constants.cBillingNoAdsName
 import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.preferences.PreferencesTool
-import dev.astler.catlib.utils.infoLog
+import dev.astler.catlib.helpers.infoLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject

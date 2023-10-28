@@ -1,12 +1,12 @@
 package dev.astler.catlib.signin.ui.activity
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.setInsetsViaOrientation
 import dev.astler.cat_ui.utils.views.showViewWithCondition
+import dev.astler.catlib.extensions.toast
 import dev.astler.catlib.signin.R
 import dev.astler.catlib.signin.data.CatSignInMode
 import dev.astler.catlib.signin.databinding.SignInLayoutBinding
@@ -20,8 +20,7 @@ import dev.astler.catlib.signin.utils.signInWithGoogle
 import dev.astler.catlib.signin.utils.startRegisterSignIn
 import dev.astler.catlib.utils.MobileServicesSource
 import dev.astler.catlib.utils.getMobileServiceSource
-import dev.astler.catlib.utils.infoLog
-import dev.astler.catlib.utils.toast
+import dev.astler.catlib.helpers.infoLog
 
 const val cSignInModeExtra = "signInMode"
 

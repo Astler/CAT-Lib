@@ -4,7 +4,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.catlib.utils.toast
+import dev.astler.catlib.extensions.toast
 import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.data.TestBaseItem

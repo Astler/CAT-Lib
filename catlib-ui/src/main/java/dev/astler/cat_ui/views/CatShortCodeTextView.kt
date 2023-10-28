@@ -20,18 +20,18 @@ import dev.astler.cat_ui.utils.getDrawableByName
 import dev.astler.cat_ui.utils.toNoFilterDrawable
 import dev.astler.cat_ui.views.span.VerticalImageSpan
 import dev.astler.cat_ui.views.span.CustomFancyTextSpan
-import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.ui.R
 import dev.astler.catlib.utils.getBitmapFromAsset
 import kotlinx.coroutines.*
 import java.util.regex.Pattern
 
+//TODO remove shit with async span formatter..
 open class CatShortCodeTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = android.R.attr.textViewStyle
-) :
-    CatTextView(context, attrs, defStyleAttr) {
+) : CatTextView(context, attrs, defStyleAttr) {
 
     companion object {
         private val spannableFactory = Spannable.Factory.getInstance()
@@ -72,7 +72,8 @@ open class CatShortCodeTextView @JvmOverloads constructor(
         val textSizeModifier =
             typedArray.getInteger(R.styleable.CatTextView_textSizeModifier, 0)
 
-        iconSize = if (!isInEditMode) gPreferencesTool.textSize else 18f + textSizeModifier
+        //TODO do smth with this..
+        iconSize = if (!isInEditMode) PreferencesTool(context).textSize else 18f + textSizeModifier
     }
 
 

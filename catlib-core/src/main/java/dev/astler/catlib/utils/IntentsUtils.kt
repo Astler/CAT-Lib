@@ -10,9 +10,10 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
-import dev.astler.catlib.cMimetypeImages
-import dev.astler.catlib.cRegistryKey
+import dev.astler.catlib.constants.MimetypeImages
+import dev.astler.catlib.constants.RegistryKey
 import dev.astler.catlib.core.R
+import dev.astler.catlib.helpers.trackedTry
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -22,10 +23,10 @@ class ImagePicker(
     pCallback: (pImageUri: Uri?) -> Unit
 ) {
     private val mGetContent: ActivityResultLauncher<String> =
-        pActivityResultRegistry.register(cRegistryKey, ActivityResultContracts.GetContent(), pCallback)
+        pActivityResultRegistry.register(RegistryKey, ActivityResultContracts.GetContent(), pCallback)
 
     fun pickImage() {
-        mGetContent.launch(cMimetypeImages)
+        mGetContent.launch(MimetypeImages)
     }
 }
 

@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,12 +26,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import dev.astler.catlib.compose.R
-import dev.astler.catlib.utils.infoLog
 import dev.astler.unlib_compose.ui.compose.collapse_toolbar.management.states.toolbar.ToolbarState
 import dev.astler.unlib_compose.ui.compose.collapse_toolbar.management.states.toolbar.scrollflags.EnterAlwaysCollapsedState
-import dev.astler.unlib_compose.ui.compose.collapse_toolbar.management.states.toolbar.scrollflags.EnterAlwaysState
-import dev.astler.unlib_compose.ui.compose.collapse_toolbar.management.states.toolbar.scrollflags.ExitUntilCollapsedState
-import dev.astler.unlib_compose.ui.compose.collapse_toolbar.management.states.toolbar.scrollflags.ScrollState
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 

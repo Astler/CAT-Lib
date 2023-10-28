@@ -1,13 +1,13 @@
 package dev.astler.catlib.utils
 
-import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.preferences.PreferencesTool
 import java.util.*
 
-fun String.hasPrefsTimePassed(
+fun String.hasPrefsTimePassed(preferencesTool: PreferencesTool,
     millisTimeToCheck: Long,
     default: Long = GregorianCalendar().timeInMillis
 ): Boolean {
-    return GregorianCalendar().timeInMillis - gPreferencesTool.getLong(
+    return GregorianCalendar().timeInMillis - preferencesTool.getLong(
         this, default
     ) >= millisTimeToCheck
 }

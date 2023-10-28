@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
-import dev.astler.catlib.gPreferencesTool
+import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.ui.R
 
 open class CatTextView @JvmOverloads constructor(
@@ -21,7 +21,8 @@ open class CatTextView @JvmOverloads constructor(
         val typedArray =
             context.theme.obtainStyledAttributes(attrs, R.styleable.CatTextView, 0, 0)
 
-        textSize = (if (!isInEditMode) gPreferencesTool.textSize else 18f) + typedArray.getInteger(
+        //TODO do smth with this..
+        textSize = (if (!isInEditMode) PreferencesTool(context).textSize else 18f) + typedArray.getInteger(
             R.styleable.CatTextView_textSizeModifier,
             0
         )

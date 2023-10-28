@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import dev.astler.catlib.utils.infoLog
+import dev.astler.catlib.helpers.infoLog
 import dev.astler.unlib_compose.data.settings.AppTheme
 import dev.astler.unlib_compose.data.settings.Settings
 

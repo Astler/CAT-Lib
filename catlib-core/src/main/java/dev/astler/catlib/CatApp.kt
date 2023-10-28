@@ -1,38 +1,24 @@
 package dev.astler.catlib
 
 import android.app.Application
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.color.DynamicColors
+import dev.astler.catlib.extensions.defaultNightMode
 import dev.astler.catlib.preferences.PreferencesTool
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-@Deprecated("Use Hilt instead")
-val gPreferencesTool: PreferencesTool by lazy {
-    CatApp.prefs
-}
-
-val mJson = Json { allowStructuredMapKeys = true }
-
-fun getDefaultNightMode() = when (CatApp.prefs.appTheme) {
-    "light" -> AppCompatDelegate.MODE_NIGHT_NO
-    "dark" -> AppCompatDelegate.MODE_NIGHT_YES
-    else -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-    } else {
-        AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
-    }
+val catJson = Json {
+    allowStructuredMapKeys = true
 }
 
 open class CatApp : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    companion object {
-        lateinit var prefs: PreferencesTool
+    @Inject
+    protected lateinit var preferences: PreferencesTool
 
+    companion object {
         private lateinit var applicationInstance: CatApp
 
         @Synchronized
@@ -42,13 +28,11 @@ open class CatApp : Application(), SharedPreferences.OnSharedPreferenceChangeLis
     override fun onCreate() {
         super.onCreate()
 
-        prefs = PreferencesTool(this)
-
-        AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
+        AppCompatDelegate.setDefaultNightMode(preferences.defaultNightMode)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         DynamicColors.applyToActivitiesIfAvailable(this)
 
-        prefs.addListener(this)
+        preferences.addListener(this)
 
         applicationInstance = this
 
@@ -57,26 +41,9 @@ open class CatApp : Application(), SharedPreferences.OnSharedPreferenceChangeLis
 
     open fun createNotificationChannels() {}
 
-    fun createNotificationChannel(
-        pName: String = packageName,
-        pDescription: String = "",
-        pChannelId: String = "unli_default"
-    ) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(pChannelId, pName, importance).apply {
-                description = pDescription
-            }
-
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
         if (key == PreferencesTool.appThemeKey) {
-            AppCompatDelegate.setDefaultNightMode(getDefaultNightMode())
+            AppCompatDelegate.setDefaultNightMode(preferences.defaultNightMode)
         }
     }
 }

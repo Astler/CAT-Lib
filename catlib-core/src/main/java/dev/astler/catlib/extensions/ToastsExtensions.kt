@@ -1,4 +1,4 @@
-package dev.astler.catlib.utils
+package dev.astler.catlib.extensions
 
 import android.content.Context
 import android.widget.Toast

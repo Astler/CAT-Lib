@@ -2,6 +2,7 @@ package dev.astler.catlib.utils
 
 import android.annotation.SuppressLint
 import android.text.format.DateUtils
+import dev.astler.catlib.helpers.errorLog
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.* 

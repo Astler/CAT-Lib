@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import dev.astler.catlib.analytics.CatAnalytics
+import dev.astler.catlib.helpers.errorLog
+import dev.astler.catlib.helpers.trackedTry
 import java.io.* 
 import java.nio.channels.FileChannel
 import java.nio.charset.Charset

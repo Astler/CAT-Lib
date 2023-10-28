@@ -7,7 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.astler.catlib.core.R
-import dev.astler.catlib.mJson
+import dev.astler.catlib.catJson
 import dev.astler.catlib.utils.readFileFromRaw
 import kotlinx.serialization.decodeFromString
 import javax.inject.Singleton
@@ -21,7 +21,7 @@ class AppConfigModule {
         val appConfigFile = context.readFileFromRaw(R.raw.app_config)
 
         return if (appConfigFile.isNotEmpty()) {
-            mJson.decodeFromString(appConfigFile)
+            catJson.decodeFromString(appConfigFile)
         } else {
             AppConfig()
         }

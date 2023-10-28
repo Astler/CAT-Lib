@@ -3,7 +3,7 @@ package dev.astler.cat_ui.utils
 import android.content.Context
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
-import dev.astler.catlib.utils.errorLog
+import dev.astler.catlib.helpers.errorLog
 
 fun Context.generateImageShortcut(
     @DrawableRes imageId: Int,

@@ -1,4 +1,4 @@
-package dev.astler.catlib.utils
+package dev.astler.catlib.constants
 
 import kotlinx.coroutines.Dispatchers
 
@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
  */
 
 val MainDispatcher = Dispatchers.Main
+val IODispatcher = Dispatchers.IO
+
 val DefaultDispatcher = Dispatchers.Default
 val UnconfinedDispatcher = Dispatchers.Unconfined
-val IODispatcher = Dispatchers.IO

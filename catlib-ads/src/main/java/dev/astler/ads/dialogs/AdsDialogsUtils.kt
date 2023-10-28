@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import dev.astler.ads.interfaces.IAdListener
 import dev.astler.cat_ui.utils.dialogs.confirmDialog
-import dev.astler.catlib.utils.openAppInPlayStore
+import dev.astler.catlib.extensions.openAppInPlayStore
 import dev.astler.catlib.ads.R
 
 fun AppCompatActivity.showNoAdsDialog(proPackageName: String) {

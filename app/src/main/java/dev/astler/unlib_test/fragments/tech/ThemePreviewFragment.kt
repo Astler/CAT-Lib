@@ -1,8 +1,5 @@
 package dev.astler.unlib_test.fragments.tech
 
-import android.app.UiModeManager
-import android.content.Context
-import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -30,12 +27,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.utils.dialogs.okDialog
 import dev.astler.cat_ui.utils.isAppDarkTheme
 import dev.astler.cat_ui.utils.isSystemDarkMode
-import dev.astler.catlib.utils.infoLog
 import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
-import dev.astler.unlib_test.R
 
 @AndroidEntryPoint
 class ThemePreviewFragment : CatComposeFragment() {
