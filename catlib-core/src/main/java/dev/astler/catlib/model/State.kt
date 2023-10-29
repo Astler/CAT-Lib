@@ -2,7 +2,6 @@ package dev.astler.catlib.model
 
 import dev.astler.catlib.helpers.infoLog
 
-
 sealed class State<T> {
     class Loading<T> : State<T>()
 
@@ -34,7 +33,3 @@ sealed class State<T> {
     }
 }
 
-sealed class Resource<T> {
-    class Success<T>(val data: T) : Resource<T>()
-    class Failed<T>(val message: String) : Resource<T>()
-}

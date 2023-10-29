@@ -1,6 +1,5 @@
 package dev.astler.billing
 
-import android.app.Activity
 import android.os.Handler
 import android.os.Looper
 import com.android.billingclient.api.AcknowledgePurchaseParams

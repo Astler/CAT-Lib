@@ -13,11 +13,11 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dev.astler.catlib.extensions.toast
+import dev.astler.catlib.helpers.hasGoogleServices
 import dev.astler.catlib.helpers.infoLog
 import dev.astler.catlib.helpers.trackedTry
 import dev.astler.catlib.signin.interfaces.SignInActivityListener
 import dev.astler.catlib.signin.ui.activity.contracts.SignInActivityContract
-import dev.astler.catlib.utils.*
 import dev.astler.catlib.signin.R
 
 private var mFirebaseAuth: FirebaseAuth? = null
@@ -52,7 +52,7 @@ fun AppCompatActivity.createSingInWithGoogleLauncher() = registerForActivityResu
 }
 
 fun AppCompatActivity.signInWithGoogle(pInput: String = "sign_in") {
-    if (getMobileServiceSource() == MobileServicesSource.GOOGLE)
+    if (hasGoogleServices())
         mSignInGoogleLauncher?.launch(pInput)
 }
 

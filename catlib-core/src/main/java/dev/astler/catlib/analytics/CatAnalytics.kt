@@ -28,6 +28,11 @@ open class CatAnalytics @Inject constructor(var context: Context, val config: Ap
     private fun initialize(context: Context) {
         if (instance != null) return
 
+        if (config.d2dAppId.isEmpty()) {
+            infoLog("Id is empty, not initialized", javaClass.simpleName)
+            return
+        }
+
         val analyticsConfiguration = DTDAnalyticsConfiguration()
         analyticsConfiguration.logLevel = DTDLogLevel.Error
         DTDAnalytics.initialize(config.d2dAppId, analyticsConfiguration, context)

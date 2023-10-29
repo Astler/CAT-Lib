@@ -20,9 +20,9 @@ import dev.astler.cat_ui.utils.getDrawableByName
 import dev.astler.cat_ui.utils.toNoFilterDrawable
 import dev.astler.cat_ui.views.span.VerticalImageSpan
 import dev.astler.cat_ui.views.span.CustomFancyTextSpan
+import dev.astler.catlib.extensions.getBitmapFromAsset
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.ui.R
-import dev.astler.catlib.utils.getBitmapFromAsset
 import kotlinx.coroutines.*
 import java.util.regex.Pattern
 

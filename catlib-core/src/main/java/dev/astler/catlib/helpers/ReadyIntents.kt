@@ -1,4 +1,4 @@
-package dev.astler.catlib.utils
+package dev.astler.catlib.helpers
 
 import android.content.Context
 import android.content.Intent
@@ -6,35 +6,17 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.ActivityResultRegistry
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
-import dev.astler.catlib.constants.MimetypeImages
-import dev.astler.catlib.constants.RegistryKey
 import dev.astler.catlib.core.R
-import dev.astler.catlib.helpers.trackedTry
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
-class ImagePicker(
-    pActivityResultRegistry: ActivityResultRegistry,
-    pCallback: (pImageUri: Uri?) -> Unit
-) {
-    private val mGetContent: ActivityResultLauncher<String> =
-        pActivityResultRegistry.register(RegistryKey, ActivityResultContracts.GetContent(), pCallback)
-
-    fun pickImage() {
-        mGetContent.launch(MimetypeImages)
-    }
-}
-
 @Suppress("DEPRECATION")
-fun playStoreIntent(pUrl: String, pPackageName: String): Intent {
+fun playStoreIntent(url: String, packageName: String): Intent {
     val intent = Intent(
         Intent.ACTION_VIEW,
-        Uri.parse(String.format("%s?id=%s", pUrl, pPackageName))
+        Uri.parse(String.format("%s?id=%s", url, packageName))
     )
 
     var flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
@@ -97,11 +79,4 @@ fun Context.shareImageByUri(uri: Uri) {
     }
 }
 
-fun Context.openAstlerInGoogle() {
-    startActivity(
-        Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("https://play.google.com/store/apps/dev?id=4948748506238999540")
-        )
-    )
-}
+fun Context.openAstlerInGoogle() = openWebUrl("https://play.google.com/store/apps/dev?id=4948748506238999540")

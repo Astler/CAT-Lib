@@ -8,7 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.astler.catlib.core.R
 import dev.astler.catlib.catJson
-import dev.astler.catlib.utils.readFileFromRaw
+import dev.astler.catlib.extensions.readFileFromRaw
 import kotlinx.serialization.decodeFromString
 import javax.inject.Singleton
 

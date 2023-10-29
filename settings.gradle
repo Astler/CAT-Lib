@@ -23,7 +23,7 @@ include ':app'
 rootProject.name = "CatLib"
 include ':catlib-core'
 include ':catlib-ads'
-include ':unlib-billing'
+include ':catlib-billing'
 include ':unlib-signin'
 include ':unlib-compose'
 include ':catlib-ui'

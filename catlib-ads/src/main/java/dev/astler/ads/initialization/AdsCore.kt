@@ -27,7 +27,7 @@ class AdsCore @Inject constructor(
             if (context is Application)
                 _appOpenManager = AppOpenManager(context, preferences, config)
 
-            if (config.mNativeAdId.isNotEmpty()) {
+            if (config.nativeAdId.isNotEmpty()) {
                 _nativeAdsLoader = NativeAdsLoader(config)
             }
         }

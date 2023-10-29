@@ -3,11 +3,13 @@ package dev.astler.unlib_test.fragments.menu
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.utils.dialogs.okDialog
+import dev.astler.catlib.extensions.areNotificationsEnabled
 import dev.astler.catlib.extensions.isDebuggable
 import dev.astler.catlib.extensions.isOnline
 import dev.astler.catlib.extensions.isPackageInstalled
 import dev.astler.catlib.extensions.isPackageInstalledAlt
-import dev.astler.catlib.utils.getMobileServiceSource
+import dev.astler.catlib.extensions.requestNotificationsPermission
+import dev.astler.catlib.helpers.getMobileServiceSource
 import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.data.TestBaseItem
@@ -20,6 +22,7 @@ class TechMenuFragment : TestsMenuFragment() {
     private val debuggableInfoKey = "DebuggableInfo"
     private val myAppsTrackerInfoKey = "MyAppsTrackerInfo"
     private val themePreviewKey = "ThemePreview"
+    private val notifications = "ThemePreview"
 
     override val menuItems = listOf(
         BaseCard(TestBaseItem(dev.astler.catlib.ui.R.string.app_theme, R.drawable.ic_launcher_foreground, 3, uid = themePreviewKey)),
@@ -27,10 +30,17 @@ class TechMenuFragment : TestsMenuFragment() {
         BaseCard(TestBaseItem(R.string.debuggable_info, R.drawable.ic_launcher_foreground, 3, uid = debuggableInfoKey)),
         BaseCard(TestBaseItem(R.string.my_apps_tracker, R.drawable.ic_launcher_foreground, 3, uid = myAppsTrackerInfoKey)),
         BaseCard(TestBaseItem(R.string.services_info, R.drawable.ic_launcher_foreground, 3, uid = servicesInfoKey)),
+        BaseCard(TestBaseItem(R.string.services_info, R.drawable.ic_launcher_foreground, 3, uid = notifications)),
     )
 
     override fun menuItemClicked(uid: String) {
         when (uid) {
+            notifications -> {
+                if (safeContext.areNotificationsEnabled().not()) {
+                    activity?.requestNotificationsPermission()
+                }
+            }
+
             servicesInfoKey -> {
                 safeContext.okDialog(
                     title = "Services?",
@@ -47,7 +57,7 @@ class TechMenuFragment : TestsMenuFragment() {
             }
 
             debuggableInfoKey -> {
-                safeContext.okDialog("is debuggable: ${safeContext.isDebuggable()}")
+                safeContext.okDialog("is debuggable: ${safeContext.isDebuggable}")
             }
 
             myAppsTrackerInfoKey -> {

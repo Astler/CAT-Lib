@@ -1,16 +1,15 @@
 package dev.astler.unlib_test.fragments.views
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import coil.load
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 import dev.astler.cat_ui.fragments.CatFragment
 import dev.astler.cat_ui.utils.toNoFilterDrawable
 import dev.astler.cat_ui.utils.views.loadWithBackground
-import dev.astler.catlib.utils.getBitmapFromAsset
+import dev.astler.catlib.constants.MockImageUrl
+import dev.astler.catlib.extensions.getBitmapFromAsset
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityImagesBinding
 
@@ -19,27 +18,27 @@ class ImageLoadVariantsFragment: CatFragment<ActivityImagesBinding>(ActivityImag
         super.onViewCreated(view, savedInstanceState)
 
 
-        binding.coilImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg")
+        binding.coilImage.load(MockImageUrl)
 
-        binding.coilRoundImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
+        binding.coilRoundImage.load(MockImageUrl) {
             crossfade(true)
             placeholder(R.drawable.ic_launcher_background)
             transformations(CircleCropTransformation())
         }
 
-        binding.coilBlurImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
+        binding.coilBlurImage.load(MockImageUrl) {
             crossfade(true)
             placeholder(R.drawable.ic_launcher_background)
 //            transformations(BlurTransformation(this@ImageLoadersActivity))
         }
 
-        binding.roundedImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
+        binding.roundedImage.load(MockImageUrl) {
             crossfade(true)
             placeholder(R.drawable.ic_launcher_background)
             transformations(RoundedCornersTransformation(8f, 16f, 24f, 32f))
         }
 
-        binding.grayScaleImage.load("https://hddesktopwallpapers.in/wp-content/uploads/2015/09/pink-flower-abstract.jpg") {
+        binding.grayScaleImage.load(MockImageUrl) {
             crossfade(true)
             placeholder(R.drawable.ic_launcher_background)
 //            transformations(GrayscaleTransformation())

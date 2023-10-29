@@ -36,7 +36,7 @@ class BillingViewModel @Inject constructor(
     ) {
         val productList = ArrayList<Product>()
 
-        appConfig.mBillingItems.forEach {
+        appConfig.billingIds.forEach {
             productList.add(
                 Product.newBuilder().setProductId(it)
                     .setProductType(BillingClient.ProductType.INAPP).build()

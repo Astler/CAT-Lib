@@ -1,29 +1,20 @@
-package dev.astler.catlib.utils
+package dev.astler.catlib.helpers
 
 import android.content.Context
-import android.content.pm.ApplicationInfo
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailabilityLight
-import dev.astler.catlib.helpers.isN
-import dev.astler.catlib.constants.PaidPackagePostfix
-import java.util.*
 
+enum class MobileServicesSource {
+    GOOGLE,
+    HMS,
+    NONE
+}
 
-val Context.activeLanguage: String
-    get() = run {
-        val configuration = resources.configuration
-        val locale: Locale = if (isN()) {
-            configuration.locales[0]
-        } else {
-            @Suppress("DEPRECATION")
-            configuration.locale
-        }
+//TODO create version for HMS
 
-        locale.language
-    }
-
-
-
+fun Context.hasGoogleServices(): Boolean {
+    return getMobileServiceSource() == MobileServicesSource.GOOGLE
+}
 
 fun Context.getMobileServiceSource(): MobileServicesSource {
     val googleApi = GoogleApiAvailabilityLight.getInstance()
@@ -37,10 +28,4 @@ fun Context.getMobileServiceSource(): MobileServicesSource {
 //    }
 
     return MobileServicesSource.NONE
-}
-
-enum class MobileServicesSource {
-    GOOGLE,
-    HMS,
-    NONE
 }

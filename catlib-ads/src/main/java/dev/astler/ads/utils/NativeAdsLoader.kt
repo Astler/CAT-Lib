@@ -24,7 +24,7 @@ class NativeAdsLoader @Inject constructor(
 
     fun loadAds(context: Context, adRequest: AdRequest?) {
         val build: AdLoader =
-            AdLoader.Builder(context, appConfig.mNativeAdId).forNativeAd { unifiedNativeAd ->
+            AdLoader.Builder(context, appConfig.nativeAdId).forNativeAd { unifiedNativeAd ->
                 nativeAdsTmp.add(unifiedNativeAd)
                 if (!adLoader!!.isLoading) {
                     nativeAds.clear()

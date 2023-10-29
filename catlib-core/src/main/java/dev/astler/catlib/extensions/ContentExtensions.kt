@@ -7,6 +7,4 @@ import dev.astler.catlib.constants.PaidPackagePostfix
 //TODO create pro interface to validate paid version
 val Context.isPaidVersion get() = applicationContext.packageName.endsWith(PaidPackagePostfix)
 
-fun Context.isDebuggable(): Boolean {
-    return (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
-}
+val Context.isDebuggable get() = (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0

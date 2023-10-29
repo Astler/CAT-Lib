@@ -19,9 +19,9 @@ import dev.astler.ads.utils.canShowAds
 import dev.astler.ads.utils.lastAdsTime
 import dev.astler.cat_ui.appResumeTime
 import dev.astler.catlib.config.AppConfig
-import dev.astler.catlib.preferences.PreferencesTool
+import dev.astler.catlib.extensions.now
 import dev.astler.catlib.helpers.adsLog
-import dev.astler.catlib.utils.hasPrefsTimePassed
+import dev.astler.catlib.preferences.PreferencesTool
 import java.util.Date
 import javax.inject.Inject
 
@@ -56,8 +56,7 @@ class AppOpenManager @Inject constructor(
         get() {
             val timePassed =
                 Date().time - _preferences.appResumeTime > adsConfig.startAdDelay * 1000
-            val otherAdLastTime =
-                _preferences.lastAdsTime.hasPrefsTimePassed(adsConfig.startAdOtherAdDelay * 1000L)
+            val otherAdLastTime = (now - _preferences.lastAdsTime) > adsConfig.startAdOtherAdDelay * 1000L
             val canShowAds = _currentActivity?.canShowAds(_preferences) == true
 
             log(
@@ -137,7 +136,7 @@ class AppOpenManager @Inject constructor(
 
         AppOpenAd.load(
             _context,
-            appConfig.mStartAdId,
+            appConfig.startAdId,
             adRequest,
             _loadCallback as AppOpenAdLoadCallback
         )

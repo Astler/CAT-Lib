@@ -4,31 +4,29 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AppConfig(
-    val mProPackageName: String = "",
-    val mMainActivityPackage: String = "",
+    val proVersionPackageId: String = "",
 
-    val mRewardedAdId: String = "",
-    val mInterstitialAdId: String = "",
-    val mNativeAdId: String = "",
-    val mStartAdId: String = "",
+    val rewardedAdId: String = "",
+    val interstitialAdId: String = "",
+    val nativeAdId: String = "",
+    val startAdId: String = "",
 
-    val mNeedAgeCheck: Boolean = false,
-    val mTestDevices: List<String> = listOf(),
-    val mBillingItems: List<String> = listOf(),
+    val ageRestricted: Boolean = false,
+    val testDevices: List<String> = listOf(),
+    val billingIds: List<String> = listOf(),
 
     val d2dAppId: String = "",
 ) {
     override fun toString(): String {
         return """
-            Pro Version Package: ${mProPackageName.ifEmpty { "No Pro Version" }}
-            Main Activity Package: ${mMainActivityPackage.ifEmpty { "---" }}
-            Rewarded Id: ${mRewardedAdId.ifEmpty { "---" }}
-            Interstitial Id: ${mInterstitialAdId.ifEmpty { "---" }}
-            Native Id: ${mNativeAdId.ifEmpty { "---" }}
-            Start Id: ${mStartAdId.ifEmpty { "---" }}
-            Age Check Requirement: $mNeedAgeCheck
-            Test Devices: $mTestDevices
-            Billing Item: $mBillingItems
+            Pro Version Package: ${proVersionPackageId.ifEmpty { "No Pro Version" }}
+            Rewarded Id: ${rewardedAdId.ifEmpty { "---" }}
+            Interstitial Id: ${interstitialAdId.ifEmpty { "---" }}
+            Native Id: ${nativeAdId.ifEmpty { "---" }}
+            Start Id: ${startAdId.ifEmpty { "---" }}
+            Age Check Requirement: $ageRestricted
+            Test Devices: $testDevices
+            Billing Item: $billingIds
             D2D App Id: $d2dAppId
         """.trimIndent()
     }

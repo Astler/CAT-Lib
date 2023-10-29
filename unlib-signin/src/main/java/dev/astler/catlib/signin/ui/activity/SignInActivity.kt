@@ -7,6 +7,8 @@ import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.cat_ui.utils.setInsetsViaOrientation
 import dev.astler.cat_ui.utils.views.showViewWithCondition
 import dev.astler.catlib.extensions.toast
+import dev.astler.catlib.helpers.MobileServicesSource
+import dev.astler.catlib.helpers.hasGoogleServices
 import dev.astler.catlib.signin.R
 import dev.astler.catlib.signin.data.CatSignInMode
 import dev.astler.catlib.signin.databinding.SignInLayoutBinding
@@ -18,8 +20,6 @@ import dev.astler.catlib.signin.utils.signInInitializer
 import dev.astler.catlib.signin.utils.signInOnResume
 import dev.astler.catlib.signin.utils.signInWithGoogle
 import dev.astler.catlib.signin.utils.startRegisterSignIn
-import dev.astler.catlib.utils.MobileServicesSource
-import dev.astler.catlib.utils.getMobileServiceSource
 import dev.astler.catlib.helpers.infoLog
 
 const val cSignInModeExtra = "signInMode"
@@ -35,7 +35,7 @@ open class SignInActivity: CatActivity<SignInLayoutBinding>(SignInLayoutBinding:
         with(binding) {
             val signInMode = intent.getStringExtra(cSignInModeExtra)?.fromString()
             val registerMode = signInMode == CatSignInMode.REGISTER
-            val hasGoogleServices = getMobileServiceSource() == MobileServicesSource.GOOGLE
+            val hasGoogleServices = hasGoogleServices()
 
             val canBeClosed =
                 signInMode == CatSignInMode.OPTIONAL || signInMode == CatSignInMode.REGISTER

@@ -34,12 +34,12 @@ import dev.astler.cat_ui.utils.views.gone
 import dev.astler.cat_ui.utils.views.visible
 import dev.astler.catlib.ads.databinding.ItemAdBinding
 import dev.astler.catlib.config.AppConfig
+import dev.astler.catlib.extensions.now
 import dev.astler.catlib.extensions.shortPackageId
+import dev.astler.catlib.helpers.adsLog
+import dev.astler.catlib.helpers.infoLog
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.RemoteConfigProvider
-import dev.astler.catlib.helpers.adsLog
-import dev.astler.catlib.utils.hasPrefsTimePassed
-import dev.astler.catlib.helpers.infoLog
 import java.util.GregorianCalendar
 import javax.inject.Inject
 
@@ -55,10 +55,10 @@ class AdsTool @Inject constructor(
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     private var _configPackageName: String = context.shortPackageId()
-    private var _needAgeCheck: Boolean = appConfig.mNeedAgeCheck
+    private var _needAgeCheck: Boolean = appConfig.ageRestricted
 
-    private var _interstitialAdId = appConfig.mInterstitialAdId
-    private var _rewardedAdId = appConfig.mRewardedAdId
+    private var _interstitialAdId = appConfig.interstitialAdId
+    private var _rewardedAdId = appConfig.rewardedAdId
 
     private var _loadedRewardedInterstitial: RewardedInterstitialAd? = null
     private var _loadedInterstitial: InterstitialAd? = null
@@ -134,12 +134,12 @@ class AdsTool @Inject constructor(
 
         val startDelay = config.startAdDelay
 
-        if (!hasPrefsTimePassed(preferences.appResumeTime, startDelay * 1000L)) {
+        if ((now - preferences.appResumeTime) < startDelay * 1000L) {
             adsLog("Time from start not passed ${(preferences.appResumeTime - GregorianCalendar().timeInMillis)/1000}!")
             return
         }
 
-        if (!hasPrefsTimePassed(preferences.lastAdsTime, config.startAdOtherAdDelay * 1000L)) {
+        if ((now - preferences.lastAdsTime) < config.startAdOtherAdDelay * 1000L) {
             adsLog("Time from last ad not passed ${(preferences.lastAdsTime - GregorianCalendar().timeInMillis)/1000}!")
             return
         }
@@ -150,7 +150,7 @@ class AdsTool @Inject constructor(
     fun createNativeAdLoader(pAdBindItem: ItemAdBinding): AdLoader {
         var nAdLoader: AdLoader? = null
 
-        nAdLoader = AdLoader.Builder(context, appConfig.mNativeAdId)
+        nAdLoader = AdLoader.Builder(context, appConfig.nativeAdId)
             .forNativeAd { nativeAd: NativeAd ->
                 if (nAdLoader?.isLoading == true) {
                     adsLog("Native Ad Banner is loading")
@@ -361,7 +361,7 @@ class AdsTool @Inject constructor(
         val testDevices = arrayListOf(
             AdRequest.DEVICE_ID_EMULATOR
         )
-        testDevices.addAll(appConfig.mTestDevices)
+        testDevices.addAll(appConfig.testDevices)
 
         return testDevices
     }

@@ -21,7 +21,7 @@ class RemoteConfigProvider @Inject constructor(var context: Context) {
     init {
         val configSettings = remoteConfigSettings {
             minimumFetchIntervalInSeconds =
-                if (context.isDebuggable()) 5 else 60 * 30.toLong()
+                if (context.isDebuggable) 5 else 60 * 30.toLong()
         }
 
         _remoteConfig.setConfigSettingsAsync(configSettings)

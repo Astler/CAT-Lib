@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import dev.astler.catlib.helpers.errorLog
 import dev.astler.catlib.helpers.infoLog
-import dev.astler.catlib.utils.playStoreIntent
+import dev.astler.catlib.helpers.playStoreIntent
 import dev.astler.catlib.helpers.trackedTry
 
 private const val GOOGLE_PLAY_STORE_PACKAGE = "com.android.vending"

@@ -26,7 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.os.LocaleListCompat
 import dev.astler.cat_ui.activities.CatActivity
-import dev.astler.catlib.utils.activeLanguage
+import dev.astler.catlib.extensions.activeLanguage
 import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
 import dev.astler.unlib_test.R
 import java.util.Locale

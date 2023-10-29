@@ -67,8 +67,8 @@ dependencies {
     implementation project(':catlib-ads')
     implementation project(':catlib-ui')
     implementation project(':catlib-room')
+    implementation project(':catlib-billing')
 
-    implementation project(':unlib-billing')
     implementation project(':unlib-compose')
     implementation project(':unlib-signin')
 

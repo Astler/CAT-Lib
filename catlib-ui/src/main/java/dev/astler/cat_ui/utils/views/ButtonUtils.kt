@@ -1,7 +1,7 @@
 package dev.astler.cat_ui.utils.views
 
 import android.widget.Button
-import dev.astler.catlib.utils.openWebUrl
+import dev.astler.catlib.helpers.openWebUrl
 
 fun Button.setLink(pLink: String) {
     setOnClickListener {
