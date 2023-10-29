@@ -16,7 +16,6 @@ fun Context.getBitmapFromAsset(path: String): Bitmap? {
     return try {
         BitmapFactory.decodeStream(assets.open(path))
     } catch (e: Exception) {
-        CatAnalytics().missingAssetsResource(path)
         errorLog(e, "CatLib Error getBitmapFromAsset:")
         null
     }

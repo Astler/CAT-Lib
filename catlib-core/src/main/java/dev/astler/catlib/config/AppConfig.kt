@@ -15,6 +15,8 @@ data class AppConfig(
     val mNeedAgeCheck: Boolean = false,
     val mTestDevices: List<String> = listOf(),
     val mBillingItems: List<String> = listOf(),
+
+    val d2dAppId: String = "",
 ) {
     override fun toString(): String {
         return """
@@ -27,6 +29,7 @@ data class AppConfig(
             Age Check Requirement: $mNeedAgeCheck
             Test Devices: $mTestDevices
             Billing Item: $mBillingItems
+            D2D App Id: $d2dAppId
         """.trimIndent()
     }
 }

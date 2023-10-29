@@ -33,6 +33,7 @@ import dev.astler.cat_ui.fragments.IInternetDependentFragment
 import dev.astler.cat_ui.interfaces.ICatActivity
 import dev.astler.cat_ui.interfaces.IRootInsets
 import dev.astler.cat_ui.utils.getDimensionFromAttr
+import dev.astler.catlib.analytics.CatAnalytics
 import dev.astler.catlib.extensions.defaultNightMode
 import dev.astler.catlib.extensions.isOnline
 import dev.astler.catlib.extensions.isPlayStoreInstalled
@@ -50,6 +51,9 @@ abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (Layout
 
     @Inject
     lateinit var preferences: PreferencesTool
+
+    @Inject
+    lateinit var analytics: CatAnalytics
 
     @Inject
     protected lateinit var remoteConfig: RemoteConfigProvider

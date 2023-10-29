@@ -1,28 +1,58 @@
 package dev.astler.catlib.analytics
 
-import android.os.Bundle
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
+import android.annotation.SuppressLint
+import android.content.Context
+import com.devtodev.analytics.external.DTDLogLevel
+import com.devtodev.analytics.external.analytics.DTDAnalytics
+import com.devtodev.analytics.external.analytics.DTDAnalyticsConfiguration
+import com.devtodev.analytics.external.analytics.DTDCustomEventParameters
+import dev.astler.catlib.config.AppConfig
+import dev.astler.catlib.helpers.infoLog
+import javax.inject.Inject
 
-open class CatAnalytics {
+open class CatAnalytics @Inject constructor(var context: Context, val config: AppConfig) {
 
-    private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
+    companion object {
+        @SuppressLint("StaticFieldLeak")
+        var instance: CatAnalytics? = null
 
-    fun missingAssetsResource(path: String) {
-        simpleEvent("missing_asset", Pair("path", path))
+        fun truckCustomEvent(key: String, vararg params: Pair<String, Any>) {
+            instance?.simpleEvent(key, *params)
+        }
+    }
+
+    init {
+        initialize(context)
+    }
+
+    private fun initialize(context: Context) {
+        if (instance != null) return
+
+        val analyticsConfiguration = DTDAnalyticsConfiguration()
+        analyticsConfiguration.logLevel = DTDLogLevel.Error
+        DTDAnalytics.initialize(config.d2dAppId, analyticsConfiguration, context)
+
+        infoLog("Initialized", javaClass.simpleName)
+
+        instance = this
     }
 
     protected fun simpleEvent(key: String, vararg params: Pair<String, Any>) {
-        val bundle: Bundle? = if (params.isNotEmpty()) {
-            Bundle().also {
-                params.forEach { pair ->
-                    it.putString(pair.first, pair.second.toString())
-                }
+        val parameters = DTDCustomEventParameters()
+
+        params.forEach { pair ->
+            when (pair.second) {
+                is String -> parameters.add(pair.first, pair.second as String)
+                is Long -> parameters.add(pair.first, pair.second as Long)
+                is Double -> parameters.add(pair.first, pair.second as Double)
+                else -> parameters.add(pair.first, pair.second.toString())
             }
-        } else null
+        }
 
-        firebaseAnalytics.logEvent(key, bundle)
+        infoLog("Event $key $parameters", javaClass.simpleName)
+
+        DTDAnalytics.customEvent(
+            eventName = key, customEventParameters = parameters
+        )
     }
-
 }

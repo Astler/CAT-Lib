@@ -30,8 +30,6 @@ import dev.astler.unlib_test.analytics.CatTestAnalytics
 @AndroidEntryPoint
 class AnalyticsFragment : CatComposeFragment() {
 
-    private val _analyticsService by lazy { CatTestAnalytics() }
-
     @Composable
     override fun ScreenContent() {
         ButtonsGrid()
@@ -41,13 +39,13 @@ class AnalyticsFragment : CatComposeFragment() {
     fun ButtonsGrid() {
         Column {
             Button(R.string.track_click) {
-                _analyticsService.trackClick("TestClick")
+                CatTestAnalytics.trackClick("TestClick")
             }
 
             Spacer(modifier = Modifier.size(8.dp))
 
             Button(R.string.track_missing_asset) {
-                _analyticsService.missingAssetsResource("assets/missing_asset.png")
+                CatTestAnalytics.missingAssetsResource("assets/missing_asset.png")
             }
         }
     }
