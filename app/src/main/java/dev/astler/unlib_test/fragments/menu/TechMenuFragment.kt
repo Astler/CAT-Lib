@@ -22,7 +22,7 @@ class TechMenuFragment : TestsMenuFragment() {
     private val debuggableInfoKey = "DebuggableInfo"
     private val myAppsTrackerInfoKey = "MyAppsTrackerInfo"
     private val themePreviewKey = "ThemePreview"
-    private val notifications = "ThemePreview"
+    private val notifications = "Notifications"
 
     override val menuItems = listOf(
         BaseCard(TestBaseItem(dev.astler.catlib.ui.R.string.app_theme, R.drawable.ic_launcher_foreground, 3, uid = themePreviewKey)),

@@ -3,6 +3,14 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="17">
       <module name="app" target="1.8" />
+      <module name="Apps.CatLib.unlib-compose" target="19" />
+      <module name="CatLib.app" target="19" />
+      <module name="CatLib.catlib-ads" target="19" />
+      <module name="CatLib.catlib-billing" target="19" />
+      <module name="CatLib.catlib-core" target="19" />
+      <module name="CatLib.catlib-room" target="19" />
+      <module name="CatLib.catlib-ui" target="19" />
+      <module name="CatLib.unlib-signin" target="19" />
       <module name="unli" target="1.8" />
     </bytecodeTargetLevel>
   </component>

@@ -34,25 +34,28 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-
-    kotlin {
-        jvmToolchain(17)
-    }
-
-    kotlinOptions {
-        jvmTarget = 17
-    }
 
     buildFeatures {
+        buildConfig true
+        viewBinding true
         compose true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.3"
+    }
+
+    kotlin {
+        jvmToolchain(19)
+    }
+
+    kotlinOptions {
+        jvmTarget = "19"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_19
+        targetCompatibility JavaVersion.VERSION_19
     }
 
     namespace 'dev.astler.catlib.compose'

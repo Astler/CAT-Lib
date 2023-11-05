@@ -38,18 +38,29 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+
+    buildFeatures {
+        buildConfig true
+        viewBinding true
     }
 
     kotlin {
-        jvmToolchain(17)
+        jvmToolchain(19)
     }
 
     kotlinOptions {
-        jvmTarget = 17
+        jvmTarget = "19"
     }
+
+    kapt {
+        correctErrorTypes true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_19
+        targetCompatibility JavaVersion.VERSION_19
+    }
+
     namespace 'dev.astler.catlib.billing'
 }
 
@@ -63,5 +74,5 @@ dependencies {
 
     api "com.google.dagger:hilt-android:2.48.1"
     kapt "com.google.dagger:hilt-compiler:2.48.1"
-    api 'androidx.hilt:hilt-navigation-fragment:1.0.0'
+    api 'androidx.hilt:hilt-navigation-fragment:1.1.0'
 }

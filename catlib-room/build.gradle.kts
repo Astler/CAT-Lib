@@ -26,16 +26,16 @@ android {
     }
 
     kotlin {
-        jvmToolchain(17)
+        jvmToolchain(19)
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
-    
+
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "19"
     }
 }
 
@@ -49,7 +49,7 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    val roomVersion = "2.5.2"
+    val roomVersion = "2.6.0"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.room:room-paging:$roomVersion")

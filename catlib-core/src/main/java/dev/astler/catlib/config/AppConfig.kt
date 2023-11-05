@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 data class AppConfig(
     val proVersionPackageId: String = "",
 
-    val rewardedAdId: String = "",
     val interstitialAdId: String = "",
+    val rewardedAdId: String = "",
     val nativeAdId: String = "",
     val startAdId: String = "",
 
