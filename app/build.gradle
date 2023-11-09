@@ -80,8 +80,8 @@ dependencies {
     implementation project(':catlib-ui')
     implementation project(':catlib-room')
     implementation project(':catlib-billing')
+    implementation project(':catlib-compose')
 
-    implementation project(':unlib-compose')
     implementation project(':unlib-signin')
 
     api "com.google.dagger:hilt-android:2.47"
