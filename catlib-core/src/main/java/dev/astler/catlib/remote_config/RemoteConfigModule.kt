@@ -4,16 +4,15 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.scopes.ActivityScoped
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ActivityComponent::class)
 class RemoteConfigModule {
 
     @Provides
-    @Singleton
-    fun provideFirebaseRemoteConfig(@ApplicationContext context: Context): RemoteConfigProvider =
-        RemoteConfigProvider(context)
+    @ActivityScoped
+    fun provideFirebaseRemoteConfig(@ActivityContext context: Context): RemoteConfigProvider = RemoteConfigProvider(context)
 }
