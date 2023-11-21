@@ -1,5 +1,6 @@
 package dev.astler.ads.data
 
+import dev.astler.catlib.helpers.infoLog
 import dev.astler.catlib.remote_config.RemoteConfigProvider
 
 const val startAdDelayKey = "start_ad_delay_"
@@ -39,7 +40,9 @@ data class RemoteConfigData(
     var rewardAdEnabled: Boolean = true
 
     init {
+        infoLog("remoteConfig = $remoteConfig")
         if (remoteConfig != null) {
+            infoLog(startAdDelayKey + configPackageName)
             startAdDelay = remoteConfig.getLong(startAdDelayKey + configPackageName)
             startAdOtherAdDelay =  remoteConfig.getLong(startAdOtherAdDelayKey + configPackageName)
 

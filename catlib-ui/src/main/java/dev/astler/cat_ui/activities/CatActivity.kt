@@ -22,6 +22,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.material.internal.EdgeToEdgeUtils
 import com.google.android.play.core.review.ReviewException
 import com.google.android.play.core.review.ReviewInfo
@@ -37,10 +38,10 @@ import dev.astler.catlib.analytics.CatAnalytics
 import dev.astler.catlib.extensions.defaultNightMode
 import dev.astler.catlib.extensions.isOnline
 import dev.astler.catlib.extensions.isPlayStoreInstalled
+import dev.astler.catlib.helpers.errorLog
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.IRemoteConfigListener
 import dev.astler.catlib.remote_config.RemoteConfigProvider
-import dev.astler.catlib.helpers.errorLog
 import kotlinx.coroutines.launch
 import java.util.GregorianCalendar
 import javax.inject.Inject
@@ -164,18 +165,20 @@ abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (Layout
             preferences.setFirstStartForVersion(appVersionCode())
         }
 
-        if (isPlayStoreInstalled()) {
-            try {
-                reviewManager.requestReviewFlow().addOnCompleteListener { request ->
-                    if (request.isSuccessful) {
-                        reviewInfo = request.result
-                    } else {
-                        errorLog(request.exception, "error during requestReviewFlow")
+        with(GoogleApiAvailability.getInstance()) {
+            if (isPlayStoreInstalled()) {
+                try {
+                    reviewManager.requestReviewFlow().addOnCompleteListener { request ->
+                        if (request.isSuccessful) {
+                            reviewInfo = request.result
+                        } else {
+                            errorLog(request.exception, "error during requestReviewFlow")
+                        }
                     }
-                }
 
-            } catch (e: ReviewException) {
-                errorLog(e, "error during requestReviewFlow")
+                } catch (e: ReviewException) {
+                    errorLog(e, "error during requestReviewFlow")
+                }
             }
         }
 
