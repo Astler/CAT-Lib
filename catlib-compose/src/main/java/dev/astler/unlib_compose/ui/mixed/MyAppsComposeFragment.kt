@@ -2,6 +2,7 @@ package dev.astler.unlib_compose.ui.mixed
 
 import androidx.compose.runtime.Composable
 import dagger.hilt.android.AndroidEntryPoint
+import dev.astler.catlib.extensions.openAppInPlayStore
 import dev.astler.unlib_compose.screens.apps.AppItem
 import dev.astler.unlib_compose.screens.apps.nAppsData
 
@@ -15,7 +16,9 @@ open class MyAppsComposeFragment : ListComposeFragment<AppItem>() {
 
     @Composable
     override fun ContentItem(pItem: AppItem) {
-        AppItem(pItem)
+        AppItem(pItem) {
+            safeContext.openAppInPlayStore(it)
+        }
     }
 
     override fun onFragmentBackPressed(endAction: () -> Unit) {

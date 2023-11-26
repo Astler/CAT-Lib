@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.os.LocaleListCompat
-import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.cat_ui.activities.BindingCatActivity
 import dev.astler.catlib.extensions.activeLanguage
 import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
 import dev.astler.unlib_test.R
@@ -111,7 +111,7 @@ class LanguagePreviewFragment : CatComposeFragment() {
             modifier = Modifier.padding(8.dp),
             border = BorderStroke(if (isSelected) 4.dp else 1.dp, if (isSelected) colors.primary else colors.onSurface),
             onClick = {
-                if (activity is CatActivity<*>) {
+                if (activity is BindingCatActivity<*>) {
                     val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(item.language)
                     AppCompatDelegate.setApplicationLocales(appLocale)
                 }

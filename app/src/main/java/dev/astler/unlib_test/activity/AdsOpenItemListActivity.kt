@@ -3,7 +3,7 @@ package dev.astler.unlib_test.activity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.cat_ui.activities.BindingCatActivity
 import dev.astler.ads.adapters.OIAdsAdapterConfig
 import dev.astler.ads.adapters.OneItemAdsAdapter
 import dev.astler.ads.initialization.AdsTool
@@ -14,7 +14,7 @@ import dev.astler.unlib_test.items.TextItem
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AdsOpenItemListActivity : CatActivity<ActivityRecyclerviewBinding>(ActivityRecyclerviewBinding::inflate) {
+class AdsOpenItemListActivity : BindingCatActivity<ActivityRecyclerviewBinding>(ActivityRecyclerviewBinding::inflate) {
 
     @Inject lateinit var adsTool: AdsTool
 

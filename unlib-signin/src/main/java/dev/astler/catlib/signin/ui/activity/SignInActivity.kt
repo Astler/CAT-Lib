@@ -3,11 +3,10 @@ package dev.astler.catlib.signin.ui.activity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.cat_ui.activities.BindingCatActivity
 import dev.astler.cat_ui.utils.setInsetsViaOrientation
 import dev.astler.cat_ui.utils.views.showViewWithCondition
 import dev.astler.catlib.extensions.toast
-import dev.astler.catlib.helpers.MobileServicesSource
 import dev.astler.catlib.helpers.hasGoogleServices
 import dev.astler.catlib.signin.R
 import dev.astler.catlib.signin.data.CatSignInMode
@@ -25,7 +24,7 @@ import dev.astler.catlib.helpers.infoLog
 const val cSignInModeExtra = "signInMode"
 
 @AndroidEntryPoint
-open class SignInActivity: CatActivity<SignInLayoutBinding>(SignInLayoutBinding::inflate), SignInActivityListener {
+open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutBinding::inflate), SignInActivityListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

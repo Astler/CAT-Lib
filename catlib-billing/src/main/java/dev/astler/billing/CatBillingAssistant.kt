@@ -11,12 +11,12 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import dev.astler.billing.data.BillingViewModel
 import dev.astler.billing.interfaces.IQueryPurchases
 import dev.astler.billing.interfaces.PerformBillingListener
-import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.cat_ui.activities.BindingCatActivity
 import dev.astler.catlib.constants.cBillingNoAdsName
 import dev.astler.catlib.helpers.infoLog
 
 class CatBillingAssistant(
-    private val queryActivity: CatActivity<*>,
+    private val queryActivity: BindingCatActivity<*>,
     private val billingViewModel: BillingViewModel
 ) : PerformBillingListener {
 

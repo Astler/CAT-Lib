@@ -46,21 +46,17 @@ import kotlinx.coroutines.launch
 import java.util.GregorianCalendar
 import javax.inject.Inject
 
-abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (LayoutInflater) -> T) : AppCompatActivity(),
-    SharedPreferences.OnSharedPreferenceChangeListener,
+abstract class CatActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener,
     ICatActivity, IRootInsets, IRemoteConfigListener {
 
     @Inject
-    lateinit var preferences: PreferencesTool
+    override lateinit var preferences: PreferencesTool
 
     @Inject
-    lateinit var analytics: CatAnalytics
+    protected lateinit var analytics: CatAnalytics
 
     @Inject
     protected lateinit var remoteConfig: RemoteConfigProvider
-
-    protected lateinit var binding: T
-        private set
 
     private var _currentWindowInsets: WindowInsetsCompat = WindowInsetsCompat.Builder().build()
 
@@ -76,7 +72,6 @@ abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (Layout
 
     override val toolbarHeight: Int
         get() = _toolbarHeight
-
 
     protected var activeFragment: Fragment? = null
 
@@ -123,25 +118,14 @@ abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (Layout
         onBackPressedDispatcher.onBackPressed()
     }
 
-    protected inline fun <reified T : ViewBinding> inflateBinding(): T {
-        return T::class.java.getMethod("inflate", LayoutInflater::class.java)
-            .invoke(null, layoutInflater) as T
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
 
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-        )
-
         super.onCreate(savedInstanceState)
 
-        binding = bindingInflater(layoutInflater)
-        setContentView(binding.root)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = Color.TRANSPARENT
 
-        EdgeToEdgeUtils.applyEdgeToEdge(window, true)
         AppCompatDelegate.setDefaultNightMode(preferences.defaultNightMode)
 
         delegate.applyDayNight()
@@ -182,8 +166,6 @@ abstract class CatActivity<T : ViewBinding>(private val bindingInflater: (Layout
             }
         }
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        window.statusBarColor = Color.TRANSPARENT
     }
 
     /**

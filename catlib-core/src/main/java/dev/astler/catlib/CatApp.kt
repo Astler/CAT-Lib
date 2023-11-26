@@ -7,6 +7,7 @@ import com.google.android.material.color.DynamicColors
 import dev.astler.catlib.extensions.defaultNightMode
 import dev.astler.catlib.preferences.PreferencesTool
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 import javax.inject.Inject
 
 val catJson = Json {
@@ -37,6 +38,11 @@ open class CatApp : Application(), SharedPreferences.OnSharedPreferenceChangeLis
         applicationInstance = this
 
         createNotificationChannels()
+        plantTimber()
+    }
+
+    private fun plantTimber(){
+        Timber.plant(Timber.DebugTree())
     }
 
     open fun createNotificationChannels() {}
