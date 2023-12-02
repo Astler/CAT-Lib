@@ -15,8 +15,8 @@
             <option value="$PROJECT_DIR$/catlib-compose" />
             <option value="$PROJECT_DIR$/catlib-core" />
             <option value="$PROJECT_DIR$/catlib-room" />
+            <option value="$PROJECT_DIR$/catlib-signin" />
             <option value="$PROJECT_DIR$/catlib-ui" />
-            <option value="$PROJECT_DIR$/unlib-signin" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
