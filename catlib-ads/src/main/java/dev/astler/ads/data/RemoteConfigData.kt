@@ -6,6 +6,9 @@ import dev.astler.catlib.remote_config.RemoteConfigProvider
 const val startAdDelayKey = "start_ad_delay_"
 const val showStartAdKey = "start_ad_show_"
 
+const val interstitialAdDelayKey = "interstitial_ad_delay_"
+const val interstitialAdOtherAdDelayKey = "interstitial_ad_other_ad_delay_"
+
 const val interstitialAdEnabledKey = "interstitial_ad_enabled_"
 
 const val bannerAdEnabledKey = "banner_ad_enabled_"
@@ -32,6 +35,12 @@ data class RemoteConfigData(
     var startAdOtherAdDelay: Long = 20
 
     /**
+     * Delay in second which will be min use time to show and in one session!
+     */
+    var interstitialAdDelay: Long = 60
+    var interstitialAdOtherDelay: Long = 20
+
+    /**
      * Enabled options to control ads
      */
     var isStartAdsEnabled: Boolean = true
@@ -43,12 +52,16 @@ data class RemoteConfigData(
         infoLog("remoteConfig = $remoteConfig")
         if (remoteConfig != null) {
             infoLog(startAdDelayKey + configPackageName)
+
+            isStartAdsEnabled = remoteConfig.getBoolean(showStartAdKey + configPackageName)
             startAdDelay = remoteConfig.getLong(startAdDelayKey + configPackageName)
             startAdOtherAdDelay =  remoteConfig.getLong(startAdOtherAdDelayKey + configPackageName)
 
-            isStartAdsEnabled = remoteConfig.getBoolean(showStartAdKey + configPackageName)
             interstitialAdEnabled =
                 remoteConfig.getBoolean(interstitialAdEnabledKey + configPackageName)
+            interstitialAdDelay = remoteConfig.getLong(interstitialAdDelayKey + configPackageName)
+            interstitialAdOtherDelay =  remoteConfig.getLong(interstitialAdOtherAdDelayKey + configPackageName)
+
             bannerAdEnabled = remoteConfig.getBoolean(bannerAdEnabledKey + configPackageName)
             rewardAdEnabled = remoteConfig.getBoolean(rewardAdEnabledKey + configPackageName)
         }
