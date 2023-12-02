@@ -132,14 +132,14 @@ class AdsTool @Inject constructor(
             return
         }
 
-        val startDelay = config.startAdDelay
+        val startDelay = config.interstitialAdDelay
 
         if ((now - preferences.appResumeTime) < startDelay * 1000L) {
             adsLog("Time from start not passed ${(preferences.appResumeTime - GregorianCalendar().timeInMillis)/1000}!")
             return
         }
 
-        if ((now - preferences.lastAdsTime) < config.startAdOtherAdDelay * 1000L) {
+        if ((now - preferences.lastAdsTime) < config.interstitialAdOtherDelay * 1000L) {
             adsLog("Time from last ad not passed ${(preferences.lastAdsTime - GregorianCalendar().timeInMillis)/1000}!")
             return
         }
