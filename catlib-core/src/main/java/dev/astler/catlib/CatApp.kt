@@ -4,6 +4,11 @@ import android.app.Application
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.color.DynamicColors
+import com.google.firebase.FirebaseApp
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
+import dev.astler.catlib.core.BuildConfig
 import dev.astler.catlib.extensions.defaultNightMode
 import dev.astler.catlib.preferences.PreferencesTool
 import kotlinx.serialization.json.Json
@@ -39,6 +44,9 @@ open class CatApp : Application(), SharedPreferences.OnSharedPreferenceChangeLis
 
         createNotificationChannels()
         plantTimber()
+
+        FirebaseApp.initializeApp(this)
+        Firebase.crashlytics.setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
     }
 
     private fun plantTimber(){

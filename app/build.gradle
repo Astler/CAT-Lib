@@ -51,7 +51,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = "1.5.5"
     }
 
     kotlin {
@@ -84,8 +84,8 @@ dependencies {
     implementation project(':catlib-signin')
 
 
-    api "com.google.dagger:hilt-android:2.47"
-    kapt "com.google.dagger:hilt-compiler:2.47"
+    api "com.google.dagger:hilt-android:2.48.1"
+    kapt "com.google.dagger:hilt-compiler:2.48.1"
 
 
     testImplementation 'junit:junit:4.13.2'
