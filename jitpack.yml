@@ -1,5 +1,5 @@
 jdk:
   - openjdk19
 before_install:
-  - sdk install java openjdk-19.0.1
-  - sdk use java openjdk-19.0.1
+  - sdk install java corretto-19.0.2
+  - sdk use java corretto-19.0.2
