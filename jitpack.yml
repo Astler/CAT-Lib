@@ -1,5 +1,5 @@
 jdk:
   - openjdk19
 before_install:
-  - sdk install java jdk-19.0.1-ga
-  - sdk use java jdk-19.0.1-ga
+  - sdk install java openjdk-19.0.1
+  - sdk use java openjdk-19.0.1
