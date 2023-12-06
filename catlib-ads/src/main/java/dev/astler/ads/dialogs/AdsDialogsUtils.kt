@@ -3,13 +3,13 @@ package dev.astler.ads.dialogs
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import dev.astler.ads.interfaces.IAdListener
-import dev.astler.cat_ui.utils.dialogs.confirmDialog
+import dev.astler.cat_ui.utils.dialogs.unpackedCatDialog
 import dev.astler.catlib.extensions.openAppInPlayStore
 import dev.astler.catlib.ads.R
 
 fun AppCompatActivity.showNoAdsDialog(proPackageName: String) {
     if (proPackageName.isNotEmpty()) {
-        confirmDialog(
+        unpackedCatDialog(
             dev.astler.catlib.core.R.string.disable_ads,
             dev.astler.catlib.core.R.string.disable_ads_msg,
             positive = dev.astler.catlib.core.R.string.buy_pro,
@@ -23,7 +23,7 @@ fun AppCompatActivity.showNoAdsDialog(proPackageName: String) {
             }
         )
     } else {
-        confirmDialog(
+        unpackedCatDialog(
             dev.astler.catlib.core.R.string.disable_ads,
             dev.astler.catlib.core.R.string.disable_ads_msg,
             negative = android.R.string.cancel,
@@ -38,7 +38,7 @@ fun AppCompatActivity.showNoAdsDialog(proPackageName: String) {
 }
 
 fun Context.adsAgeConfirmDialog(result: (Boolean) -> Unit) {
-    confirmDialog(
+    unpackedCatDialog(
         R.string.ads_dialog_title,
         R.string.ads_dialog_msg,
         positive = dev.astler.catlib.core.R.string.yes,

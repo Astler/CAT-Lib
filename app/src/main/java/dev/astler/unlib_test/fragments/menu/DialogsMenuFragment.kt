@@ -1,9 +1,8 @@
 package dev.astler.unlib_test.fragments.menu
 
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.utils.dialogs.confirmDialog
-import dev.astler.cat_ui.utils.dialogs.exitDialog
 import dev.astler.cat_ui.utils.dialogs.okDialog
+import dev.astler.cat_ui.utils.dialogs.unpackedCatDialog
 import dev.astler.cat_ui.utils.dialogs.yesNoDialog
 import dev.astler.catlib.extensions.toast
 import dev.astler.unlib_compose.ui.compose.items.BaseCard
@@ -40,12 +39,8 @@ class DialogsMenuFragment : TestsMenuFragment() {
                 }
             }
 
-            exitDialogKey -> {
-                activity?.exitDialog(preferences)
-            }
-
             confirmDialogKey -> {
-                safeContext.confirmDialog(
+                safeContext.unpackedCatDialog(
                     title = "Title",
                     message = "Message",
                     positive = "Yes",

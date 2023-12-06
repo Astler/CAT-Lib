@@ -1,6 +1,5 @@
 package dev.astler.cat_ui.utils.dialogs
 
-import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
@@ -11,17 +10,21 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dev.astler.cat_ui.adapters.CatOneTypeAdapter
 import dev.astler.cat_ui.items.DialogSimpleTextItem
 import dev.astler.cat_ui.utils.tryToGetTextFrom
-import dev.astler.catlib.extensions.tryToVibrate
-import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.ui.R
 import dev.astler.catlib.ui.databinding.DialogChooseItemBinding
 import dev.astler.catlib.ui.databinding.DialogChooseItemWithSearchBinding
 import dev.astler.catlib.ui.databinding.DialogEditTextBinding
 import dev.astler.catlib.ui.databinding.ItemPrefsTextBinding
 
-/**
- * Predefined yes/no options dialog
- */
+data class CatDialogData(
+    val title: Any? = null,
+    val message: Any? = null,
+    val positive: Any? = null,
+    val negative: Any? = null,
+    val positiveAction: ((DialogInterface) -> Unit)? = null,
+    val negativeAction: ((DialogInterface) -> Unit)? = null,
+    val showAfterCreation: Boolean = true
+)
 
 fun Context.editTextDialog(
     showAfterCreation: Boolean = true,
@@ -56,119 +59,62 @@ fun Context.editTextDialog(
 
 
 fun Context.yesNoDialog(
-    showAfterCreation: Boolean = true,
     title: Any? = null,
     message: Any? = null,
+    showAfterCreation: Boolean = true,
+    negativeAction: ((DialogInterface) -> Unit)? = {},
     positiveAction: ((DialogInterface) -> Unit)? = {}
 ): AlertDialog {
     return catDialog(
-        showAfterCreation,
-        title = title,
-        message = message,
-        negative = R.string.no,
-        negativeAction = { it.dismiss() },
-        positive = R.string.yes
-    ) { positiveAction?.invoke(it) }
-}
-
-fun Context.yesNoDialog(
-    title: Any? = null,
-    message: Any? = null,
-    positiveAction: ((DialogInterface) -> Unit)? = { }
-): AlertDialog {
-    return yesNoDialog(
-        showAfterCreation = true,
-        title = title,
-        message = message,
-    ) { positiveAction?.invoke(it) }
-}
-
-
-/**
- * Predefined ok dialog
- */
-
-fun Context.okDialog(
-    showAfterCreation: Boolean = true,
-    title: Any? = null,
-    message: Any? = null,
-    okAction: ((DialogInterface) -> Unit) = {}
-): AlertDialog {
-    return catDialog(
-        showAfterCreation,
-        title = title,
-        message = message,
-        positive = dev.astler.catlib.core.R.string.ok,
-        positiveAction = okAction
+        CatDialogData(
+            title = title,
+            message = message,
+            negative = R.string.no,
+            negativeAction = negativeAction,
+            positive = R.string.yes,
+            positiveAction = positiveAction,
+            showAfterCreation = showAfterCreation
+        )
     )
 }
 
 fun Context.okDialog(
     title: Any? = null,
     message: Any? = null,
+    showAfterCreation: Boolean = true,
     okAction: ((DialogInterface) -> Unit) = {}
 ): AlertDialog {
-    return okDialog(
-        showAfterCreation = true,
-        title = title,
-        message = message,
-        okAction = okAction
+    return catDialog(
+        CatDialogData(
+            title = title,
+            message = message,
+            positive = dev.astler.catlib.core.R.string.ok,
+            positiveAction = okAction,
+            showAfterCreation = showAfterCreation
+        )
     )
 }
 
-/**
- * Predefined confirm dialog. Just public variant for catDialog
- */
-
-fun Context.confirmDialog(
-    showAfterCreation: Boolean = true,
+fun Context.unpackedCatDialog(
     title: Any? = null,
     message: Any? = null,
     negative: Any? = null,
     positive: Any? = null,
+    showAfterCreation: Boolean = true,
     negativeAction: ((DialogInterface) -> Unit)? = null,
     positiveAction: ((DialogInterface) -> Unit)? = null
 ): AlertDialog {
     return catDialog(
-        showAfterCreation,
-        title,
-        message,
-        negative = negative,
-        negativeAction = negativeAction,
-        positive = positive,
-        positiveAction = positiveAction
+        CatDialogData(
+            title = title,
+            message = message,
+            negative = negative,
+            positive = positive,
+            negativeAction = negativeAction,
+            positiveAction = positiveAction,
+            showAfterCreation = showAfterCreation
+        )
     )
-}
-
-fun Context.confirmDialog(
-    title: Any? = null,
-    message: Any? = null,
-    negative: Any? = null,
-    positive: Any? = null,
-    negativeAction: ((DialogInterface) -> Unit)? = null,
-    positiveAction: ((DialogInterface) -> Unit)? = null
-): AlertDialog {
-    return confirmDialog(
-        showAfterCreation = true,
-        title = title,
-        message = message,
-        negative = negative,
-        negativeAction = negativeAction,
-        positive = positive,
-        positiveAction = positiveAction
-    )
-}
-
-fun Activity.exitDialog(preferencesTool: PreferencesTool): AlertDialog {
-    return catDialog(title = R.string.exiting_app,
-        message = R.string.already_leave,
-        negative = R.string.no,
-        negativeAction = { it.dismiss() },
-        positive = R.string.yes,
-        positiveAction = {
-            this.tryToVibrate(preferencesTool)
-            this.finish()
-        })
 }
 
 fun <T> Context.searchListDialog(
@@ -205,23 +151,45 @@ fun <T> Context.searchListDialog(
 
 fun <T> Context.listDialog(
     showAfterCreation: Boolean = true,
-    pTitle: Int,
-    pItems: List<T>,
-    pItemsAdapter: CatOneTypeAdapter<T>
+    title: Any,
+    items: List<T>,
+    cotAdapter: CatOneTypeAdapter<T>,
+    negative: Any? = null,
+    positive: Any? = null,
+    negativeAction: ((DialogInterface) -> Unit)? = null,
+    positiveAction: ((DialogInterface) -> Unit)? = null
 ): AlertDialog {
     val dialogView = DialogChooseItemBinding.inflate(LayoutInflater.from(this))
 
-    val listDialog =
-        MaterialAlertDialogBuilder(this).setView(dialogView.root).setTitle(pTitle).create()
+    val titleText = tryToGetTextFrom(title)
+    val positiveText = tryToGetTextFrom(positive)
+    val negativeText = tryToGetTextFrom(negative)
 
-    pItemsAdapter.setData(pItems)
+    val materialDialog =
+        MaterialAlertDialogBuilder(this).setView(dialogView.root).setTitle(titleText)
+
+    if (positiveAction != null && positiveText != null) materialDialog.setPositiveButton(
+        positiveText
+    ) { dialog, _ ->
+        positiveAction(dialog)
+    }
+
+    if (negativeAction != null && negativeText != null) materialDialog.setNegativeButton(
+        negativeText
+    ) { dialog, _ ->
+        negativeAction(dialog)
+    }
+
+    cotAdapter.setData(items)
 
     dialogView.itemsList.layoutManager = LinearLayoutManager(this)
-    dialogView.itemsList.adapter = pItemsAdapter
+    dialogView.itemsList.adapter = cotAdapter
 
-    if (showAfterCreation) listDialog.show()
+    val createdDialog = materialDialog.create()
 
-    return listDialog
+    if (showAfterCreation) createdDialog.show()
+
+    return createdDialog
 }
 
 fun Context.simpleListDialog(
@@ -256,21 +224,13 @@ fun Context.simpleListDialog(
     return nChooseItemDialog
 }
 
-private fun Context.catDialog(
-    showAfterCreation: Boolean = true,
-    title: Any? = null,
-    message: Any? = null,
-    negative: Any? = null,
-    negativeAction: ((DialogInterface) -> Unit)? = null,
-    positive: Any? = null,
-    positiveAction: ((DialogInterface) -> Unit)? = null
-): AlertDialog {
+private fun Context.catDialog(data: CatDialogData): AlertDialog {
     val materialDialog = MaterialAlertDialogBuilder(this)
 
-    val titleText = tryToGetTextFrom(title)
-    val messageText = tryToGetTextFrom(message)
-    val positiveText = tryToGetTextFrom(positive)
-    val negativeText = tryToGetTextFrom(negative)
+    val titleText = tryToGetTextFrom(data.title)
+    val messageText = tryToGetTextFrom(data.message)
+    val positiveText = tryToGetTextFrom(data.positive)
+    val negativeText = tryToGetTextFrom(data.negative)
 
     if (titleText != null) {
         materialDialog.setTitle(titleText)
@@ -280,21 +240,21 @@ private fun Context.catDialog(
         materialDialog.setMessage(messageText)
     }
 
-    if (positiveAction != null && positiveText != null) materialDialog.setPositiveButton(
+    if (data.positiveAction != null && positiveText != null) materialDialog.setPositiveButton(
         positiveText
     ) { dialog, _ ->
-        positiveAction(dialog)
+        data.positiveAction.invoke(dialog)
     }
 
-    if (negativeAction != null && negativeText != null) materialDialog.setNegativeButton(
+    if (data.negativeAction != null && negativeText != null) materialDialog.setNegativeButton(
         negativeText
     ) { dialog, _ ->
-        negativeAction(dialog)
+        data.negativeAction.invoke(dialog)
     }
 
     val dialog = materialDialog.create()
 
-    if (showAfterCreation)
+    if (data.showAfterCreation)
         dialog.show()
 
     return dialog
