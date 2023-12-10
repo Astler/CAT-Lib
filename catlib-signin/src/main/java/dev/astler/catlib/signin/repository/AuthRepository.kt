@@ -1,6 +1,7 @@
 package dev.astler.catlib.signin.repository
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import dev.astler.catlib.model.State
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -13,14 +14,25 @@ class AuthRepository @Inject constructor(
 ) : IAuthRepository {
     override fun isUserAuthenticatedInFirebase(): Flow<State<Boolean>> = flow {
         try {
-            emit(State.loading())
-            if (auth.currentUser != null) {
-                emit(State.success(true))
-            } else {
-                emit(State.success(false))
+            firebaseUser().collect { userState ->
+                when (userState) {
+                    is State.Loading -> emit(State.loading())
+                    is State.Success -> emit(State.success(userState.data != null))
+                    is State.Error -> emit(State.error(userState.toString()))
+                }
             }
         } catch (e: Exception) {
-            emit(State.success(false))
+            emit(State.error(e.message))
+        }
+    }
+
+    override fun firebaseUser(): Flow<State<FirebaseUser?>> = flow {
+        try {
+            emit(State.loading())
+            val currentUser = auth.currentUser
+            emit(State.success(currentUser))
+        } catch (e: Exception) {
+            emit(State.error(e.message))
         }
     }
 

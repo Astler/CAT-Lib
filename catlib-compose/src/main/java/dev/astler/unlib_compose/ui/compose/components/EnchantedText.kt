@@ -17,16 +17,16 @@ import dev.astler.unlib_compose.theme.GoogleSans
 fun EnchantedTitle(
     modifier: Modifier = Modifier,
     textSize: Float = 20f,
-    @StringRes titleId: Int,
+    @StringRes text: Int,
     centered: Boolean = false
 ) {
-    EnchantedTitle(modifier, stringResource(id = titleId), textSize, centered)
+    EnchantedTitle(modifier, stringResource(id = text), textSize, centered)
 }
 
 @Composable
 fun EnchantedTitle(
     modifier: Modifier = Modifier,
-    title: String,
+    text: String,
     textSize: Float = 20f,
     centered: Boolean = false,
     color: Color? = null
@@ -37,7 +37,7 @@ fun EnchantedTitle(
     EnchantedText(
         modifier = modifier,
         textStyle = if (centered) typography.titleLarge else typography.titleMedium.copy(fontSize = textSize.sp),
-        text = title,
+        text = text,
         textSize = textSize,
         centered = centered,
         isBold = true,
