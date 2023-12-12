@@ -1,0 +1,5 @@
+<ad-services-config>
+    <attribution allowAllToAccess="true" />
+    <topics allowAllToAccess="true" />
+    <custom-audiences allowAllToAccess="true" />
+</ad-services-config>

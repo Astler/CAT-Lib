@@ -18,6 +18,11 @@
         tools:ignore="AllowBackup"
         android:theme="@style/CatLibTheme">
 
+        <property
+            android:name="android.adservices.AD_SERVICES_CONFIG"
+            android:resource="@xml/my_ad_services_config"
+            tools:replace="android:resource" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
