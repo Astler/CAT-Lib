@@ -35,5 +35,4 @@ class AuthRepository @Inject constructor(
             emit(CatState.error(e.message))
         }
     }
-
 }

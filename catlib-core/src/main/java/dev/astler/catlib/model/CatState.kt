@@ -8,11 +8,29 @@ sealed class CatState<T>(val data: T? = null) {
 
     data class Error<T>(val message: String?) : CatState<T>()
 
-    fun isLoading(): Boolean = this is Loading
+    fun isLoading(actionIfTrue: (() -> Unit)? = null): Boolean {
+        return (this is Loading).also {
+            if (it) {
+                actionIfTrue?.invoke()
+            }
+        }
+    }
 
-    fun isSuccessful(): Boolean = this is Success
+    fun isSuccessful(actionIfTrue: ((T) -> Unit)? = null): Boolean {
+        return (this is Success).also {
+            if (it) {
+                actionIfTrue?.invoke((this as Success<T>).successData)
+            }
+        }
+    }
 
-    fun isFailed(): Boolean = this is Error
+    fun isFailed(actionIfTrue: ((String?) -> Unit)? = null): Boolean {
+        return (this is Error).also {
+            if (it) {
+                actionIfTrue?.invoke((this as Error<T>).message)
+            }
+        }
+    }
 
     companion object {
 
