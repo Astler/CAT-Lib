@@ -3,12 +3,15 @@ package dev.astler.catlib.extensions
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import dev.astler.catlib.constants.IODispatcher
+import dev.astler.catlib.helpers.errorLog
 import dev.astler.catlib.helpers.isNotM
 import dev.astler.catlib.helpers.trackedTry
+import kotlinx.coroutines.withContext
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.net.HttpURLConnection
 import java.net.URL
-import javax.net.ssl.HttpsURLConnection
 
 @Suppress("DEPRECATION")
 val Context.isOnline: Boolean
@@ -36,40 +39,41 @@ val Context.isOnline: Boolean
     }
 
 
-fun String.getJsonContent(): String {
-    var nConnection: HttpsURLConnection? = null
+suspend fun String.getJsonContent(fallbackAction: (() -> String)? = null): String {
+    return withContext(IODispatcher) {
+        var connection: HttpURLConnection? = null
 
-    return trackedTry(fallbackValue = "", finallyAction = {
-        if (nConnection != null) {
-            trackedTry {
-                nConnection?.disconnect()
+        trackedTry(finallyAction = {
+            connection?.disconnect()
+        }, fallbackValue = "") {
+            val url = URL(this@getJsonContent)
+            connection = url.openConnection() as HttpURLConnection
+
+            var result = ""
+
+            connection?.let {
+                it.connectTimeout = 15000
+                it.readTimeout = 15000
+                it.requestMethod = "GET"
+
+                if (it.responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader(InputStreamReader(it.inputStream)).use { reader ->
+                        val response = StringBuilder()
+                        var line: String?
+
+                        while (reader.readLine().also { line = it } != null) {
+                            response.append(line).append("\n")
+                        }
+
+                        result = response.toString()
+                    }
+                } else {
+                    errorLog("Error: Server responded with status code: ${connection?.responseCode}")
+                    result = fallbackAction?.invoke() ?: ""
+                }
             }
+
+            result
         }
-
-        ""
-    }) {
-        val nURL = URL(this)
-        nConnection = nURL.openConnection() as HttpsURLConnection
-
-        if (nConnection == null) return@trackedTry ""
-
-        nConnection!!.connect()
-
-        val nBufferReader =
-            BufferedReader(InputStreamReader(nConnection!!.inputStream))
-        val nStringBuilder = StringBuilder()
-        var line: String
-        while (nBufferReader.readLine().also { line = it ?: "" } != null) {
-            nStringBuilder.append(
-                """
-                        $line
-                        
-                """.trimIndent()
-            )
-        }
-
-        nBufferReader.close()
-
-        nStringBuilder.toString()
     }
 }
