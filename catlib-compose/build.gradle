@@ -71,12 +71,14 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
     api "androidx.compose.material3:material3:1.1.2"
+    api "androidx.compose.material3:material3-android:1.2.0-alpha12"
     api "androidx.compose.material3:material3-window-size-class:1.1.2"
 
     api "androidx.compose.ui:ui-tooling:$compose_version"
     api "androidx.compose.ui:ui-util:$compose_version"
     api "androidx.compose.ui:ui-tooling-preview:$compose_version"
     api "androidx.compose.ui:ui:$compose_version"
+    api "androidx.compose.runtime:runtime:$compose_version"
     api "androidx.compose.material:material:$compose_version"
     api "androidx.activity:activity-compose:1.8.1"
     api "androidx.navigation:navigation-compose:2.7.5"
@@ -85,12 +87,20 @@ dependencies {
     api "androidx.compose.compiler:compiler:1.5.6"
     api "org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.6.0"
 
+    api "androidx.compose.foundation:foundation:1.6.0-beta03"
+    api 'com.google.accompanist:accompanist-insets:0.30.1'
+
     api 'androidx.hilt:hilt-navigation-compose:1.1.0'
     api "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2"
     api "androidx.lifecycle:lifecycle-runtime-compose:2.6.2"
 
+    api 'com.valentinilk.shimmer:compose-shimmer:1.2.0'
+    api "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+    api 'nl.dionsegijn:konfetti-compose:2.0.3'
 
     api "io.coil-kt:coil:$coil"
     api "io.coil-kt:coil-gif:$coil"
     api "io.coil-kt:coil-compose:$coil"
+    api "com.github.Commit451.coil-transformations:transformations:2.0.2"
+
 }
