@@ -1,7 +1,9 @@
 package dev.astler.unlib_test
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.billing.data.BillingViewModel
@@ -18,6 +20,8 @@ class MainActivity : BindingCatActivity<ActivityMainBinding>(ActivityMainBinding
     private val _billingViewModel: BillingViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
+
         super.onCreate(savedInstanceState)
 
         lifecycleScope.launch(IODispatcher) {

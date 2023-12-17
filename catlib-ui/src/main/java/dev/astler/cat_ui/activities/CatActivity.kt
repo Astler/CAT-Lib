@@ -2,28 +2,22 @@ package dev.astler.cat_ui.activities
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.viewbinding.ViewBinding
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.material.internal.EdgeToEdgeUtils
 import com.google.android.play.core.review.ReviewException
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
@@ -77,6 +71,7 @@ abstract class CatActivity : AppCompatActivity(), SharedPreferences.OnSharedPref
 
     @Suppress("MemberVisibilityCanBePrivate")
     protected var reviewInfo: ReviewInfo? = null
+
     @Suppress("MemberVisibilityCanBePrivate")
     protected val reviewManager: ReviewManager by lazy {
         ReviewManagerFactory.create(this)
@@ -123,11 +118,7 @@ abstract class CatActivity : AppCompatActivity(), SharedPreferences.OnSharedPref
 
         super.onCreate(savedInstanceState)
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        window.statusBarColor = Color.TRANSPARENT
-
         AppCompatDelegate.setDefaultNightMode(preferences.defaultNightMode)
-
         delegate.applyDayNight()
 
         _toolbarHeight = getDimensionFromAttr(androidx.appcompat.R.attr.actionBarSize)
