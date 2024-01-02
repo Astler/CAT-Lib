@@ -1,5 +1,5 @@
 package dev.astler.billing.interfaces
 
-interface PerformBillingListener {
+interface IBillingAssistant {
     fun buyItem(pItemName: String)
 }

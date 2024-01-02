@@ -2,6 +2,7 @@ package dev.astler.billing
 
 import android.os.Handler
 import android.os.Looper
+import androidx.lifecycle.ViewModelProvider
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
@@ -10,17 +11,27 @@ import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import dev.astler.billing.data.BillingViewModel
 import dev.astler.billing.interfaces.IQueryPurchases
-import dev.astler.billing.interfaces.PerformBillingListener
-import dev.astler.cat_ui.activities.BindingCatActivity
+import dev.astler.billing.interfaces.IBillingAssistant
+import dev.astler.billing.interfaces.IBillingAssistantProvider
+import dev.astler.cat_ui.activities.CatActivity
 import dev.astler.catlib.constants.cBillingNoAdsName
 import dev.astler.catlib.helpers.infoLog
 
+/**
+ * A billing assistant that requires the hosting activity to implement [IBillingAssistantProvider].
+ *
+ * @property queryActivity The activity this assistant is associated with. Must implement [IBillingAssistantProvider].
+ * @throws Exception if [queryActivity] does not implement [IBillingAssistantProvider].
+ */
 class CatBillingAssistant(
-    private val queryActivity: BindingCatActivity<*>,
-    private val billingViewModel: BillingViewModel
-) : PerformBillingListener {
+    private val queryActivity: CatActivity
+) : IBillingAssistant {
 
     private var activityQueries: IQueryPurchases? = null
+
+    private val billingViewModel: BillingViewModel by lazy {
+        ViewModelProvider(queryActivity)[BillingViewModel::class.java]
+    }
 
     private val purchasesUpdatedListener =
         PurchasesUpdatedListener { billingResult, pPurchases ->
@@ -41,6 +52,10 @@ class CatBillingAssistant(
     private var reconnectAttempts = 0
 
     init {
+        if (queryActivity !is IBillingAssistantProvider) {
+            throw Exception("Activity must implement IBillingAssistantProvider")
+        }
+
         if (queryActivity is IQueryPurchases) {
             activityQueries = queryActivity
         }
