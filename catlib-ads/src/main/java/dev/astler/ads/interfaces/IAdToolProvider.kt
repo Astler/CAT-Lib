@@ -1,7 +1,6 @@
 package dev.astler.ads.interfaces
 
-interface IAdListener {
+interface IAdToolProvider: IAdHolderListener {
 
     fun showRewardAd()
-    fun hideAd()
 }

@@ -5,7 +5,7 @@ import android.view.View
 import dev.astler.cat_ui.interfaces.RecyclerAdapterSizeListener
 import dev.astler.cat_ui.utils.views.hideFABOnScroll
 import dev.astler.cat_ui.utils.views.setBottomMarginInsets
-import dev.astler.cat_ui.utils.views.showViewWithCondition
+import dev.astler.cat_ui.utils.views.showWithCondition
 import dev.astler.cat_ui.views.CatStateLayout
 import dev.astler.catlib.ui.databinding.RecyclerViewFragmentBinding
 
@@ -35,7 +35,7 @@ abstract class CatListFragment : CatFragment<RecyclerViewFragmentBinding>(Recycl
         with(binding) {
             stateLayout.activeView = CatStateLayout.loadingView
 
-            fab.showViewWithCondition(showFloatingActionButton)
+            fab.showWithCondition(showFloatingActionButton)
 
             if (showFloatingActionButton)  {
                 recyclerView.hideFABOnScroll(fab)

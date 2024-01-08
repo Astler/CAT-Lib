@@ -49,7 +49,6 @@ data class RemoteConfigData(
     var rewardAdEnabled: Boolean = true
 
     init {
-        infoLog("remoteConfig = $remoteConfig")
         if (remoteConfig != null) {
             infoLog(startAdDelayKey + configPackageName)
 
@@ -65,5 +64,11 @@ data class RemoteConfigData(
             bannerAdEnabled = remoteConfig.getBoolean(bannerAdEnabledKey + configPackageName)
             rewardAdEnabled = remoteConfig.getBoolean(rewardAdEnabledKey + configPackageName)
         }
+
+        infoLog("Full remote ads config: $this")
+    }
+
+    override fun toString(): String {
+        return "RemoteConfigData(startAdDelay=$startAdDelay, startAdOtherAdDelay=$startAdOtherAdDelay, interstitialAdDelay=$interstitialAdDelay, interstitialAdOtherDelay=$interstitialAdOtherDelay, isStartAdsEnabled=$isStartAdsEnabled, interstitialAdEnabled=$interstitialAdEnabled, bannerAdEnabled=$bannerAdEnabled, rewardAdEnabled=$rewardAdEnabled)"
     }
 }

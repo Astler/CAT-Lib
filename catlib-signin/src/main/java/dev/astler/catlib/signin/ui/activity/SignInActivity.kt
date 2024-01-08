@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.BindingCatActivity
 import dev.astler.cat_ui.utils.setInsetsViaOrientation
-import dev.astler.cat_ui.utils.views.showViewWithCondition
+import dev.astler.cat_ui.utils.views.showWithCondition
 import dev.astler.catlib.extensions.toast
 import dev.astler.catlib.helpers.hasGoogleServices
 import dev.astler.catlib.signin.R
@@ -39,12 +39,12 @@ open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutB
             val canBeClosed =
                 signInMode == CatSignInMode.OPTIONAL || signInMode == CatSignInMode.REGISTER
 
-            secondPassword.showViewWithCondition(registerMode)
-            orContinueWith.showViewWithCondition(!registerMode)
-            registerHint.showViewWithCondition(!registerMode)
-            googleSignIn.showViewWithCondition(!registerMode)
+            secondPassword.showWithCondition(registerMode)
+            orContinueWith.showWithCondition(!registerMode)
+            registerHint.showWithCondition(!registerMode)
+            googleSignIn.showWithCondition(!registerMode)
 
-            notNow.showViewWithCondition(canBeClosed)
+            notNow.showWithCondition(canBeClosed)
 
             notNow.setOnClickListener {
                 this@SignInActivity.finish()

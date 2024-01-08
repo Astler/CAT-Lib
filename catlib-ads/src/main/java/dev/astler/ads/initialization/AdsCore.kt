@@ -19,9 +19,9 @@ class AdsCore @Inject constructor(
 
     init {
         if (context.isGoogleTestDevice()) {
-            infoLog("started on google device")
+            infoLog("Started on google device")
         } else {
-            infoLog("started on default device")
+            infoLog("Started on default device")
             MobileAds.initialize(context)
 
             if (context is Application)

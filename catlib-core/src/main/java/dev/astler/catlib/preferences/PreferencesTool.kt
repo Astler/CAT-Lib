@@ -93,7 +93,7 @@ open class PreferencesTool @Inject constructor(context: Context) {
             edit(firstStartKey, value)
         }
 
-    var noAdsDay: Int
+    var noAdsHour: Int
         get() = getPreferences().getInt(dayWithoutAdsKey, -1)
         set(value) {
             edit(dayWithoutAdsKey, value)

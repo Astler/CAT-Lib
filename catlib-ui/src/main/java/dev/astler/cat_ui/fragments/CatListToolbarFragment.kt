@@ -1,7 +1,6 @@
 package dev.astler.cat_ui.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.interfaces.RecyclerAdapterSizeListener
 import dev.astler.cat_ui.utils.setStatusBarColor
-import dev.astler.cat_ui.utils.views.showViewWithCondition
+import dev.astler.cat_ui.utils.views.showWithCondition
 import dev.astler.cat_ui.views.CatStateLayout
 import dev.astler.catlib.ui.databinding.FragmentListToolbarBinding
 
@@ -64,7 +63,7 @@ abstract class CatListToolbarFragment : CatFragment<FragmentListToolbarBinding>(
     }
 
     private fun setupToolbar() {
-        binding.toolbarLayout.customTopBar.showViewWithCondition(showToolbar)
+        binding.toolbarLayout.customTopBar.showWithCondition(showToolbar)
 
         if (showToolbar) coreListener?.setupToolbar(binding.toolbarLayout.toolbar)
 

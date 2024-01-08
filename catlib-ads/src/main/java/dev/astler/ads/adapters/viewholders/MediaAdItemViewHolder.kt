@@ -7,7 +7,7 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import dev.astler.cat_ui.utils.views.gone
 import dev.astler.cat_ui.utils.views.visible
-import dev.astler.cat_ui.utils.views.showViewWithCondition
+import dev.astler.cat_ui.utils.views.showWithCondition
 import dev.astler.catlib.helpers.adsLog
 import dev.astler.catlib.ads.databinding.ItemMediaAdBinding
 
@@ -31,8 +31,8 @@ class MediaAdItemViewHolder(view: View) : ViewHolder(view) {
         with(_itemBinding) {
             val canLoadAds = pNativeAd != null && pCanShowAds
 
-            adHeadline.showViewWithCondition(canLoadAds)
-            nativeAd.showViewWithCondition(canLoadAds)
+            adHeadline.showWithCondition(canLoadAds)
+            nativeAd.showWithCondition(canLoadAds)
 
             if (!canLoadAds) {
                 adsLog("Hide ad: data = $pNativeAd and canShowAds = $pCanShowAds")

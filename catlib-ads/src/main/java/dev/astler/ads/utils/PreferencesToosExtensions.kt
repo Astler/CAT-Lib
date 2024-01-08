@@ -5,14 +5,7 @@ import dev.astler.catlib.preferences.PreferencesTool
 private const val ChildAdsKey = "child_ads"
 private const val AgeConfirmedKey = "age_confirmed"
 private const val LastAdsTimeKey = "last_ads_time"
-private const val RewardAdActiveKey = "reward_ad_active_key"
 private const val StartAdTimeKey = "start_ad_timer"
-
-var PreferencesTool.rewardAdActive: Boolean
-    get() = getBoolean(RewardAdActiveKey, false)
-    set(value) {
-        edit(RewardAdActiveKey, value)
-    }
 
 
 var PreferencesTool.childAdsMode: Boolean

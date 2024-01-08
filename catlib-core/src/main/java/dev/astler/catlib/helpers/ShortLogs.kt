@@ -4,17 +4,19 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import timber.log.Timber
 
-fun infoLog(pText: String, pPostCategory: String = "", pCategory: String = "ForAstler") {
-    Timber.tag("$pCategory $pPostCategory").i(pText)
+private const val baseTag = "ForAstler:"
+
+fun infoLog(pText: String, postCategory: String = "", category: String = baseTag) {
+    Timber.tag(category + postCategory).i(pText)
 }
 
-fun adsLog(text: String, postCategory: String = "", category: String = "ForAds") {
-    Timber.tag(category + postCategory).i(text)
+fun adsLog(text: String, postCategory: String = "", category: String = "ForAds:") {
+    infoLog(text, postCategory, category)
 }
 
-fun errorLog(pText: String, pPostCategory: String = "", pCategory: String = "ForAstler") {
+fun errorLog(pText: String, postCategory: String = "", category: String = baseTag) {
     Firebase.crashlytics.log(pText)
-    Timber.tag(pCategory + pPostCategory).e(pText)
+    Timber.tag(category + postCategory).e(pText)
 }
 
 fun errorLog(

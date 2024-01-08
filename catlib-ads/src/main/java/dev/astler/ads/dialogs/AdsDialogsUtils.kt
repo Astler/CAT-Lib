@@ -2,7 +2,7 @@ package dev.astler.ads.dialogs
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
-import dev.astler.ads.interfaces.IAdListener
+import dev.astler.ads.interfaces.IAdToolProvider
 import dev.astler.cat_ui.utils.dialogs.unpackedCatDialog
 import dev.astler.catlib.extensions.openAppInPlayStore
 import dev.astler.catlib.ads.R
@@ -18,7 +18,7 @@ fun AppCompatActivity.showNoAdsDialog(proPackageName: String) {
                 openAppInPlayStore(proPackageName)
             },
             negativeAction = {
-                if (this is IAdListener)
+                if (this is IAdToolProvider)
                     showRewardAd()
             }
         )
@@ -29,7 +29,7 @@ fun AppCompatActivity.showNoAdsDialog(proPackageName: String) {
             negative = android.R.string.cancel,
             positive = dev.astler.catlib.core.R.string.watch_ads,
             positiveAction = {
-                if (this is IAdListener)
+                if (this is IAdToolProvider)
                     showRewardAd()
             },
             negativeAction = {}
