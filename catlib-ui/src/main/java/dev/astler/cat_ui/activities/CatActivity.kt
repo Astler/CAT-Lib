@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.Toolbar
 import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
@@ -28,6 +29,7 @@ import dev.astler.cat_ui.fragments.IInternetDependentFragment
 import dev.astler.cat_ui.interfaces.ICatActivity
 import dev.astler.cat_ui.interfaces.IRootInsets
 import dev.astler.cat_ui.utils.getDimensionFromAttr
+import dev.astler.cat_ui.utils.tryToGetTextFrom
 import dev.astler.catlib.analytics.CatAnalytics
 import dev.astler.catlib.extensions.defaultNightMode
 import dev.astler.catlib.extensions.isOnline
@@ -239,7 +241,13 @@ abstract class CatActivity : AppCompatActivity(), SharedPreferences.OnSharedPref
         }
     }
 
-    override fun setToolbarTitle(title: String) {}
+    override fun setToolbarTitle(title: Any?) {
+        supportActionBar?.title = tryToGetTextFrom(title)
+    }
+
+    override fun setupToolbar(toolbar: Toolbar) {
+        setSupportActionBar(toolbar)
+    }
 
     protected fun loadInsets(view: View) {
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->

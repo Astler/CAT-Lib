@@ -8,7 +8,7 @@ interface ICatActivity : CoreFragmentInterface {
     val preferences: PreferencesTool
 
     fun setCurrentFragment(fragment: Fragment)
-    fun setToolbarTitle(title: String)
     fun callBackPressed()
+    fun setToolbarTitle(title: Any?) {}
     fun setupToolbar(toolbar: Toolbar) {}
 }
