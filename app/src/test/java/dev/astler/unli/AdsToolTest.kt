@@ -1,7 +1,7 @@
 package dev.astler.unli
 
 import android.content.Context
-import dev.astler.ads.initialization.AdsTool
+import dev.astler.ads.AdsTool
 import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.RemoteConfigProvider

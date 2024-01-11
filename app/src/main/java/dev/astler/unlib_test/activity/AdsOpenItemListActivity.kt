@@ -6,7 +6,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.activities.BindingCatActivity
 import dev.astler.ads.adapters.OIAdsAdapterConfig
 import dev.astler.ads.adapters.OneItemAdsAdapter
-import dev.astler.ads.initialization.AdsTool
+import dev.astler.ads.AdsTool
 import dev.astler.ads.utils.canShowAds
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.databinding.ActivityRecyclerviewBinding

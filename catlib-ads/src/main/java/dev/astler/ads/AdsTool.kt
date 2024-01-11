@@ -1,4 +1,4 @@
-package dev.astler.ads.initialization
+package dev.astler.ads
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -8,7 +8,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.ads.initialization.AdsCore
-import dev.astler.ads.initialization.AdsTool
 import dev.astler.catlib.config.AppConfig
 import javax.inject.Singleton
 

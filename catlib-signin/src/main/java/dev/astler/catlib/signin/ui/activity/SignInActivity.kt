@@ -11,7 +11,7 @@ import dev.astler.catlib.helpers.hasGoogleServices
 import dev.astler.catlib.signin.R
 import dev.astler.catlib.signin.data.CatSignInMode
 import dev.astler.catlib.signin.databinding.SignInLayoutBinding
-import dev.astler.catlib.signin.interfaces.SignInActivityListener
+import dev.astler.catlib.signin.interfaces.ISignInListener
 import dev.astler.catlib.signin.data.CatSignInMode.Companion.fromString
 import dev.astler.catlib.signin.utils.authWithEmailAndPassword
 import dev.astler.catlib.signin.utils.createUserWithEmailAndPassword
@@ -24,7 +24,7 @@ import dev.astler.catlib.helpers.infoLog
 const val cSignInModeExtra = "signInMode"
 
 @AndroidEntryPoint
-open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutBinding::inflate), SignInActivityListener {
+open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutBinding::inflate), ISignInListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

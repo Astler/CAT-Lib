@@ -16,7 +16,7 @@ import dev.astler.catlib.extensions.toast
 import dev.astler.catlib.helpers.hasGoogleServices
 import dev.astler.catlib.helpers.infoLog
 import dev.astler.catlib.helpers.trackedTry
-import dev.astler.catlib.signin.interfaces.SignInActivityListener
+import dev.astler.catlib.signin.interfaces.ISignInListener
 import dev.astler.catlib.signin.ui.activity.contracts.SignInActivityContract
 import dev.astler.catlib.signin.R
 
@@ -76,7 +76,7 @@ private fun AppCompatActivity.authWithGoogle(idToken: String? = null) {
                 null
             }
 
-            if (this is SignInActivityListener)
+            if (this is ISignInListener)
                 updateUI(nUser)
         }
 }
@@ -103,7 +103,7 @@ fun AppCompatActivity.createUserWithEmailAndPassword(pEmail: String? = null, pPa
                 null
             }
 
-            if (this is SignInActivityListener)
+            if (this is ISignInListener)
                 updateUI(nUser)
         }
 }
@@ -129,7 +129,7 @@ fun AppCompatActivity.authWithEmailAndPassword(pEmail: String? = null, pPassword
                 null
             }
 
-            if (this is SignInActivityListener)
+            if (this is ISignInListener)
                 updateUI(nUser)
         }
 }
@@ -138,7 +138,7 @@ fun AppCompatActivity.signOut() {
     Firebase.auth.signOut()
 
     getGoogleSignInClient().signOut().addOnCompleteListener(this) {
-        if (this is SignInActivityListener)
+        if (this is ISignInListener)
             updateUI(null)
     }
 }
@@ -165,7 +165,7 @@ fun AppCompatActivity.signInInitializer() {
 fun AppCompatActivity.signInOnResume() {
     val currentUser = getFirebaseUser()
 
-    if (this is SignInActivityListener)
+    if (this is ISignInListener)
         updateUI(currentUser)
 
 //    if (currentUser == null)

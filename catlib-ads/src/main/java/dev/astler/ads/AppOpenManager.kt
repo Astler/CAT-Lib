@@ -14,7 +14,6 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.appopen.AppOpenAd.AppOpenAdLoadCallback
-import dev.astler.ads.initialization.adsConfig
 import dev.astler.ads.utils.canShowAds
 import dev.astler.ads.utils.lastAdsTime
 import dev.astler.cat_ui.appResumeTime
