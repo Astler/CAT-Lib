@@ -11,11 +11,16 @@ import dev.astler.cat_ui.activities.BindingCatActivity
 import dev.astler.catlib.constants.IODispatcher
 import dev.astler.catlib.extensions.getJsonContent
 import dev.astler.catlib.helpers.infoLog
+import dev.astler.catlib.signin.SignInTool
 import dev.astler.unlib_test.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BindingCatActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+
+    @Inject
+    lateinit var singInTool: SignInTool
 
     private val _billingViewModel: BillingViewModel by viewModels()
 
@@ -23,6 +28,8 @@ class MainActivity : BindingCatActivity<ActivityMainBinding>(ActivityMainBinding
         enableEdgeToEdge()
 
         super.onCreate(savedInstanceState)
+
+        singInTool.universalSignInRequest()
 
         lifecycleScope.launch(IODispatcher) {
             val dataBe = "https://astler.net/apps_data/be_versions.json".getJsonContent()

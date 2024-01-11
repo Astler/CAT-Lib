@@ -3,9 +3,13 @@ package dev.astler.catlib.signin
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -20,6 +24,7 @@ import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.RemoteConfigProvider
 import dev.astler.catlib.signin.interfaces.ISignInListener
 import dev.astler.catlib.signin.utils.startOptionalSignIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SignInTool @Inject constructor(
@@ -28,6 +33,7 @@ class SignInTool @Inject constructor(
     private val remoteConfig: RemoteConfigProvider,
     val appConfig: AppConfig
 ) {
+    private var _signInLauncher: ActivityResultLauncher<IntentSenderRequest>? = null
     private var _signInListener: ISignInListener? = null
 
     private val _auth by lazy {
@@ -50,59 +56,61 @@ class SignInTool @Inject constructor(
                 BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                     .setSupported(true)
                     .setServerClientId(_context.getString(R.string.default_web_client_id))
-                    .setFilterByAuthorizedAccounts(true)
+                    .setFilterByAuthorizedAccounts(false)
                     .build()
             )
             .setAutoSelectEnabled(true)
             .build()
     }
 
-    private val _signInLauncher by lazy {
-        if (_context !is AppCompatActivity) {
-            errorLog("AdsTool: Context is not AppCompatActivity")
-            return@lazy null
+    init {
+        if (_context is ISignInListener) {
+            _signInListener = _context
         }
 
-        _context.registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-            if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
+        initializeForActivity()
+    }
 
-            val data: Intent? = result.data
+    private fun initializeForActivity() {
+        if (_context !is AppCompatActivity) {
+            errorLog("AdsTool: Context is not AppCompatActivity")
+            return
+        }
 
-            trackedTry {
-                val googleCredential = _oneTapClient.getSignInCredentialFromIntent(data)
-                val idToken = googleCredential.googleIdToken
+        _context.lifecycleScope.launch {
+            _context.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                _signInLauncher = _context.registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+                    if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
 
-                when {
-                    idToken != null -> {
-                        val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
-                        _auth.signInWithCredential(firebaseCredential)
-                            .addOnCompleteListener(_context) { task ->
-                                if (task.isSuccessful) {
-                                    infoLog("signInWithCredential:success")
-                                    val user = _auth.currentUser
-                                    _signInListener?.updateUI(user)
-                                } else {
-                                    errorLog("signInWithCredential:failure: ${task.exception}")
-                                    _signInListener?.updateUI(null)
-                                }
+                    val data: Intent? = result.data
+
+                    trackedTry {
+                        val googleCredential = _oneTapClient.getSignInCredentialFromIntent(data)
+                        val idToken = googleCredential.googleIdToken
+
+                        when {
+                            idToken != null -> {
+                                val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+                                _auth.signInWithCredential(firebaseCredential)
+                                    .addOnCompleteListener(_context) { task ->
+                                        if (task.isSuccessful) {
+                                            infoLog("signInWithCredential:success")
+                                            val user = _auth.currentUser
+                                            _signInListener?.updateUI(user)
+                                        } else {
+                                            errorLog("signInWithCredential:failure: ${task.exception}")
+                                            _signInListener?.updateUI(null)
+                                        }
+                                    }
                             }
-                    }
 
-                    else -> {
-                        errorLog("No ID token!")
+                            else -> {
+                                errorLog("No ID token!")
+                            }
+                        }
                     }
                 }
             }
-        }
-    }
-
-    init {
-        if (_context !is AppCompatActivity) {
-            errorLog("AdsTool: Context is not AppCompatActivity")
-        }
-
-        if (_context is ISignInListener) {
-            _signInListener = _context
         }
     }
 
