@@ -5,12 +5,14 @@ import com.google.firebase.ktx.Firebase
 import timber.log.Timber
 
 private const val baseTag = "ForAstler:"
+private const val adsTag = "ForAstler:Ads:"
+private const val errorTag = "ForAstler:Error:"
 
 fun infoLog(pText: String, postCategory: String = "", category: String = baseTag) {
     Timber.tag(category + postCategory).i(pText)
 }
 
-fun adsLog(text: String, postCategory: String = "", category: String = "ForAds:") {
+fun adsLog(text: String, postCategory: String = "", category: String = adsTag) {
     infoLog(text, postCategory, category)
 }
 
@@ -23,7 +25,7 @@ fun errorLog(
     exception: Exception?,
     text: String = "",
     pPostCategory: String = "",
-    pCategory: String = "ForAstler"
+    pCategory: String = errorTag
 ) {
     if (exception != null)
         Firebase.crashlytics.recordException(exception)

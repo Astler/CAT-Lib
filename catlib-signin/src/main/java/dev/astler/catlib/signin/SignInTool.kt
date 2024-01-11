@@ -113,19 +113,25 @@ class SignInTool @Inject constructor(
             _context.startOptionalSignIn()
         }
 
+        infoLog("universalSignInRequest start")
         _signInRequest.let {
+            infoLog("_signInRequest $_signInRequest")
             _oneTapClient.beginSignIn(it)
                 .addOnSuccessListener { result ->
+                    infoLog("_oneTapClient result $result")
                     try {
                         val intentSenderRequest = IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
+                        infoLog("_signInLauncher $_signInLauncher")
                         _signInLauncher?.launch(intentSenderRequest)
                     } catch (e: Exception) {
+                        infoLog("_oneTapClient catch ${e.message}")
                         errorLog(e)
                         tryToSignInWithPicker()
                     }
                 }
                 .addOnFailureListener { e ->
                     errorLog(e)
+                    infoLog("_oneTapClient failed ${e.message}")
                     tryToSignInWithPicker()
                 }
         }
