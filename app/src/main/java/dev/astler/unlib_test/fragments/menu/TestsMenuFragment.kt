@@ -1,6 +1,10 @@
 package dev.astler.unlib_test.fragments.menu
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import dagger.hilt.android.AndroidEntryPoint
+import dev.astler.catlib.signin.SignInTool
 import dev.astler.unlib_compose.data.IFlexibleItem
 import dev.astler.unlib_compose.interfaces.IComposeItem
 import dev.astler.unlib_compose.ui.compose.flexible_grid.FlexibleGrid
@@ -8,8 +12,13 @@ import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
 import dev.astler.unlib_test.R
 import dev.astler.unlib_test.data.TestBaseItem
+import javax.inject.Inject
 
+@AndroidEntryPoint
 abstract class TestsMenuFragment : CatComposeFragment() {
+
+    @Inject
+    lateinit var singInTool: SignInTool
 
     open val menuItems = listOf<IComposeItem<IFlexibleItem, String>>(
         BaseCard(TestBaseItem(R.string.app_name, R.drawable.ic_launcher_foreground, 2)),
@@ -29,6 +38,14 @@ abstract class TestsMenuFragment : CatComposeFragment() {
 
     @Composable
     override fun ScreenContent() {
-        FlexibleGrid(items = menuItems, onItemClick = ::menuItemClicked)
+        Column {
+            if (singInTool.isSignedIn) {
+                Text(text = "Signed in")
+            } else {
+                Text(text = "Not signed in")
+            }
+
+            FlexibleGrid(items = menuItems, onItemClick = ::menuItemClicked)
+        }
     }
 }

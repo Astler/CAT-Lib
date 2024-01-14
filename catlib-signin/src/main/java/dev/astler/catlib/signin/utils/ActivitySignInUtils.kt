@@ -21,7 +21,6 @@ import dev.astler.catlib.signin.ui.activity.contracts.SignInActivityContract
 import dev.astler.catlib.signin.R
 
 private var mFirebaseAuth: FirebaseAuth? = null
-var mSignInGoogleLauncher: ActivityResultLauncher<String>? = null
 
 fun getFirebaseAuth(): FirebaseAuth {
     return if (mFirebaseAuth == null) {
@@ -37,23 +36,6 @@ fun getFirebaseUser(): FirebaseUser? {
 
 fun getFirebaseUserId(): String {
     return getFirebaseAuth().currentUser?.uid ?: ""
-}
-
-fun AppCompatActivity.createSingInWithGoogleLauncher() = registerForActivityResult(SignInActivityContract()) { pTask ->
-    infoLog("task null?:")
-
-    if (pTask == null) return@registerForActivityResult
-
-    trackedTry {
-        val account = pTask.getResult(ApiException::class.java)!!
-        infoLog("firebaseAuthWithGoogle:" + account.id)
-        this.authWithGoogle(account.idToken)
-    }
-}
-
-fun AppCompatActivity.signInWithGoogle(pInput: String = "sign_in") {
-    if (hasGoogleServices())
-        mSignInGoogleLauncher?.launch(pInput)
 }
 
 private fun AppCompatActivity.authWithGoogle(idToken: String? = null) {
@@ -158,9 +140,7 @@ fun Context.getGoogleSignInClient(): GoogleSignInClient {
  * Activity Functions
  */
 
-fun AppCompatActivity.signInInitializer() {
-    mSignInGoogleLauncher = createSingInWithGoogleLauncher()
-}
+
 
 fun AppCompatActivity.signInOnResume() {
     val currentUser = getFirebaseUser()

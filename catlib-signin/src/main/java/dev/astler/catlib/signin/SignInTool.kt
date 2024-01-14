@@ -2,7 +2,6 @@ package dev.astler.catlib.signin
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,9 +13,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.helpers.errorLog
+import dev.astler.catlib.helpers.hasGoogleServices
 import dev.astler.catlib.helpers.infoLog
 import dev.astler.catlib.helpers.trackedTry
 import dev.astler.catlib.preferences.PreferencesTool
@@ -24,6 +25,7 @@ import dev.astler.catlib.remote_config.RemoteConfigProvider
 import dev.astler.catlib.signin.data.IFirebaseAuthRepository
 import dev.astler.catlib.signin.data.SignInViewModel
 import dev.astler.catlib.signin.interfaces.ISignInListener
+import dev.astler.catlib.signin.ui.activity.contracts.SignInActivityContract
 import dev.astler.catlib.signin.utils.startOptionalSignIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -37,12 +39,13 @@ class SignInTool @Inject constructor(
 ) {
     private var _signInLauncher: ActivityResultLauncher<IntentSenderRequest>? = null
     private var _signInListener: ISignInListener? = null
+    private var _googleDialogSignInLauncher: ActivityResultLauncher<String>? = null
 
     private val _oneTapClient: SignInClient by lazy {
         Identity.getSignInClient(_context)
     }
 
-    val signInViewModel: SignInViewModel? by lazy {
+    private val signInViewModel: SignInViewModel? by lazy {
         if (_context !is AppCompatActivity) {
             errorLog("AdsTool: Context is not AppCompatActivity")
             return@lazy null
@@ -50,6 +53,9 @@ class SignInTool @Inject constructor(
 
         ViewModelProvider(_context)[SignInViewModel::class.java]
     }
+
+    val isSignedIn: Boolean
+        get() = _firebaseAuthRepository.isSignedIn
 
     private val _signInRequest: BeginSignInRequest by lazy {
         BeginSignInRequest.builder()
@@ -89,36 +95,42 @@ class SignInTool @Inject constructor(
 
         _context.lifecycleScope.launch {
             _context.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+
+                fun signInWithTokenId(idToken: String?) {
+                    when {
+                        idToken != null -> {
+                            val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+                            _firebaseAuthRepository.auth.signInWithCredential(firebaseCredential)
+                                .addOnCompleteListener(_context) { task ->
+                                    if (task.isSuccessful) {
+                                        infoLog("signInWithCredential:success")
+                                        val user = _firebaseAuthRepository.user
+                                        _signInListener?.onSignIn(user)
+                                    } else {
+                                        errorLog("signInWithCredential:failure: ${task.exception}")
+                                    }
+
+                                    signInViewModel?.setupUserData(_firebaseAuthRepository.user)
+                                }
+                        }
+
+                        else -> {
+                            errorLog("No ID token!")
+                        }
+                    }
+                }
+
                 _signInLauncher = _context.registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
                     if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
 
-                    val data: Intent? = result.data
-
                     trackedTry {
-                        val googleCredential = _oneTapClient.getSignInCredentialFromIntent(data)
-                        val idToken = googleCredential.googleIdToken
+                        signInWithTokenId(_oneTapClient.getSignInCredentialFromIntent(result.data).googleIdToken)
+                    }
+                }
 
-                        when {
-                            idToken != null -> {
-                                val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
-                                _firebaseAuthRepository.auth.signInWithCredential(firebaseCredential)
-                                    .addOnCompleteListener(_context) { task ->
-                                        if (task.isSuccessful) {
-                                            infoLog("signInWithCredential:success")
-                                            val user = _firebaseAuthRepository.user
-                                            _signInListener?.onSignIn(user)
-                                        } else {
-                                            errorLog("signInWithCredential:failure: ${task.exception}")
-                                        }
-
-                                        signInViewModel?.setupUserData(_firebaseAuthRepository.user)
-                                    }
-                            }
-
-                            else -> {
-                                errorLog("No ID token!")
-                            }
-                        }
+                _googleDialogSignInLauncher = _context.registerForActivityResult(SignInActivityContract()) { task ->
+                    trackedTry {
+                        signInWithTokenId(task?.getResult(ApiException::class.java)?.idToken)
                     }
                 }
             }
@@ -135,11 +147,15 @@ class SignInTool @Inject constructor(
         signInViewModel?.setupUserData(null)
     }
 
-    fun universalSignInRequest() {
+    fun universalSignInRequest(isAutoRequest: Boolean = true) {
         if (_firebaseAuthRepository.isSignedIn) return
 
         fun tryToSignInWithPicker() {
-            _context.startOptionalSignIn()
+            if (_context.hasGoogleServices() && isAutoRequest) {
+                tryToSignInWithGoogle()
+            } else {
+                _context.startOptionalSignIn()
+            }
         }
 
         infoLog("universalSignInRequest start")
@@ -160,10 +176,14 @@ class SignInTool @Inject constructor(
                     }
                 }
                 .addOnFailureListener { e ->
-                    errorLog(e)
                     infoLog("_oneTapClient failed ${e.message}")
+                    errorLog(e)
                     tryToSignInWithPicker()
                 }
         }
+    }
+
+    fun tryToSignInWithGoogle() {
+        _googleDialogSignInLauncher?.launch("sign_in")
     }
 }

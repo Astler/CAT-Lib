@@ -15,9 +15,7 @@ import dev.astler.catlib.signin.interfaces.ISignInListener
 import dev.astler.catlib.signin.data.CatSignInMode.Companion.fromString
 import dev.astler.catlib.signin.utils.authWithEmailAndPassword
 import dev.astler.catlib.signin.utils.createUserWithEmailAndPassword
-import dev.astler.catlib.signin.utils.signInInitializer
 import dev.astler.catlib.signin.utils.signInOnResume
-import dev.astler.catlib.signin.utils.signInWithGoogle
 import dev.astler.catlib.signin.utils.startRegisterSignIn
 import dev.astler.catlib.helpers.infoLog
 
@@ -28,8 +26,6 @@ open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        signInInitializer()
 
         with(binding) {
             val signInMode = intent.getStringExtra(cSignInModeExtra)?.fromString()
@@ -52,7 +48,7 @@ open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutB
 
             if (hasGoogleServices) {
                 googleSignIn.setOnClickListener {
-                    signInWithGoogle()
+                 //   signInWithGoogle()
                 }
             }
 
