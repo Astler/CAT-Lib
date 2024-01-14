@@ -3,6 +3,7 @@ package dev.astler.catlib.extensions
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import dev.astler.catlib.helpers.trackedTry
 import java.io.File
@@ -13,13 +14,22 @@ import java.io.OutputStreamWriter
 import java.nio.channels.FileChannel
 import java.nio.charset.Charset
 
+fun Context.getBitmapFromUri(uri: Uri): Bitmap? {
+    return trackedTry(fallbackValue = null) {
+        val imageStream = contentResolver.openInputStream(uri)
+        BitmapFactory.decodeStream(imageStream)
+    }
+}
+
 fun Bitmap.saveToInternalStorage(content: Context, pictureName: String = "shareImage.png"): Uri {
     val wrapper = ContextWrapper(content)
-
     var file = wrapper.getDir("images", Context.MODE_PRIVATE)
-
     file = File(file, pictureName)
 
+    return saveToInternalStorage(content, file)
+}
+
+fun Bitmap.saveToInternalStorage(content: Context, file: File): Uri {
     trackedTry {
         val stream: OutputStream = FileOutputStream(file)
         this.compress(Bitmap.CompressFormat.PNG, 100, stream)
