@@ -1,5 +1,7 @@
 package dev.astler.catlib.signin.ui.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
@@ -9,20 +11,21 @@ import dev.astler.cat_ui.utils.views.showWithCondition
 import dev.astler.catlib.extensions.toast
 import dev.astler.catlib.helpers.hasGoogleServices
 import dev.astler.catlib.signin.R
+import dev.astler.catlib.signin.SignInTool
 import dev.astler.catlib.signin.data.CatSignInMode
+import dev.astler.catlib.signin.data.CatSignInMode.Companion.fromString
 import dev.astler.catlib.signin.databinding.SignInLayoutBinding
 import dev.astler.catlib.signin.interfaces.ISignInListener
-import dev.astler.catlib.signin.data.CatSignInMode.Companion.fromString
-import dev.astler.catlib.signin.utils.authWithEmailAndPassword
-import dev.astler.catlib.signin.utils.createUserWithEmailAndPassword
-import dev.astler.catlib.signin.utils.signInOnResume
 import dev.astler.catlib.signin.utils.startRegisterSignIn
-import dev.astler.catlib.helpers.infoLog
+import javax.inject.Inject
 
 const val cSignInModeExtra = "signInMode"
 
 @AndroidEntryPoint
 open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutBinding::inflate), ISignInListener {
+
+    @Inject
+    lateinit var signInTool: SignInTool
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +51,7 @@ open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutB
 
             if (hasGoogleServices) {
                 googleSignIn.setOnClickListener {
-                 //   signInWithGoogle()
+                    signInTool.tryToSignInWithGoogle()
                 }
             }
 
@@ -71,7 +74,7 @@ open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutB
                     } else {
                         if (nPasswordText != nPasswordAgainText) {
                             toast(R.string.passwords_dont_match)
-                        } else createUserWithEmailAndPassword(nEmailText, nPasswordText)
+                        } else handleAuthentication(nEmailText, nPasswordText, true)
                     }
                 } else {
                     val nEmailText = email.text.toString()
@@ -80,7 +83,7 @@ open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutB
                     if (nEmailText.isEmpty() || nPasswordText.isEmpty()) {
                         toast(R.string.not_all_fields)
                     } else {
-                        authWithEmailAndPassword(nEmailText, nPasswordText)
+                        handleAuthentication(nEmailText, nPasswordText, false)
                     }
                 }
             }
@@ -89,16 +92,30 @@ open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutB
         setInsetsViaOrientation(binding.root)
     }
 
-    override fun onResume() {
-        super.onResume()
-        signInOnResume()
+    override fun updateUI(user: FirebaseUser?) {
+        if (user != null) {
+            this.finish()
+        }
     }
 
-    override fun updateUI(pUser: FirebaseUser?) {
-        if (pUser != null) {
-            this.finish()
+    private fun handleAuthentication(email: String, password: String, isRegister: Boolean) {
+        val authMethod = if (isRegister) {
+            signInTool::createUserWithEmailAndPassword
         } else {
-            infoLog("No Active Users!")
+            signInTool::authWithEmailAndPassword
+        }
+
+        authMethod(email, password) { firebaseUser, message ->
+            if (firebaseUser != null) {
+                val resultIntent = Intent()
+
+                resultIntent.putExtra("FirebaseUser", firebaseUser)
+                setResult(Activity.RESULT_OK, resultIntent)
+
+                finish()
+            } else {
+                toast(message ?: getString(dev.astler.catlib.ui.R.string.something_went_wrong))
+            }
         }
     }
 }

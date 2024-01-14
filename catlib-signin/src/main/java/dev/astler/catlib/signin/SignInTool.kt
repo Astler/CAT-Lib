@@ -13,7 +13,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.helpers.errorLog
@@ -22,11 +26,12 @@ import dev.astler.catlib.helpers.infoLog
 import dev.astler.catlib.helpers.trackedTry
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.RemoteConfigProvider
+import dev.astler.catlib.signin.data.CatSignInMode
 import dev.astler.catlib.signin.data.IFirebaseAuthRepository
 import dev.astler.catlib.signin.data.SignInViewModel
 import dev.astler.catlib.signin.interfaces.ISignInListener
+import dev.astler.catlib.signin.ui.activity.contracts.EmailSignInActivityContract
 import dev.astler.catlib.signin.ui.activity.contracts.SignInActivityContract
-import dev.astler.catlib.signin.utils.startOptionalSignIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,6 +45,7 @@ class SignInTool @Inject constructor(
     private var _signInLauncher: ActivityResultLauncher<IntentSenderRequest>? = null
     private var _signInListener: ISignInListener? = null
     private var _googleDialogSignInLauncher: ActivityResultLauncher<String>? = null
+    private var _emailSignInListener: ActivityResultLauncher<Int>? = null
 
     private val _oneTapClient: SignInClient by lazy {
         Identity.getSignInClient(_context)
@@ -133,6 +139,10 @@ class SignInTool @Inject constructor(
                         signInWithTokenId(task?.getResult(ApiException::class.java)?.idToken)
                     }
                 }
+
+                _emailSignInListener = _context.registerForActivityResult(EmailSignInActivityContract()) { returnUser ->
+                    processEmailSignIn(returnUser)
+                }
             }
 
             _context.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -141,20 +151,32 @@ class SignInTool @Inject constructor(
         }
     }
 
+    fun processEmailSignIn(returnUser: FirebaseUser?): FirebaseUser? {
+        val user = returnUser ?: _firebaseAuthRepository.user
+
+        trackedTry {
+            _signInListener?.onSignIn(user)
+            signInViewModel?.setupUserData(user)
+        }
+
+        return user
+    }
+
     fun signOut() {
         _firebaseAuthRepository.signOut()
         _signInListener?.onSignOut()
+        getGoogleSignInClient().signOut()
         signInViewModel?.setupUserData(null)
     }
 
-    fun universalSignInRequest(isAutoRequest: Boolean = true) {
+    fun universalSignInRequest(isAutoRequest: Boolean = true, catSignInMode: CatSignInMode = CatSignInMode.OPTIONAL) {
         if (_firebaseAuthRepository.isSignedIn) return
 
         fun tryToSignInWithPicker() {
             if (_context.hasGoogleServices() && isAutoRequest) {
                 tryToSignInWithGoogle()
             } else {
-                _context.startOptionalSignIn()
+                _emailSignInListener?.launch(catSignInMode.ordinal)
             }
         }
 
@@ -185,5 +207,42 @@ class SignInTool @Inject constructor(
 
     fun tryToSignInWithGoogle() {
         _googleDialogSignInLauncher?.launch("sign_in")
+    }
+
+    fun createUserWithEmailAndPassword(email: String?, password: String?, callback: (FirebaseUser?, String?) -> Unit) {
+        if (_context !is AppCompatActivity) return
+        if (email == null || password == null) return
+        if (email.isEmpty() || password.isEmpty()) return
+
+        _firebaseAuthRepository.auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(_context) { task ->
+                callback(trackedTry(fallbackValue = null) {
+                    task.result.user
+                }, task.exception?.message)
+            }
+    }
+
+    fun authWithEmailAndPassword(email: String?, password: String?, callback: (FirebaseUser?, String?) -> Unit) {
+        if (_context !is AppCompatActivity) return
+        if (email == null || password == null) return
+        if (email.isEmpty() || password.isEmpty()) return
+
+        _firebaseAuthRepository.auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(_context) { task ->
+                callback(trackedTry(fallbackValue = null) {
+                    task.result.user
+                }, task.exception?.message)
+            }
+    }
+
+    private fun getGoogleSignInClient(): GoogleSignInClient {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(_context.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        infoLog("TOKEN code = ${_context.getString(R.string.default_web_client_id)}")
+
+        return GoogleSignIn.getClient(_context, gso)
     }
 }

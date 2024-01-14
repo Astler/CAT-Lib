@@ -3,21 +3,23 @@ package dev.astler.unlib_test
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.billing.data.BillingViewModel
 import dev.astler.cat_ui.activities.BindingCatActivity
 import dev.astler.catlib.constants.IODispatcher
 import dev.astler.catlib.extensions.getJsonContent
+import dev.astler.catlib.extensions.toast
 import dev.astler.catlib.helpers.infoLog
 import dev.astler.catlib.signin.SignInTool
+import dev.astler.catlib.signin.interfaces.ISignInListener
 import dev.astler.unlib_test.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : BindingCatActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+class MainActivity : BindingCatActivity<ActivityMainBinding>(ActivityMainBinding::inflate), ISignInListener {
 
     @Inject
     lateinit var singInTool: SignInTool
@@ -35,5 +37,9 @@ class MainActivity : BindingCatActivity<ActivityMainBinding>(ActivityMainBinding
             val dataBe = "https://astler.net/apps_data/be_versions.json".getJsonContent()
             infoLog(dataBe)
         }
+    }
+
+    override fun updateUI(user: FirebaseUser?) {
+        toast("User: $user")
     }
 }

@@ -2,11 +2,9 @@ package dev.astler.catlib.signin.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.fragments.CatFragment
 import dev.astler.catlib.signin.SignInTool
-import dev.astler.catlib.signin.utils.authWithEmailAndPassword
 import dev.astler.catlib.signin.databinding.SignInLayoutBinding
 import javax.inject.Inject
 
@@ -19,8 +17,6 @@ open class SignInFragment : CatFragment<SignInLayoutBinding>(SignInLayoutBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val activity = requireActivity()
-
         with(binding) {
             googleSignIn.setOnClickListener {
                 signInTool.tryToSignInWithGoogle()
@@ -30,8 +26,8 @@ open class SignInFragment : CatFragment<SignInLayoutBinding>(SignInLayoutBinding
                 val emailValue = email.text.toString()
                 val passwordValue = password.text.toString()
 
-                if (activity is AppCompatActivity) {
-                    activity.authWithEmailAndPassword(emailValue, passwordValue)
+                signInTool.authWithEmailAndPassword(emailValue, passwordValue) { user, error ->
+                    signInTool.processEmailSignIn(user)
                 }
             }
         }
