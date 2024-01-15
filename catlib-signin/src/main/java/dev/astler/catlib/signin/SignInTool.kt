@@ -53,7 +53,7 @@ class SignInTool @Inject constructor(
 
     private val signInViewModel: SignInViewModel? by lazy {
         if (_context !is AppCompatActivity) {
-            errorLog("AdsTool: Context is not AppCompatActivity")
+            errorLog("SignInTool: Context is not AppCompatActivity")
             return@lazy null
         }
 
@@ -105,53 +105,57 @@ class SignInTool @Inject constructor(
         }
 
         _context.lifecycleScope.launch {
-            _context.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+            launch {
+                _context.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
 
-                fun signInWithTokenId(idToken: String?) {
-                    when {
-                        idToken != null -> {
-                            val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
-                            _firebaseAuthRepository.auth.signInWithCredential(firebaseCredential)
-                                .addOnCompleteListener(_context) { task ->
-                                    if (task.isSuccessful) {
-                                        infoLog("signInWithCredential:success")
-                                        val user = _firebaseAuthRepository.user
-                                        _signInListener?.onSignIn(user)
-                                    } else {
-                                        errorLog("signInWithCredential:failure: ${task.exception}")
+                    fun signInWithTokenId(idToken: String?) {
+                        when {
+                            idToken != null -> {
+                                val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+                                _firebaseAuthRepository.auth.signInWithCredential(firebaseCredential)
+                                    .addOnCompleteListener(_context) { task ->
+                                        if (task.isSuccessful) {
+                                            infoLog("signInWithCredential:success")
+                                            val user = _firebaseAuthRepository.user
+                                            _signInListener?.onSignIn(user)
+                                        } else {
+                                            errorLog("signInWithCredential:failure: ${task.exception}")
+                                        }
+
+                                        signInViewModel?.setupUserData(_firebaseAuthRepository.user)
                                     }
+                            }
 
-                                    signInViewModel?.setupUserData(_firebaseAuthRepository.user)
-                                }
-                        }
-
-                        else -> {
-                            errorLog("No ID token!")
+                            else -> {
+                                errorLog("No ID token!")
+                            }
                         }
                     }
-                }
 
-                _signInLauncher = _context.registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-                    if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
+                    _signInLauncher = _context.registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+                        if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
 
-                    trackedTry {
-                        signInWithTokenId(_oneTapClient.getSignInCredentialFromIntent(result.data).googleIdToken)
+                        trackedTry {
+                            signInWithTokenId(_oneTapClient.getSignInCredentialFromIntent(result.data).googleIdToken)
+                        }
                     }
-                }
 
-                _googleDialogSignInLauncher = _context.registerForActivityResult(SignInActivityContract()) { task ->
-                    trackedTry {
-                        signInWithTokenId(task?.getResult(ApiException::class.java)?.idToken)
+                    _googleDialogSignInLauncher = _context.registerForActivityResult(SignInActivityContract()) { task ->
+                        trackedTry {
+                            signInWithTokenId(task?.getResult(ApiException::class.java)?.idToken)
+                        }
                     }
-                }
 
-                _emailSignInListener = _context.registerForActivityResult(EmailSignInActivityContract()) { returnUser ->
-                    processEmailSignIn(returnUser)
+                    _emailSignInListener = _context.registerForActivityResult(EmailSignInActivityContract()) { returnUser ->
+                        processEmailSignIn(returnUser)
+                    }
                 }
             }
 
-            _context.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                signInViewModel?.setupUserData(_firebaseAuthRepository.user)
+            launch {
+                _context.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                    signInViewModel?.setupUserData(_firebaseAuthRepository.user)
+                }
             }
         }
     }

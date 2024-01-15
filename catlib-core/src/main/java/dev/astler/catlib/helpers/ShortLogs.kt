@@ -6,6 +6,7 @@ import timber.log.Timber
 
 private const val baseTag = "ForAstler:"
 private const val adsTag = "ForAstler:Ads:"
+private const val signInTag = "ForAstler:SignIn:"
 private const val errorTag = "ForAstler:Error:"
 
 fun infoLog(pText: String, postCategory: String = "", category: String = baseTag) {
@@ -13,6 +14,10 @@ fun infoLog(pText: String, postCategory: String = "", category: String = baseTag
 }
 
 fun adsLog(text: String, postCategory: String = "", category: String = adsTag) {
+    infoLog(text, postCategory, category)
+}
+
+fun signInLog(text: String, postCategory: String = "", category: String = signInTag) {
     infoLog(text, postCategory, category)
 }
 

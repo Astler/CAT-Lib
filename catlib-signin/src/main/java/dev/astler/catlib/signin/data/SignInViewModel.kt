@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.astler.catlib.helpers.adsLog
+import dev.astler.catlib.helpers.infoLog
+import dev.astler.catlib.helpers.signInLog
 import dev.astler.catlib.preferences.PreferencesTool
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
@@ -22,13 +25,16 @@ class SignInViewModel @Inject constructor(private val _preferences: PreferencesT
     val user: LiveData<FirebaseUser?> = _user.asLiveData()
 
     fun setupUserData(user: FirebaseUser?) {
+        signInLog("setupUserData started: $user")
+
         if (_user.value == user) return
+
+        signInLog("setupUserData: $user")
 
         _user.value = user
         _signedIn.value = user != null
+        _photoUrl.value = user?.photoUrl?.toString() ?: ""
 
-        if (_photoUrl.value == null) {
-            _photoUrl.value = user?.photoUrl?.toString() ?: ""
-        }
+        signInLog("photo: ${_photoUrl.value}")
     }
 }
