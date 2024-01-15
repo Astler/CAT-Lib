@@ -63,6 +63,11 @@ class SignInTool @Inject constructor(
     val isSignedIn: Boolean
         get() = _firebaseAuthRepository.isSignedIn
 
+    val photoObservable get() = signInViewModel?.photoUrl
+    val signedInObservable get() = signInViewModel?.signedIn
+
+    val user get() = _firebaseAuthRepository.user
+
     private val _signInRequest: BeginSignInRequest by lazy {
         BeginSignInRequest.builder()
             .setPasswordRequestOptions(
