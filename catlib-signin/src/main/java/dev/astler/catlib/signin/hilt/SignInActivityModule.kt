@@ -16,12 +16,7 @@ import dev.astler.catlib.signin.data.IFirebaseAuthRepository
 
 @Module
 @InstallIn(ActivityComponent::class)
-object SignInToolModule {
-
-    @Provides
-    @ActivityScoped
-    fun provideFirebaseAuthRepository(@ActivityContext context: Context): IFirebaseAuthRepository =
-        FirebaseAuthRepository(context)
+object SignInActivityModule {
 
     @Provides
     @ActivityScoped
