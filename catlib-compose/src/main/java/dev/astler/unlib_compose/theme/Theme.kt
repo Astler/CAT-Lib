@@ -55,16 +55,17 @@ fun CatComposeTheme(isDarkTheme: Boolean = isSystemInDarkTheme(), isDynamicColor
         else -> LightThemeColors
     }
     val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.background.toArgb()
-            window.navigationBarColor = colorScheme.background.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !isDarkTheme
-            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars =
-                !isDarkTheme
-        }
-    }
+
+//    if (!view.isInEditMode) {
+//        SideEffect {
+//            val window = (view.context as Activity).window
+//            window.statusBarColor = colorScheme.background.toArgb()
+//            window.navigationBarColor = colorScheme.background.toArgb()
+//            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !isDarkTheme
+//            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars =
+//                !isDarkTheme
+//        }
+//    }
 
     MaterialTheme(
         colorScheme = colorScheme,
