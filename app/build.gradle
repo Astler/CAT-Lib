@@ -17,12 +17,12 @@ android {
     }
 
     defaultConfig {
-        applicationId "dev.astler.unlib_test"
+        applicationId "com.ao.subscribeme"
         minSdkVersion 21
         compileSdk 34
         targetSdkVersion 34
-        versionCode 4
-        versionName "1.1"
+        versionCode 5
+        versionName "1.2"
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -71,7 +71,7 @@ android {
         targetCompatibility JavaVersion.VERSION_19
     }
 
-    namespace 'dev.astler.unlib_test'
+    namespace 'com.ao.subscribeme'
 }
 
 dependencies {
