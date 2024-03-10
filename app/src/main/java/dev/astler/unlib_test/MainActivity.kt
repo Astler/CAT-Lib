@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.ao.subscribeme.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.billing.data.BillingViewModel
@@ -14,7 +15,6 @@ import dev.astler.catlib.extensions.toast
 import dev.astler.catlib.helpers.infoLog
 import dev.astler.catlib.signin.SignInTool
 import dev.astler.catlib.signin.interfaces.ISignInListener
-import dev.astler.unlib_test.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

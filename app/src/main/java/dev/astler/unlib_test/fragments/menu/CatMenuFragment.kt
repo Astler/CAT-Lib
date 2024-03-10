@@ -5,7 +5,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.utils.dialogs.okDialog
 import dev.astler.catlib.config.AppConfig
 import dev.astler.unlib_compose.ui.compose.items.BaseCard
-import dev.astler.unlib_test.R
+import com.ao.subscribeme.R
 import dev.astler.unlib_test.data.TestBaseItem
 import javax.inject.Inject
 

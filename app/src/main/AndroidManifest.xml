@@ -9,7 +9,7 @@
     </queries>
 
     <application
-        android:name=".App"
+        android:name="dev.astler.unlib_test.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +19,7 @@
         android:theme="@style/CatLibTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name="dev.astler.unlib_test.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.AdsOpenItemListActivity"
+        <activity android:name="dev.astler.unlib_test.activity.AdsOpenItemListActivity"
             android:theme="@style/ThemeOverlay.Shrine" />
 
         <meta-data

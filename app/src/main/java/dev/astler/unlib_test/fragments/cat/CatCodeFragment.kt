@@ -24,13 +24,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.ao.subscribeme.R
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.catlib.extensions.getValueOrDefault
 import dev.astler.catlib.extensions.toast
 import dev.astler.catlib.helpers.infoLog
 import dev.astler.catlib.helpers.trackedTry
 import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
-import dev.astler.unlib_test.R
 
 @AndroidEntryPoint
 class CatCodeFragment : CatComposeFragment() {

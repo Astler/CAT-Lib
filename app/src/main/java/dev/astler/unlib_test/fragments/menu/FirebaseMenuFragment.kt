@@ -6,7 +6,7 @@ import com.google.firebase.messaging.ktx.messaging
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.catlib.extensions.toast
 import dev.astler.unlib_compose.ui.compose.items.BaseCard
-import dev.astler.unlib_test.R
+import com.ao.subscribeme.R
 import dev.astler.unlib_test.data.TestBaseItem
 import dev.astler.unlib_test.fragments.menu.TestsMenuFragment
 

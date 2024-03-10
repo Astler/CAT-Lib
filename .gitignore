@@ -16,3 +16,4 @@ local.properties
 /.idea/
 /unlib-signin/google-services.json
 /app/src/main/res/raw/app_config.catc
+/app/google-services.json

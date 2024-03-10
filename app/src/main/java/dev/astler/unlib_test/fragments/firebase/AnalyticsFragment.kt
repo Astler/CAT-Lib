@@ -22,9 +22,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.ao.subscribeme.R
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
-import dev.astler.unlib_test.R
 import dev.astler.unlib_test.analytics.CatTestAnalytics
 
 @AndroidEntryPoint

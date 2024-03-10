@@ -10,7 +10,7 @@ import dev.astler.unlib_compose.interfaces.IComposeItem
 import dev.astler.unlib_compose.ui.compose.flexible_grid.FlexibleGrid
 import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
-import dev.astler.unlib_test.R
+import com.ao.subscribeme.R
 import dev.astler.unlib_test.data.TestBaseItem
 import javax.inject.Inject
 

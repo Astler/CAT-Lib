@@ -28,7 +28,7 @@ import androidx.core.os.LocaleListCompat
 import dev.astler.cat_ui.activities.BindingCatActivity
 import dev.astler.catlib.extensions.activeLanguage
 import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
-import dev.astler.unlib_test.R
+import com.ao.subscribeme.R
 import java.util.Locale
 
 class LanguagePreviewFragment : CatComposeFragment() {

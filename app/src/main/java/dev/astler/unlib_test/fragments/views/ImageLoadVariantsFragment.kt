@@ -10,8 +10,8 @@ import dev.astler.cat_ui.utils.toNoFilterDrawable
 import dev.astler.cat_ui.utils.views.loadWithBackground
 import dev.astler.catlib.constants.MockImageUrl
 import dev.astler.catlib.extensions.getBitmapFromAsset
-import dev.astler.unlib_test.R
-import dev.astler.unlib_test.databinding.ActivityImagesBinding
+import com.ao.subscribeme.R
+import com.ao.subscribeme.databinding.ActivityImagesBinding
 
 class ImageLoadVariantsFragment: CatFragment<ActivityImagesBinding>(ActivityImagesBinding::inflate) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

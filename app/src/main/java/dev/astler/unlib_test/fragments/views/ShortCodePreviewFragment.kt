@@ -5,8 +5,8 @@ import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.fragments.CatFragment
 import dev.astler.cat_ui.utils.getDimensionFromAttr
-import dev.astler.unlib_test.R
-import dev.astler.unlib_test.databinding.FragmentShortCodePreviewBinding
+import com.ao.subscribeme.R
+import com.ao.subscribeme.databinding.FragmentShortCodePreviewBinding
 
 @AndroidEntryPoint
 class ShortCodePreviewFragment : CatFragment<FragmentShortCodePreviewBinding>(FragmentShortCodePreviewBinding::inflate) {
