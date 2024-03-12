@@ -19,8 +19,9 @@ dependencyResolutionManagement {
     }
 }
 
-include ':app'
 rootProject.name = "CatLib"
+
+include ':app'
 include ':catlib-core'
 include ':catlib-ads'
 include ':catlib-billing'
