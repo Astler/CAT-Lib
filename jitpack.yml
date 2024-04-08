@@ -5,10 +5,10 @@ before_install:
   - sdk use java 19.0.2-open
 install:
   - ./gradlew clean -Pgroup=com.github.Astler -Pversion=CommitHash -xtest -xlint assemble publishToMavenLocal
-  - cd ../catlib-ads && ./gradlew build publishToMavenLocal
-  - cd ../catlib-billing && ./gradlew build publishToMavenLocal
-  - cd ../catlib-compose && ./gradlew build publishToMavenLocal
-  - cd ../catlib-core && ./gradlew build publishToMavenLocal
-  - cd ../catlib-room && ./gradlew build publishToMavenLocal
-  - cd ../catlib-signin && ./gradlew build publishToMavenLocal
-  - cd ../catlib-ui && ./gradlew build publishToMavenLocal
+  - cd catlib-ads && ./gradlew build publishToMavenLocal
+  - cd catlib-billing && ./gradlew build publishToMavenLocal
+  - cd catlib-compose && ./gradlew build publishToMavenLocal
+  - cd catlib-core && ./gradlew build publishToMavenLocal
+  - cd catlib-room && ./gradlew build publishToMavenLocal
+  - cd catlib-signin && ./gradlew build publishToMavenLocal
+  - cd catlib-ui && ./gradlew build publishToMavenLocal
