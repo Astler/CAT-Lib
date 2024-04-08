@@ -3,14 +3,3 @@ jdk:
 before_install:
   - sdk install java 19.0.2-open
   - sdk use java 19.0.2-open
-install:
-  - echo "Running a custom install command"
-  - ./gradlew clean install -xtest
-  - ./gradlew clean -Pgroup=com.github.Astler -Pversion=CommitHash -xtest -xlint assemble publishToMavenLocal
-  - ./gradlew :catlib-ads:build publishToMavenLocal
-  - ./gradlew :catlib-billing:build publishToMavenLocal
-  - ./gradlew :catlib-compose:build publishToMavenLocal
-  - ./gradlew :catlib-core:build publishToMavenLocal
-  - ./gradlew :catlib-room:build publishToMavenLocal
-  - ./gradlew :catlib-signin:build publishToMavenLocal
-  - ./gradlew :catlib-ui:build publishToMavenLocal

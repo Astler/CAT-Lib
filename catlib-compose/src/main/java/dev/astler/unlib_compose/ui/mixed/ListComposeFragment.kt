@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 abstract class ListComposeFragment<T> : CatComposeFragment() {
     @Composable
-    open fun ItemsList(modifier: Modifier = Modifier, contentPadding: PaddingValues = PaddingValues(0.dp), pData: Array<T>?) {
+    open fun ItemsList(modifier: Modifier, contentPadding: PaddingValues, pData: Array<T>?) {
 
         if (pData == null) {
             LoadingScreen()

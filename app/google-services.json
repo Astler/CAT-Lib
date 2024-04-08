@@ -1,0 +1,24 @@
+{
+  "project_info": {
+    "project_number": "",
+    "firebase_url": "",
+    "project_id": "",
+    "storage_bucket": ""
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "rush_e",
+        "android_client_info": {
+          "package_name": "com.ao.subscribeme"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "eeeeee"
+        }
+      ]
+    }
+  ],
+  "configuration_version": "1"
+}
