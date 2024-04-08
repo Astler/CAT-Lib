@@ -64,7 +64,7 @@ android {
 }
 
 dependencies {
-    api "org.jetbrains.kotlin:kotlin-reflect:1.9.21"
+    api "org.jetbrains.kotlin:kotlin-reflect:1.9.23"
 
     api 'com.google.android.gms:play-services-base:18.3.0'
     api 'com.google.android.gms:play-services-tasks:18.1.0'
@@ -116,7 +116,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    api platform('com.google.firebase:firebase-bom:32.7.4')
+    api platform('com.google.firebase:firebase-bom:32.8.0')
     api 'com.google.firebase:firebase-analytics-ktx'
     api 'com.google.firebase:firebase-crashlytics-ktx'
     api 'com.google.firebase:firebase-config-ktx'

@@ -68,7 +68,7 @@ dependencies {
     implementation project(':catlib-core')
     implementation project(':catlib-ui')
 
-    api platform('com.google.firebase:firebase-bom:32.7.4')
+    api platform('com.google.firebase:firebase-bom:32.8.0')
     api 'com.google.firebase:firebase-auth-ktx'
     api 'com.google.android.gms:play-services-auth:21.0.0'
 
