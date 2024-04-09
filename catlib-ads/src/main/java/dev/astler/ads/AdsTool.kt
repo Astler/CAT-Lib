@@ -55,8 +55,7 @@ class AdsTool @Inject constructor(
     val preferences: PreferencesTool,
     private val remoteConfig: RemoteConfigProvider,
     val appConfig: AppConfig
-) :
-    SharedPreferences.OnSharedPreferenceChangeListener {
+) : SharedPreferences.OnSharedPreferenceChangeListener {
 
     private var _configPackageName: String = _context.shortPackageId()
     private var _needAgeCheck: Boolean = appConfig.ageRestricted
@@ -92,8 +91,8 @@ class AdsTool @Inject constructor(
 
     private fun initializeAds() {
         fun setupMobileAds() {
-            val requestConfiguration = RequestConfiguration.Builder()
-                .setTestDeviceIds(getTestDevicesList())
+            val requestConfiguration =
+                RequestConfiguration.Builder().setTestDeviceIds(getTestDevicesList())
 
             if (preferences.childAdsMode) {
                 requestConfiguration.setTagForChildDirectedTreatment(
@@ -124,7 +123,8 @@ class AdsTool @Inject constructor(
 
     private val _noAdsRewardListener: OnUserEarnedRewardListener
         get() = OnUserEarnedRewardListener {
-            preferences.noAdsHour = GregorianCalendar.getInstance().get(GregorianCalendar.HOUR_OF_DAY)
+            preferences.noAdsHour =
+                GregorianCalendar.getInstance().get(GregorianCalendar.HOUR_OF_DAY)
         }
 
     private fun fetchRemoteConfigForAds() {
@@ -168,30 +168,27 @@ class AdsTool @Inject constructor(
 
         adsLog("Native Ad Started")
 
-        adLoader = AdLoader.Builder(_context, appConfig.nativeAdId)
-            .forNativeAd { nativeAd: NativeAd ->
-                if (adLoader?.isLoading == true) {
-                    adsLog("Native Ad Banner is loading")
-                } else {
-                    adsLog("Native Ad Banner is loaded")
-                    nativeAd.setupNativeBanner(pAdBindItem)
-                }
-
-                if (_context is AppCompatActivity) {
-                    if (_context.isDestroyed) {
-                        nativeAd.destroy()
-                        return@forNativeAd
+        adLoader =
+            AdLoader.Builder(_context, appConfig.nativeAdId).forNativeAd { nativeAd: NativeAd ->
+                    if (adLoader?.isLoading == true) {
+                        adsLog("Native Ad Banner is loading")
+                    } else {
+                        adsLog("Native Ad Banner is loaded")
+                        nativeAd.setupNativeBanner(pAdBindItem)
                     }
-                }
 
-            }
-            .withAdListener(object : AdListener() {
-                override fun onAdFailedToLoad(adError: LoadAdError) {
-                    errorLog("error = $adError")
-                }
-            })
-            .withNativeAdOptions(NativeAdOptions.Builder().build())
-            .build()
+                    if (_context is AppCompatActivity) {
+                        if (_context.isDestroyed) {
+                            nativeAd.destroy()
+                            return@forNativeAd
+                        }
+                    }
+
+                }.withAdListener(object : AdListener() {
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        errorLog("error = $adError")
+                    }
+                }).withNativeAdOptions(NativeAdOptions.Builder().build()).build()
 
         adsLog("Native Ad Builded")
 
@@ -200,7 +197,7 @@ class AdsTool @Inject constructor(
         return adLoader
     }
 
-    private fun tryToShowInterstitialAd() {
+    fun tryToShowInterstitialAd() {
         if (!canShowAds) {
             adsLog("Can't show ads!")
             return
@@ -215,6 +212,7 @@ class AdsTool @Inject constructor(
             loadAds()
             return
         }
+
         if (_adsConfig.isEmpty) {
             adsLog("isEmpty need to fetch")
             fetchRemoteConfigForAds()
@@ -231,15 +229,14 @@ class AdsTool @Inject constructor(
         val startDelay = config.interstitialAdDelay
 
         if ((now - preferences.appResumeTime) < startDelay * 1000L) {
-            adsLog("Time from start not passed ${(preferences.appResumeTime - GregorianCalendar().timeInMillis)/1000}!")
+            adsLog("Time from start not passed ${(preferences.appResumeTime - GregorianCalendar().timeInMillis) / 1000}!")
             return
         }
 
         if ((now - preferences.lastAdsTime) < config.interstitialAdOtherDelay * 1000L) {
-            adsLog("Time from last ad not passed ${(preferences.lastAdsTime - GregorianCalendar().timeInMillis)/1000}!")
+            adsLog("Time from last ad not passed ${(preferences.lastAdsTime - GregorianCalendar().timeInMillis) / 1000}!")
             return
         }
-
 
         _loadedInterstitial?.show(_context)
         preferences.lastAdsTime = GregorianCalendar().timeInMillis
@@ -268,8 +265,7 @@ class AdsTool @Inject constructor(
 
         adsLog("Load interstitial")
 
-        InterstitialAd.load(
-            _context,
+        InterstitialAd.load(_context,
             _interstitialAdId,
             adRequest,
             object : InterstitialAdLoadCallback() {
@@ -309,8 +305,7 @@ class AdsTool @Inject constructor(
                         }
                     }
                 }
-            }
-        )
+            })
     }
 
     private fun tryToLoadRewardedInterstitial(adRequest: AdRequest) {
@@ -328,8 +323,7 @@ class AdsTool @Inject constructor(
 
         adsLog("Load rewarded interstitial")
 
-        RewardedInterstitialAd.load(
-            _context,
+        RewardedInterstitialAd.load(_context,
             _rewardedAdId,
             adRequest,
             object : RewardedInterstitialAdLoadCallback() {
@@ -369,8 +363,7 @@ class AdsTool @Inject constructor(
                         }
                     }
                 }
-            }
-        )
+            })
     }
 
     private fun NativeAd.setupNativeBanner(binding: ItemAdBinding) {

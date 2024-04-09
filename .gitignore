@@ -18,3 +18,4 @@ local.properties
 /app/src/main/res/raw/app_config.catc
 /app/google-services.json
 /app/_google-services.json
+/app/release/app-release.aab
