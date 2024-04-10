@@ -34,13 +34,13 @@ import dev.astler.catlib.signin.ui.activity.contracts.EmailSignInActivityContrac
 import dev.astler.catlib.signin.ui.activity.contracts.SignInActivityContract
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class SignInTool @Inject constructor(
     private val _context: Context,
     val preferences: PreferencesTool,
-    private val remoteConfig: RemoteConfigProvider,
-    private val _firebaseAuthRepository: IFirebaseAuthRepository,
-    val appConfig: AppConfig
+    private val _firebaseAuthRepository: IFirebaseAuthRepository
 ) {
     private var _signInLauncher: ActivityResultLauncher<IntentSenderRequest>? = null
     private var _signInListener: ISignInListener? = null
