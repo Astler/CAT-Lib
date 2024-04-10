@@ -91,6 +91,8 @@ class SignInTool @Inject constructor(
             _signInListener = _context
         }
 
+        infoLog("Initialization of SignInTool")
+
         initializeForActivity()
     }
 
