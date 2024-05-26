@@ -35,5 +35,5 @@ fun errorLog(
     if (exception != null)
         Firebase.crashlytics.recordException(exception)
 
-    errorLog(text, pPostCategory, pCategory)
+    errorLog(text + exception?.message, pPostCategory, pCategory)
 }

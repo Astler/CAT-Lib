@@ -17,9 +17,10 @@ android {
     defaultConfig {
         applicationId = "com.ao.subscribeme"
         minSdk = 23
+        targetSdk = 34
         
-        versionCode = 6
-        versionName = "1.3"
+        versionCode = 8
+        versionName = "1.3.1"
 
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true

@@ -1,7 +1,6 @@
 package dev.astler.unlib_test
 
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -10,6 +9,7 @@ import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.billing.data.BillingViewModel
 import dev.astler.cat_ui.activities.BindingCatActivity
+import dev.astler.cat_ui.extensions.InAppUpdateActivityExtension
 import dev.astler.catlib.constants.IODispatcher
 import dev.astler.catlib.extensions.getJsonContent
 import dev.astler.catlib.extensions.toast
@@ -30,8 +30,9 @@ class MainActivity : BindingCatActivity<ActivityMainBinding>(ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         singInTool.universalSignInRequest()
+
+        InAppUpdateActivityExtension(this, binding.snackbarLayout)
 
         lifecycleScope.launch(IODispatcher) {
             val dataBe = "https://astler.net/apps_data/be_versions.json".getJsonContent()

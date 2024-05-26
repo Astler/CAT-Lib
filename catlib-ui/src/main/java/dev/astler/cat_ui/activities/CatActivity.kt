@@ -158,7 +158,6 @@ abstract class CatActivity : AppCompatActivity(), SharedPreferences.OnSharedPref
                 }
             }
         }
-
     }
 
     /**

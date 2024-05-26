@@ -63,7 +63,7 @@ dependencies {
     implementation(project(":catlib-core"))
     implementation(project(":catlib-ui"))
 
-    api(libs.firebaseBom)
+    api(platform(libs.firebaseBom))
     api(libs.firebaseAuthKtx)
     api(libs.playServicesAuth)
 
