@@ -1,6 +1,7 @@
 package dev.astler.unlib_test
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -28,9 +29,8 @@ class MainActivity : BindingCatActivity<ActivityMainBinding>(ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
-
         super.onCreate(savedInstanceState)
-
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         singInTool.universalSignInRequest()
 
         lifecycleScope.launch(IODispatcher) {

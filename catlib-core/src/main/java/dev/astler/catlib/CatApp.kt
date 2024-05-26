@@ -22,7 +22,7 @@ val catJson = Json {
 open class CatApp : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
-    protected lateinit var preferences: PreferencesTool
+    lateinit var preferences: PreferencesTool
 
     companion object {
         private lateinit var applicationInstance: CatApp

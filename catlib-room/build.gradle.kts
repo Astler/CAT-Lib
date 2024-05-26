@@ -9,7 +9,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 23
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -42,13 +42,12 @@ android {
 dependencies {
     implementation(project(":catlib-core"))
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.extJunit)
+    androidTestImplementation(libs.espressoCore)
 
-    val roomVersion = "2.6.1"
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    implementation("androidx.room:room-paging:$roomVersion")
-    ksp("androidx.room:room-compiler:$roomVersion")
+    implementation(libs.roomRuntime)
+    implementation(libs.roomKtx)
+    implementation(libs.roomPaging)
+    ksp(libs.roomCompiler)
 }

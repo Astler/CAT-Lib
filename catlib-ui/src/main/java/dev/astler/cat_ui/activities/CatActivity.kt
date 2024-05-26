@@ -49,10 +49,10 @@ abstract class CatActivity : AppCompatActivity(), SharedPreferences.OnSharedPref
     override lateinit var preferences: PreferencesTool
 
     @Inject
-    protected lateinit var analytics: CatAnalytics
+    lateinit var analytics: CatAnalytics
 
     @Inject
-    protected lateinit var remoteConfig: RemoteConfigProvider
+    lateinit var remoteConfig: RemoteConfigProvider
 
     private var _currentWindowInsets: WindowInsetsCompat = WindowInsetsCompat.Builder().build()
 
