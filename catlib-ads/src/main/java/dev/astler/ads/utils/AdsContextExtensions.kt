@@ -29,8 +29,8 @@ fun Context.canShowAds(preferences: PreferencesTool): Boolean {
     ) {
         false
     } else {
-        preferences.noAdsHour != GregorianCalendar.getInstance().get(
-            Calendar.HOUR_OF_DAY
-        ) && isOnline
+        val currentTime = System.currentTimeMillis()
+        val oneHourInMillis = 3600000L
+        return currentTime - preferences.noAdsStartTime > oneHourInMillis && isOnline
     }
 }

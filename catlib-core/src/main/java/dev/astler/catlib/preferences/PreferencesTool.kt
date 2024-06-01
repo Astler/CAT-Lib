@@ -23,7 +23,7 @@ open class PreferencesTool @Inject constructor(context: Context) {
         const val textSizeDefault = "18"
 
         const val firstStartKey = "firstStart"
-        const val dayWithoutAdsKey = "dayWithoutAds"
+        const val noAdsStartTimeKey = "noAdsStartTime"
 
         const val appFirstStartTimeKey = "appFirstStartTime"
     }
@@ -93,10 +93,10 @@ open class PreferencesTool @Inject constructor(context: Context) {
             edit(firstStartKey, value)
         }
 
-    var noAdsHour: Int
-        get() = getPreferences().getInt(dayWithoutAdsKey, -1)
+    var noAdsStartTime: Long
+        get() = getPreferences().getLong(noAdsStartTimeKey, -1)
         set(value) {
-            edit(dayWithoutAdsKey, value)
+            edit(noAdsStartTimeKey, value)
         }
 
     var userLanguage: String

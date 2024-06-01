@@ -123,8 +123,7 @@ class AdsTool @Inject constructor(
 
     private val _noAdsRewardListener: OnUserEarnedRewardListener
         get() = OnUserEarnedRewardListener {
-            preferences.noAdsHour =
-                GregorianCalendar.getInstance().get(GregorianCalendar.HOUR_OF_DAY)
+            preferences.noAdsStartTime = System.currentTimeMillis()
         }
 
     private fun fetchRemoteConfigForAds() {
@@ -135,7 +134,7 @@ class AdsTool @Inject constructor(
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == PreferencesTool.dayWithoutAdsKey) {
+        if (key == PreferencesTool.noAdsStartTimeKey) {
             if (_context is IAdToolProvider) {
                 _context.hideAd()
             }
