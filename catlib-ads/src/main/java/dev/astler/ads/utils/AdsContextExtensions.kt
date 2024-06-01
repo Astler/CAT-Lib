@@ -30,7 +30,7 @@ fun Context.canShowAds(preferences: PreferencesTool): Boolean {
         false
     } else {
         preferences.noAdsHour != GregorianCalendar.getInstance().get(
-            Calendar.DAY_OF_MONTH
+            Calendar.HOUR_OF_DAY
         ) && isOnline
     }
 }
