@@ -58,8 +58,8 @@ dependencies {
     androidTestImplementation(libs.extJunit)
     androidTestImplementation(libs.espressoCore)
 
-    implementation(libs.roomRuntime)
-    implementation(libs.roomKtx)
-    implementation(libs.roomPaging)
+    api(libs.roomRuntime)
+    api(libs.roomKtx)
+    api(libs.roomPaging)
     ksp(libs.roomCompiler)
 }
