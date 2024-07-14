@@ -14,7 +14,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
 import dev.astler.cat_ui.interfaces.CoreFragmentInterface
 import dev.astler.cat_ui.interfaces.ICatActivity
-import dev.astler.cat_ui.interfaces.IRootInsets
 import dev.astler.cat_ui.utils.getStringResource
 import dev.astler.cat_ui.utils.views.setNavigationPaddingForView
 import dev.astler.cat_ui.utils.views.setStatusAndNavigationPaddingForView
@@ -33,7 +32,6 @@ abstract class CatFragment<VB : ViewBinding>(private val bindingInflater: (Layou
     private var _binding: VB? = null
 
     protected var coreListener: ICatActivity? = null
-    protected var rootInsets: IRootInsets? = null
     protected lateinit var safeContext: Context
     protected val binding get() = _binding!!
 
@@ -46,9 +44,6 @@ abstract class CatFragment<VB : ViewBinding>(private val bindingInflater: (Layou
 
         if (context is ICatActivity)
             coreListener = context
-
-        if (context is IRootInsets)
-            rootInsets = context
     }
 
     override fun onCreateView(
@@ -92,12 +87,6 @@ abstract class CatFragment<VB : ViewBinding>(private val bindingInflater: (Layou
 
     fun applyPaddingPattern(pattern: InsetsPattern, viewToImplement: View) {
         when (pattern) {
-            InsetsPattern.SYSTEM_WITH_ACTION_BAR -> {
-                viewToImplement.setStatusAndNavigationPaddingForView(
-                    pAdditionalTopPadding = rootInsets?.toolbarHeight ?: 0
-                )
-            }
-
             InsetsPattern.SYSTEM -> {
                 viewToImplement.setStatusAndNavigationPaddingForView()
             }
@@ -108,12 +97,6 @@ abstract class CatFragment<VB : ViewBinding>(private val bindingInflater: (Layou
 
             InsetsPattern.TOP -> {
                 viewToImplement.setStatusPaddingForView()
-            }
-
-            InsetsPattern.TOP_WITH_ACTION_BAR -> {
-                viewToImplement.setStatusPaddingForView(
-                    pAdditionalTopPadding = rootInsets?.toolbarHeight ?: 0
-                )
             }
 
             else -> {}

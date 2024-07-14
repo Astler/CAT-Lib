@@ -29,7 +29,7 @@ class AdsOpenItemListActivity : BindingCatActivity<ActivityRecyclerviewBinding>(
         mAdapter = OneItemAdsAdapter(
             R.layout.item_text,
             mItemLoadListener = { pData, pHolder ->
-                val nBind = ItemTextBinding.bind(pHolder.mItemView)
+                val nBind = ItemTextBinding.bind(pHolder.itemView)
                 nBind.text.text = pData.text
             },
             mConfig = OIAdsAdapterConfig(canShowAds(preferences))

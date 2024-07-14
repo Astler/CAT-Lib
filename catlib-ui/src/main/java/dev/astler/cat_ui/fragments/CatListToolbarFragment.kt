@@ -46,19 +46,19 @@ abstract class CatListToolbarFragment : CatFragment<FragmentListToolbarBinding>(
 
             toolbarLayout.customTopBar.isLiftOnScroll = liftToolbarOnScroll
 
-            ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout.topContent) { v, insets ->
-                val params = v.layoutParams as ViewGroup.MarginLayoutParams
-                params.topMargin = rootInsets?.topPadding ?: 0
-                v.layoutParams = params
-                insets
-            }
-
-            ViewCompat.setOnApplyWindowInsetsListener(fab) { v, insets ->
-                val params = v.layoutParams as ViewGroup.MarginLayoutParams
-                params.topMargin = rootInsets?.bottomPadding ?: 0
-                v.layoutParams = params
-                insets
-            }
+//            ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout.topContent) { v, insets ->
+//                val params = v.layoutParams as ViewGroup.MarginLayoutParams
+//                params.topMargin = rootInsets?.topPadding ?: 0
+//                v.layoutParams = params
+//                insets
+//            }
+//
+//            ViewCompat.setOnApplyWindowInsetsListener(fab) { v, insets ->
+//                val params = v.layoutParams as ViewGroup.MarginLayoutParams
+//                params.topMargin = rootInsets?.bottomPadding ?: 0
+//                v.layoutParams = params
+//                insets
+//            }
         }
     }
 

@@ -6,7 +6,6 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.AttributeSet
 import android.view.MotionEvent
-import dev.astler.cat_ui.views.CatTextView
 
 class LinksCompatTextView @JvmOverloads constructor(
     context: Context,
@@ -21,10 +20,7 @@ class LinksCompatTextView @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        // Extract the text (as Spanned)
-        val stext = text as Spanned
-
-        // Get the clicked position
+        val spanned = text as Spanned
         var x = event?.x?.toInt() ?: -1
         var y = event?.y?.toInt() ?: -1
 
@@ -38,8 +34,7 @@ class LinksCompatTextView @JvmOverloads constructor(
         val line = layout.getLineForVertical(y)
         val off = layout.getOffsetForHorizontal(line, x.toFloat())
 
-        // Check if there's a clickable span under the click
-        val link = stext.getSpans(off, off, ClickableSpan::class.java)
+        val link = spanned.getSpans(off, off, ClickableSpan::class.java)
 
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -58,7 +53,6 @@ class LinksCompatTextView @JvmOverloads constructor(
             }
         }
 
-        // Otherwise, let the framework handle the touch event (this won't consume it for non-clickable text)
         return false
     }
 }
