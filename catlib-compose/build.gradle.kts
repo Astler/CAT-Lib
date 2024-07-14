@@ -62,10 +62,6 @@ dependencies {
     implementation(project(":catlib-ui"))
 
     api(libs.accompanistSystemuicontroller)
-
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${libs.versions.compose.get()}")
-    debugImplementation("androidx.compose.ui:ui-tooling:${libs.versions.compose.get()}")
-
     api(libs.material3)
     api(libs.material3Android)
     api(libs.material3WindowSizeClass)

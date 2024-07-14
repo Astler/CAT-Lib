@@ -38,24 +38,29 @@ fun hide(vararg viewsToHide: View) {
     gone(*viewsToHide)
 }
 
-fun View.visibleWithCondition(condition: Boolean) {
+fun View.visibleWithCondition(condition: Boolean): Boolean {
     if (condition) {
         visible()
     } else {
         gone()
     }
+    return condition
 }
 
-fun View.showWithCondition(condition: Boolean) {
+fun View.showWithCondition(condition: Boolean): Boolean {
     visibleWithCondition(condition)
+    return condition
 }
 
-fun visibleWithCondition(condition: Boolean, vararg views: View) {
+fun visibleWithCondition(condition: Boolean, vararg views: View): Boolean {
     views.forEach {
         it.showWithCondition(condition)
     }
+
+    return condition
 }
 
-fun showWithCondition(condition: Boolean, vararg views: View) {
+fun showWithCondition(condition: Boolean, vararg views: View): Boolean {
     visibleWithCondition(condition, *views)
+    return condition
 }
