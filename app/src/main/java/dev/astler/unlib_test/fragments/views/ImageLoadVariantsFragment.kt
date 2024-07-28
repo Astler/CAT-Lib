@@ -12,11 +12,12 @@ import dev.astler.catlib.constants.MockImageUrl
 import dev.astler.catlib.extensions.getBitmapFromAsset
 import com.ao.subscribeme.R
 import com.ao.subscribeme.databinding.ActivityImagesBinding
+import com.commit451.coiltransformations.BlurTransformation
+import com.commit451.coiltransformations.GrayscaleTransformation
 
 class ImageLoadVariantsFragment: CatFragment<ActivityImagesBinding>(ActivityImagesBinding::inflate) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         binding.coilImage.load(MockImageUrl)
 
@@ -29,7 +30,7 @@ class ImageLoadVariantsFragment: CatFragment<ActivityImagesBinding>(ActivityImag
         binding.coilBlurImage.load(MockImageUrl) {
             crossfade(true)
             placeholder(R.drawable.ic_launcher_background)
-//            transformations(BlurTransformation(this@ImageLoadersActivity))
+            transformations(BlurTransformation(safeContext))
         }
 
         binding.roundedImage.load(MockImageUrl) {
@@ -41,7 +42,7 @@ class ImageLoadVariantsFragment: CatFragment<ActivityImagesBinding>(ActivityImag
         binding.grayScaleImage.load(MockImageUrl) {
             crossfade(true)
             placeholder(R.drawable.ic_launcher_background)
-//            transformations(GrayscaleTransformation())
+            transformations(GrayscaleTransformation())
         }
 
         binding.assetsImage.setImageBitmap(safeContext.getBitmapFromAsset("frozen.png"))

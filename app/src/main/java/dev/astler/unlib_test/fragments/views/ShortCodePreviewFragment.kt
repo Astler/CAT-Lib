@@ -13,10 +13,6 @@ class ShortCodePreviewFragment : CatFragment<FragmentShortCodePreviewBinding>(Fr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val testText =
-            getString(R.string.strange_string) + safeContext.getDimensionFromAttr(androidx.appcompat.R.attr.actionBarSize) + "\n" + binding.toolbar.height
-
-        binding.test.text = testText
+        binding.test.text = getString(R.string.strange_string)
     }
 }

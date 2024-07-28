@@ -14,10 +14,12 @@
 
     <string name="copied_to_buffer">Текст скопійований: %s</string>
 
+    <string name="exit">Вихід</string>
     <string name="exiting_app">Вже йдете?</string>
     <string name="already_leave">Вийти з додатку?</string>
     <string name="yes">Так</string>
     <string name="no">Ні</string>
+    <string name="yes_agree">Так, згоден</string>
 
     <string name="share">Поділитися з…</string>
 
@@ -26,4 +28,8 @@
     <string name="update">Оновлення</string>
     <string name="new_version_title">Нова версія!</string>
     <string name="new_version_text">Нова версія!</string>
+
+    <string name="privacy_policy">Політика конфіденційності</string>
+    <string name="privacy_policy_request">Будь ласка, прочитайте та погодьтеся з нашою політикою конфіденційності.</string>
+    <string name="read_privacy_policy">Прочитати</string>
 </resources>

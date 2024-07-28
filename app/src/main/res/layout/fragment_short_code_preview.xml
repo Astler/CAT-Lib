@@ -8,9 +8,13 @@
 
     <dev.astler.cat_ui.views.CatShortCodeTextView
         android:id="@+id/test"
-        app:asyncModeActive="true"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        app:asyncModeActive="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -20,31 +24,28 @@
         android:id="@+id/astler_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/app_name"
         android:textStyle="bold"
-        tools:text="ASTLER"
-        app:layout_constraintTop_toBottomOf="@+id/test" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/test"
+        tools:text="ASTLER" />
 
     <dev.astler.cat_ui.views.CatTextView
         android:id="@+id/astler_2_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/astler_test"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/app_name"
-        tools:text="ASTLER 2"
-        app:textStyle="bold" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/test"
-        app:layout_constraintVertical_bias="0.82" />
+        app:layout_constraintTop_toBottomOf="@+id/astler_test"
+        app:textStyle="bold"
+        tools:text="ASTLER 2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

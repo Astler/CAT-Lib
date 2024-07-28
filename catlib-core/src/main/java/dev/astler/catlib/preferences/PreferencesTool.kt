@@ -23,6 +23,7 @@ open class PreferencesTool @Inject constructor(context: Context) {
         const val textSizeDefault = "18"
 
         const val firstStartKey = "firstStart"
+        const val policyKey = "policyKey"
         const val noAdsStartTimeKey = "noAdsStartTime"
 
         const val appFirstStartTimeKey = "appFirstStartTime"
@@ -91,6 +92,12 @@ open class PreferencesTool @Inject constructor(context: Context) {
         get() = getPreferences().getBoolean(firstStartKey, true)
         set(value) {
             edit(firstStartKey, value)
+        }
+
+    var isPolicyAnswered: Boolean
+        get() = getPreferences().getBoolean(policyKey, false)
+        set(value) {
+            edit(policyKey, value)
         }
 
     var noAdsStartTime: Long

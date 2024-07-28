@@ -17,10 +17,12 @@
 
     <string name="copied_to_buffer">The text copied: %s</string>
 
+    <string name="exit">Exit</string>
     <string name="exiting_app">Already leave?</string>
     <string name="already_leave">Quit the application?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="yes_agree">Yes, I Agree</string>
 
     <string name="share">Share with…</string>
 
@@ -29,4 +31,8 @@
     <string name="update">Update</string>
     <string name="new_version_title">New version!</string>
     <string name="new_version_text">New version!</string>
+
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_request">Please read and agree to our privacy policy.</string>
+    <string name="read_privacy_policy">Read</string>
 </resources>

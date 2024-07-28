@@ -1,7 +1,10 @@
 package dev.astler.cat_ui.utils.dialogs
 
+import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
@@ -10,6 +13,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dev.astler.cat_ui.adapters.CatOneTypeAdapter
 import dev.astler.cat_ui.items.DialogSimpleTextItem
 import dev.astler.cat_ui.utils.tryToGetTextFrom
+import dev.astler.catlib.config.AppConfig
+import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.ui.R
 import dev.astler.catlib.ui.databinding.DialogChooseItemBinding
 import dev.astler.catlib.ui.databinding.DialogChooseItemWithSearchBinding
@@ -25,6 +30,31 @@ data class CatDialogData(
     val negativeAction: ((DialogInterface) -> Unit)? = null,
     val showAfterCreation: Boolean = true
 )
+
+fun Activity.privacyPolicyDialog(appConfig: AppConfig, preferences: PreferencesTool) {
+    val builder = MaterialAlertDialogBuilder(this)
+    builder.setTitle(gg.pressf.resources.R.string.privacy_policy)
+    builder.setCancelable(false)
+    builder.setMessage(gg.pressf.resources.R.string.privacy_policy_request)
+
+    builder.setPositiveButton(gg.pressf.resources.R.string.read_privacy_policy) { _, _ ->
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(appConfig.policyLink))
+        startActivity(intent)
+        privacyPolicyDialog(appConfig, preferences)
+    }
+
+    builder.setNegativeButton(gg.pressf.resources.R.string.exit) { dialog, which ->
+        finish()
+    }
+
+    builder.setNeutralButton(gg.pressf.resources.R.string.yes_agree) { dialog, which ->
+        preferences.isPolicyAnswered = true
+        dialog.dismiss()
+    }
+
+    builder.create().show()
+}
+
 
 fun Context.editTextDialog(
     showAfterCreation: Boolean = true,

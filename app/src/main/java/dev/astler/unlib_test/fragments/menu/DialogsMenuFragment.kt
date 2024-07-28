@@ -7,22 +7,28 @@ import dev.astler.cat_ui.utils.dialogs.yesNoDialog
 import dev.astler.catlib.extensions.toast
 import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import com.ao.subscribeme.R
+import dev.astler.cat_ui.utils.dialogs.privacyPolicyDialog
+import dev.astler.catlib.config.AppConfig
 import dev.astler.unlib_test.data.TestBaseItem
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DialogsMenuFragment : TestsMenuFragment() {
+    @Inject
+    lateinit var appConfig: AppConfig
+
     private val yesNoEmptyDialogKey = "YesNoEmptyDialog"
     private val yesNoDialogKey = "YesNoDialog"
-    private val exitDialogKey = "ExitDialog"
     private val confirmDialogKey = "ConfirmDialog"
     private val okDialogKey = "OkDialog"
+    private val policyKey = "policy"
 
     override val menuItems = listOf(
-        BaseCard(TestBaseItem(R.string.yes_no_empty_dialog, R.drawable.ic_launcher_foreground, 2, uid = yesNoEmptyDialogKey)),
-        BaseCard(TestBaseItem(R.string.yes_no_dialog, R.drawable.ic_launcher_foreground, 2, uid = yesNoDialogKey)),
-        BaseCard(TestBaseItem(R.string.exit, R.drawable.ic_launcher_foreground, 2, uid = exitDialogKey)),
-        BaseCard(TestBaseItem(R.string.confirm, R.drawable.ic_launcher_foreground, 2, uid = confirmDialogKey)),
-        BaseCard(TestBaseItem(R.string.ok, R.drawable.ic_launcher_foreground, 2, uid = okDialogKey)),
+        BaseCard(TestBaseItem(R.string.yes_no_empty_dialog, R.drawable.ic_launcher_foreground, 3, uid = yesNoEmptyDialogKey)),
+        BaseCard(TestBaseItem(R.string.yes_no_dialog, R.drawable.ic_launcher_foreground, 3, uid = yesNoDialogKey)),
+        BaseCard(TestBaseItem(R.string.confirm, R.drawable.ic_launcher_foreground, 3, uid = confirmDialogKey)),
+        BaseCard(TestBaseItem(R.string.ok, R.drawable.ic_launcher_foreground, 3, uid = okDialogKey)),
+        BaseCard(TestBaseItem(gg.pressf.resources.R.string.privacy_policy, R.drawable.ic_launcher_foreground, 6, uid = policyKey)),
     )
 
     override fun menuItemClicked(uid: String) {
@@ -56,6 +62,10 @@ class DialogsMenuFragment : TestsMenuFragment() {
 
             okDialogKey -> {
                 safeContext.okDialog(title = R.string.app_name)
+            }
+
+            policyKey -> {
+                activity?.privacyPolicyDialog(appConfig, preferences)
             }
         }
     }

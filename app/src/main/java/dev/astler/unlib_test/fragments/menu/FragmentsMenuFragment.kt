@@ -11,11 +11,9 @@ import dev.astler.unlib_test.fragments.menu.TestsMenuFragment
 class FragmentsMenuFragment: TestsMenuFragment() {
 
     private val settingsLocal = "settingsFragment"
-    private val settingsCat = "settingsFragmentCat"
 
     override val menuItems = listOf(
-        BaseCard(TestBaseItem(R.string.short_code_view, R.drawable.ic_launcher_foreground, 2, uid = settingsLocal)),
-        BaseCard(TestBaseItem(R.string.short_code_view, R.drawable.ic_launcher_foreground, 2, uid = settingsCat)),
+        BaseCard(TestBaseItem(gg.pressf.resources.R.string.settings, R.drawable.ic_launcher_foreground, 2, uid = settingsLocal)),
     )
 
     override fun menuItemClicked(uid: String) {
@@ -24,9 +22,6 @@ class FragmentsMenuFragment: TestsMenuFragment() {
                 findNavController().navigate(R.id.action_global_settingsFragment)
             }
 
-            settingsCat -> {
-                findNavController().navigate(R.id.action_global_catDefaultSettingsFragment)
-            }
         }
     }
 }

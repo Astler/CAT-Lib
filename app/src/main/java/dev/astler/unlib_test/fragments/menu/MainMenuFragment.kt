@@ -24,13 +24,14 @@ class MainMenuFragment : TestsMenuFragment() {
     private val catKey = "Cat"
 
     override val menuItems = listOf(
-        BaseCard(TestBaseItem(R.string.activities, R.drawable.ic_launcher_foreground, 3, uid = activitiesKey)),
-        FilledBaseCard(TestBaseItem(R.string.fragments, R.drawable.ic_launcher_foreground, 3, uid = fragmentsKey)),
-        ElevatedBaseCard(TestBaseItem(R.string.compose, R.drawable.ic_launcher_foreground, 3, uid = composeKey)),
-        FilledBaseCard(TestBaseItem(R.string.dialogs, R.drawable.ic_launcher_foreground, 3, uid = baseDialogsKey)),
+        FilledBaseCard(TestBaseItem(R.string.fragments, R.drawable.ic_launcher_foreground, 2, uid = fragmentsKey)),
         BaseCard(TestBaseItem(R.string.views, R.drawable.ic_launcher_foreground, 2, uid = viewsKey)),
+        ElevatedBaseCard(TestBaseItem(R.string.compose, R.drawable.ic_launcher_foreground, 2, uid = composeKey)),
+
+        FilledBaseCard(TestBaseItem(R.string.dialogs, R.drawable.ic_launcher_foreground, 2, uid = baseDialogsKey)),
         FilledBaseCard(TestBaseItem(R.string.ads, R.drawable.ic_launcher_foreground, 2, uid = adsKey)),
         ElevatedBaseCard(TestBaseItem(R.string.tech, R.drawable.ic_launcher_foreground, 2, uid = techKey)),
+
         FilledBaseCard(TestBaseItem(R.string.firebase, R.drawable.ic_launcher_foreground, 3, uid = firebaseKey)),
         BaseCard(TestBaseItem(R.string.cat, R.drawable.ic_launcher_foreground, 3, uid = catKey)),
     )

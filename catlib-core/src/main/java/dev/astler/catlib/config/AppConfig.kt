@@ -6,6 +6,8 @@ import kotlinx.serialization.Serializable
 data class AppConfig(
     val proVersionPackageId: String = "",
 
+    val policyLink: String = "https://geekstand.top/uncategorized/pressf-app-privacy-policy/",
+
     val interstitialAdId: String = "",
     val rewardedAdId: String = "",
     val nativeAdId: String = "",

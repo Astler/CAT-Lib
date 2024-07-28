@@ -14,10 +14,12 @@
 
     <string name="copied_to_buffer">Текст скопирован: %s</string>
 
+    <string name="exit">Выход</string>
     <string name="exiting_app">Уже уходите?</string>
     <string name="already_leave">Выйти из приложения?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="yes_agree">Да, согласен</string>
 
     <string name="share">Поделиться с…</string>
 
@@ -26,4 +28,8 @@
     <string name="update">Обновление</string>
     <string name="new_version_title">Новая версия!</string>
     <string name="new_version_text">Новая версия!</string>
+
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="privacy_policy_request">Пожалуйста, прочитайте и согласитесь с нашей политикой конфиденциальности.</string>
+    <string name="read_privacy_policy">Прочитать</string>
 </resources>

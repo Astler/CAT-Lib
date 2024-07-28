@@ -1,11 +1,14 @@
 package dev.astler.cat_ui.fragments
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.interfaces.ICatActivity
+import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.ui.R
 import javax.inject.Inject
@@ -14,9 +17,13 @@ import javax.inject.Inject
 open class CatDefaultSettingsFragment : PreferenceFragmentCompat() {
 
     @Inject
+    lateinit var appConfig: AppConfig
+
+    @Inject
     lateinit var preferences: PreferencesTool
 
     private var noAdsItem: Preference? = null
+    private var privacy: Preference? = null
     protected var coreListener: ICatActivity? = null
 
     override fun onAttach(context: Context) {
@@ -30,11 +37,13 @@ open class CatDefaultSettingsFragment : PreferenceFragmentCompat() {
         addPreferencesFromResource(dev.astler.catlib.core.R.xml.prefs)
 
         noAdsItem = findPreference("dayWithoutAds")
+        privacy = findPreference("privacy")
 
-//        mPreference?.setOnPreferenceClickListener {
-//            coreListener.showRewardAd()
-//            true
-//        }
+        privacy?.setOnPreferenceClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(appConfig.policyLink))
+            startActivity(intent)
+            true
+        }
 
 //        noAdsItem?.isVisible = requireContext().canShowAds(preferences)
     }

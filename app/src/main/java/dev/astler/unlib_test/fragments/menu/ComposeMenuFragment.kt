@@ -12,13 +12,11 @@ class ComposeMenuFragment : TestsMenuFragment() {
     private val dynamicComposeKey = "DynamicCompose"
     private val typewriterKey = "Typewriter"
     private val collapsingToolbarKey = "CollapsingToolbar"
-    private val staticGridKey = "StaticGridKey"
 
     override val menuItems = listOf(
-        BaseCard(TestBaseItem(R.string.app_name, R.drawable.ic_launcher_foreground, 2, uid = dynamicComposeKey)),
-        BaseCard(TestBaseItem(R.string.typewriter, R.drawable.ic_launcher_foreground, 2, uid = typewriterKey)),
-        BaseCard(TestBaseItem(R.string.typewriter, R.drawable.ic_launcher_foreground, 6, uid = collapsingToolbarKey)),
-        BaseCard(TestBaseItem(R.string.static_grid, R.drawable.ic_launcher_foreground, 6, uid = staticGridKey)),
+        BaseCard(TestBaseItem(R.string.static_grid, R.drawable.ic_launcher_foreground, 3, uid = dynamicComposeKey)),
+        BaseCard(TestBaseItem(R.string.typewriter, R.drawable.ic_launcher_foreground, 3, uid = typewriterKey)),
+        BaseCard(TestBaseItem(R.string.collapsing_test, R.drawable.ic_launcher_foreground, 6, uid = collapsingToolbarKey)),
     )
 
     override fun menuItemClicked(uid: String) {
@@ -33,10 +31,6 @@ class ComposeMenuFragment : TestsMenuFragment() {
 
             collapsingToolbarKey -> {
                 findNavController().navigate(R.id.action_global_collapsingToolbarFragment)
-            }
-
-            staticGridKey -> {
-                findNavController().navigate(R.id.action_global_staticGridComposeFragment)
             }
         }
     }

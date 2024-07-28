@@ -36,6 +36,7 @@ fun TypewriterText(
 
     Text(
         text = textToDisplay,
+        color = MaterialTheme.colorScheme.primary,
     )
 }
 
