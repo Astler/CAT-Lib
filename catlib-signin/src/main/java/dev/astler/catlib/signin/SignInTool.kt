@@ -160,7 +160,7 @@ class SignInTool @Inject constructor(
             return
         }
 
-        val clientId = ""
+        val clientId = "1034191241995-7br90ripldpicnnti4b7rk02gcfpjo9t.apps.googleusercontent.com"
         val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
             .setFilterByAuthorizedAccounts(true)
             .setServerClientId(clientId)

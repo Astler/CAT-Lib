@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">Tech Name Link</string>
+
     <string name="ok">OK</string>
     <string name="nothing">Nothing</string>
     <string name="other">Other</string>
