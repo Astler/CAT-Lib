@@ -123,7 +123,7 @@ class AdsTool @Inject constructor(
         }
     }
 
-    private val _noAdsRewardListener: OnUserEarnedRewardListener
+    public val noAdsRewardListener: OnUserEarnedRewardListener
         get() = OnUserEarnedRewardListener {
             preferences.noAdsStartTime = System.currentTimeMillis()
         }
@@ -151,14 +151,15 @@ class AdsTool @Inject constructor(
         NativeAdsLoader.instance?.loadAds(_context, AdRequest.Builder().build())
     }
 
-    fun tryToShowRewardedInterstitial() {
+    fun tryToShowRewardedInterstitial(rewardListener: OnUserEarnedRewardListener = noAdsRewardListener) {
         if (_context !is AppCompatActivity) {
             adsLog("Cant show ads, context is not AppCompatActivity")
             return
         }
 
         if (_loadedRewardedInterstitial != null) {
-            _loadedRewardedInterstitial?.show(_context, _noAdsRewardListener)
+            _loadedRewardedInterstitial?.fullScreenContentCallback
+            _loadedRewardedInterstitial?.show(_context, rewardListener)
         } else {
             loadAds()
         }
