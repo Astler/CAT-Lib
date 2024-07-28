@@ -299,7 +299,7 @@ class AdsTool @Inject constructor(
                     if (_context is AppCompatActivity) {
                         adsLog("Interstitial started reload timer")
                         _context.lifecycleScope.launch {
-                            delay(1000)
+                            delay(5000)
                             onAdPresenter()
                         }
                     }
@@ -357,7 +357,7 @@ class AdsTool @Inject constructor(
                     if (_context is AppCompatActivity) {
                         adsLog("Rewarded interstitial started reload timer")
                         _context.lifecycleScope.launch {
-                            delay(1000)
+                            delay(5000)
                             onAdPresenter(false)
                         }
                     }
