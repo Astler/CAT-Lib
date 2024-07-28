@@ -57,6 +57,8 @@ class AdsTool @Inject constructor(
     val appConfig: AppConfig
 ) : SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private var _interstitialRequestTimerActive: Boolean = false
+    private var _rewardedRequestTimerActive: Boolean = false
     private var _configPackageName: String = _context.shortPackageId()
     private var _needAgeCheck: Boolean = appConfig.ageRestricted
 
@@ -169,25 +171,25 @@ class AdsTool @Inject constructor(
 
         adLoader =
             AdLoader.Builder(_context, appConfig.nativeAdId).forNativeAd { nativeAd: NativeAd ->
-                    if (adLoader?.isLoading == true) {
-                        adsLog("Native Ad Banner is loading")
-                    } else {
-                        adsLog("Native Ad Banner is loaded")
-                        nativeAd.setupNativeBanner(pAdBindItem)
-                    }
+                if (adLoader?.isLoading == true) {
+                    adsLog("Native Ad Banner is loading")
+                } else {
+                    adsLog("Native Ad Banner is loaded")
+                    nativeAd.setupNativeBanner(pAdBindItem)
+                }
 
-                    if (_context is AppCompatActivity) {
-                        if (_context.isDestroyed) {
-                            nativeAd.destroy()
-                            return@forNativeAd
-                        }
+                if (_context is AppCompatActivity) {
+                    if (_context.isDestroyed) {
+                        nativeAd.destroy()
+                        return@forNativeAd
                     }
+                }
 
-                }.withAdListener(object : AdListener() {
-                    override fun onAdFailedToLoad(adError: LoadAdError) {
-                        errorLog("error = $adError")
-                    }
-                }).withNativeAdOptions(NativeAdOptions.Builder().build()).build()
+            }.withAdListener(object : AdListener() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    errorLog("error = $adError")
+                }
+            }).withNativeAdOptions(NativeAdOptions.Builder().build()).build()
 
         adsLog("Native Ad Builded")
 
@@ -243,7 +245,7 @@ class AdsTool @Inject constructor(
 
     private fun loadAds() {
         if (!canShowAds) {
-            adsLog("Can't show ads by preferences!")
+            adsLog("Can't show ads by preferences!", "AdsTool")
             return
         }
 
@@ -254,12 +256,13 @@ class AdsTool @Inject constructor(
     }
 
     private fun tryToLoadInterstitial(adRequest: AdRequest) {
-        adsLog("Try to load interstitial")
+        if (_interstitialRequestTimerActive) return
+        adsLog("Try to load interstitial", "AdsTool")
         if (_interstitialAdId.isEmpty() || _loadedInterstitial != null) return
 
         fun onAdPresenter() {
             _loadedInterstitial = null
-            loadAds()
+            tryToLoadInterstitial(adRequest)
         }
 
         adsLog("Load interstitial")
@@ -298,8 +301,10 @@ class AdsTool @Inject constructor(
 
                     if (_context is AppCompatActivity) {
                         adsLog("Interstitial started reload timer")
+                        _interstitialRequestTimerActive = true
                         _context.lifecycleScope.launch {
                             delay(5000)
+                            _interstitialRequestTimerActive = false
                             onAdPresenter()
                         }
                     }
@@ -308,16 +313,15 @@ class AdsTool @Inject constructor(
     }
 
     private fun tryToLoadRewardedInterstitial(adRequest: AdRequest) {
+        if (_rewardedRequestTimerActive) return
         adsLog("Try to load rewarded interstitial")
 
         if (_rewardedAdId.isEmpty() || _loadedRewardedInterstitial != null) return
 
         fun onAdPresenter(isSuccess: Boolean) {
             _loadedRewardedInterstitial = null
-
             if (isSuccess) return
-
-            loadAds()
+            tryToLoadRewardedInterstitial(adRequest)
         }
 
         adsLog("Load rewarded interstitial")
@@ -353,11 +357,12 @@ class AdsTool @Inject constructor(
 
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     adsLog("Rewarded interstitial failed to load: ${loadAdError.message}")
-
                     if (_context is AppCompatActivity) {
                         adsLog("Rewarded interstitial started reload timer")
+                        _rewardedRequestTimerActive = true
                         _context.lifecycleScope.launch {
                             delay(5000)
+                            _rewardedRequestTimerActive = false
                             onAdPresenter(false)
                         }
                     }
