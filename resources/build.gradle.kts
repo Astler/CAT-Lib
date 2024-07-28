@@ -1,11 +1,22 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlin)
+    id("maven-publish")
+}
+
+project.afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+            }
+        }
+    }
 }
 
 android {
     namespace = "gg.pressf.resources"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -20,13 +31,20 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+
+    kotlin {
+        jvmToolchain(19)
     }
+
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "19"
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
+    }
+
 }
 
 dependencies {
