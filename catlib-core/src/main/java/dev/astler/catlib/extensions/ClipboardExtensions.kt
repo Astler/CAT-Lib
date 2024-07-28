@@ -12,7 +12,7 @@ fun Context.copyToBuffer(dataToCopy: CharSequence) {
     val newClip = ClipData.newPlainText("text", dataToCopy)
     clipboardManager.setPrimaryClip(newClip)
 
-    toast(getString(R.string.copied_to_buffer, dataToCopy))
+    toast(getString(gg.pressf.resources.R.string.copied_to_buffer, dataToCopy))
 }
 
 fun Context.readFromBuffer(): CharSequence? {

@@ -41,6 +41,6 @@ open class CatDefaultSettingsFragment : PreferenceFragmentCompat() {
 
     override fun onResume() {
         super.onResume()
-        coreListener?.setToolbarTitle(getString(R.string.settings))
+        coreListener?.setToolbarTitle(getString(gg.pressf.resources.R.string.settings))
     }
 }

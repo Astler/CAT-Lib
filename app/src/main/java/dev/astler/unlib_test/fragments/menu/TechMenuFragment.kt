@@ -25,8 +25,8 @@ class TechMenuFragment : TestsMenuFragment() {
     private val notifications = "Notifications"
 
     override val menuItems = listOf(
-        BaseCard(TestBaseItem(dev.astler.catlib.ui.R.string.app_theme, R.drawable.ic_launcher_foreground, 3, uid = themePreviewKey)),
-        BaseCard(TestBaseItem(dev.astler.catlib.ui.R.string.language, R.drawable.ic_launcher_foreground, 3, uid = languagesPreviewKey)),
+        BaseCard(TestBaseItem(gg.pressf.resources.R.string.app_theme, R.drawable.ic_launcher_foreground, 3, uid = themePreviewKey)),
+        BaseCard(TestBaseItem(gg.pressf.resources.R.string.language, R.drawable.ic_launcher_foreground, 3, uid = languagesPreviewKey)),
         BaseCard(TestBaseItem(R.string.debuggable_info, R.drawable.ic_launcher_foreground, 3, uid = debuggableInfoKey)),
         BaseCard(TestBaseItem(R.string.my_apps_tracker, R.drawable.ic_launcher_foreground, 3, uid = myAppsTrackerInfoKey)),
         BaseCard(TestBaseItem(R.string.services_info, R.drawable.ic_launcher_foreground, 3, uid = servicesInfoKey)),

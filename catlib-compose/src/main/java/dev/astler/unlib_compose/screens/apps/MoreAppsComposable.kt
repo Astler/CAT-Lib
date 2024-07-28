@@ -22,23 +22,24 @@ data class AppItem(
     val appIcon: Int
 )
 
+//TODO finish data block
 val nAppsData = arrayOf(
     AppItem(
         "be",
-        dev.astler.catlib.core.R.string.app_name,
-        dev.astler.catlib.core.R.string.app_name,
+        gg.pressf.resources.R.string.nothing,
+        gg.pressf.resources.R.string.nothing,
         R.drawable.banner
     ),
     AppItem(
         "gtb",
-        dev.astler.catlib.core.R.string.app_name,
-        dev.astler.catlib.core.R.string.app_name,
+        gg.pressf.resources.R.string.nothing,
+        gg.pressf.resources.R.string.nothing,
         R.drawable.gtb
     ),
     AppItem(
         "kb",
-        dev.astler.catlib.core.R.string.app_name,
-        dev.astler.catlib.core.R.string.app_name,
+        gg.pressf.resources.R.string.nothing,
+        gg.pressf.resources.R.string.nothing,
         R.drawable.kb
     ),
 )

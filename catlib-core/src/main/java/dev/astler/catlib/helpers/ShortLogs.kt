@@ -29,11 +29,11 @@ fun errorLog(pText: String, postCategory: String = "", category: String = baseTa
 fun errorLog(
     exception: Exception?,
     text: String = "",
-    pPostCategory: String = "",
+    postCategory: String = "",
     pCategory: String = errorTag
 ) {
     if (exception != null)
         Firebase.crashlytics.recordException(exception)
 
-    errorLog(text + exception?.message, pPostCategory, pCategory)
+    errorLog(text + exception?.message, postCategory, pCategory)
 }

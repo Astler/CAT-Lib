@@ -2,7 +2,7 @@ package dev.astler.catlib.extensions
 
 import android.content.Context
 import android.widget.Toast
-import dev.astler.catlib.core.R
+import androidx.annotation.StringRes
 
 var globalToast: Toast? = null
 const val cToastDefaultText = "Toast"
@@ -28,10 +28,7 @@ fun Context.toast(
     return nToast
 }
 
-fun Context.toast(
-    pToastRes: Int = R.string.app_name,
-    pToastLength: Int = Toast.LENGTH_SHORT,
-    pShowToast: Boolean = true
+fun Context.toast(@StringRes textId: Int, length: Int = Toast.LENGTH_SHORT, instantShow: Boolean = true
 ): Toast? {
-    return toast(resources.getText(pToastRes), pToastLength, pShowToast)
+    return toast(resources.getText(textId), length, instantShow)
 }

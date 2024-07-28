@@ -19,7 +19,7 @@ open class SignInFragment : CatFragment<SignInLayoutBinding>(SignInLayoutBinding
 
         with(binding) {
             googleSignIn.setOnClickListener {
-                signInTool.tryToSignInWithGoogle()
+                signInTool.tryToSignIn()
             }
 
             signInButton.setOnClickListener {

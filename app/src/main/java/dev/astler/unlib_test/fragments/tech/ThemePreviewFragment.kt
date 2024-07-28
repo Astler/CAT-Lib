@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.ao.subscribeme.R
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.cat_ui.utils.isAppDarkTheme
 import dev.astler.cat_ui.utils.isSystemDarkMode
@@ -54,7 +55,7 @@ class ThemePreviewFragment : CatComposeFragment() {
 
         Column {
             Text(
-                text = stringResource(id = dev.astler.catlib.ui.R.string.app_theme),
+                text = stringResource(id = gg.pressf.resources.R.string.app_theme),
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),

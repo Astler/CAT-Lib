@@ -64,6 +64,8 @@ android {
 }
 
 dependencies {
+    api(project(":resources"))
+
     debugApi(libs.leakcanaryAndroid)
 
     api(libs.kotlinReflect)

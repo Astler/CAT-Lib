@@ -31,7 +31,7 @@ fun Context.editTextDialog(
     title: Any? = null,
     message: Any? = null,
     initText: String = "",
-    positive: Any? = dev.astler.catlib.core.R.string.ok,
+    positive: Any? = gg.pressf.resources.R.string.ok,
     okClicked: (DialogInterface, String) -> Unit = { _, _ -> }
 ): AlertDialog {
     val dialogView = DialogEditTextBinding.inflate(LayoutInflater.from(this))
@@ -69,9 +69,9 @@ fun Context.yesNoDialog(
         CatDialogData(
             title = title,
             message = message,
-            negative = R.string.no,
+            negative = gg.pressf.resources.R.string.no,
             negativeAction = negativeAction,
-            positive = R.string.yes,
+            positive = gg.pressf.resources.R.string.yes,
             positiveAction = positiveAction,
             showAfterCreation = showAfterCreation
         )
@@ -88,7 +88,7 @@ fun Context.okDialog(
         CatDialogData(
             title = title,
             message = message,
-            positive = dev.astler.catlib.core.R.string.ok,
+            positive = gg.pressf.resources.R.string.ok,
             positiveAction = okAction,
             showAfterCreation = showAfterCreation
         )

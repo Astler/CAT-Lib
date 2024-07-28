@@ -27,7 +27,17 @@ open class CatTextView @JvmOverloads constructor(
             0
         )
 
-        typeface = when (typedArray.getInteger(R.styleable.CatTextView_textStyle, 10)) {
+        setTextStyle(typedArray.getInteger(R.styleable.CatTextView_textStyle, 10))
+    }
+
+    /**
+     * @param styleId Defines font to use (10 - regular, 11 - bold, 12 - italic)
+     *
+     * @attr ref android.R.styleable#CatTextView_textStyle
+     */
+
+    fun setTextStyle(styleId: Int) {
+        typeface = when (styleId) {
             11 -> {
                 ResourcesCompat.getFont(context, dev.astler.catlib.core.R.font.google_sans_bold)
             }

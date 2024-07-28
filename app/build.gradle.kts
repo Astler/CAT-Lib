@@ -12,16 +12,16 @@ plugins {
 }
 
 android {
-    buildToolsVersion = "34.0.0"
-    compileSdk = 34
+    buildToolsVersion = "35.0.0"
+    compileSdkPreview = "VanillaIceCream"
 
     defaultConfig {
         applicationId = "com.ao.subscribeme"
-        minSdk = 23
-        targetSdk = 34
+        minSdk = 24
+        targetSdk = 35
         
-        versionCode = 8
-        versionName = "1.3.1"
+        versionCode = 9
+        versionName = "1.4"
 
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true

@@ -30,7 +30,7 @@ fun LoadingScreen(textSize: Float) {
             AsyncImage(modifier = Modifier.size(100.dp), model = R.drawable.search, contentDescription = null)
             EnchantedText(
                 modifier = Modifier.padding(16.dp),
-                text = stringResource(id = dev.astler.catlib.ui.R.string.loading),
+                text = stringResource(id = gg.pressf.resources.R.string.loading),
                 centered = true,
                 isBold = true,
                 textSize = textSize + 8

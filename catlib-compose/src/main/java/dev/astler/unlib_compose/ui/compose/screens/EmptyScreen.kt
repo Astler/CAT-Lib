@@ -27,7 +27,7 @@ fun EmptyScreen(textSize: Float) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                text = stringResource(id = dev.astler.catlib.ui.R.string.nothing_to_show),
+                text = stringResource(id = gg.pressf.resources.R.string.nothing_to_show),
                 centered = true,
                 isBold = true,
                 textSize = textSize + 8

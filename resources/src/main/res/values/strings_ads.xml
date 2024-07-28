@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="disable_ads">Temp disable ads</string>
+    <string name="disable_ads_msg">Want to disable ads?</string>
+    <string name="buy_pro">Buy Pro Version</string>
+    <string name="watch_ads">Disable today</string>
+    <string name="ad_is_loading">Advertising is loading…</string>
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="locales_string" translatable="false">
+        <item>System</item>
+        <item>English</item>
+        <item>Русский</item>
+        <item>Українська</item>
+    </string-array>
+
+    <string-array name="locales_values" translatable="false">
+        <item>system</item>
+        <item>en</item>
+        <item>ru</item>
+        <item>uk</item>
+    </string-array>
+
+    <string-array name="font_size_names" translatable="false">
+        <item>@string/very_small_font</item>
+        <item>@string/small_font</item>
+        <item>@string/medium_font</item>
+        <item>@string/big_font</item>
+        <item>@string/very_big_font</item>
+    </string-array>
+
+    <string-array name="theme_values" translatable="false">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+
+    <string-array name="theme_names" translatable="false">
+        <item>@string/system_theme</item>
+        <item>@string/light_theme</item>
+        <item>@string/dark_theme</item>
+    </string-array>
+
+</resources>

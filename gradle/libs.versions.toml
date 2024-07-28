@@ -14,12 +14,14 @@ constraintlayoutCompose = "1.0.1"
 coreKtx = "1.13.1"
 coreSplashscreen = "1.2.0-alpha01"
 coreTesting = "2.2.0"
+credentials = "1.5.0-alpha03"
 emoji2 = "1.4.0"
 espressoCore = "3.6.1"
 featureDeliveryKtx = "2.1.0"
 firebaseBom = "33.1.2"
 foundation = "1.6.8"
 fragmentKtx = "1.8.1"
+googleid = "1.1.1"
 gson = "2.10.1"
 guava = "33.0.0-jre"
 hiltAndroid = "2.51.1"
@@ -111,6 +113,8 @@ constraintlayoutCompose = { module = "androidx.constraintlayout:constraintlayout
 coreKtx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 coreSplashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 coreTesting = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
+credentialsPlayServicesAuth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
 emoji2 = { module = "androidx.emoji2:emoji2", version.ref = "emoji2" }
 espressoCore = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 extJunit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
@@ -125,6 +129,7 @@ firebaseMessagingKtx = { module = "com.google.firebase:firebase-messaging-ktx" }
 firebasePerfKtx = { module = "com.google.firebase:firebase-perf-ktx" }
 foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
 fragmentKtx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
+googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 hiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }

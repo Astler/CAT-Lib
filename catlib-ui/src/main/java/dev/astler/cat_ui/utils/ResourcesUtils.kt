@@ -39,7 +39,7 @@ fun dpToPixels(dips: Float): Float = dips * Resources.getSystem().displayMetrics
 
 fun Context.getStringResourceId(string: String): Int {
     val id = resources.getIdentifier(string, "string", packageName)
-    return if (id != 0) id else R.string.nothing
+    return if (id != 0) id else gg.pressf.resources.R.string.nothing
 }
 
 fun Context.getStringResource(

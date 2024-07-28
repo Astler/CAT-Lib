@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="disable_ads">Временно отключить рекламу</string>
+    <string name="disable_ads_msg">Хотите отключить рекламу?</string>
+    <string name="buy_pro">Купить ПРО версию</string>
+    <string name="watch_ads">Отключить сегодня</string>
+    <string name="ad_is_loading">Реклама загружается…</string>
+</resources>

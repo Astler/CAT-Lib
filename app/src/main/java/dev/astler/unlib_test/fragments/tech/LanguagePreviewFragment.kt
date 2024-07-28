@@ -50,7 +50,7 @@ class LanguagePreviewFragment : CatComposeFragment() {
 
         Column {
             Text(
-                text = stringResource(id = dev.astler.catlib.ui.R.string.language),
+                text = stringResource(id = gg.pressf.resources.R.string.language),
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),

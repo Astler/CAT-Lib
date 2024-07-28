@@ -51,7 +51,7 @@ open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutB
 
             if (hasGoogleServices) {
                 googleSignIn.setOnClickListener {
-                    signInTool.tryToSignInWithGoogle()
+                    signInTool.tryToSignIn()
                 }
             }
 
@@ -114,7 +114,7 @@ open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutB
 
                 finish()
             } else {
-                toast(message ?: getString(dev.astler.catlib.ui.R.string.something_went_wrong))
+                toast(message ?: getString(gg.pressf.resources.R.string.something_went_wrong))
             }
         }
     }

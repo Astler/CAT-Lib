@@ -33,7 +33,7 @@ class MainActivity : BindingCatActivity<ActivityMainBinding>(ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        singInTool.universalSignInRequest()
+        singInTool.tryToSignIn()
 
         InAppReviewActivityExtension(this, binding.snackbarLayout)
         InAppUpdateActivityExtension(this, binding.snackbarLayout)
@@ -46,6 +46,8 @@ class MainActivity : BindingCatActivity<ActivityMainBinding>(ActivityMainBinding
     }
 
     override fun updateUI(user: FirebaseUser?) {
+        if (user == null) return
+
         toast("User: $user")
     }
 }

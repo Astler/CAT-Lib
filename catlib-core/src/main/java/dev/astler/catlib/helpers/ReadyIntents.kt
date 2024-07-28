@@ -38,15 +38,15 @@ fun Context.openWebUrl(pUrl: String) {
     }
 }
 
-fun Context.shareApp(pAppId: String, pShareText: String) {
+fun Context.shareApp(appName: String, pAppId: String, pShareText: String) {
     trackedTry {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, appName)
         var shareMessage = "\n$pShareText\n\n"
         shareMessage = "${shareMessage}https://play.google.com/store/apps/details?id=$pAppId"
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
-        startActivity(Intent.createChooser(shareIntent, getString(R.string.share)))
+        startActivity(Intent.createChooser(shareIntent, getString(gg.pressf.resources.R.string.share)))
     }
 }
 
