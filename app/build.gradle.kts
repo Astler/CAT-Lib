@@ -13,7 +13,7 @@ plugins {
 
 android {
     buildToolsVersion = "35.0.0"
-    compileSdkPreview = "VanillaIceCream"
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.ao.subscribeme"
