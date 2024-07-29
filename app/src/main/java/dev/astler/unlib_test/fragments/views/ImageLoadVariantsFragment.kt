@@ -5,9 +5,9 @@ import android.view.View
 import coil.load
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
-import dev.astler.cat_ui.fragments.CatFragment
-import dev.astler.cat_ui.utils.toNoFilterDrawable
-import dev.astler.cat_ui.utils.views.loadWithBackground
+import dev.astler.ui.fragments.CatFragment
+import dev.astler.ui.utils.toNoFilterDrawable
+import dev.astler.ui.utils.views.loadWithBackground
 import dev.astler.catlib.constants.MockImageUrl
 import dev.astler.catlib.extensions.getBitmapFromAsset
 import com.ao.subscribeme.R

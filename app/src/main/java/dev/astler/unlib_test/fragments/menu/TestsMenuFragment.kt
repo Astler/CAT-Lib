@@ -1,6 +1,5 @@
 package dev.astler.unlib_test.fragments.menu
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -26,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,14 +32,14 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.catlib.signin.SignInTool
-import dev.astler.unlib_compose.data.IFlexibleItem
-import dev.astler.unlib_compose.interfaces.IComposeItem
-import dev.astler.unlib_compose.ui.compose.flexible_grid.FlexibleGrid
-import dev.astler.unlib_compose.ui.compose.items.BaseCard
-import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
+import dev.astler.ui.data.IFlexibleItem
+import dev.astler.ui.interfaces.IComposeItem
+import dev.astler.ui.fragments.CatComposeFragment
 import com.ao.subscribeme.R
-import dev.astler.unlib_compose.extensions.thenIf
-import dev.astler.unlib_compose.theme.CatComposeTheme
+import dev.astler.ui.compose.flexible_grid.FlexibleGrid
+import dev.astler.ui.compose.items.BaseCard
+import dev.astler.ui.extensions.thenIf
+import dev.astler.ui.theme.CatComposeTheme
 import dev.astler.unlib_test.data.TestBaseItem
 import javax.inject.Inject
 

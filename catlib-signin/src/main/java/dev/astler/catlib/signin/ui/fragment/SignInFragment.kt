@@ -3,7 +3,7 @@ package dev.astler.catlib.signin.ui.fragment
 import android.os.Bundle
 import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.fragments.CatFragment
+import dev.astler.ui.fragments.CatFragment
 import dev.astler.catlib.signin.SignInTool
 import dev.astler.catlib.signin.databinding.SignInLayoutBinding
 import javax.inject.Inject

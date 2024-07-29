@@ -3,7 +3,7 @@ package dev.astler.ads.dialogs
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import dev.astler.ads.interfaces.IAdToolProvider
-import dev.astler.cat_ui.utils.dialogs.unpackedCatDialog
+import dev.astler.ui.utils.dialogs.unpackedCatDialog
 import dev.astler.catlib.extensions.openAppInPlayStore
 import dev.astler.catlib.ads.R
 

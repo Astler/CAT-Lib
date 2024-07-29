@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <dev.astler.cat_ui.views.CatTextView
+    <dev.astler.ui.views.CatTextView
         android:id="@+id/astler_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="ASTLER" />
 
-    <dev.astler.cat_ui.views.CatTextView
+    <dev.astler.ui.views.CatTextView
         android:id="@+id/astler_2_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

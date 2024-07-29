@@ -3,7 +3,7 @@ package dev.astler.unlib_test.fragments
 import android.os.Bundle
 import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.fragments.CatDefaultSettingsFragment
+import dev.astler.ui.fragments.CatDefaultSettingsFragment
 import dev.chrisbanes.insetter.applyInsetter
 
 @AndroidEntryPoint

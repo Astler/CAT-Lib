@@ -2,7 +2,7 @@ package dev.astler.unlib_test.data
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import dev.astler.unlib_compose.data.IFlexibleItem
+import dev.astler.ui.data.IFlexibleItem
 import java.util.UUID
 
 data class TestBaseItem(

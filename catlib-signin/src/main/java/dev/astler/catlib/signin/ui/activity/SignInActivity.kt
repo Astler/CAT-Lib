@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.activities.BindingCatActivity
-import dev.astler.cat_ui.utils.setInsetsViaOrientation
-import dev.astler.cat_ui.utils.views.showWithCondition
+import dev.astler.ui.activities.BindingCatActivity
+import dev.astler.ui.utils.setInsetsViaOrientation
+import dev.astler.ui.utils.views.showWithCondition
 import dev.astler.catlib.extensions.toast
 import dev.astler.catlib.helpers.hasGoogleServices
 import dev.astler.catlib.signin.R

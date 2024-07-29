@@ -3,8 +3,8 @@ package dev.astler.unlib_test.fragments.menu
 import com.ao.subscribeme.R
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.ads.utils.canShowAds
-import dev.astler.cat_ui.utils.dialogs.okDialog
-import dev.astler.unlib_compose.ui.compose.items.BaseCard
+import dev.astler.ui.compose.items.BaseCard
+import dev.astler.ui.utils.dialogs.okDialog
 
 import dev.astler.unlib_test.data.TestBaseItem
 

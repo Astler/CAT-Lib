@@ -26,11 +26,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ao.subscribeme.R
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.utils.isAppDarkTheme
-import dev.astler.cat_ui.utils.isSystemDarkMode
-import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
+import dev.astler.ui.utils.isAppDarkTheme
+import dev.astler.ui.utils.isSystemDarkMode
+import dev.astler.ui.fragments.CatComposeFragment
 
 @AndroidEntryPoint
 class ThemePreviewFragment : CatComposeFragment() {

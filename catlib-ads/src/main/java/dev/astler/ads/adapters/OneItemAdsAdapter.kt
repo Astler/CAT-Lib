@@ -6,9 +6,9 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.nativead.NativeAd
-import dev.astler.cat_ui.adapters.viewholders.CatOneTypeViewHolder
-import dev.astler.cat_ui.interfaces.RecyclerAdapterSizeListener
-import dev.astler.cat_ui.utils.views.inflateById
+import dev.astler.ui.adapters.viewholders.CatOneTypeViewHolder
+import dev.astler.ui.interfaces.RecyclerAdapterSizeListener
+import dev.astler.ui.utils.views.inflateById
 import dev.astler.ads.adapters.diffutils.OneItemDiffUtil
 import dev.astler.ads.adapters.viewholders.AdItemViewHolder
 import dev.astler.ads.adapters.viewholders.MediaAdItemViewHolder

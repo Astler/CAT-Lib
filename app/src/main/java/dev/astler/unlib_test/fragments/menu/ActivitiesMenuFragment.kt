@@ -5,11 +5,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.catlib.signin.utils.startMandatorySignIn
 import dev.astler.catlib.signin.utils.startOptionalSignIn
 import dev.astler.catlib.signin.utils.startRegisterSignIn
-import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import com.ao.subscribeme.R
+import dev.astler.ui.compose.items.BaseCard
 import dev.astler.unlib_test.data.TestBaseItem
-import dev.astler.unlib_test.fragments.menu.TestsMenuFragment
-import dev.astler.unlib_test.items.ClickableItem
 
 @AndroidEntryPoint
 class ActivitiesMenuFragment : TestsMenuFragment() {

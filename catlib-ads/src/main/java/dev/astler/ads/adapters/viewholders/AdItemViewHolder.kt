@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import dev.astler.catlib.helpers.infoLog
-import dev.astler.cat_ui.utils.views.gone
-import dev.astler.cat_ui.utils.views.visible
+import dev.astler.ui.utils.views.gone
+import dev.astler.ui.utils.views.visible
 import dev.astler.catlib.ads.databinding.ItemAdBinding
 
 class AdItemViewHolder(view: View) :

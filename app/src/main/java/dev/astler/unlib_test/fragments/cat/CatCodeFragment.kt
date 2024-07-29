@@ -30,7 +30,7 @@ import dev.astler.catlib.extensions.getValueOrDefault
 import dev.astler.catlib.extensions.toast
 import dev.astler.catlib.helpers.infoLog
 import dev.astler.catlib.helpers.trackedTry
-import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
+import dev.astler.ui.fragments.CatComposeFragment
 
 @AndroidEntryPoint
 class CatCodeFragment : CatComposeFragment() {

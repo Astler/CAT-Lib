@@ -1,14 +1,12 @@
 package dev.astler.unlib_test.fragments.menu
 
 import androidx.navigation.fragment.findNavController
-import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.catlib.signin.SignInTool
-import dev.astler.unlib_compose.ui.compose.items.BaseCard
-import dev.astler.unlib_compose.ui.compose.items.ElevatedBaseCard
-import dev.astler.unlib_compose.ui.compose.items.FilledBaseCard
 import com.ao.subscribeme.R
+import dagger.hilt.android.AndroidEntryPoint
+import dev.astler.ui.compose.items.BaseCard
+import dev.astler.ui.compose.items.ElevatedBaseCard
+import dev.astler.ui.compose.items.FilledBaseCard
 import dev.astler.unlib_test.data.TestBaseItem
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainMenuFragment : TestsMenuFragment() {
@@ -25,7 +23,7 @@ class MainMenuFragment : TestsMenuFragment() {
 
     override val menuItems = listOf(
         FilledBaseCard(TestBaseItem(R.string.fragments, R.drawable.ic_launcher_foreground, 2, uid = fragmentsKey)),
-        BaseCard(TestBaseItem(R.string.views, R.drawable.ic_launcher_foreground, 2, uid = viewsKey)),
+        BaseCard(item = TestBaseItem(R.string.views, R.drawable.ic_launcher_foreground, 2, uid = viewsKey)),
         ElevatedBaseCard(TestBaseItem(R.string.compose, R.drawable.ic_launcher_foreground, 2, uid = composeKey)),
 
         FilledBaseCard(TestBaseItem(R.string.dialogs, R.drawable.ic_launcher_foreground, 2, uid = baseDialogsKey)),

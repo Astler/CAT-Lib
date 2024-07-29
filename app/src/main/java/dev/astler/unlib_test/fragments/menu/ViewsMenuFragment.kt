@@ -1,11 +1,10 @@
 package dev.astler.unlib_test.fragments.menu
 
 import androidx.navigation.fragment.findNavController
-import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import com.ao.subscribeme.R
+import dagger.hilt.android.AndroidEntryPoint
+import dev.astler.ui.compose.items.BaseCard
 import dev.astler.unlib_test.data.TestBaseItem
-import dev.astler.unlib_test.fragments.menu.TestsMenuFragment
 
 @AndroidEntryPoint
 class ViewsMenuFragment: TestsMenuFragment() {

@@ -35,4 +35,6 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privacy_policy_request">Please read and agree to our privacy policy.</string>
     <string name="read_privacy_policy">Read</string>
+
+    <string name="about_libraries">About Libraries</string>
 </resources>

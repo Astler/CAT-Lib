@@ -8,11 +8,11 @@ import com.ao.subscribeme.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import dev.astler.billing.data.BillingViewModel
-import dev.astler.cat_ui.activities.BindingCatActivity
-import dev.astler.cat_ui.extensions.InAppReviewActivityExtension
-import dev.astler.cat_ui.extensions.InAppUpdateActivityExtension
-import dev.astler.cat_ui.extensions.NetworkActivityExtension
-import dev.astler.cat_ui.interfaces.INetworkActivity
+import dev.astler.ui.activities.BindingCatActivity
+import dev.astler.ui.activities.extensions.InAppReviewActivityExtension
+import dev.astler.ui.activities.extensions.InAppUpdateActivityExtension
+import dev.astler.ui.activities.extensions.NetworkActivityExtension
+import dev.astler.ui.interfaces.INetworkActivity
 import dev.astler.catlib.constants.IODispatcher
 import dev.astler.catlib.extensions.getJsonContent
 import dev.astler.catlib.extensions.toast

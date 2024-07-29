@@ -20,7 +20,7 @@
         app:layout_constraintVertical_chainStyle="spread"
         app:srcCompat="@drawable/folder_search" />
 
-    <dev.astler.cat_ui.views.CatTextView
+    <dev.astler.ui.views.CatTextView
         android:id="@+id/emptyText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

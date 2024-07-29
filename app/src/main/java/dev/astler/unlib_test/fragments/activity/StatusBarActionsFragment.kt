@@ -24,9 +24,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ao.subscribeme.R
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.utils.setStatusBarColor
-import dev.astler.cat_ui.utils.setSystemBarTransparent
-import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
+import dev.astler.ui.utils.setStatusBarColor
+import dev.astler.ui.utils.setSystemBarTransparent
+import dev.astler.ui.fragments.CatComposeFragment
 
 @AndroidEntryPoint
 class StatusBarActionsFragment: CatComposeFragment() {
@@ -46,7 +46,7 @@ class StatusBarActionsFragment: CatComposeFragment() {
             Spacer(modifier = Modifier.size(8.dp))
 
             Button(R.string.colored_status_bar) {
-                activity?.setStatusBarColor(dev.astler.catlib.ui.R.color.orange_dark)
+                activity?.setStatusBarColor(dev.astler.ui.R.color.orange_dark)
             }
         }
     }

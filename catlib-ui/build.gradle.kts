@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.compose)
     id("kotlin-kapt")
     id("maven-publish")
 }
@@ -18,11 +19,14 @@ project.afterEvaluate {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 23
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -35,6 +39,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
     }
 
     kotlin {
@@ -54,11 +59,44 @@ android {
         targetCompatibility = JavaVersion.VERSION_19
     }
 
-    namespace = "dev.astler.catlib.ui"
+    namespace = "dev.astler.ui"
 }
 
 dependencies {
     implementation(project(":catlib-core"))
+    implementation(libs.aboutlibrariesComposeM3)
+
+    api(libs.accompanistSystemuicontroller)
+    api(libs.material3)
+    api(libs.material3Android)
+    api(libs.material3WindowSizeClass)
+
+    api("androidx.compose.ui:ui-tooling:${libs.versions.compose.get()}")
+    api("androidx.compose.ui:ui-util:${libs.versions.compose.get()}")
+    api("androidx.compose.ui:ui-tooling-preview:${libs.versions.compose.get()}")
+    api("androidx.compose.ui:ui:${libs.versions.compose.get()}")
+    api("androidx.compose.runtime:runtime:${libs.versions.compose.get()}")
+    api("androidx.compose.material:material:${libs.versions.compose.get()}")
+    api(libs.animation)
+    api(libs.activityCompose)
+    api(libs.navigationCompose)
+    api("androidx.compose.material:material-icons-extended:${libs.versions.compose.get()}")
+    api(libs.runtimeLivedata)
+    api(libs.kotlinxMetadataJvm)
+
+    api(libs.foundation)
+    api(libs.accompanistInsets)
+
+    api(libs.hiltNavigationCompose)
+    api(libs.lifecycleViewmodelCompose)
+    api(libs.lifecycleRuntimeCompose)
+
+    api(libs.composeShimmer)
+    api(libs.constraintlayoutCompose)
+    api(libs.konfettiCompose)
+
+    api(libs.coilCompose)
+    api(libs.transformations)
 
     api(libs.coreSplashscreen)
     api(libs.shimmer)

@@ -2,10 +2,10 @@ package dev.astler.unlib_test.fragments.menu
 
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.utils.dialogs.okDialog
+import dev.astler.ui.utils.dialogs.okDialog
 import dev.astler.catlib.config.AppConfig
-import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import com.ao.subscribeme.R
+import dev.astler.ui.compose.items.BaseCard
 import dev.astler.unlib_test.data.TestBaseItem
 import javax.inject.Inject
 

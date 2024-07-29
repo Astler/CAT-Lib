@@ -13,7 +13,7 @@ import dev.astler.billing.data.BillingViewModel
 import dev.astler.billing.interfaces.IQueryPurchases
 import dev.astler.billing.interfaces.IBillingAssistant
 import dev.astler.billing.interfaces.IBillingAssistantProvider
-import dev.astler.cat_ui.activities.CatActivity
+import dev.astler.ui.activities.CatActivity
 import dev.astler.catlib.constants.cBillingNoAdsName
 import dev.astler.catlib.helpers.infoLog
 

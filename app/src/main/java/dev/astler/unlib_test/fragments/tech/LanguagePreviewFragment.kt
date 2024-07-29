@@ -25,9 +25,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.os.LocaleListCompat
-import dev.astler.cat_ui.activities.BindingCatActivity
+import dev.astler.ui.activities.BindingCatActivity
 import dev.astler.catlib.extensions.activeLanguage
-import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
+import dev.astler.ui.fragments.CatComposeFragment
 import com.ao.subscribeme.R
 import java.util.Locale
 

@@ -24,7 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ao.subscribeme.R
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
+import dev.astler.ui.fragments.CatComposeFragment
 import dev.astler.unlib_test.analytics.CatTestAnalytics
 
 @AndroidEntryPoint

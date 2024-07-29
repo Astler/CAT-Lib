@@ -3,8 +3,7 @@ package dev.astler.unlib_test.fragments.views
 import android.os.Bundle
 import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.fragments.CatFragment
-import dev.astler.cat_ui.utils.getDimensionFromAttr
+import dev.astler.ui.fragments.CatFragment
 import com.ao.subscribeme.R
 import com.ao.subscribeme.databinding.FragmentShortCodePreviewBinding
 

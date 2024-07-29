@@ -64,6 +64,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.aboutlibrariesCore)
     api(project(":resources"))
 
     debugApi(libs.leakcanaryAndroid)

@@ -4,10 +4,10 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import com.ao.subscribeme.R
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.unlib_compose.ui.compose.collapse_toolbar.CollapsingToolbarContent
-import dev.astler.unlib_compose.ui.compose.flexible_grid.FlexibleGrid
-import dev.astler.unlib_compose.ui.compose.items.BaseCard
-import dev.astler.unlib_compose.ui.mixed.CatComposeFragment
+import dev.astler.ui.compose.collapse_toolbar.CollapsingToolbarContent
+import dev.astler.ui.compose.flexible_grid.FlexibleGrid
+import dev.astler.ui.compose.items.BaseCard
+import dev.astler.ui.fragments.CatComposeFragment
 import dev.astler.unlib_test.data.TestBaseItem
 
 @AndroidEntryPoint

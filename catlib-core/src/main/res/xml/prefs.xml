@@ -47,6 +47,11 @@
     </PreferenceCategory>
 
     <Preference
+        android:key="about_libraries"
+        android:title="@string/about_libraries"
+        app:iconSpaceReserved="false" />
+
+    <Preference
         android:key="privacy"
         android:title="@string/privacy_policy"
         app:iconSpaceReserved="false" />

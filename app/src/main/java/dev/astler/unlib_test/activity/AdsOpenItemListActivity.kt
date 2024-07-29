@@ -6,7 +6,7 @@ import com.ao.subscribeme.R
 import com.ao.subscribeme.databinding.ActivityRecyclerviewBinding
 import com.ao.subscribeme.databinding.ItemTextBinding
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.activities.BindingCatActivity
+import dev.astler.ui.activities.BindingCatActivity
 import dev.astler.ads.adapters.OIAdsAdapterConfig
 import dev.astler.ads.adapters.OneItemAdsAdapter
 import dev.astler.ads.AdsTool

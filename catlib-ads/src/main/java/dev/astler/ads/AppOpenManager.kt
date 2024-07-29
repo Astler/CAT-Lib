@@ -16,7 +16,7 @@ import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.appopen.AppOpenAd.AppOpenAdLoadCallback
 import dev.astler.ads.utils.canShowAds
 import dev.astler.ads.utils.lastAdsTime
-import dev.astler.cat_ui.appResumeTime
+import dev.astler.ui.appResumeTime
 import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.extensions.now
 import dev.astler.catlib.helpers.adsLog

@@ -73,7 +73,6 @@ dependencies {
     implementation(project(":catlib-ui"))
     implementation(project(":catlib-room"))
     implementation(project(":catlib-billing"))
-    implementation(project(":catlib-compose"))
     implementation(project(":catlib-signin"))
 
     api(libs.hiltAndroid)

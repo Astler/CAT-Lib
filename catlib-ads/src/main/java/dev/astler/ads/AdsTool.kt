@@ -32,8 +32,8 @@ import dev.astler.ads.utils.ageConfirmed
 import dev.astler.ads.utils.canShowAds
 import dev.astler.ads.utils.childAdsMode
 import dev.astler.ads.utils.lastAdsTime
-import dev.astler.cat_ui.appResumeTime
-import dev.astler.cat_ui.utils.views.showWithCondition
+import dev.astler.ui.appResumeTime
+import dev.astler.ui.utils.views.showWithCondition
 import dev.astler.catlib.ads.databinding.ItemAdBinding
 import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.extensions.now

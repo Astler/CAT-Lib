@@ -2,7 +2,7 @@ package dev.astler.unlib_test.fragments.menu
 
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.cat_ui.utils.dialogs.okDialog
+import dev.astler.ui.utils.dialogs.okDialog
 import dev.astler.catlib.extensions.areNotificationsEnabled
 import dev.astler.catlib.extensions.isDebuggable
 import dev.astler.catlib.extensions.isOnline
@@ -10,8 +10,8 @@ import dev.astler.catlib.extensions.isPackageInstalled
 import dev.astler.catlib.extensions.isPackageInstalledAlt
 import dev.astler.catlib.extensions.requestNotificationsPermission
 import dev.astler.catlib.helpers.getMobileServiceSource
-import dev.astler.unlib_compose.ui.compose.items.BaseCard
 import com.ao.subscribeme.R
+import dev.astler.ui.compose.items.BaseCard
 import dev.astler.unlib_test.data.TestBaseItem
 
 @AndroidEntryPoint
