@@ -7,5 +7,6 @@
 
     <application>
         <activity android:name="dev.astler.ui.activities.LibsActivity" android:theme="@style/CatLibTheme" />
+        <activity android:name="dev.astler.ui.activities.PrivacyActivity" android:theme="@style/CatLibTheme" />
     </application>
 </manifest>

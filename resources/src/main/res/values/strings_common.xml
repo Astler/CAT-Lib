@@ -36,5 +36,6 @@
     <string name="privacy_policy_request">Please read and agree to our privacy policy.</string>
     <string name="read_privacy_policy">Read</string>
 
+    <string name="no_app_to_send_email">No email app found</string>
     <string name="about_libraries">About Libraries</string>
 </resources>

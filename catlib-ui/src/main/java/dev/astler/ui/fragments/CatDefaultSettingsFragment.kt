@@ -11,13 +11,11 @@ import dev.astler.ui.activities.LibsActivity
 import dev.astler.ui.interfaces.ICatActivity
 import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.preferences.PreferencesTool
+import dev.astler.ui.activities.PrivacyActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
 open class CatDefaultSettingsFragment : PreferenceFragmentCompat() {
-
-    @Inject
-    lateinit var appConfig: AppConfig
 
     @Inject
     lateinit var preferences: PreferencesTool
@@ -40,8 +38,7 @@ open class CatDefaultSettingsFragment : PreferenceFragmentCompat() {
         privacy = findPreference("privacy")
 
         privacy?.setOnPreferenceClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(appConfig.policyLink))
-            startActivity(intent)
+            activity?.startActivity(Intent(activity, PrivacyActivity::class.java))
             true
         }
 

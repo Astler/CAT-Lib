@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="privacy_intro_title" translatable="false">Introduction</string>
+    <string name="privacy_intro_content" translatable="false">Welcome to %1$s! This privacy notice outlines how we collect, use, and protect your personal information when you use our mobile application. By using %1$s, you agree to the terms described in this notice.</string>
+
+    <string name="privacy_data_collection_title" translatable="false">Data Collection</string>
+    <string name="privacy_data_collection_content" translatable="false">For a better experience, while using %1$s, we may require you to provide us with certain personally identifiable information. The information that we request will be retained on your device and is not collected by us in any way.</string>
+
+    <string name="privacy_information_usage_title" translatable="false">Information Usage</string>
+    <string name="privacy_information_usage_content" translatable="false">We want to inform you that whenever you use %1$s, in a case of an error in the app we collect data and information (through third-party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing my Service, the time and date of your use of the Service, and other statistics. This data will be stored temporary and used only to improve stability of this product.</string>
+
+    <string name="privacy_data_security_title" translatable="false">Data Security</string>
+    <string name="privacy_data_security_content" translatable="false">On-Device Storage: All data used by %1$s remains on your device. We do not transmit or store any data externally.</string>
+
+    <string name="privacy_third_party_services_title" translatable="false">Third-Party Services</string>
+    <string name="privacy_third_party_services_content" translatable="false">%1$s does use third-party services (Google Play Services, AdMob, Google Analytics for Firebase, Firebase Crashlytics) may collect information used to identify you.
+        \n\nExternal Links: Our app may contain links to external websites. Please note that we are not responsible for the privacy practices of these sites.</string>
+
+    <string name="privacy_children_privacy_title" translatable="false">Children’s Privacy</string>
+    <string name="privacy_children_privacy_content" translatable="false">%1$s is not intended for children under the age of 13. We do not knowingly collect any information from children.</string>
+    <string name="privacy_changes_notice_title" translatable="false">Changes to this notice</string>
+    <string name="privacy_changes_notice_content" translatable="false">We may update this privacy notice from time to time. Any changes will be reflected in the app and on our website.</string>
+    <string name="privacy_contact_us_title" translatable="false">Contact Us</string>
+    <string name="privacy_contact_us_content" translatable="false">If you have any questions or concerns about this privacy notice, please contact me at %1$s.</string>
+
+    <string name="pressf_policy" translatable="false">PressF Policy On Website</string>
+    <string name="contact" translatable="false">Contact</string>
+</resources>

@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.kotlin)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
@@ -105,4 +106,11 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:${libs.versions.hilt.get()}")
     api(libs.hiltNavigationFragment)
     api(libs.insetter)
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.extJunit)
+    androidTestImplementation(libs.espressoCore)
+    testImplementation(libs.mockitoCore)
+    testImplementation(libs.mockitoInline)
+    testImplementation(libs.coreTesting)
 }
