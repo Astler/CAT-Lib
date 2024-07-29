@@ -39,7 +39,7 @@ kotlinReflect = "2.0.0"
 kotlinxCoroutinesAndroid = "1.8.1"
 kotlinxCoroutinesCore = "1.8.1"
 kotlinxMetadataJvm = "0.9.0"
-kotlinxSerializationJson = "1.5.0"
+kotlinxSerializationJson = "1.6.3"
 leakcanaryAndroid = "2.14"
 legacySupportV4 = "1.0.0"
 lifecycleCommonJava8 = "2.8.4"
@@ -55,17 +55,13 @@ material3WindowSizeClass = "1.2.1"
 mockitoInline = "3.12.4"
 mockitoCore = "3.12.4"
 multidex = "2.0.1"
-navigationCompose = "2.7.7"
-navigationDynamicFeaturesFragment = "2.7.7"
-navigationFragmentKtx = "2.7.7"
-navigationUiKtx = "2.7.7"
+navigation = "2.8.0-beta06"
 playServicesAds = "23.2.0"
 playServicesAuth = "21.2.0"
 coil = "2.6.0"
 accompanist = "0.32.0"
 appcompat = "1.7.0-rc01"
 hilt = "2.51.1"
-navigationSafeArgs = "2.7.7"
 googleServices = "4.4.2"
 firebaseCrashlytics = "3.0.2"
 daggerHiltGradle = "2.48"
@@ -163,14 +159,14 @@ material3WindowSizeClass = { module = "androidx.compose.material3:material3-wind
 mockitoCore = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 mockitoInline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
 multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
-navigationCompose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-navigationDynamicFeaturesFragment = { module = "androidx.navigation:navigation-dynamic-features-fragment", version.ref = "navigationDynamicFeaturesFragment" }
-navigationFragmentKtx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
-navigationSafeArgs = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationSafeArgs" }
+navigationCompose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
+navigationDynamicFeaturesFragment = { module = "androidx.navigation:navigation-dynamic-features-fragment", version.ref = "navigation" }
+navigationFragmentKtx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
+navigationSafeArgs = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigation" }
 googleServices = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 firebaseCrashlytics = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlytics" }
 daggerHiltGradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "daggerHiltGradle" }
-navigationUiKtx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtx" }
+navigationUiKtx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
 playServicesAds = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
 playServicesAuth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 playServicesBase = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBase" }

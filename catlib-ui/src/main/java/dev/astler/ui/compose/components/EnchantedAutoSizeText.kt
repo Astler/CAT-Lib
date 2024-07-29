@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -32,7 +33,7 @@ fun EnchantedAutoSizeText(
         style = if (centered) typography.bodyMedium else typography.bodyLarge,
         color = textColor ?: colors.onSurface,
         fontWeight = if (isBold) FontWeight.Bold else FontWeight.Normal,
-        textAlign = if (centered) TextAlign.Center else TextAlign.Start,
+        alignment = if (centered) Alignment.Center else Alignment.TopStart,
     )
 }
 
