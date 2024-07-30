@@ -1,9 +1,20 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="CatLibTheme" parent="M3AppTheme">
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="materialCardViewOutlinedStyle">@style/Widget.Material3.CardView.Outlined</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="sign_in_app_icon">@mipmap/ic_launcher</item>
+        <!--        <item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>-->
+        <item name="alertDialogTheme">@style/ThemeOverlay.Material3.MaterialAlertDialog</item>
+        <item name="dialogCornerRadius">28dp</item>
+    </style>
 
     <style name="CatLibTheme.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenAnimatedIcon">@drawable/default_dot</item>
+        <item name="sign_in_app_icon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
         <item name="windowSplashScreenAnimationDuration">1000</item>
-        <item name="windowSplashScreenBackground">@drawable/default_dot</item>
         <item name="postSplashScreenTheme">@style/CatLibTheme</item>
     </style>
 
@@ -16,31 +27,11 @@
         <item name="dialogCornerRadius">28dp</item>
     </style>
 
-    <style name="CatLibTheme" parent="M3AppTheme">
-        <item name="sign_in_app_icon">@drawable/ic_settings_black_24dp</item>
-        <item name="colorPrimary">@color/orange_dark</item>
-        <item name="colorPrimaryDark">@color/orange_dark</item>
-        <item name="colorAccent">@color/orange_dark</item>
-
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-
-        <item name="android:windowAllowEnterTransitionOverlap">true</item>
-        <item name="android:windowAllowReturnTransitionOverlap">true</item>
-        <item name="android:windowSharedElementEnterTransition">@transition/enter_anim</item>
-        <item name="android:windowSharedElementExitTransition">@transition/exit_anim</item>
-
-        <item name="linearProgressIndicatorStyle">@style/Widget.App.CircularProgressIndicator</item>
+    <style name="AppTheme.PreferenceThemeOverlay" parent="PreferenceThemeOverlay">
+        <item name="preferenceFragmentCompatStyle">@style/AppPreferenceFragmentCompatStyle</item>
     </style>
 
-    <style name="Widget.App.CircularProgressIndicator" parent="Widget.Material3.CircularProgressIndicator">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.App.CircularProgressIndicator</item>
-    </style>
-
-    <style name="ThemeOverlay.App.CircularProgressIndicator" parent="">
-        <item name="colorPrimary">@color/orange_dark</item>
+    <style name="AppPreferenceFragmentCompatStyle" parent="@style/PreferenceFragment.Material">
+        <item name="android:layout">@layout/fragment_settings</item>
     </style>
 </resources>
