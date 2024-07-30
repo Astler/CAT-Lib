@@ -16,6 +16,7 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.helpers.errorLog
 import dev.astler.catlib.helpers.infoLog
 import dev.astler.catlib.helpers.trackedTry
@@ -31,6 +32,7 @@ import javax.inject.Singleton
 class SignInTool @Inject constructor(
     private val _context: Context,
     val preferences: PreferencesTool,
+    private val _appConfig: AppConfig,
     private val _firebaseAuthRepository: IFirebaseAuthRepository
 ) {
     private var _credentialManager: CredentialManager? = null
@@ -160,7 +162,7 @@ class SignInTool @Inject constructor(
             return
         }
 
-        val clientId = ""
+        val clientId = _appConfig.signInClientId
         val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
             .setFilterByAuthorizedAccounts(true)
             .setServerClientId(clientId)
