@@ -2,23 +2,23 @@ package dev.astler.ui.activities
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
-import dev.astler.ui.StartTimeKey
-import dev.astler.ui.appResumeTime
-import dev.astler.ui.interfaces.ICatActivity
-import dev.astler.ui.utils.dialogs.privacyPolicyDialog
-import dev.astler.ui.utils.tryToGetTextFrom
 import dev.astler.catlib.analytics.CatAnalytics
 import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.extensions.defaultNightMode
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.remote_config.IRemoteConfigListener
 import dev.astler.catlib.remote_config.RemoteConfigProvider
+import dev.astler.ui.StartTimeKey
+import dev.astler.ui.appResumeTime
+import dev.astler.ui.interfaces.ICatActivity
+import dev.astler.ui.utils.tryToGetTextFrom
 import java.util.GregorianCalendar
 import javax.inject.Inject
 
@@ -47,6 +47,7 @@ abstract class CatActivity : AppCompatActivity(), SharedPreferences.OnSharedPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
+        enableEdgeToEdge()
 
         super.onCreate(savedInstanceState)
 
@@ -61,9 +62,9 @@ abstract class CatActivity : AppCompatActivity(), SharedPreferences.OnSharedPref
             preferences.isFirstStart = false
         }
 
-        if (!preferences.isPolicyAnswered) {
-            privacyPolicyDialog(appConfig, preferences)
-        }
+//        if (!preferences.isPolicyAnswered) {
+//            privacyPolicyDialog(appConfig, preferences)
+//        }
 
         if (preferences.isFirstStartForVersion(appVersionCode())) {
             preferences.appFirstStartTime = GregorianCalendar().timeInMillis
@@ -80,19 +81,11 @@ abstract class CatActivity : AppCompatActivity(), SharedPreferences.OnSharedPref
         onBackPressedDispatcher.onBackPressed()
     }
 
-    /**
-     * My personal use methods
-     */
-
     protected open fun appVersionCode() = 0
 
     protected open fun onFirstAppStart() {}
 
     protected open fun onFirstStartCurrentVersion() {}
-
-    /**
-     * System callbacks
-     */
 
     override fun onStart() {
         super.onStart()
