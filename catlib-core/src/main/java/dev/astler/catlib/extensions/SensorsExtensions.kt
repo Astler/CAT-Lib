@@ -6,7 +6,6 @@ import android.os.Vibrator
 import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.helpers.isO
 
-
 fun Context.tryToVibrate(preferences: PreferencesTool, duration: Long = 40L) {
     if (!preferences.vibrateOnClick) return
 
