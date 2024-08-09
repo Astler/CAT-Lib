@@ -30,6 +30,7 @@ class InAppReviewActivityExtension(private val _catActivity: CatActivity, snapPa
                     infoLog("InAppReviewActivityExtension: requestReviewFlow")
                     _reviewManager.requestReviewFlow().addOnCompleteListener { request ->
                         if (request.isSuccessful) {
+                            infoLog("InAppReviewActivityExtension: request.isSuccessful")
                             _reviewInfo = request.result
                         } else {
                             errorLog(request.exception, "error during requestReviewFlow")
@@ -42,7 +43,7 @@ class InAppReviewActivityExtension(private val _catActivity: CatActivity, snapPa
             }
         }
 
-        _catActivity.onFragmentChangedListener = {
+        _catActivity.addOnFragmentChangedListener {
             tryToShow()
         }
     }

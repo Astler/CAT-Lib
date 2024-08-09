@@ -43,7 +43,21 @@ abstract class CatActivity : AppCompatActivity(), SharedPreferences.OnSharedPref
     val activeFragment: Fragment?
         get() = _activeFragment
 
-    var onFragmentChangedListener: ((Fragment) -> Unit)? = null
+    private val onFragmentChangedListeners = mutableListOf<(Fragment) -> Unit>()
+
+    fun addOnFragmentChangedListener(listener: (Fragment) -> Unit) {
+        onFragmentChangedListeners.add(listener)
+    }
+
+    fun removeOnFragmentChangedListener(listener: (Fragment) -> Unit) {
+        onFragmentChangedListeners.remove(listener)
+    }
+
+    private fun notifyFragmentChanged(fragment: Fragment) {
+        for (listener in onFragmentChangedListeners) {
+            listener(fragment)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -118,7 +132,7 @@ abstract class CatActivity : AppCompatActivity(), SharedPreferences.OnSharedPref
 
     override fun setCurrentFragment(fragment: Fragment) {
         _activeFragment = fragment
-        onFragmentChangedListener?.invoke(fragment)
+        notifyFragmentChanged(fragment)
     }
 
     override fun setToolbarTitle(title: Any?) {

@@ -60,7 +60,7 @@ class NetworkActivityExtension(private val _catActivity: CatActivity, snapParent
         if (_catActivity is INetworkActivity) {
             _networkActivity = _catActivity
 
-            _catActivity.onFragmentChangedListener = { fragment ->
+            _catActivity.addOnFragmentChangedListener { fragment ->
                 if (fragment is IInternetDependentFragment) {
                     if (_catActivity.isOnline) {
                         fragment.onInternetAvailable()
