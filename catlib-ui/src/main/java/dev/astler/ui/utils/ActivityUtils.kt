@@ -28,18 +28,11 @@ import dev.astler.ui.utils.views.setStatusAndNavigationPaddingForView
 import dev.astler.catlib.helpers.infoLog
 
 fun Activity.setStatusBarColor(@ColorRes color: Int) {
-
     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        val nDecorView = window.decorView
-        val wic = WindowInsetsControllerCompat(window, nDecorView)
-
-        wic.isAppearanceLightStatusBars = false
-    }
-
+    val nDecorView = window.decorView
+    val wic = WindowInsetsControllerCompat(window, nDecorView)
+    wic.isAppearanceLightStatusBars = false
     window.statusBarColor = ContextCompat.getColor(this, color)
-
     window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
 }
 
@@ -106,7 +99,7 @@ fun Activity.hideKeyboard() {
         getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethod.hideSoftInputFromWindow(
         view.windowToken,
-        InputMethodManager.SHOW_IMPLICIT
+        InputMethodManager.HIDE_IMPLICIT_ONLY
     )
 }
 

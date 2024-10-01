@@ -19,7 +19,7 @@ fun ComposeImageView(
         AndroidView(factory = { viewContext ->
             AppCompatImageView(viewContext).apply {
                 val drawable = ContextCompat.getDrawable(viewContext, drawableId)
-                ViewCompat.setBackground(this, drawable)
+                this.background = drawable
                 layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT

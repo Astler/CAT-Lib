@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlin)
     alias(libs.plugins.ksp)
-    id("kotlin-kapt")
     id("maven-publish")
 }
 

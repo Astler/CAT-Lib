@@ -7,7 +7,6 @@ import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.GetCredentialException
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +23,7 @@ import dev.astler.catlib.preferences.PreferencesTool
 import dev.astler.catlib.signin.data.IFirebaseAuthRepository
 import dev.astler.catlib.signin.data.SignInViewModel
 import dev.astler.catlib.signin.interfaces.ISignInListener
+import dev.astler.catlib.signin.utils.startOptionalSignIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -182,9 +182,13 @@ class SignInTool @Inject constructor(
                 infoLog("Received result: $result", "SignInTool")
                 handleSignIn(result)
             } catch (e: GetCredentialException) {
-                errorLog(e, postCategory = "SignInTool")
+                tryToStartCatSignIn()
             }
         }
+    }
+
+    fun tryToStartCatSignIn() {
+        _context.startOptionalSignIn()
     }
 
     fun createUserWithEmailAndPassword(email: String?, password: String?, callback: (FirebaseUser?, String?) -> Unit) {
