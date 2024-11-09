@@ -9,9 +9,8 @@ import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.scopes.ActivityScoped
 import dev.astler.catlib.config.AppConfig
 import dev.astler.catlib.preferences.PreferencesTool
-import dev.astler.catlib.signin.SignInTool
+import dev.astler.catlib.signin.SignInManager
 import dev.astler.catlib.signin.data.IFirebaseAuthRepository
-import javax.inject.Singleton
 
 @Module
 @InstallIn(ActivityComponent::class)
@@ -24,7 +23,7 @@ object SignInActivityModule {
         preferences: PreferencesTool,
         firebaseAuthRepository: IFirebaseAuthRepository,
         appConfig: AppConfig
-    ): SignInTool =
-        SignInTool(context, preferences, appConfig, firebaseAuthRepository)
+    ): SignInManager =
+        SignInManager(context, firebaseAuthRepository, appConfig)
 
 }

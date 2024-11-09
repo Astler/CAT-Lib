@@ -17,7 +17,7 @@ import dev.astler.catlib.constants.IODispatcher
 import dev.astler.catlib.extensions.getJsonContent
 import dev.astler.catlib.extensions.toast
 import dev.astler.catlib.helpers.infoLog
-import dev.astler.catlib.signin.SignInTool
+import dev.astler.catlib.signin.SignInManager
 import dev.astler.catlib.signin.interfaces.ISignInListener
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,14 +26,14 @@ import javax.inject.Inject
 class MainActivity : BindingCatActivity<ActivityMainBinding>(ActivityMainBinding::inflate), ISignInListener, INetworkActivity {
 
     @Inject
-    lateinit var singInTool: SignInTool
+    lateinit var singInTool: SignInManager
 
     private val _billingViewModel: BillingViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        singInTool.tryToSignIn()
+        singInTool.tryCredentialSignIn()
 
         InAppReviewActivityExtension(this, binding.snackbarLayout)
         InAppUpdateActivityExtension(this, binding.snackbarLayout)

@@ -11,7 +11,7 @@ import dev.astler.ui.utils.views.showWithCondition
 import dev.astler.catlib.extensions.toast
 import dev.astler.catlib.helpers.hasGoogleServices
 import dev.astler.catlib.signin.R
-import dev.astler.catlib.signin.SignInTool
+import dev.astler.catlib.signin.SignInManager
 import dev.astler.catlib.signin.data.CatSignInMode
 import dev.astler.catlib.signin.data.CatSignInMode.Companion.fromString
 import dev.astler.catlib.signin.databinding.SignInLayoutBinding
@@ -22,10 +22,11 @@ import javax.inject.Inject
 const val cSignInModeExtra = "signInMode"
 
 @AndroidEntryPoint
-open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutBinding::inflate), ISignInListener {
+open class SignInActivity : BindingCatActivity<SignInLayoutBinding>(SignInLayoutBinding::inflate),
+    ISignInListener {
 
     @Inject
-    lateinit var signInTool: SignInTool
+    lateinit var signInTool: SignInManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,7 @@ open class SignInActivity: BindingCatActivity<SignInLayoutBinding>(SignInLayoutB
 
             if (hasGoogleServices) {
                 googleSignIn.setOnClickListener {
-                    signInTool.tryToSignIn()
+                    signInTool.tryCredentialSignIn()
                 }
             }
 

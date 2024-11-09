@@ -31,11 +31,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import dagger.hilt.android.AndroidEntryPoint
-import dev.astler.catlib.signin.SignInTool
 import dev.astler.ui.data.IFlexibleItem
 import dev.astler.ui.interfaces.IComposeItem
 import dev.astler.ui.fragments.CatComposeFragment
 import com.ao.subscribeme.R
+import dev.astler.catlib.signin.SignInManager
 import dev.astler.ui.compose.flexible_grid.FlexibleGrid
 import dev.astler.ui.compose.items.BaseCard
 import dev.astler.ui.extensions.thenIf
@@ -47,7 +47,7 @@ import javax.inject.Inject
 abstract class TestsMenuFragment : CatComposeFragment() {
 
     @Inject
-    lateinit var singInTool: SignInTool
+    lateinit var singInTool: SignInManager
 
     open val menuItems = listOf<IComposeItem<IFlexibleItem, String>>(
         BaseCard(TestBaseItem(R.string.app_name, R.drawable.ic_launcher_foreground, 2)),
@@ -79,7 +79,7 @@ abstract class TestsMenuFragment : CatComposeFragment() {
                         profileImageUrl = profileImageUrl, onSignOutClicked = {
                             singInTool.signOut()
                         }, onSignInClicked = {
-                            singInTool.tryToSignIn()
+                            singInTool.tryCredentialSignIn()
                         }
                     )
 

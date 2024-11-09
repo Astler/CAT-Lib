@@ -55,4 +55,7 @@
     <string name="map_exist_value">Map Exist Value</string>
     <string name="map_missed_value">Map Missed Value</string>
     <string name="static_grid">Static Grid</string>
+    <string name="sign_in_v1">Sign in V1</string>
+    <string name="sign_in_v2">Sign In V2</string>
+    <string name="sign_in_v3">Sign In V3</string>
 </resources>
