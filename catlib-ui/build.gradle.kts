@@ -33,7 +33,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -49,6 +52,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "19"
+    }
+
+    publishing {
+        singleVariant("release")
     }
 
     kapt {
@@ -77,11 +84,11 @@ dependencies {
     api("androidx.compose.ui:ui-tooling-preview:${libs.versions.compose.get()}")
     api("androidx.compose.ui:ui:${libs.versions.compose.get()}")
     api("androidx.compose.runtime:runtime:${libs.versions.compose.get()}")
-    api("androidx.compose.material:material:${libs.versions.compose.get()}")
+    api(libs.androidxMaterial)
     api(libs.animation)
     api(libs.activityCompose)
     api(libs.navigationCompose)
-    api("androidx.compose.material:material-icons-extended:${libs.versions.compose.get()}")
+    api(libs.materialIconsExtended)
     api(libs.runtimeLivedata)
     api(libs.kotlinxMetadataJvm)
 

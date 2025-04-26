@@ -10,13 +10,12 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import coil.ImageLoader
-import coil.request.Disposable
-import coil.request.ImageRequest
+import coil3.ImageLoader
+import coil3.request.Disposable
+import coil3.request.ImageRequest
 import dev.astler.ui.utils.tintDrawable
 import dev.astler.ui.utils.tintDrawableByAttr
 import dev.astler.catlib.helpers.trackedTry
-import okhttp3.HttpUrl
 import java.io.File
 
 fun ImageView.setColorTintDrawable(@DrawableRes icon: Int, @ColorRes colorId: Int) {
@@ -33,6 +32,7 @@ fun ImageView.loadWithBackground(pRequest: String, pBackgroundColor: Int): Dispo
         val requestBuilder = ImageRequest.Builder(context)
             .data(pRequest)
             .target { drawable ->
+                if (drawable !is Drawable) return@target
                 val background = ShapeDrawable()
                 background.paint.color =
                     ContextCompat.getColor(context, pBackgroundColor)
@@ -63,7 +63,12 @@ fun ImageView.mixDrawables(pRequest: Any?, vararg pAdditionalDrawables: Drawable
         val requestBuilder = ImageRequest.Builder(context)
             .data(pRequest)
             .target { drawable ->
-                val layers = arrayOf(drawable, *pAdditionalDrawables)
+                if (drawable !is Drawable) return@target
+                val layers = arrayOfNulls<Drawable>(1 + pAdditionalDrawables.size)
+                layers[0] = drawable
+                for (i in pAdditionalDrawables.indices) {
+                    layers[i + 1] = pAdditionalDrawables[i]
+                }
                 setImageDrawable(LayerDrawable(layers))
             }
 

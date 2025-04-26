@@ -18,7 +18,7 @@ project.afterEvaluate {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 19
@@ -37,6 +37,10 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+    }
+
+    publishing {
+        singleVariant("release")
     }
 
     kotlin {

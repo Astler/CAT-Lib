@@ -47,6 +47,10 @@ android {
         compose = true
     }
 
+    publishing {
+        singleVariant("release")
+    }
+
     kotlin {
         jvmToolchain(19)
     }
@@ -62,12 +66,15 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_19
         targetCompatibility = JavaVersion.VERSION_19
+        isCoreLibraryDesugaringEnabled = true
     }
 
     namespace = "com.ao.subscribeme"
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.desugarJdkLibs)
+
     implementation(project(":catlib-core"))
     implementation(project(":catlib-ads"))
     implementation(project(":catlib-ui"))

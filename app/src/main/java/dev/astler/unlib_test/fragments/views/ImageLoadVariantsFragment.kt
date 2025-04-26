@@ -2,9 +2,12 @@ package dev.astler.unlib_test.fragments.views
 
 import android.os.Bundle
 import android.view.View
-import coil.load
-import coil.transform.CircleCropTransformation
-import coil.transform.RoundedCornersTransformation
+import coil3.load
+import coil3.request.crossfade
+import coil3.request.placeholder
+import coil3.request.transformations
+import coil3.transform.CircleCropTransformation
+import coil3.transform.RoundedCornersTransformation
 import dev.astler.ui.fragments.CatFragment
 import dev.astler.ui.utils.toNoFilterDrawable
 import dev.astler.ui.utils.views.loadWithBackground
@@ -15,7 +18,8 @@ import com.ao.subscribeme.databinding.ActivityImagesBinding
 import com.commit451.coiltransformations.BlurTransformation
 import com.commit451.coiltransformations.GrayscaleTransformation
 
-class ImageLoadVariantsFragment: CatFragment<ActivityImagesBinding>(ActivityImagesBinding::inflate) {
+class ImageLoadVariantsFragment :
+    CatFragment<ActivityImagesBinding>(ActivityImagesBinding::inflate) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -52,7 +56,12 @@ class ImageLoadVariantsFragment: CatFragment<ActivityImagesBinding>(ActivityImag
         }
 
         safeContext.getBitmapFromAsset("frozen.png")?.let {
-            binding.coloredNoFilterBitmapAssetsImage.setImageDrawable(it.toNoFilterDrawable(safeContext, R.color.colorPrimary))
+            binding.coloredNoFilterBitmapAssetsImage.setImageDrawable(
+                it.toNoFilterDrawable(
+                    safeContext,
+                    R.color.colorPrimary
+                )
+            )
         }
 
         binding.backgroundImage.loadWithBackground(

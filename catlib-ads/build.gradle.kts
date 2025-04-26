@@ -33,6 +33,10 @@ android {
         }
     }
 
+    publishing {
+        singleVariant("release")
+    }
+
     buildFeatures {
         viewBinding = true
         buildConfig = true
