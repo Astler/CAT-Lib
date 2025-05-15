@@ -106,6 +106,7 @@ dependencies {
     api(libs.navigationDynamicFeaturesFragment)
     api(libs.coil)
     api(libs.coilGif)
+    api(libs.coilNetworkOkhttp)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.extJunit)
