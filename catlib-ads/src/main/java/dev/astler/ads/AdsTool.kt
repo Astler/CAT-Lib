@@ -57,6 +57,7 @@ class AdsTool @Inject constructor(
     val appConfig: AppConfig
 ) : SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private var _globalAdsRequestTimerActive = false
     private var _interstitialRequestTimerActive: Boolean = false
     private var _rewardedRequestTimerActive: Boolean = false
     private var _configPackageName: String = _context.shortPackageId()
@@ -250,10 +251,25 @@ class AdsTool @Inject constructor(
             return
         }
 
+        if (_globalAdsRequestTimerActive) {
+            adsLog("Global ads request timer active, skipping", "AdsTool")
+            return
+        }
+
+        _globalAdsRequestTimerActive = true
+
         val adRequest = AdRequest.Builder().build()
 
         tryToLoadRewardedInterstitial(adRequest)
         tryToLoadInterstitial(adRequest)
+
+        if (_context is AppCompatActivity) {
+            _context.lifecycleScope.launch {
+                delay(5000)
+                _globalAdsRequestTimerActive = false
+                adsLog("Global ads request timer released", "AdsTool")
+            }
+        }
     }
 
     private fun tryToLoadInterstitial(adRequest: AdRequest) {
