@@ -25,8 +25,9 @@ abstract class CatComposeFragment : Fragment(), CoreFragmentInterface, MenuProvi
     @Inject
     lateinit var preferences: PreferencesTool
 
-    @Suppress("MemberVisibilityCanBePrivate")
+    protected var fragmentTag: String = this::class.java.simpleName
     protected var coreListener: ICatActivity? = null
+
     protected lateinit var safeContext: Context
 
     open val addMenuProvider: Boolean = true
