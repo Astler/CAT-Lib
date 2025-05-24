@@ -10,9 +10,12 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import coil3.Image
 import coil3.ImageLoader
-import coil3.request.Disposable
+import coil3.SingletonImageLoader
+import coil3.asDrawable
 import coil3.request.ImageRequest
+import coil3.request.Disposable
 import dev.astler.ui.utils.tintDrawable
 import dev.astler.ui.utils.tintDrawableByAttr
 import dev.astler.catlib.helpers.trackedTry
@@ -56,22 +59,33 @@ fun ImageView.loadWithBackground(pRequest: String, pBackgroundColor: Int): Dispo
  * - [Drawable]
  * - [Bitmap]
  */
-fun ImageView.mixDrawables(pRequest: Any?, vararg pAdditionalDrawables: Drawable): Disposable? {
-    return trackedTry(fallbackValue = null) {
-        val imageLoader = ImageLoader(context)
+fun ImageView.mixDrawables(
+    pRequest: Any?,
+    vararg pAdditionalDrawables: Drawable
+): Disposable? = trackedTry(fallbackValue = null) {
+    val loader: ImageLoader = SingletonImageLoader.get(context)
 
-        val requestBuilder = ImageRequest.Builder(context)
-            .data(pRequest)
-            .target { drawable ->
-                if (drawable !is Drawable) return@target
+    val req = ImageRequest.Builder(context)
+        .data(pRequest)
+        .target(
+            onStart = { },
+            onSuccess = { image: Image ->
+                val primary = image.asDrawable(context.resources)
                 val layers = arrayOfNulls<Drawable>(1 + pAdditionalDrawables.size)
-                layers[0] = drawable
-                for (i in pAdditionalDrawables.indices) {
-                    layers[i + 1] = pAdditionalDrawables[i]
-                }
+                layers[0] = primary
+                pAdditionalDrawables.forEachIndexed { i, extra -> layers[i + 1] = extra }
                 setImageDrawable(LayerDrawable(layers))
+            },
+            onError = { image: Image? ->
+                image?.asDrawable(context.resources)?.let { err ->
+                    val layers = arrayOfNulls<Drawable>(1 + pAdditionalDrawables.size)
+                    layers[0] = err
+                    pAdditionalDrawables.forEachIndexed { i, extra -> layers[i + 1] = extra }
+                    setImageDrawable(LayerDrawable(layers))
+                }
             }
+        )
+        .build()
 
-        imageLoader.enqueue(requestBuilder.build())
-    }
+    loader.enqueue(req)
 }
