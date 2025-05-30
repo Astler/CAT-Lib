@@ -1,9 +1,6 @@
 package dev.astler.ui.activities
 
-import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -23,11 +20,9 @@ import dev.astler.ui.appResumeTime
 import dev.astler.ui.interfaces.ICatActivity
 import dev.astler.ui.utils.tryToGetTextFrom
 import java.util.GregorianCalendar
-import java.util.Locale
 import javax.inject.Inject
 
-abstract class CatActivity : AppCompatActivity(),
-    SharedPreferences.OnSharedPreferenceChangeListener,
+abstract class CatActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener,
     ICatActivity, IRemoteConfigListener {
 
     @Inject
@@ -66,49 +61,6 @@ abstract class CatActivity : AppCompatActivity(),
         }
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        // Для старых версий Android (< 13) применяем сохранённую локаль до создания Activity
-        val updatedContext = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            applyLegacyLocale(newBase)
-        } else {
-            newBase
-        }
-        super.attachBaseContext(updatedContext)
-    }
-
-    private fun applyLegacyLocale(context: Context): Context {
-        return try {
-            val savedLocale = preferences.appLanguage
-
-            if (savedLocale != "system") {
-                val locale = Locale.forLanguageTag(savedLocale)
-                updateContextLocale(context, locale)
-            } else {
-                context
-            }
-        } catch (e: Exception) {
-            android.util.Log.w("CatActivity", "Failed to apply saved locale: ${e.message}")
-            context
-        }
-    }
-
-    private fun updateContextLocale(context: Context, locale: Locale): Context {
-        Locale.setDefault(locale)
-
-        val configuration = Configuration(context.resources.configuration)
-
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            configuration.setLocale(locale)
-            context.createConfigurationContext(configuration)
-        } else {
-            @Suppress("DEPRECATION")
-            configuration.locale = locale
-            @Suppress("DEPRECATION")
-            context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
-            context
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         enableEdgeToEdge()
@@ -120,8 +72,6 @@ abstract class CatActivity : AppCompatActivity(),
 
         preferences.loadDefaultPreferences(this)
         preferences.edit(StartTimeKey, GregorianCalendar().timeInMillis)
-
-        localizationManager.initializeLocaleOnStart(this)
 
         if (preferences.isFirstStart) {
             onFirstAppStart()
@@ -169,29 +119,16 @@ abstract class CatActivity : AppCompatActivity(),
                 AppCompatDelegate.setDefaultNightMode(preferences.defaultNightMode)
                 delegate.applyDayNight()
             }
-
             PreferencesTool.appLocaleKey -> {
-                val newLocale = sharedPreferences?.getString(key, "system") ?: "system"
-
-                if (newLocale != localizationManager.getCurrentLocale()) {
-                    localizationManager.setLocale(newLocale, this)
-
-                    if (!localizationManager.isModernLocalizationSupported()) {
-                        recreateActivity()
-                    }
-                }
+                val newLocale = sharedPreferences?.getString(key, LocalizationManager.SYSTEM_LANGUAGE)
+                    ?: LocalizationManager.SYSTEM_LANGUAGE
+                localizationManager.setAppLocale(newLocale)
             }
         }
     }
 
     fun changeLanguage(languageCode: String) {
         preferences.edit(PreferencesTool.appLocaleKey, languageCode)
-    }
-
-    private fun recreateActivity() {
-        runOnUiThread {
-            recreate()
-        }
     }
 
     override fun setCurrentFragment(fragment: Fragment) {

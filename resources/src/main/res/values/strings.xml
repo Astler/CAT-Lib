@@ -46,4 +46,5 @@
     <string name="system_theme">System</string>
     <string name="language_settings">Language Settings</string>
     <string name="language">App language</string>
+    <string name="system">System</string>
 </resources>

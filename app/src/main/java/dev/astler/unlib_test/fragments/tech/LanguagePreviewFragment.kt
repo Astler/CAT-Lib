@@ -37,8 +37,18 @@ class LanguagePreviewFragment : CatComposeFragment() {
 
     private val menuItems = listOf(
         Locale.ENGLISH,
+        Locale("ar"),
+        Locale("de"),
+        Locale("es"),
+        Locale("in"),
+        Locale("ja"),
+        Locale("ko"),
+        Locale("pl"),
+        Locale("pt"),
+        Locale("pt", "BR"),
         Locale("ru"),
         Locale("uk"),
+        Locale("zh"),
     )
 
     @Composable

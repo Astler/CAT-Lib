@@ -6,10 +6,10 @@ import android.os.Build
 import android.os.StrictMode
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.HiltAndroidApp
-import dev.astler.catlib.CatApp
+import dev.astler.catlib.PressFAplication
 
 @HiltAndroidApp
-class App: CatApp() {
+class App: PressFAplication() {
     companion object {
         const val MAIN_CHANNEL_ID = "MAIN_CHANNEL"
         const val NEWS_CHANNEL_ID = "NEWS_CHANNEL"

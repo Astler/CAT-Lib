@@ -1,133 +1,96 @@
 package dev.astler.catlib.localization
 
 import android.content.Context
-import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
-import dev.astler.catlib.preferences.PreferencesTool
-import java.util.Locale
+import gg.pressf.resources.R
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LocalizationManager @Inject constructor(
-    private val preferences: PreferencesTool
-) {
+class LocalizationManager @Inject constructor() {
+
+    private val supportedLanguages: Map<String, String> by lazy {
+        mapOf(
+            SYSTEM_LANGUAGE to "System",
+            "en" to "English",
+            "ar" to "العربية",
+            "de" to "Deutsch",
+            "es" to "Español",
+            "fr" to "Français",
+            "id" to "Bahasa Indonesia",
+            "ja" to "日本語",
+            "ko" to "한국어",
+            "pl" to "Polski",
+            "pt" to "Português",
+            "pt-BR" to "Português (Brasil)",
+            "ru" to "Русский",
+            "uk" to "Українська",
+            "zh" to "中文"
+        )
+    }
+
     companion object {
-        private const val DEFAULT_LOCALE = "system"
-    }
+        const val SYSTEM_LANGUAGE = "system"
 
-    /**
-     * Получить текущую локаль приложения
-     */
-    fun getCurrentLocale(): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // Android 13+ - используем AppCompatDelegate
-            val currentLocales = AppCompatDelegate.getApplicationLocales()
-            if (currentLocales.isEmpty) {
-                DEFAULT_LOCALE
+        fun getSystemLanguage(): String {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Resources.getSystem().configuration.locales[0].language
             } else {
-                currentLocales[0]?.toLanguageTag() ?: DEFAULT_LOCALE
+                @Suppress("DEPRECATION")
+                Resources.getSystem().configuration.locale.language
             }
-        } else {
-            // Android < 13 - используем SharedPreferences
-            preferences.appLanguage
         }
     }
 
-    /**
-     * Установить локаль приложения
-     * @param languageTag - код языка (например, "en", "ru", "uk" или "system" для системной)
-     * @param context - контекст для обновления конфигурации на старых версиях Android
-     */
-    fun setLocale(languageTag: String, context: Context? = null) {
-        preferences.appLanguage = languageTag
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // Android 13+ - используем современный API
-            setLocaleModern(languageTag)
-        } else {
-            // Android < 13 - используем legacy подход
-            setLocaleLegacy(languageTag, context)
-        }
+    fun isLanguageSupported(languageCode: String): Boolean {
+        return languageCode == SYSTEM_LANGUAGE || supportedLanguages.containsKey(languageCode)
     }
 
-    /**
-     * Современный способ для Android 13+
-     */
-    private fun setLocaleModern(languageTag: String) {
-        val localeList = if (languageTag == DEFAULT_LOCALE) {
-            LocaleListCompat.getEmptyLocaleList()
-        } else {
-            LocaleListCompat.forLanguageTags(languageTag)
-        }
-
-        // Это автоматически пересоздаст активность
-        AppCompatDelegate.setApplicationLocales(localeList)
-    }
-
-    /**
-     * Legacy способ для Android < 13
-     */
-    private fun setLocaleLegacy(languageTag: String, context: Context?) {
-        context?.let { ctx ->
-            val locale = if (languageTag == DEFAULT_LOCALE) {
-                getSystemLocale()
-            } else {
-                Locale.forLanguageTag(languageTag)
+    fun setAppLocale(languageCode: String) {
+        when {
+            languageCode == SYSTEM_LANGUAGE -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList())
+                } else {
+                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.getAdjustedDefault())
+                }
             }
 
-            updateContextLocale(ctx, locale)
+            supportedLanguages.containsKey(languageCode) -> {
+                val localeList = LocaleListCompat.forLanguageTags(languageCode)
+                AppCompatDelegate.setApplicationLocales(localeList)
+            }
+
+            else -> {
+                val localeList = LocaleListCompat.forLanguageTags("en")
+                AppCompatDelegate.setApplicationLocales(localeList)
+            }
         }
     }
 
-    /**
-     * Получить системную локаль
-     */
-    private fun getSystemLocale(): Locale {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            android.content.res.Resources.getSystem().configuration.locales[0]
+    fun getCurrentLanguage(): String {
+        val currentLocales = AppCompatDelegate.getApplicationLocales()
+        return if (currentLocales.isEmpty) {
+            SYSTEM_LANGUAGE
         } else {
-            @Suppress("DEPRECATION")
-            android.content.res.Resources.getSystem().configuration.locale
+            currentLocales[0]?.language ?: SYSTEM_LANGUAGE
         }
     }
 
-    /**
-     * Обновить контекст с новой локалью (для старых версий Android)
-     */
-    private fun updateContextLocale(context: Context, locale: Locale) {
-        Locale.setDefault(locale)
+    fun getDisplayName(languageCode: String, context: Context): String {
+        return when (languageCode) {
+            SYSTEM_LANGUAGE -> {
+                try {
+                    context.getString(R.string.system)
+                } catch (e: Exception) {
+                    "System"
+                }
+            }
 
-        val configuration = Configuration(context.resources.configuration)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            configuration.setLocale(locale)
-        } else {
-            @Suppress("DEPRECATION")
-            configuration.locale = locale
+            else -> supportedLanguages[languageCode] ?: languageCode
         }
-
-        @Suppress("DEPRECATION")
-        context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
-    }
-
-    /**
-     * Проверить, нужно ли инициализировать локаль при старте приложения
-     */
-    fun initializeLocaleOnStart(context: Context) {
-        val savedLocale = preferences.appLanguage
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU && savedLocale != DEFAULT_LOCALE) {
-            setLocaleLegacy(savedLocale, context)
-        }
-    }
-
-    /**
-     * Проверить, поддерживается ли современный API локализации
-     */
-    fun isModernLocalizationSupported(): Boolean {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
     }
 }
