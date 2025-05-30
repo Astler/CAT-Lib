@@ -29,14 +29,16 @@ import dev.astler.ui.activities.BindingCatActivity
 import dev.astler.catlib.extensions.activeLanguage
 import dev.astler.ui.fragments.CatComposeFragment
 import com.ao.subscribeme.R
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
+@AndroidEntryPoint
 class LanguagePreviewFragment : CatComposeFragment() {
 
     private val menuItems = listOf(
         Locale.ENGLISH,
         Locale("ru"),
-        Locale("ua"),
+        Locale("uk"),
     )
 
     @Composable
@@ -109,12 +111,12 @@ class LanguagePreviewFragment : CatComposeFragment() {
 
         OutlinedCard(
             modifier = Modifier.padding(8.dp),
-            border = BorderStroke(if (isSelected) 4.dp else 1.dp, if (isSelected) colors.primary else colors.onSurface),
+            border = BorderStroke(
+                if (isSelected) 4.dp else 1.dp,
+                if (isSelected) colors.primary else colors.onSurface
+            ),
             onClick = {
-                if (activity is BindingCatActivity<*>) {
-                    val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(item.language)
-                    AppCompatDelegate.setApplicationLocales(appLocale)
-                }
+                preferences.appLanguage = item.language
             },
         ) {
             Box(

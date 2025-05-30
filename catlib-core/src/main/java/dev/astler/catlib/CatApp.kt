@@ -46,7 +46,7 @@ open class CatApp : Application(), SharedPreferences.OnSharedPreferenceChangeLis
         plantTimber()
 
         FirebaseApp.initializeApp(this)
-        Firebase.crashlytics.setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
+        Firebase.crashlytics.isCrashlyticsCollectionEnabled = !BuildConfig.DEBUG
     }
 
     private fun plantTimber(){

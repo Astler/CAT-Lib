@@ -42,7 +42,7 @@ fun Context.isPlayStoreInstalled(): Boolean {
         }
 
         val isInstalled =
-            packageInfo.applicationInfo.enabled && GOOGLE_PLAY_STORE_PACKAGE == installerPackageName
+            packageInfo.applicationInfo?.enabled == true && GOOGLE_PLAY_STORE_PACKAGE == installerPackageName
 
         infoLog("Play Store is installed: $isInstalled", "Play Store")
 

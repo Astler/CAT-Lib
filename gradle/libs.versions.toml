@@ -1,5 +1,5 @@
 [versions]
-cat = "d2ec5b557a"
+cat = "1d793f2c28"
 retrofit = "3.0.0"
 aboutlibraries = "12.1.2"
 accompanistInsets = "0.30.1"
@@ -94,8 +94,8 @@ firebaseFirestoreKtx = "25.1.4"
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-androidApplication = { id = "com.android.application", version = "8.10.0" }
-androidLibrary = { id = "com.android.library", version = "8.10.0" }
+androidApplication = { id = "com.android.application", version = "8.10.1" }
+androidLibrary = { id = "com.android.library", version = "8.10.1" }
 hilt = { id = "com.google.dagger.hilt.android", version = "2.56.2" }
 ksp = { id = "com.google.devtools.ksp", version = "2.1.21-2.0.1" }
 crashlytics = { id = "com.google.firebase.crashlytics", version = "3.0.3" }
